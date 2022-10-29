@@ -1,0 +1,39 @@
+name: deploy-front
+
+on:
+  push:
+    branches:
+      - production
+
+jobs:
+  deploy:
+    runs-on: ubuntu-20.04
+    permissions:
+      contents: write
+    concurrency:
+      group: ${{ github.workflow }}-${{ github.ref }}
+    steps:
+      - name: git-clone
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: build
+        run: |
+          cd client
+          sudo apt-get -y update
+          sudo apt-get -y install nodejs npm
+          npm install
+          npm run build
+
+      - name: deploy
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          cname: lifeline.techstartucalgary.com
+          force_orphan: true
+          full_commit_message: ${{ github.event.head_commit.message }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_branch: production-build
+          publish_dir: client/build
+          user_name: github-actions[bot]
+          user_email: github-actions[bot]@users.noreply.github.com
