@@ -5,6 +5,6 @@ import { Router, Request, Response } from "express";
  */
 
 export default interface Controller {
-    path: string;
-    router: Router;
+  path: string;
+  router: Router;
 }
