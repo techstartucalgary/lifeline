@@ -1,8 +1,8 @@
 import { Routes, Route } from "react-router-dom";
-import Landing from './pages/Landing';
-import Loading from './pages/Loading';
-import Review from './pages/Review';
-import ThankYou from './components/ThankYou';
+import Landing from "./pages/Landing";
+import Loading from "./pages/Loading";
+import Review from "./pages/Review";
+import ThankYou from "./components/ThankYou";
 import Upload from "./pages/Upload";
 import Workflow from "./pages/Workflow";
 
@@ -20,6 +20,5 @@ function App() {
     </div>
   );
 }
-
 
 export default App;
