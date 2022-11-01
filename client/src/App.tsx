@@ -1,44 +1,25 @@
-import * as React from 'react';
-import { Routes, Route, Link } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
+import Landing from './landing/Landing';
+import Loading from './loading/Loading';
+import Review from './review/Review';
+import ThankYou from './thankyou/ThankYou';
+import Upload from "./upload/Upload";
+import Workflow from "./workflow/Workflow";
 
 function App() {
   return (
     <div className="App">
-      <h1>Hello world!</h1>
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="about" element={<About />} />
+        <Route path="/" element={<Landing />} />
+        <Route path="/loading" element={<Loading />} />
+        <Route path="/review" element={<Review />} />
+        <Route path="/thankyou" element={<ThankYou />} />
+        <Route path="/upload" element={<Upload />} />
+        <Route path="/workflow" element={<Workflow />} />
       </Routes>
     </div>
   );
 }
 
-function Home() {
-  return (
-    <>
-      <main>
-        <h2>Welcome to the homepage!</h2>
-      </main>
-      <p><br/>Go to about page:</p>
-      <nav>
-        <Link to="/about">About</Link>
-      </nav>
-    </>
-  );
-}
-
-function About() {
-  return (
-    <>
-      <main>
-        <h2>This is the about page</h2>
-      </main>
-      <p><br/>Go to home page:</p>
-      <nav>
-        <Link to="/">Home</Link>
-      </nav>
-    </>
-  );
-}
 
 export default App;
