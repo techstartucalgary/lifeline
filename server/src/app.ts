@@ -1,14 +1,15 @@
 import { Application, Router } from "express";
-import { CalendarController } from "./controllers/calendar.controller";
-
+import Controller from "./controllers/controller.interface";
+import cors from "cors";
 import express = require("express");
 
 export class App {
   public app: Application;
   public port: Number;
 
-  constructor(controllers: Array<CalendarController>, port: Number) {
+  constructor(controllers: Array<Controller>, port: Number) {
     this.app = express();
+    this.app.use(cors());
     this.port = port;
     this.initializeControllers(controllers);
   }
@@ -19,7 +20,7 @@ export class App {
     });
   }
 
-  private initializeControllers(controllers: Array<CalendarController>) {
+  private initializeControllers(controllers: Array<Controller>) {
     controllers.forEach((controller) => {
       this.app.use("/", controller.router);
     });
