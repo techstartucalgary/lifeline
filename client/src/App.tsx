@@ -1,10 +1,10 @@
 import { Routes, Route } from "react-router-dom";
-import Landing from './landing/Landing';
-import Loading from './loading/Loading';
-import Review from './review/Review';
-import ThankYou from './thankyou/ThankYou';
-import Upload from "./upload/Upload";
-import Workflow from "./workflow/Workflow";
+import Landing from './pages/Landing';
+import Loading from './pages/Loading';
+import Review from './pages/Review';
+import ThankYou from './components/ThankYou';
+import Upload from "./pages/Upload";
+import Workflow from "./pages/Workflow";
 
 function App() {
   return (
