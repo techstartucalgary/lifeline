@@ -15,7 +15,7 @@ export default function Upload() {
             "test": "test123"
         };
 
-        axios.get("http://127.0.0.1:3001/pdf", { data: reqBody })
+        axios.get("/pdf", { data: reqBody })
             .then(res => setResponse(res.data))
             .catch(err => setError(err.message));
     };
