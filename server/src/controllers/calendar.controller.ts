@@ -1,39 +1,38 @@
-import {Router, Request, Response} from "express"
+import { Router, Request, Response } from "express";
+import Controller from "./controller.interface";
 
-export class CalendarController{
+export class CalendarController implements Controller {
+  public path = "/calendar";
+  public router = Router();
 
-    public path = '/calendar';
-    public router = Router();
+  constructor() {
+    this.intializeRoutes();
+  }
 
-    constructor() {
-        this.intializeRoutes();
-    }
+  public intializeRoutes() {
+    this.router.get(this.path, this.getASampleCalendar);
+  }
 
-
-    public intializeRoutes() {
-        this.router.get(this.path, this.getASampleCalendar);
-    }
-
-    getASampleCalendar = (req: Request, res: Response) => {
-        return res.json({
-            "calendar": [
-                {
-                    "course": "SENG 550",
-                    "assessments": {
-                        "Assignment1": "October 1",
-                        "Assignment2": "October 31",
-                        "Final": "December 13"
-                    }
-                },
-                {
-                    "course" : "SENG 513",
-                    "assessments" : {
-                        "Assignment1": "October 11",
-                        "Assignment2": "October 31",
-                        "Final": "December 23"
-                    }
-                },
-            ]
-        })
-    }
+  getASampleCalendar = (req: Request, res: Response) => {
+    return res.json({
+      calendar: [
+        {
+          course: "SENG 550",
+          assessments: {
+            Assignment1: "October 1",
+            Assignment2: "October 31",
+            Final: "December 13",
+          },
+        },
+        {
+          course: "SENG 513",
+          assessments: {
+            Assignment1: "October 11",
+            Assignment2: "October 31",
+            Final: "December 23",
+          },
+        },
+      ],
+    });
+  };
 }
