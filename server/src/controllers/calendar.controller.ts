@@ -1,6 +1,5 @@
 import { Router, Request, Response } from "express";
 import Controller from "./controller.interface";
-
 export class CalendarController implements Controller {
   public path = "/calendar";
   public router = Router();
