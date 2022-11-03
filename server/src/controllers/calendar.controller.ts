@@ -10,12 +10,18 @@ export class CalendarController implements Controller {
   }
 
   public intializeRoutes() {
-    this.router.get(this.path, this.getASampleCalendar);
+    this.router.get(this.path, this.handleCalendarRequest);
   }
 
-  getASampleCalendar = (req: Request, res: Response) => {
-    return res.json({
-      calendar: [
+  handleCalendarRequest = (req: Request, res: Response) => {
+    var generatedCalendar = this.getGeneratedCalendar()
+    return res.json(generatedCalendar);
+  };
+
+  getGeneratedCalendar = () => {
+    // We can insert all the logic for generating the calendar here
+    const sampleCalendar =  
+      { calendar: [
         {
           course: "SENG 550",
           assessments: {
@@ -33,6 +39,9 @@ export class CalendarController implements Controller {
           },
         },
       ],
-    });
+    };
+
+    return sampleCalendar;
   };
+
 }
