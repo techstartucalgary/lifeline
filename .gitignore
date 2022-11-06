@@ -8,3 +8,5 @@
 **/.env.development
 **/.env.test
 **/.env.production
+server/env
+__pycache__
