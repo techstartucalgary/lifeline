@@ -1,48 +1,46 @@
-[
+{
+  "course": "CPSC 471",
+  "topic": " Data Base Management Systems",
+  "assessments": [
     {
-        "course": "CPSC 471",
-        "topic": " Data Base Management Systems",
-        "assessments": [
-            {
-                "name": "Graded Group Activities",
-                "date": "Ongoing",
-                "weight": "25"
-            },
-            {
-                "name": "Assignment 1",
-                "date": "2022-09-23T00:00:00.000",
-                "weight": "5"
-            },
-            {
-                "name": "Assignment 2",
-                "date": "2022-10-07T00:00:00.000",
-                "weight": "5"
-            },
-            {
-                "name": "Assignment 3",
-                "date": "2022-10-28T00:00:00.000",
-                "weight": "5"
-            },
-            {
-                "name": "Assignment 4",
-                "date": "2022-11-18T00:00:00.000",
-                "weight": "5"
-            },
-            {
-                "name": "Assignment 5",
-                "date": "2022-12-02T17:00:00.000",
-                "weight": "5"
-            },
-            {
-                "name": "Project",
-                "date": "2022-12-07T00:00:00.000",
-                "weight": "25"
-            },
-            {
-                "name": "Final Exam",
-                "date": "TBD",
-                "weight": "25"
-            }
-        ]
+      "name": "Graded Group Activities",
+      "date": "Ongoing",
+      "weight": "25"
+    },
+    {
+      "name": "Assignment 1",
+      "date": "2022-09-23T00:00:00.000",
+      "weight": "5"
+    },
+    {
+      "name": "Assignment 2",
+      "date": "2022-10-07T00:00:00.000",
+      "weight": "5"
+    },
+    {
+      "name": "Assignment 3",
+      "date": "2022-10-28T00:00:00.000",
+      "weight": "5"
+    },
+    {
+      "name": "Assignment 4",
+      "date": "2022-11-18T00:00:00.000",
+      "weight": "5"
+    },
+    {
+      "name": "Assignment 5",
+      "date": "2022-12-02T17:00:00.000",
+      "weight": "5"
+    },
+    {
+      "name": "Project",
+      "date": "2022-12-07T00:00:00.000",
+      "weight": "25"
+    },
+    {
+      "name": "Final Exam",
+      "date": "TBD",
+      "weight": "25"
     }
-]
+  ]
+}
