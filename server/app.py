@@ -1,6 +1,6 @@
 import uvicorn
 from fastapi import FastAPI
-from .handlers import calendarHandler
+from handlers import calendarHandler
 
 app = FastAPI()
 
