@@ -1,5 +1,5 @@
 import { Routes, Route } from "react-router-dom";
-import axios from 'axios';
+import axios from "axios";
 
 import Landing from "./pages/Landing";
 import Loading from "./pages/Loading";
@@ -7,7 +7,6 @@ import Review from "./pages/Review";
 import ThankYou from "./components/ThankYou";
 import Upload from "./pages/Upload";
 import Workflow from "./pages/Workflow";
-
 
 const hostname = window.location.hostname;
 const port = window.location.port;
