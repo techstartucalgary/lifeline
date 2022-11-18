@@ -1,0 +1,41 @@
+{
+    "course": "FREN 213",
+    "topic": "Intermediate French",
+    "assessments": [
+        {
+            "name": "Composition 1",
+            "date": "2021-10-08T00:00:00.000",
+            "weight": "10"
+        },
+        {
+            "name": "Composition 2",
+            "date": "2021-11-19T00:00:00.000",
+            "weight": "10"
+        },
+        {
+            "name": "Dictation 1",
+            "date": "2021-09-24T00:00:00.000",
+            "weight": "5"
+        },
+        {
+            "name": "Dictation 2",
+            "date": "2021-11-05T00:00:00.000",
+            "weight": "5"
+        },
+        {
+            "name": "Test 1",
+            "date": "2021-10-22T00:00:00.000",
+            "weight": "20"
+        },
+        {
+            "name": "Test 2",
+            "date": "2021-11-26T00:00:00.000",
+            "weight": "20"
+        },
+        {
+            "name": "Test 2",
+            "date": "ONGOING",
+            "weight": "10"
+        }
+    ]
+}
