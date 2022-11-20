@@ -5,6 +5,9 @@ export default function About() {
     <>
       <main>
         <h2 className="font-bold mt-10 text-emerald-500">This is the landing page</h2>
+        <span className="material-symbols-outlined">
+          expand_more
+        </span>
       </main>
 
       <nav>
