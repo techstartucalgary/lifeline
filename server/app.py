@@ -10,7 +10,7 @@ async def showCalendar():
     return calendarHandler.getCalendarJson()
 
 
-@app.post("/sendFile")
+@app.post("/files")
 async def sendOutlineFile(outlineFile: UploadFile = File(...)):
     return {"The File that you just passed is ": outlineFile.filename}
 
