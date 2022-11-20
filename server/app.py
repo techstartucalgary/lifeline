@@ -4,6 +4,7 @@ from handlers import calendarHandler
 
 app = FastAPI()
 
+
 @app.get("/calendarJson")
 async def showCalendar():
     return calendarHandler.getCalendarJson()
