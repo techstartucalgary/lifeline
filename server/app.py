@@ -1,13 +1,18 @@
 import uvicorn
-from fastapi import FastAPI
+from fastapi import FastAPI, File, UploadFile
 from handlers import calendarHandler
 
 app = FastAPI()
 
 
 @app.get("/calendarJson")
-def showCalendar():
+async def showCalendar():
     return calendarHandler.getCalendarJson()
+
+
+@app.post("/files")
+async def sendOutlineFile(outlineFile: UploadFile = File(...)):
+    return {"The File that you just passed is ": outlineFile.filename}
 
 
 if __name__ == "__main__":
