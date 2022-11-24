@@ -1,3 +1,50 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Lexend:wght@100;200;300;400;500;600;700;800;900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200');
+
+.material-symbols-outlined {
+    font-variation-settings:
+        'FILL' 1,
+        'wght' 400,
+        'GRAD' 200,
+        'opsz' 40
+}
+
+@layer components {
+    .btn {
+     @apply font-bold py-2 px-4 m-2 rounded;
+    }
+    .sm {
+      @apply px-2;
+    }
+  
+    .md {
+      @apply px-4;
+    }
+  
+    .lg {
+      @apply px-8;
+    }
+  
+    .xl {
+      @apply px-16;
+    }
+
+    .default {
+      @apply bg-light-primary text-white;
+    }
+    .default:hover {
+      @apply bg-light-primary text-white;
+    }
+
+    .secondary {
+        @apply border  border-light-primary bg-transparent text-light-primary;
+    }
+    
+    .secondary:hover {
+        @apply bg-white text-light-primary;
+    }
+}
