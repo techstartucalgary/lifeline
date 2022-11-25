@@ -3,10 +3,6 @@ import React from "react";
 interface Props {
   width: string;
   height: string; 
-  padding: string; 
-  colour: string; 
-  radius: string; 
-  gap: string; 
   onClick: () => void;
   children: any;
 }
@@ -14,28 +10,15 @@ interface Props {
 const Button: React.FC<Props> = ({ 
   width,
   height,
-  padding,
-  colour, 
-  radius,
-  gap,
   onClick,
   children
   }) => { 
   return (
-    <button 
-      onClick={onClick}
-      style={{
-        width,
-        height,
-        padding,
-        backgroundColor: colour,
-        borderRadius: radius,
-        gap
-      }}
-    >
+    <button className='bg-burgundy p-0 gap-2'>
     {children}
     </button>
   );
 }
 
 export default Button;
+

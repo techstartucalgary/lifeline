@@ -10,10 +10,6 @@ export default function About() {
       <Button
         width = "130px"
         height = "46px"
-        padding = "0px"
-        colour = "#B7194A"
-        radius = "100px"
-        gap = "8px"
         children = "Get Started"
         onClick={() => console.log("The button has been clicked")}
         />
