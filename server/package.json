@@ -6,6 +6,8 @@
   "dependencies": {
     "cors": "^2.8.5",
     "express": "^4.18.2",
+    "ics": "^2.41.0",
+    "ics-file-export": "^1.0.1",
     "typescript": "^4.8.4"
   },
   "devDependencies": {
