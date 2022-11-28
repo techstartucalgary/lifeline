@@ -1,18 +1,22 @@
+"""Uvicorn is an ASGI web server implementation for Python."""
 import uvicorn
+
 from fastapi import FastAPI, File, UploadFile
 from handlers import calendarHandler
 
 app = FastAPI()
 
 
-@app.get("/calendarJson")
-async def showCalendar():
-    return calendarHandler.getCalendarJson()
+@app.get("/test-calendar-json")
+async def show_calendar():
+    """sends a test json to client"""
+    return calendarHandler.get_calendar_json()
 
 
 @app.post("/files")
-async def sendOutlineFile(outlineFile: UploadFile = File(...)):
-    return {"The File that you just passed is ": outlineFile.filename}
+async def send_outline_file(outline_file: UploadFile = File(...)):
+    """sends pdf file to server"""
+    return {"The File that you just passed is ": outline_file.filename}
 
 
 if __name__ == "__main__":
