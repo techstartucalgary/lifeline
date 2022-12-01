@@ -1,0 +1,37 @@
+{
+    "course": "CPSC 457",
+
+    "topic": "Principles of Operating Systems",
+    "assessments": [
+        {
+            "name": "Assignment 1",
+            "date": "2022-09-30T23:30:00.000",
+            "weight": "15"
+        },
+        {
+            "name": "Assignment 2",
+            "date": "2022-10-07T23:30:00.000",
+            "weight": "19"
+        },
+        {
+            "name": "Assignment 3",
+            "date": "2022-10-21T23:30:00.000",
+            "weight": "21"
+        },
+        {
+            "name": "Assignment 4",
+            "date": "2022-11-04T23:30:00.000",
+            "weight": "22"
+        },
+        {
+            "name": "Assignment 5",
+            "date": "2022-11-18T23:30:00.000",
+            "weight": "8"
+        },
+        {
+            "name": "Assignment 6",
+            "date": "2022-12-06T23:30:00.000",
+            "weight": "15"
+        }
+    ]
+}
