@@ -7,6 +7,8 @@ interface Props {
   variant?: string, // default, secondary, etc.
   size?: string, // sm, md, lg
   disabled?: boolean,
+  width?: string,
+  height?: string,
   type?: ButtonHTMLAttributes<HTMLButtonElement>['type'],
 }
 
@@ -21,7 +23,7 @@ const Button: React.FC<Props> = ({
 }) => {
   return (
     <button
-      className={`btn ${variant} ${size} mx-10 my-10 rounded-full font-medium font-body text-sm` + (disabled ? ' disabled' : '')}
+      className={`btn ${variant} ${size} my-10 rounded-full font-medium font-body text-sm` + (disabled ? ' disabled' : '')}
       onClick={onClick}
       disabled={disabled}
       type={rest.type}

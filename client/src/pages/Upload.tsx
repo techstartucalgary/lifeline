@@ -81,9 +81,7 @@ export default function Upload() {
                 My course outlines
               </h1>
               
-			  <div>
-
-			  </div>
+			
             </div>
             <div className="basis-1/2">
               <h1 className="text-secondary-30 text-lg md:text-lg font-bold landing-title mb-14 fade-in-top">

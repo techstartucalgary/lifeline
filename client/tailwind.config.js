@@ -10,6 +10,12 @@ module.exports = {
         "body": ["Poppins", "system-ui"],
       },
       colors: {
+        'gray': '#D9D9D9',
+        'pink': '#FF2480',
+        'getStarted': '#B7194A',
+        'learnMore': '#B7194A',
+        'divider': "ADADAD",
+        'start': '#B7194A',
         "primary": {
           100: "#FFFFFF",
           99: "#FFFBFF",
