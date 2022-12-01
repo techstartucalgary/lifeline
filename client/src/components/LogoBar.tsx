@@ -9,7 +9,7 @@ export default function LogoBar() {
     }
 	return (
 		<div>
-				<div className=" flex items-center flex-no-shrink text-white mr-6 absolute w-48 p-6">
+				<div className="flex items-center flex-no-shrink h-11 md: my-5 text-white mr-6 absolute w-48 p-6 cursor-pointer">
 					<Logo onClick={routeChange}/>
 				</div>
         </div>
