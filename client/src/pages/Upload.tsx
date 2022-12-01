@@ -47,6 +47,10 @@ export default function Upload() {
     axios.post("/files", formData, {
       headers: { 'Content-Type': 'multipart/form-data' }
     })
+    .then (res => {
+      console.log(res);
+      setOutlineUploadLoading(false);
+    })
     .catch((error) => {
       console.log(error);
     })
