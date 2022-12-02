@@ -28,12 +28,34 @@ jobs:
           cd server
           pip install -r requirements.txt
           black --check .
+
       - name: format-client
         run: |
           cd client
           npm install
           npm run check-format
+      
+      
+  test:
+    runs-on: ubuntu-20.04
+    permissions:
+      contents: write
+    concurrency:
+      group: ${{ github.workflow }}-${{ github.ref }}
+    steps:
+      - name: git-clone
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: dependencies
+        run: |
+          sudo apt-get -y update
+          sudo apt-get -y install pip
+  
       - name: test-server
         run: |
           cd server
+          pip install -r requirements.txt
           pytest test_app.py
+  
