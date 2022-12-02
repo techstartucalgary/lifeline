@@ -2,7 +2,7 @@
 import uvicorn
 
 from fastapi import FastAPI, File, UploadFile
-from handlers import calendarHandler
+from handlers import calendar_handler
 
 app = FastAPI()
 
@@ -10,7 +10,7 @@ app = FastAPI()
 @app.get("/test-calendar-json")
 async def show_calendar():
     """sends a test json to client"""
-    return calendarHandler.get_calendar_json()
+    return calendar_handler.get_calendar_json()
 
 
 @app.post("/files")
