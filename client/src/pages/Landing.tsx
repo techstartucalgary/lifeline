@@ -10,7 +10,7 @@ export default function Landing() {
         <div className="w-7/12 m-0 pl-12">
           <div className="text-5xl font-poppins font-[800] leading- tracking-tight">
             <h1>A better way to</h1>
-            <h1 className=" text-pink">Organize deadlines</h1>
+            <h1 className=" text-pink">organize deadlines</h1>
           </div>
           <div className="leading-relaxed font-poppins mt-10 w-11/12">
             <p className="text-xl font-normal non-italic">
