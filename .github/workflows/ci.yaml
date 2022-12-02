@@ -33,3 +33,7 @@ jobs:
           cd client
           npm install
           npm run check-format
+      - name: test-server
+        run: |
+          cd server
+          pytest test_app.py
