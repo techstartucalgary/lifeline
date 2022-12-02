@@ -7,12 +7,36 @@ export default function About() {
       <main>
         <h2 className="font-bold mt-10 text-emerald-500">This is the landing page</h2>
       </main>
+      <Button variant="filled"
+        disabled={false}
+        children={"Filled"}
+      />
       <Button
-        width = "130px"
-        height = "46px"
-        children = "Get Started"
-        onClick={() => console.log("The button has been clicked")}
-        />
+        variant="filled"
+        disabled={true}
+        children={"Filled + Disabled"}
+      />
+      <Button
+        variant="tonal"
+        disabled={true}
+        children={"Tonal"}
+      />
+      <Button
+        variant="tonal"
+        disabled={false}
+        children={"Tonal + Disabled"}
+      />
+      <Button
+        variant="text"
+        disabled={true}
+        children={"Text"}
+      />
+      <Button
+        variant="text"
+        disabled={false}
+        children={"Text + Disabled"}
+      />
+
       <nav>
         <Link to="/upload">Get Started</Link>
         <Link to="/workflow">Learn more</Link>

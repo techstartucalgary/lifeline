@@ -2,10 +2,19 @@
 module.exports = {
   content: ["./**/src/**/*.{tsx, ts}"],
   theme: {
-    colors: {
-      'burgundy': '#B7194A',
+    extend: {
+      colors: {
+        'burgundy': '#B7194A',
+        'disabled' : '#1C1B1F',
+        'textdis' : '#400013',
+        'tonal' : '#FFD7F4',
+        'tonalText' : '#380037',
+        'textHover' : '#6750a414'
+      },
+      fontFamily: {
+        poppins: "'Poppins', sans-serif",
+      },
     },
-    extend: {},
   },
   plugins: [
     require("@tailwindcss/typography"),
