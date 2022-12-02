@@ -21,5 +21,5 @@ def test_handlers():  # Here we can test handler functions
 def test_api():  # To test the api routes
     """tests api routes"""
     response = client.get("/test-calendar-json")
-    assert response.status_code == 400
+    assert response.status_code == 200
     assert response.json() == EXPECTEDCALENDARJSON
