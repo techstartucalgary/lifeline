@@ -21,10 +21,15 @@ jobs:
       - name: dependencies
         run: |
           sudo apt-get -y update
-          sudo apt-get -y install pip
+          sudo apt-get -y install pip nodejs yarn
 
       - name: format-server
         run: |
           cd server
           pip install -r requirements.txt
           black --check .
+      - name: format-client
+        run: |
+          cd client
+          npm install
+          npm run check-format
