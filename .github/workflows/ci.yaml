@@ -33,7 +33,7 @@ jobs:
         run: |
           cd client
           npm install
-          npm run check-format
+          eslint . --ext .js,.jsx,.ts,.tsx
       
       
   test:
