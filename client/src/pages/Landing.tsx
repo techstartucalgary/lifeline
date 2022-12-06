@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 
-export default function Landing() {
+export default function About() {
   return (
     <>
       <div className="flex flex-row px-28 mt-28">
