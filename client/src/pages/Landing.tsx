@@ -98,6 +98,5 @@ export default function Landing() {
       <div className="border-solid rounded-full bg-gray"></div>
       <div className="text-sm text-normal">Designed with &hearts; in 2022<span className="block">All rights reserved.</span></div>
     </>
-
   );
 }
