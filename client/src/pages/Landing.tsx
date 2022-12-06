@@ -12,7 +12,7 @@ export default function About() {
       </main>
 
       <Button variant="filled">Filled</Button>
-      <Button variant="filled" disabled>Filled + Disabled</Button>
+      <Button variant="filled" disabled><p>Filled</p> + <p>Disabled</p></Button>
       <Button variant="tonal">Tonal</Button>
       <Button variant="tonal" disabled>Tonal + Disabled</Button>
       <Button variant="text" onClick={() => alert(111)}>Text</Button>

@@ -2,7 +2,7 @@ import { ReactNode, ButtonHTMLAttributes } from "react";
 import { twMerge } from "tailwind-merge";
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-  children: ReactNode;
+  children: string | ReactNode;
   variant?: "filled" | "tonal" | "text";
   className?: string;
 };
@@ -29,7 +29,9 @@ const classnames = {
 };
 
 const Button = ({ variant = "text", children, className, ...props }: ButtonProps) => {
-  return <button className={twMerge(classnames[variant], className)} {...props}>{children}</button>;
+  return <button className={twMerge(classnames[variant], className)} {...props} type="button">
+    {typeof children === "string" ? <>{children}</> : <div className="flex flex-row gap-2">{children}</div>}
+  </button>;
 };
 
 export default Button;
