@@ -20,6 +20,7 @@ const base = `
   active:before:bg-state-layers-light-primary/[.12]
 
   disabled:bg-light-on-surface/[.12] disabled:text-light-on-surface/[.38] disabled:cursor-not-allowed
+  disabled:before:bg-transparent
 `;
 
 const classnames = {
