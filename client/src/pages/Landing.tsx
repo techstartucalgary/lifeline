@@ -10,35 +10,13 @@ export default function About() {
         </h2>
         <span className="material-symbols-outlined">expand_more</span>
       </main>
-      <Button variant="filled"
-        disabled={false}
-        children={"Filled"}
-      />
-      <Button
-        variant="filled"
-        disabled={true}
-        children={"Filled + Disabled"}
-      />
-      <Button
-        variant="tonal"
-        disabled={true}
-        children={"Tonal"}
-      />
-      <Button
-        variant="tonal"
-        disabled={false}
-        children={"Tonal + Disabled"}
-      />
-      <Button
-        variant="text"
-        disabled={true}
-        children={"Text"}
-      />
-      <Button
-        variant="text"
-        disabled={false}
-        children={"Text + Disabled"}
-      />
+      
+      <Button variant="filled">bbbb</Button>
+      <Button variant="filled" disabled>Filled + Disabled</Button>
+      <Button variant="tonal" disabled>Tonal</Button>
+      <Button variant="tonal">Tonal + Disabled</Button>
+      <Button variant="text" disabled>Text</Button>
+      <Button variant="text">Text + Disabled</Button>
 
       <nav>
         <Link to="/upload">Get Started</Link>

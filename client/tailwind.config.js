@@ -12,12 +12,12 @@ module.exports = {
         body: ["Lexend", "system-ui"],
       },
       colors: {
-        burgundy: '#B7194A',
-        disabled: '#1C1B1F',
-        textdis: '#400013',
-        tonal: '#FFD7F4',
-        tonalText: '#380037',
-        textHover: '#6750a414',
+        burgundy: "#B7194A",
+        disabled: "#1C1B1F",
+        textdis: "#400013",
+        tonal: "#FFD7F4",
+        tonalText: "#380037",
+        textHover: "#6750a414",
 
         primary: {
           100: "#FFFFFF",
