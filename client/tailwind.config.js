@@ -1,24 +1,15 @@
 /* eslint-disable no-undef */
 /** @type {import("tailwindcss").Config} */
 module.exports = {
-  content: ["./**/src/**/*.{tsx, ts}"],
+  content: ["./**/src/**/*.{tsx, ts, jsx, js}"],
   theme: {
     extend: {
       fontFamily: {
-        poppins: "'Poppins', sans-serif",
-
         sans: ["ui-sans-serif", "Lexend", "system-ui"],
         display: ["Poppins", "system-ui"],
         body: ["Lexend", "system-ui"],
       },
       colors: {
-        burgundy: "#B7194A",
-        disabled: "#1C1B1F",
-        textdis: "#400013",
-        tonal: "#FFD7F4",
-        tonalText: "#380037",
-        textHover: "#6750a414",
-
         primary: {
           100: "#FFFFFF",
           99: "#FFFBFF",
@@ -33,6 +24,7 @@ module.exports = {
           20: "#670023",
           10: "#400013",
           0: "#000000",
+          DEFAULT: "#B7194A",
         },
         secondary: {
           100: "#FFFFFF",
@@ -48,6 +40,7 @@ module.exports = {
           20: "#551352",
           10: "#380037",
           0: "#000000",
+          DEFAULT: "#8B4483",
         },
         tertiary: {
           100: "#FFFFFF",
@@ -63,6 +56,7 @@ module.exports = {
           20: "#491866",
           10: "#30004B",
           0: "#000000",
+          DEFAULT: "#7B4998",
         },
         neutral: {
           100: "#FFFFFF",
@@ -78,6 +72,7 @@ module.exports = {
           20: "#670023",
           10: "#400013",
           0: "#000000",
+          DEFAULT: "#B7194A",
         },
         "neutral-variant": {
           100: "#FFFFFF",
@@ -93,6 +88,7 @@ module.exports = {
           20: "#3A2D2F",
           10: "#24181A",
           0: "#000000",
+          DEFAULT: "#847374",
         },
         "light-primary": "#B7194A",
         "light-on-primary": "#FFFFFF",
@@ -113,6 +109,11 @@ module.exports = {
         "light-surface-variant": "#F3DDDF",
         "light-on-surface-variant": "#524345",
         "light-outline": "#847374",
+        "state-layers": {
+          "light-primary": "#6750A4",
+          "on-secondary-container": "#1D192B",
+          "light-on-surface": "#1C1B1F",
+        }
       },
     },
   },
