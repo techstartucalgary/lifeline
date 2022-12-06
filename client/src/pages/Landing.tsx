@@ -4,9 +4,6 @@ export default function Landing() {
   return (
     <>
       <div className="flex flex-row px-28 mt-28">
-        {/* <IconTextPair icon="xx" title="Upload your course outline" />
-        <IconTextPair icon="xx" title="Prevw and edt" />
-        <IconTextPair icon="xx" title="y" /> */}
         <div className="w-7/12 m-0 pl-12">
           <div className="text-5xl font-poppins font-[800] leading- tracking-tight">
             <h1>A better way to</h1>
