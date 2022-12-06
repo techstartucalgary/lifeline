@@ -10,7 +10,7 @@ export default function Upload() {
     "application/pdf",
   ]
 
-  const handleOutlineUpload = (event?: React.ChangeEvent<HTMLInputElement>) => {
+  const handleOutlineUpload = async (event?: React.ChangeEvent<HTMLInputElement>) => {
     if (event!.target.files!.length > 1) {
       console.log("fileInput", "Please upload a single file")
       return
@@ -44,19 +44,44 @@ export default function Upload() {
       "file",
       file,
     )
-    axios.post("/files", formData, {
-      headers: { 'Content-Type': 'multipart/form-data' }
-    })
-    .then (res => {
-      console.log(res);
-      setOutlineUploadLoading(false);
-    })
-    .catch((error) => {
-      console.log(error);
-    })
-    .finally (() => {
-      setOutlineUploadLoading(false);
-    })
+    // axios.post("http://localhost:8000/files", formData, {
+    //   headers: { 'Content-Type': 'multipart/form-data' }
+    // })
+    // .then (res => {
+    //   console.log(res);
+    // })
+    // .catch((error) => {
+    //   console.log(error);
+    // })
+    // .finally (() => {
+    //   setOutlineUploadLoading(false);
+    // })
+
+    // const options = {
+    //   method: "POST",
+    //   body: formData,
+    //   headers: {
+    //     'Content-Type': 'multipart/form-data',
+    //   }
+    // };
+    await fetch("localhost:8000/files", {
+      method: 'POST',
+      mode: 'cors',
+      cache: 'no-cache',
+      redirect: 'follow',
+      referrerPolicy: 'no-referrer',
+      headers: {
+          "Content-type": "multipart/form-data"
+      }})
+      .then (res => {
+          console.log(res);
+        })
+        .catch((error) => {
+          console.log(error);
+        })
+        .finally (() => {
+          setOutlineUploadLoading(false);
+        })
   }
 
   return (
