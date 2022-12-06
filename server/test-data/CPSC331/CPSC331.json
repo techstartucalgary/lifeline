@@ -1,0 +1,46 @@
+{
+    "course": "CPSC 331",
+    "topic": " Data Structures, Algorithms, and Their Analysis",
+    "assessments": [
+        {
+            "name": "Assignment 1",
+            "date": "2022-09-24T00:00:00.000",
+            "weight": "10"
+        },
+        {
+            "name": "Assignment 2",
+            "date": "2022-10-07T00:00:00.000",
+            "weight": "10"
+        },
+        {
+            "name": "Term Test 1",
+            "date": "2022-10-17T18:00:00.000",
+            "weight": "15"
+        },
+        {
+            "name": "Assignment 3",
+            "date": "2022-10-31T00:00:00.000",
+            "weight": "10"
+        },
+        {
+            "name": "Term Test 2",
+            "date": "2022-11-02T18:00:00.000",
+            "weight": "15"
+        },
+        {
+            "name": "Assignment 4",
+            "date": "2022-11-18T17:00:00.000",
+            "weight": "10"
+        },
+        {
+            "name": "Assignment 5",
+            "date": "2022-12-05T00:00:00.000",
+            "weight": "10"
+        },
+        {
+            "name": "Final Exam",
+            "date": "TBD",
+            "weight": "30"
+        }
+    ]
+}

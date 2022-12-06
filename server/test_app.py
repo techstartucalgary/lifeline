@@ -1,22 +1,25 @@
+"""package for working with json"""
 import json
-from handlers import calendarHandler
+from handlers import calendar_handler
 from fastapi.testclient import TestClient
 
 from app import app
 
-expectedCalendarJson = None
-with open("data/calendar.json") as stream:
-    expectedCalendarJson = json.load(stream)
+EXPECTEDCALENDARJSON = None
+with open("data/calendar.json", encoding="utf8") as stream:
+    EXPECTEDCALENDARJSON = json.load(stream)
 
 
 client = TestClient(app)
 
 
 def test_handlers():  # Here we can test handler functions
-    assert calendarHandler.getCalendarJson() == expectedCalendarJson
+    """tests handler functions"""
+    assert calendar_handler.get_calendar_json() == EXPECTEDCALENDARJSON
 
 
 def test_api():  # To test the api routes
-    response = client.get("/calendarJson")
+    """tests api routes"""
+    response = client.get("/test-calendar-json")
     assert response.status_code == 200
-    assert response.json() == expectedCalendarJson
+    assert response.json() == EXPECTEDCALENDARJSON
