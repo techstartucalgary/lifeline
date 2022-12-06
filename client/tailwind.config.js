@@ -5,18 +5,18 @@ module.exports = {
     extend: {
       fontFamily: {
         poppins: "'Poppins', sans-serif",
-        
+
         sans: ["ui-sans-serif", "Lexend", "system-ui"],
         display: ["Poppins", "system-ui"],
         body: ["Lexend", "system-ui"],
       },
       colors: {
-        burgundy: '#B7194A',
-        disabled: '#1C1B1F',
-        textdis: '#400013',
-        tonal: '#FFD7F4',
-        tonalText: '#380037',
-        textHover: '#6750a414',
+        burgundy: "#B7194A",
+        disabled: "#1C1B1F",
+        textdis: "#400013",
+        tonal: "#FFD7F4",
+        tonalText: "#380037",
+        textHover: "#6750a414",
 
         primary: {
           100: "#FFFFFF",
