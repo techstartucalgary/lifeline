@@ -4,12 +4,12 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        "sans": ["ui-sans-serif", "Lexend", "system-ui"],
-        "display": ["Poppins", "system-ui"],
-        "body": ["Lexend", "system-ui"],
+        sans: ["ui-sans-serif", "Lexend", "system-ui"],
+        display: ["Poppins", "system-ui"],
+        body: ["Lexend", "system-ui"],
       },
       colors: {
-        "primary": {
+        primary: {
           100: "#FFFFFF",
           99: "#FFFBFF",
           95: "#FFECED",
@@ -24,7 +24,7 @@ module.exports = {
           10: "#400013",
           0: "#000000",
         },
-        "secondary": {
+        secondary: {
           100: "#FFFFFF",
           99: "#FFFBFF",
           95: "#FFEBF7",
@@ -39,7 +39,7 @@ module.exports = {
           10: "#380037",
           0: "#000000",
         },
-        "tertiary": {
+        tertiary: {
           100: "#FFFFFF",
           99: "#FFFBFF",
           95: "#FCEBFF",
@@ -54,7 +54,7 @@ module.exports = {
           10: "#30004B",
           0: "#000000",
         },
-        "neutral": {
+        neutral: {
           100: "#FFFFFF",
           99: "#FFFBFF",
           95: "#FFECED",
@@ -103,7 +103,7 @@ module.exports = {
         "light-surface-variant": "#F3DDDF",
         "light-on-surface-variant": "#524345",
         "light-outline": "#847374",
-      }
+      },
     },
   },
   plugins: [
