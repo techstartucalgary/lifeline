@@ -33,9 +33,8 @@ jobs:
         run: |
           cd client
           npm install
-          npm run check-format
-      
-      
+          npm run check-lint
+
   test:
     runs-on: ubuntu-20.04
     permissions:
@@ -52,10 +51,9 @@ jobs:
         run: |
           sudo apt-get -y update
           sudo apt-get -y install pip
-  
+
       - name: test-server
         run: |
           cd server
           pip install -r requirements.txt
           pytest test_app.py
-  
