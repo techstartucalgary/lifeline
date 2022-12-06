@@ -3,10 +3,10 @@ import logo from "../assets/loading.gif";
 
 export default function About() {
   return (
-    <> 
-      <main> 
+    <>
+      <main>
         <h2>This is the loading page</h2>
-      </main> 
+      </main>
       <nav>
         <Link to="/review">Todo: Redirect to Review/Edit page</Link>
       </nav>
@@ -31,7 +31,4 @@ export default function About() {
       </svg>
     </>
   );
-
-
 }
-
