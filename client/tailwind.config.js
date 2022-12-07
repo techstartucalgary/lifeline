@@ -1,6 +1,7 @@
-/** @type {import('tailwindcss').Config} */
+/* eslint-disable no-undef */
+/** @type {import("tailwindcss").Config} */
 module.exports = {
-  content: ["./**/src/**/*.{tsx, ts}"],
+  content: ["./**/src/**/*.{tsx, ts, jsx, js}"],
   theme: {
     extend: {},
     extend: {
@@ -10,12 +11,12 @@ module.exports = {
         "body": ["Poppins", "system-ui"],
       },
       colors: {
-        'gray': '#D9D9D9',
-        'pink': '#FF2480',
-        'getStarted': '#B7194A',
-        'learnMore': '#B7194A',
-        'divider': "ADADAD",
-        'start': '#B7194A',
+        "gray": "#D9D9D9",
+        "pink": "#FF2480",
+        "getStarted": "#B7194A",
+        "learnMore": "#B7194A",
+        "divider": "ADADAD",
+        "start": "#B7194A",
         "primary": {
           100: "#FFFFFF",
           99: "#FFFBFF",

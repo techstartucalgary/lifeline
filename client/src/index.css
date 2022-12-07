@@ -48,3 +48,16 @@
         @apply bg-white text-light-primary;
     }
 }
+
+:root {
+  /* -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none; */
+  font-size: 14px;
+  line-height: 1.43;
+}
+
+.material-symbols-outlined {
+  font-variation-settings: "FILL" 1, "wght" 400, "GRAD" 200, "opsz" 40;
+}
