@@ -30,7 +30,7 @@ const classnames = {
 };
 
 const Button = ({ variant = "text", children, className, ...props }: ButtonProps) => {
-  return <button className={twMerge(classnames[variant], className)} {...props} type="button">
+  return <button className={twMerge(classnames[variant], className)} {...props}>
     {typeof children === "string" ? <>{children}</> : <div className="flex flex-row gap-2">{children}</div>}
   </button>;
 };
