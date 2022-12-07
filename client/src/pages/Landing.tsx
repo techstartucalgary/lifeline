@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import Button from "../components/Button";
 
 export default function About() {
   return (
@@ -9,6 +10,13 @@ export default function About() {
         </h2>
         <span className="material-symbols-outlined">expand_more</span>
       </main>
+
+      <Button variant="filled">Filled</Button>
+      <Button variant="filled" disabled><p>Filled</p> + <p>Disabled</p></Button>
+      <Button variant="tonal">Tonal</Button>
+      <Button variant="tonal" disabled>Tonal + Disabled</Button>
+      <Button variant="text" onClick={() => alert(111)}>Text</Button>
+      <Button variant="text" disabled>Text + Disabled</Button>
 
       <nav>
         <Link to="/upload">Get Started</Link>
