@@ -1,50 +1,38 @@
-import React from "react";
+import { ReactNode, ButtonHTMLAttributes } from "react";
+import { twMerge } from "tailwind-merge";
 
-interface Props {
-  variant: string;
-  disabled: boolean;
-  children: any;
-}
+interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+  children: string | ReactNode;
+  variant?: "filled" | "tonal" | "text";
+  className?: string;
+};
 
-const Button: React.FC<Props> = ({ children, variant, disabled }) => {
-  if (variant === "filled" && disabled == false) {
-    return (
-      <button className="bg-burgundy text-white shadow-none text-center text-sm tracking-wideset text-medium baseline font-poppins gap-2 p-0 px-6 h-10 rounded-full hover:bg-burgundy hover:shadow-md hover:opacity-[.92] active:opacity-[0.88] active:bg-burgundy">
-        {children}
-      </button>
-    );
-  } else if (variant === "filled" && disabled == true) {
-    return (
-      <button className="bg-disabled text-white text-opacity-[.38] text-sm text-center tracking-wideset baseline text-medium font-poppins gap-2 p-0 px-6 h-10 rounded-full opacity-[.12]">
-        {children}
-      </button>
-    );
-  } else if (variant === "tonal" && disabled == false) {
-    return (
-      <button className="bg-tonal text-tonalText shadow-none text-center text-sm tracking-wideset text-medium baseline font-poppins gap-2 p-0 px-6 h-10 rounded-full hover:bg-tonal hover:shadow-sm hover:opacity-[.92] active:opacity-[0.88] active:bg-tonal">
-        {children}
-      </button>
-    );
-  } else if (variant === "tonal" && disabled == true) {
-    return (
-      <button className="bg-disabled text-white text-opacity-[.38] text-sm text-center tracking-wideset baseline text-medium font-poppins gap-2 p-0 px-6 h-10 rounded-full opacity-[.12]">
-        {children}
-      </button>
-    );
-  } else if (variant === "text" && disabled == false) {
-    return (
-      <button className="bg-white text-burgundy shadow-none text-center text-sm tracking-wideset text-medium baseline font-poppins gap-2 p-0 px-6 h-10 rounded-full hover:bg-textHover hover:shadow-md hover:opacity-[.92] active:opacity-[0.88] active:bg-textHover">
-        {children}
-      </button>
-    );
-  } else if (variant === "text" && disabled == true) {
-    return (
-      <button className="bg-white text-textdis text-opacity-[.38] text-sm text-center tracking-wideset baseline text-medium font-poppins gap-2 p-0 px-6 h-10 rounded-full">
-        {children}
-      </button>
-    );
-  }
-  return null;
+const base = `
+  bg-transparent text-primary text-center font-medium tracking-[0.01rem]
+  px-6 py-3 pt-[0.67rem] align-middle rounded-full relative
+  transition-all before:transition-all
+
+  before:block before:absolute before:top-0 before:left-0 before:bottom-0 before:right-0
+  before:bg-transparent before:user-select-none before:-z-1 before:rounded-full
+
+  hover:before:bg-state-layers-light-primary/[.08]
+  focus:before:bg-state-layers-light-primary/[.12]
+  active:before:bg-state-layers-light-primary/[.12]
+
+  disabled:bg-light-on-surface/[.12] disabled:text-light-on-surface/[.38] disabled:cursor-not-allowed
+  disabled:before:bg-transparent
+`;
+
+const classnames = {
+  filled: twMerge(base, "bg-primary text-white hover:before:bg-light-on-primary/[.08] focus:before:bg-light-on-primary/[.12] active:before:bg-light-on-primary/[.12]"),
+  text: twMerge(base, "px-3 disabled:bg-transparent disable:before:bg-transparent"),
+  tonal: twMerge(base, "bg-light-secondary-container text-light-on-secondary-container hover:before:bg-state-layers-on-secondary-container/[.08] focus:before:bg-state-layers-on-secondary-container/[.12] active:before:bg-state-layers-on-secondary-container/[.12]"),
+};
+
+const Button = ({ variant = "text", children, className, ...props }: ButtonProps) => {
+  return <button className={twMerge(classnames[variant], className)} {...props}>
+    {typeof children === "string" ? <>{children}</> : <div className="flex flex-row gap-2">{children}</div>}
+  </button>;
 };
 
 export default Button;
