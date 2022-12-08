@@ -5,7 +5,6 @@ import Landing from "./pages/Landing";
 import Loading from "./pages/Loading";
 import Review from "./pages/Review";
 import Upload from "./pages/Upload";
-import Workflow from "./pages/Workflow";
 
 const hostname = window.location.hostname;
 const port = window.location.port;
@@ -26,10 +25,10 @@ function App() {
     <div className="App">
       <Routes>
         <Route path="/" element={<Landing />} />
+        <Route path="/landing" element={<Landing />} />
         <Route path="/loading" element={<Loading />} />
         <Route path="/review" element={<Review />} />
         <Route path="/upload" element={<Upload />} />
-        <Route path="/workflow" element={<Workflow />} />
       </Routes>
     </div>
   );

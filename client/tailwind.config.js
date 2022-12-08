@@ -5,12 +5,18 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        sans: ["ui-sans-serif", "Lexend", "system-ui"],
-        display: ["Poppins", "system-ui"],
-        body: ["Lexend", "system-ui"],
+        "sans": ["Lexend", "ui-sans-serif", "system-ui"],
+        "display": ["Lexend", "system-ui"],
+        "body": ["Poppins", "system-ui"],
       },
       colors: {
-        primary: {
+        "gray": "#D9D9D9",
+        "pink": "#FF2480",
+        "getStarted": "#B7194A",
+        "learnMore": "#B7194A",
+        "divider": "ADADAD",
+        "start": "#B7194A",
+        "primary": {
           100: "#FFFFFF",
           99: "#FFFBFF",
           95: "#FFECED",
@@ -26,7 +32,7 @@ module.exports = {
           0: "#000000",
           DEFAULT: "#B7194A",
         },
-        secondary: {
+        "secondary": {
           100: "#FFFFFF",
           99: "#FFFBFF",
           95: "#FFEBF7",
@@ -42,7 +48,7 @@ module.exports = {
           0: "#000000",
           DEFAULT: "#8B4483",
         },
-        tertiary: {
+        "tertiary": {
           100: "#FFFFFF",
           99: "#FFFBFF",
           95: "#FCEBFF",
@@ -58,7 +64,7 @@ module.exports = {
           0: "#000000",
           DEFAULT: "#7B4998",
         },
-        neutral: {
+        "neutral": {
           100: "#FFFFFF",
           99: "#FFFBFF",
           95: "#FFECED",
@@ -109,12 +115,7 @@ module.exports = {
         "light-surface-variant": "#F3DDDF",
         "light-on-surface-variant": "#524345",
         "light-outline": "#847374",
-        "state-layers": {
-          "light-primary": "#6750A4",
-          "on-secondary-container": "#1D192B",
-          "light-on-surface": "#1C1B1F",
-        }
-      },
+      }
     },
   },
   plugins: [
