@@ -50,6 +50,10 @@ The naming are following the Material Design 3 standard but adopting Tailwind na
 
 Example of constructing classname: When seeing color `M3/sys/light/primary` for background for an element, in implementation, one should put `bg-primary` or `bg-sys-primary` in `className` field of the element (both works). 
 
+
+<img width="600" alt="Screenshot 2022-12-08 at 2 37 32 PM" src="https://user-images.githubusercontent.com/20573623/206572750-cf2218f8-5f7f-44b7-8aad-7366edac537b.png">
+
+
 General rules:
 1. We ignore `M3` prefix as everything prefixes with `M3`, no duplication. 
 2. And we ignore `light` as there are `light` and `dark` theme in the original M3 system, but we only use `light`.
@@ -57,12 +61,12 @@ General rules:
 
 Special cases:
 4. When a color name ends with `opacity-**`, apply Tailwind's [color opacity rule](https://tailwindcss.com/docs/text-color#changing-the-opacity). For example, `M3/sys/light/on-primary/opacity-0.12` -> `bg-sys-on-primary/12`.
-5. When a color name contains `ref`, eg `M3/ref/secondary/secondary60`, it means the color is a direct reference to the color. In this case, we should use the color name directly. For example, `M3/ref/secondary/secondary60` -> `bg-secondary-60`. And `bg-ref-secondary-60` is won't work.
+5. When a color name contains `sys` or `ref`, eg `M3/ref/secondary/secondary60`, it is optional to include `sys` or `ref` in the classname. Eg for `M3/ref/secondary/secondary60`, both `bg-ref-secondary-60` and `bg-secondary-60` works.
 
 More examples:
-Text color `M3/sys/light/on-primary` -> `text-sys-on-primary`
+Text color `M3/sys/light/on-primary` -> `text-sys-on-primary` or `text-on-primary`
 Background `M3/state-layers/light/on-surface/opacity-0.12` -> `bg-state-layers-on-surface/12`
 Background `M3/state-layers/light/primary/opacity-0.08` -> `bg-state-layers-primary/8`
-Border `M3/sys/light/secondary-container` -> `border-sys-secondary-container`
+Border `M3/sys/light/secondary-container` -> `border-sys-secondary-container` or `border-secondary-container`
 
 (If you find any color that's not defined in `tailwind.config.js`, feel free to add it to the file)
