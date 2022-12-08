@@ -14,52 +14,50 @@ export default function Upload() {
   ];
 
   const handleOutlineUpload = async (event?: React.ChangeEvent<HTMLInputElement>) => {
-    if (event!.target.files!.length > 1) {
-      console.log("fileInput", "Please upload a single file");
-      return;
-    }
+    if (event?.target.files != null ) {
 
-    const file = event!.target.files![0];
+      const file = event.target.files[0];
 
-    if (file.size > 3000000) {
-      console.log("fileInput", "The maximum file size is 3MB");
-      return;
-    }
+      if (file.size > 3000000) {
+        console.log("fileInput", "The maximum file size is 3MB");
+        return;
+      }
 
-    if (!supportedFileTypes.includes(file.type)) {
-      console.log("fileInput", "This file type is not supported yet");
-      return;
-    }
+      if (!supportedFileTypes.includes(file.type)) {
+        console.log("fileInput", "This file type is not supported yet");
+        return;
+      }
 
-    setOutlineUploadLoading(true);
+      setOutlineUploadLoading(true);
 
-    console.log("Uploading file: " + file.name);
-    const uploadFiletype =
+      console.log("Uploading file: " + file.name);
+      const uploadFiletype =
       file.type === supportedFileTypes[0]
         ? ".pdf"
         : supportedFileTypes[1]
           ? ".doc"
           : ".docx";
-    const uploadFilename = file.name + uploadFiletype;
+      const uploadFilename = file.name + uploadFiletype;
 
-    const formData = new FormData();
-    formData.append(
-      "outline_file",
-      file,
-    );
-    axios.post("/files", formData, {
-      headers: { "Content-Type": "multipart/form-data" }
-    })
-      .then (res => {
-        console.log(uploadFilename + "was uploaded");
-        console.log(res);
+      const formData = new FormData();
+      formData.append(
+        "outline_file",
+        file,
+      );
+      axios.post("/files", formData, {
+        headers: { "Content-Type": "multipart/form-data" }
       })
-      .catch((error) => {
-        console.log(error);
-      })
-      .finally (() => {
-        setOutlineUploadLoading(false);
-      });
+        .then (res => {
+          console.log(uploadFilename + "was uploaded");
+          console.log(res);
+        })
+        .catch((error) => {
+          console.log(error);
+        })
+        .finally (() => {
+          setOutlineUploadLoading(false);
+        });
+    }
   };
 
   return (
