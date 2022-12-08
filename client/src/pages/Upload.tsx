@@ -7,12 +7,7 @@ import { useNavigate } from "react-router-dom";
 
 export default function Upload() {
   const navigate = useNavigate(); 
-  const routeChange = () =>{ 
-    // eslint-disable-next-line quotes
-    const path = `/loading`;
-    navigate(path);
-  };
-  
+
   const [outlineUploadLoading, setOutlineUploadLoading] = useState(false);
   const supportedFileTypes = [
     "application/pdf",
@@ -121,7 +116,7 @@ export default function Upload() {
           </div>
         </div>
 
-        <Button onClick={routeChange} variant="filled" className="text-xl absolute bottom-38 right-24">Next</Button>
+        <Button onClick={() => navigate("/loading")} variant="filled" className="text-xl absolute bottom-38 right-24">Next</Button>
       </div>
       
     </div>

@@ -19,11 +19,6 @@ export default function Landing() {
   // const howItWorksSection = useRef(null);
   
   const navigate = useNavigate(); 
-  const routeChange = () =>{ 
-    // eslint-disable-next-line quotes
-    const path = `/upload`;; 
-    navigate(path);
-  };
 
   return (
     // <>
@@ -76,16 +71,12 @@ export default function Landing() {
             </p>
             <nav>
               <div className="mt-[60px]">
-                <Link
-                  to="/upload"
-                >
-                  <Button
-                    onClick={routeChange}
-                    variant="filled"
-                  > 
+                <Button
+                  onClick={() => navigate("/upload")}
+                  variant="filled"
+                > 
                       Get Started 
-                  </Button>
-                </Link>
+                </Button>
                 <Link
                   to="/workflow"
                   className="text-learnMore text-sm text-semibold py-3.5 px-6 inline"

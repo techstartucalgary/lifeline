@@ -13,42 +13,6 @@
         'opsz' 40
 }
 
-@layer components {
-    .btn {
-     @apply font-bold py-2 px-4 m-2 rounded;
-    }
-    .sm {
-      @apply px-2;
-    }
-  
-    .md {
-      @apply px-4;
-    }
-  
-    .lg {
-      @apply px-8;
-    }
-  
-    .xl {
-      @apply px-16;
-    }
-
-    .default {
-      @apply bg-light-primary text-white;
-    }
-    .default:hover {
-      @apply bg-light-primary text-white;
-    }
-
-    .secondary {
-        @apply border  border-light-primary bg-transparent text-light-primary;
-    }
-    
-    .secondary:hover {
-        @apply bg-white text-light-primary;
-    }
-}
-
 :root {
   /* -moz-user-select: none;
   -webkit-user-select: none;

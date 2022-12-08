@@ -13,7 +13,7 @@ if (hostname === "localhost" || hostname === "127.0.0.1" || port === "3000") {
   axios.defaults.baseURL = `//${hostname}:8000`;
   console.log("Running on Localhost", axios.defaults.baseURL);
 } else {
-  axios.defaults.baseURL = `http://api.${hostname}`;
+  axios.defaults.baseURL = `https://api.${hostname}`;
   console.log("Running on Production", axios.defaults.baseURL);
 }
 

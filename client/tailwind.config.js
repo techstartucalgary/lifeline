@@ -3,7 +3,6 @@
 module.exports = {
   content: ["./**/src/**/*.{tsx, ts, jsx, js}"],
   theme: {
-    extend: {},
     extend: {
       fontFamily: {
         "sans": ["ui-sans-serif", "Lexend", "system-ui"],
@@ -31,6 +30,7 @@ module.exports = {
           20: "#670023",
           10: "#400013",
           0: "#000000",
+          DEFAULT: "#B7194A"
         },
         "secondary": {
           100: "#FFFFFF",
@@ -120,6 +120,5 @@ module.exports = {
     require("@tailwindcss/forms"),
     require("@tailwindcss/line-clamp"),
     require("@tailwindcss/aspect-ratio"),
-    require("@tailwindcss/typography"),
   ],
 };

@@ -24,7 +24,7 @@ const base = `
 `;
 
 const classnames = {
-  filled: twMerge(base, "bg-primary-40 text-white hover:before:bg-light-on-primary/[.08] focus:before:bg-light-on-primary/[.12] active:before:bg-light-on-primary/[.12]"),
+  filled: twMerge(base, "bg-primary text-white hover:before:bg-light-on-primary/[.08] focus:before:bg-light-on-primary/[.12] active:before:bg-light-on-primary/[.12]"),
   text: twMerge(base, "px-3 disabled:bg-transparent disable:before:bg-transparent"),
   tonal: twMerge(base, "bg-light-secondary-container text-light-on-secondary-container hover:before:bg-state-layers-on-secondary-container/[.08] focus:before:bg-state-layers-on-secondary-container/[.12] active:before:bg-state-layers-on-secondary-container/[.12]"),
 };
