@@ -1,9 +1,10 @@
 import { Link } from "react-router-dom";
-import logo from "../assets/loading.gif";
+import LogoBar from "../components/LogoBar";
 
 export default function About() {
   return (
     <>
+      <LogoBar/>
       <main>
         <h2>This is the loading page</h2>
       </main>
