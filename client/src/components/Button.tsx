@@ -9,7 +9,7 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 
 const base = `
   bg-transparent text-primary text-center font-medium tracking-[0.01rem]
-  px-6 py-3 pt-[0.67rem] align-middle rounded-full relative
+  px-7 py-3 pt-[0.67rem] align-middle rounded-full relative
   transition-all before:transition-all
 
   before:block before:absolute before:top-0 before:left-0 before:bottom-0 before:right-0

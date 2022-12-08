@@ -8,8 +8,8 @@ from fastapi.middleware.cors import CORSMiddleware
 app = FastAPI()
 
 origins = [
-    "http://localhost:3000/upload",
-    "https://localhost:3000/upload",
+    "http://localhost:3000",
+    "https://localhost:3000",
 ]
 
 app.add_middleware(
@@ -20,7 +20,6 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-
 @app.get("/test-calendar-json")
 async def show_calendar():
     """sends a test json to client"""
@@ -30,7 +29,7 @@ async def show_calendar():
 @app.post("/files")
 async def send_outline_file(outline_file: UploadFile = File(...)):
     """sends pdf file to server"""
-    return {"The File that you just passed is ": outline_file.filename}
+    return {"The file that you just passed is ": outline_file.filename}
 
 
 if __name__ == "__main__":
