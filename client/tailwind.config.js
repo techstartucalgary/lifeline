@@ -5,7 +5,7 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        "sans": ["ui-sans-serif", "Lexend", "system-ui"],
+        "sans": ["Lexend", "ui-sans-serif", "system-ui"],
         "display": ["Lexend", "system-ui"],
         "body": ["Poppins", "system-ui"],
       },
@@ -30,7 +30,7 @@ module.exports = {
           20: "#670023",
           10: "#400013",
           0: "#000000",
-          DEFAULT: "#B7194A"
+          DEFAULT: "#B7194A",
         },
         "secondary": {
           100: "#FFFFFF",
@@ -46,6 +46,7 @@ module.exports = {
           20: "#551352",
           10: "#380037",
           0: "#000000",
+          DEFAULT: "#8B4483",
         },
         "tertiary": {
           100: "#FFFFFF",
@@ -61,6 +62,7 @@ module.exports = {
           20: "#491866",
           10: "#30004B",
           0: "#000000",
+          DEFAULT: "#7B4998",
         },
         "neutral": {
           100: "#FFFFFF",
@@ -76,6 +78,7 @@ module.exports = {
           20: "#670023",
           10: "#400013",
           0: "#000000",
+          DEFAULT: "#B7194A",
         },
         "neutral-variant": {
           100: "#FFFFFF",
@@ -91,6 +94,7 @@ module.exports = {
           20: "#3A2D2F",
           10: "#24181A",
           0: "#000000",
+          DEFAULT: "#847374",
         },
         "light-primary": "#B7194A",
         "light-on-primary": "#FFFFFF",
