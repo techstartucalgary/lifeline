@@ -7,10 +7,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
 
-origins = [
-    "http://localhost:3000",
-    "https://localhost:3000",
-]
+origins = ["http://localhost:3000", "https://localhost:3000"]
 
 app.add_middleware(
     CORSMiddleware,
@@ -19,6 +16,7 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
 
 @app.get("/test-calendar-json")
 async def show_calendar():
