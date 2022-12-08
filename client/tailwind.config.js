@@ -115,7 +115,6 @@ module.exports = {
         "light-surface-variant": "#F3DDDF",
         "light-on-surface-variant": "#524345",
         "light-outline": "#847374",
-        "text-secondary": "#380037",
       }
     },
   },
