@@ -50,11 +50,14 @@ The naming are following the Material Design 3 standard but adopting Tailwind na
 
 Example of constructing classname: When seeing color `M3/sys/light/primary` for background for an element, in implementation, one should put `bg-primary` or `bg-sys-primary` in `className` field of the element (both works). 
 
-Rules:
-1. We ignore `M3` prefix as everything in color palette is `M3` to reduce repetition. 
+General rules:
+1. We ignore `M3` prefix as everything prefixes with `M3`, no duplication. 
 2. And we ignore `light` as there are `light` and `dark` theme in the original M3 system, but we only use `light`.
 3. For the rest of the name, replace every `/` with `-`.
+
+Special cases:
 4. When a color name ends with `opacity-**`, apply Tailwind's [color opacity rule](https://tailwindcss.com/docs/text-color#changing-the-opacity). For example, `M3/sys/light/on-primary/opacity-0.12` -> `bg-sys-on-primary/12`.
+5. When a color name contains `ref`, eg `M3/ref/secondary/secondary60`, it means the color is a direct reference to the color. In this case, we should use the color name directly. For example, `M3/ref/secondary/secondary60` -> `bg-secondary-60`. And `bg-ref-secondary-60` is won't work.
 
 More examples:
 Text color `M3/sys/light/on-primary` -> `text-sys-on-primary`
