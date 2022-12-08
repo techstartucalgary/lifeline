@@ -43,17 +43,23 @@ It will also fix all the auto-fixable problems. If there are any code smells, it
 
 ## Implementing from Design Prototype
 
-### Understand colors
+### Translating colors
 
 The codebase and prototype are sharing the same color palette.The colors are defined in `tailwind.config.js`.
 The naming are following the Material Design 3 standard but adopting Tailwind naming convention.
 
-Example: When seeing color `M3/sys/light/primary` for background for an element, in implementation, one should put `bg-primary` in `className` field of the element.
+Example of constructing classname: When seeing color `M3/sys/light/primary` for background for an element, in implementation, one should put `bg-primary` or `bg-sys-primary` in `className` field of the element (both works). 
+
+Rules:
+1. We ignore `M3` prefix as everything in color palette is `M3` to reduce repetition. 
+2. And we ignore `light` as there are `light` and `dark` theme in the original M3 system, but we only use `light`.
+3. For the rest of the name, replace every `/` with `-`.
+4. When a color name ends with `opacity-**`, apply Tailwind's [color opacity rule](https://tailwindcss.com/docs/text-color#changing-the-opacity). For example, `M3/sys/light/on-primary/opacity-0.12` -> `bg-sys-on-primary/12`.
 
 More examples:
-Text color `M3/sys/light/on-primary` -> `text-light-on-primary`
-Background `M3/state-layers/light/on-surface/opacity-0.12` -> `bg-state-layers-light-on-surface/[.12]`
-Background `M3/state-layers/light/primary/opacity-0.08` -> `bg-state-layers-light-primary/[.08]`
-Border `M3/sys/light/secondary-container` -> `border-light-secondary-container`
+Text color `M3/sys/light/on-primary` -> `text-sys-on-primary`
+Background `M3/state-layers/light/on-surface/opacity-0.12` -> `bg-state-layers-on-surface/12`
+Background `M3/state-layers/light/primary/opacity-0.08` -> `bg-state-layers-primary/8`
+Border `M3/sys/light/secondary-container` -> `border-sys-secondary-container`
 
 (If you find any color that's not defined in `tailwind.config.js`, feel free to add it to the file)
