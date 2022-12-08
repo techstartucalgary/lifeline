@@ -1,5 +1,5 @@
 import LogoBar from "../components/LogoBar";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Button from "../components/Button";
 import axios from "axios";
 import clsx from "clsx";

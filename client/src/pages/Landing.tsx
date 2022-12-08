@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Button from "../components/Button";
 import LogoBar from "../components/LogoBar";
