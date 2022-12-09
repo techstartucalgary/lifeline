@@ -61,7 +61,7 @@ General rules:
 
 Special cases:
 1. When a color name ends with `opacity-**`, apply Tailwind's [color opacity rule](https://tailwindcss.com/docs/text-color#changing-the-opacity). For example, `M3/sys/light/on-primary/opacity-0.12` -> `bg-sys-on-primary/12`.
-2. When a color name contains `sys` or `ref`, eg `M3/ref/secondary/secondary60`, it is optional to include `sys` or `ref` in the classname. Eg for `M3/ref/secondary/secondary60`, both `bg-ref-secondary-60` and `bg-secondary-60` works.
+2. When a color name contains `sys` or `ref`, eg `M3/ref/secondary/secondary60`, it is optional to include `sys` or `ref` in the classname. Eg for `M3/ref/secondary/secondary60`, both `bg-ref-secondary-60` and `bg-secondary-60` work.
 
 More examples:
 Text color `M3/sys/light/on-primary` -> `text-sys-on-primary` or `text-on-primary`

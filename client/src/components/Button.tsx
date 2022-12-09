@@ -19,7 +19,7 @@ const base = `
   focus:before:bg-state-layers-primary/12
   active:before:bg-state-layers-primary/12
 
-  disabled:bg-sys-on-surface/12 disabled:text-sys-on-surface/[.38] disabled:cursor-not-allowed
+  disabled:bg-state-layers-on-surface/12 disabled:text-sys-on-surface/[.38] disabled:cursor-not-allowed
   disabled:before:bg-transparent
 `;
 
