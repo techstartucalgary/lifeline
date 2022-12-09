@@ -2,7 +2,7 @@
 import uvicorn
 
 from fastapi import FastAPI, File, UploadFile
-from handlers import calendar_handler
+from handlers import calendar_handler, file_handler
 from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
@@ -30,10 +30,9 @@ async def show_calendar():
 
 
 @app.post("/files")
-async def send_outline_file(outline_file: UploadFile = File(...)):
-    """sends pdf file to server"""
-    return {"The file that you just passed is ": outline_file.filename}
-
+async def sendOutlineFile(outlineFile: UploadFile = File(...)):
+    # return {"The File that you just passed is ": outlineFile.filename}
+    return file_handler.handle_upload_file(outlineFile)
 
 if __name__ == "__main__":
     uvicorn.run("app:app", host="127.0.0.1", port=8000)
