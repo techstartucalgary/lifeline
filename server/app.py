@@ -34,5 +34,6 @@ async def sendOutlineFile(outlineFile: UploadFile = File(...)):
     # return {"The File that you just passed is ": outlineFile.filename}
     return file_handler.handle_upload_file(outlineFile)
 
+
 if __name__ == "__main__":
     uvicorn.run("app:app", host="127.0.0.1", port=8000)

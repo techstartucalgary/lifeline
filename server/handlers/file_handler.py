@@ -15,13 +15,13 @@ def save_upload_file_tmp(upload_file: UploadFile):
         upload_file.file.close()
     return tmp_path
 
+
 # Handles generating text from the file uploaded and returns it as json
 def handle_upload_file(upload_file: UploadFile):
     extracted_text = ""
     tmp_path = save_upload_file_tmp(upload_file)
     try:
-        extracted_text = extract_text(tmp_path) # Do something with the saved temp file
+        extracted_text = extract_text(tmp_path)  # Do something with the saved temp file
     finally:
         tmp_path.unlink()  # Delete the temp file
-    return {"text": extracted_text }
-
+    return {"text": extracted_text}
