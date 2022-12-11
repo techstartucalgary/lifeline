@@ -26,7 +26,7 @@ const base = `
 const classnames = {
   filled: twMerge(base, "bg-primary text-white hover:before:bg-sys-on-primary/8 focus:before:bg-sys-on-primary/12 active:before:bg-sys-on-primary/12"),
   text: twMerge(base, "px-3 disabled:bg-transparent disable:before:bg-transparent"),
-  tonal: twMerge(base, "bg-sys-secondary-container text-sys-on-secondary-container hover:before:bg-state-layers-on-secondary-container/8 focus:before:bg-state-layers-on-secondary-container/[.12] active:before:bg-state-layers-on-secondary-container/[.12]"),
+  tonal: twMerge(base, "bg-sys-secondary-container text-sys-on-secondary-container hover:before:bg-state-layers-on-secondary-container/8 focus:before:bg-state-layers-on-secondary-container/12 active:before:bg-state-layers-on-secondary-container/12")
 };
 
 const Button = ({ variant = "text", children, className, ...props }: ButtonProps) => {
