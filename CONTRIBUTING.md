@@ -7,7 +7,7 @@ The following is a set of guidelines/instructions for contributing to Lifeline.
 
 ## Frontend Development
 
-### Running
+### Running :airplane:
 To run the frontend locally, use the following commands:
 ```bash
 cd client
@@ -15,7 +15,7 @@ npm install
 npm run
 ```
 
-### Lint your code
+### Lint your code 
 This project uses ESLint and Prettier to lint and format code. This can be done in two ways.
 
 1. Linting in VS Code
@@ -34,7 +34,7 @@ This project uses ESLint and Prettier to lint and format code. This can be done 
 
 2. Linting in Terminal
     Use the following command:
-    ```ash
+    ```bash
     npm run lint
     ```
 
@@ -59,7 +59,7 @@ For example, the colour `M3/sys/light/primary` will simply be used as `primary` 
 
 General rules:
 1. The `M3` prefix is ignored to prevent redundancy as it is the prefix for every color.
-2. The `light` is also ignored as the M3 system includes both ```dark``` and ```light``` colour schemes but this project only uses `light`.
+2. The `light` is also ignored as the M3 system includes both `dark` and `light` colour schemes but this project only uses `light`.
 3. For the rest of the name, each `/` is replaced with a `-`. 
 
 Special cases:
@@ -72,4 +72,4 @@ A few more examples:
 - Background `M3/state-layers/light/primary/opacity-0.08` will become `bg-state-layers-primary/8`
 - Border `M3/sys/light/secondary-container` will become `border-sys-secondary-container` or `border-secondary-container`
 
-Note: If you find any color in the color palette that's not defined in `tailwind.config.js`, feel free to add it to the file.
+> **Note**: If you find any color in the color palette that's not defined in `tailwind.config.js`, feel free to add it to the file.
