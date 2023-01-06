@@ -4,15 +4,43 @@ import { twMerge as classnames } from "tailwind-merge";
 
 import Button from "../../components/Button";
 import NavigationBar from "../../components/NavigationBar/NavigationBar";
-// import illustrations
-import illustration1 from "../../assets/illustration1.svg";
-import illustration10 from "../../assets/illustration10.svg";
-import illustration19 from "../../assets/illustration19.svg";
+
+import illustration1 from "./illustration1.svg";
+import illustration10 from "./illustration10.svg";
+import illustration19 from "./illustration19.svg";
 import uploadIcon from "../../assets/upload.svg";
 import editIcon from "../../assets/edit.svg";
 import exportIcon from "../../assets/export-icon.svg";
 
 import "./Landing.css";
+
+const FlowStep = (
+  {
+    title,
+    description,
+    icon
+  }: {
+    title: string;
+    description: string;
+    icon: string;
+  }) => {
+  return (
+    <div className="flex flex-row space-x-4">
+      <div className="grow-0">
+        <div className="bg-ref-primary-95 rounded-2xl p-5">
+          <span className="material-symbols-outlined text-3xl font-bold">
+            {icon}
+          </span>
+        </div>
+      </div>
+      <div className="space-y-1">
+        <div className="font-semibold text-xl">{title}</div>
+        <div className="text-lg text-sys-on-surface/87 leading-6">{description}</div>
+      </div>
+    </div>
+  );
+};
+
 
 
 export default function Landing() {
@@ -46,7 +74,7 @@ export default function Landing() {
               <div className={classnames("text-primary-50 title-highlight whitespace-nowrap", "pb-2 sm:pt-1")}>organize deadlines</div>
             </div>
 
-            <div className={classnames("mr-10 sm:mr-0 lg:mr-10", "text-md sm:text-lg md:text-xl lg:text-xl")}>
+            <div className={classnames("mr-8 sm:mr-0 lg:mr-20", "text-md sm:text-lg md:text-xl lg:text-xl")}>
               Lifeline takes the stress out of managing important dates for your
               courses. Start saving more time and always keep track of your
               deadlines in just a few clicks.
@@ -78,56 +106,44 @@ export default function Landing() {
         </div>
       </div>
 
-
-      <div className="flex flex-row w-4/5 mt-36 mx-auto font-poppins">
-        <div className="w-1/2">
-          <img src={illustration19} alt="illustration 19" />
+      {/* Flow section */}
+      <div
+        className={classnames(
+          "gap-3 grid",
+          "mt-16 sm:mt-20 md:mt-24 lg:mt-28",
+          "grid-cols-4 sm:grid-cols-8 md:grid-cols-8 lg:grid-cols-12",
+        )}
+      >
+        {/* Left section */}
+        <div
+          className={classnames(
+            "flex items-center",
+            "order-2 lg:order-1",
+            "mt-12 sm:mt-16 md:mt-20 lg:mt-0",
+            "mr-0 sm:mr-0 md:mr-0 lg:mr-10",
+            "col-span-4 sm:col-span-8 md:col-span-8 lg:col-span-6",
+            "flex justify-center lg:justify-start",
+          )}
+        >
+          <img src={illustration19} alt="illustration of two boys discussing ideas over calendar" />
         </div>
-        <div className="pt-8 w-1/2 pl-16">
-          <div className="w-4/5 h-1/3">
-            <div className="flex flex-row">
-              <img src={uploadIcon} alt="upload" />
-              <div className="ml-4">
-                <p className="text-lg block font-[600]">
-                  Upload your course outline
-                  <span className="block text-sm font-[400]">
-                    Up to 3 PDF documents are accepted
-                  </span>
-                </p>
-              </div>
-            </div>
-          </div>
 
-          <div className="w-4/5 h-2/5 ">
-            <div className="flex flex-row">
-              <img src={editIcon} alt="upload" />
-              <div className="ml-4">
-                <p className="text-lg block font-[600]">
-                  Preview and edit
-                  <span className="block text-sm font-[400]">
-                    Lifeline extracts important information and generate your
-                    schedule, and get the chance to preview and make changes{" "}
-                  </span>
-                </p>
-              </div>
-            </div>
-          </div>
-
-          <div className="w-4/5 h-2/5">
-            <div className="flex flex-row">
-              <img src={exportIcon} alt="upload" />
-              <div className="ml-4">
-                <p className="text-lg block font-[600]">
-                  Export final result into calendar
-                  <span className="block text-sm font-[400]">
-                    Download your ICS file and import it into your calendar app{" "}
-                  </span>
-                </p>
-              </div>
-            </div>
+        {/* Right section */}
+        <div
+          className={classnames(
+            "flex items-center",
+            "order-1 lg:order-2",
+            "col-span-4 sm:col-span-8 md:col-span-8 lg:col-span-6",
+          )}
+        >
+          <div className="flex flex-col space-y-9">
+            <FlowStep title="Upload your course outline" description="Up to 3 PDF documents are accepted" icon="upload_file" />
+            <FlowStep title="Preview and edit" description="Lifeline extracts important information and generate your schedule, and get the chance to preview and make changes" icon="edit" />
+            <FlowStep title="Export your schedule" description="Download your schedule in a variety of formats, including PDF, iCal, and Google Calendar" icon="download" />
           </div>
         </div>
       </div>
+
 
       <div className="flex flex-col items-center font-poppins mt-28">
         <p className="font-[600] text-2xl leading-12 text-center">
