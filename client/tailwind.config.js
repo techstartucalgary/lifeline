@@ -151,8 +151,8 @@ module.exports = {
     extend: {
       fontFamily: {
         "sans": ["Lexend", "ui-sans-serif", "system-ui"],
-        "display": ["Lexend", "system-ui"],
-        "body": ["Poppins", "system-ui"],
+        "display": ["Poppins", "system-ui"],
+        "body": ["Lexend", "system-ui"],
       },
       opacity: {
         8: "0.08",
@@ -160,12 +160,6 @@ module.exports = {
         16: "0.16",
       },
       colors: {
-        "gray": "#D9D9D9",
-        "pink": "#FF2480",
-        "getStarted": "#B7194A",
-        "learnMore": "#B7194A",
-        "divider": "ADADAD",
-        "start": "#B7194A",
         ...sys,
         ...ref,
         sys: sys,

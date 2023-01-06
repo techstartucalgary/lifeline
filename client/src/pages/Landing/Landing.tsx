@@ -1,63 +1,53 @@
 import { useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import Button from "../components/Button";
-import LogoBar from "../components/LogoBar";
+import { Link } from "react-router-dom";
+import Button from "../../components/Button";
+import NavigationBar from "../../components/NavigationBar/NavigationBar";
 // import illustrations
-import illustration1 from "../assets/illustration1.svg";
-import illustration10 from "../assets/illustration10.svg";
-import illustration19 from "../assets/illustration19.svg";
-import uploadIcon from "../assets/upload.svg";
-import editIcon from "../assets/edit.svg";
-import exportIcon from "../assets/export-icon.svg";
+import illustration1 from "../../assets/illustration1.svg";
+import illustration10 from "../../assets/illustration10.svg";
+import illustration19 from "../../assets/illustration19.svg";
+import uploadIcon from "../../assets/upload.svg";
+import editIcon from "../../assets/edit.svg";
+import exportIcon from "../../assets/export-icon.svg";
+
+import "./Landing.css";
 
 
 export default function Landing() {
   useEffect(() => {
     document.title = "Lifeline | Making Deadlines Easier";
   }, []);
-  
-  // const howItWorksSection = useRef(null);
-  
-  const navigate = useNavigate(); 
 
   return (
-    <>
-      <LogoBar/>
-      <div className="flex flex-row px-28 mt-28">
-        <div className="w-7/12 m-0 pl-12">
-          <div className="text-5xl font-poppins font-[800] leading- tracking-tight">
-            <h1>A better way to</h1>
-            <h1 className=" text-primary-50">organize deadlines</h1>
+    <div className="font-display max-w-7xl mx-auto px-5 md:px-16 lg:px-20">
+      <NavigationBar />
+
+      <div className="mt-12 gap-3 grid grid-cols-4 md:grid-cols-8 lg:grid-cols-12">
+        <div className="col-span-4 md:col-span-5 lg:col-span-7">
+          <div className="text-4xl md:text-5xl xl:text-6xl font-poppins font-bold my-10 lg:space-y-1">
+            <div>A better way to </div>
+            <div className="text-primary-50 title-highlight pb-2">organize deadlines</div>
           </div>
-          <div className="leading-relaxed font-poppins mt-10 w-11/12">
-            <p className="text-xl font-normal non-italic">
-              Lifeline takes the stress out of managing important dates for your
-              courses. Start saving more time and always keep track of your
-              deadlines in just a few clicks.
-              <span className="block">
+          <div className="leading-relaxed font-poppins mt-10">
+            <div className="text-normal md:text-lg xl:text-xl">
+              <p className="max-w-md md:max-w-2xl">
+                Lifeline takes the stress out of managing important dates for your
+                courses. Start saving more time and always keep track of your
+                deadlines in just a few clicks.
+              </p>
+              <p>
                 Start for free today to make your scheduling a breeze.
-              </span>
-            </p>
+              </p>
+            </div>
             <nav>
-              <div className="mt-[60px]">
-                <Button
-                  onClick={() => navigate("/upload")}
-                  variant="filled"
-                > 
-                      Get Started 
-                </Button>
-                <Link
-                  to="/workflow"
-                  className="text-learnMore text-sm text-semibold py-3.5 px-6 inline"
-                >
-                  Learn more
-                </Link>
+              <div className="mt-12 flex">
+                <Button to="/upload" variant="filled" className="text-lg py-4 hidden md:block mr-2">Get Started</Button>
+                <Button to="/workflow" variant="text" className="text-lg px-4 py-4 -ml-4 -mt-6 md:ml-0 md:mt-0">Learn more</Button>
               </div>
             </nav>
           </div>
         </div>
-
-        <div className="w-5/12">
+        <div className="mt-10 xl:mt-0 col-span-4 md:col-span-3 lg:col-span-5">
           <img src={illustration1} alt="illustration 1" />
         </div>
       </div>
@@ -150,6 +140,6 @@ export default function Landing() {
         Designed with &hearts; in 2022
         <span className="block">All rights reserved.</span>
       </div>
-    </>
+    </div>
   );
 }

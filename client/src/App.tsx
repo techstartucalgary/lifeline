@@ -1,7 +1,7 @@
 import { Routes, Route } from "react-router-dom";
 import axios from "axios";
 
-import Landing from "./pages/Landing";
+import Landing from "./pages/Landing/Landing";
 import Loading from "./pages/Loading";
 import Review from "./pages/Review";
 import Upload from "./pages/Upload";
@@ -22,7 +22,7 @@ axios.defaults.timeout = 30000;
 
 function App() {
   return (
-    <div className="App">
+    <div className="App bg-sys-background">
       <Routes>
         <Route path="/" element={<Landing />} />
         <Route path="/landing" element={<Landing />} />
