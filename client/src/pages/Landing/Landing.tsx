@@ -34,8 +34,8 @@ const FlowStep = (
         </div>
       </div>
       <div className="space-y-1">
-        <div className="font-semibold text-xl">{title}</div>
-        <div className="text-lg text-sys-on-surface/87 leading-6">{description}</div>
+        <div className={classnames("font-semibold", "text-md sm:text-lg md:text-xl lg:text-xl")}>{title}</div>
+        <div className={classnames("text-sys-on-surface/87 leading-6", "text-sm sm:text-md md:text-lg lg:text-lg")}>{description}</div>
       </div>
     </div>
   );
@@ -134,6 +134,7 @@ export default function Landing() {
             "flex items-center",
             "order-1 lg:order-2",
             "col-span-4 sm:col-span-8 md:col-span-8 lg:col-span-6",
+            "mx-0 sm:mx-16 md:mx-16 lg:mx-0"
           )}
         >
           <div className="flex flex-col space-y-9">
