@@ -1,5 +1,7 @@
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
+import { twMerge as classnames } from "tailwind-merge";
+
 import Button from "../../components/Button";
 import NavigationBar from "../../components/NavigationBar/NavigationBar";
 // import illustrations
@@ -19,38 +21,63 @@ export default function Landing() {
   }, []);
 
   return (
-    <div className="font-display max-w-7xl mx-auto px-5 md:px-16 lg:px-20">
+    <div className="font-display max-w-7xl mx-auto px-5 sm:px-14 md:px-16 lg:px-20">
       <NavigationBar />
 
-      <div className="mt-12 gap-3 grid grid-cols-4 md:grid-cols-8 lg:grid-cols-12">
-        <div className="col-span-4 md:col-span-5 lg:col-span-7">
-          <div className="text-4xl md:text-5xl xl:text-6xl font-poppins font-bold my-10 lg:space-y-1">
-            <div>A better way to </div>
-            <div className="text-primary-50 title-highlight pb-2">organize deadlines</div>
-          </div>
-          <div className="leading-relaxed font-poppins mt-10">
-            <div className="text-normal md:text-lg xl:text-xl">
-              <p className="max-w-md md:max-w-2xl">
-                Lifeline takes the stress out of managing important dates for your
-                courses. Start saving more time and always keep track of your
-                deadlines in just a few clicks.
-              </p>
-              <p>
-                Start for free today to make your scheduling a breeze.
-              </p>
+      {/* Hero Section */}
+      <div
+        className={classnames(
+          "gap-3 grid",
+          "mt-16 sm:mt-20 md:mt-24 lg:mt-28",
+          "grid-cols-4 sm:grid-cols-8 md:grid-cols-8 lg:grid-cols-12"
+        )}
+      >
+        {/* Left section */}
+        <div
+          className={classnames(
+            "flex items-center",
+            "col-span-4 sm:col-span-8 md:col-span-8 lg:col-span-7",
+            "text-left sm:text-center lg:text-left",
+          )}
+        >
+          <div className="space-y-10 flex flex-col">
+            <div className={classnames("font-bold", "text-4xl sm:text-5xl md:text-6xl xl:text-6xl")}>
+              <div className="whitespace-nowrap">A better way to </div>
+              <div className={classnames("text-primary-50 title-highlight whitespace-nowrap", "pb-2 sm:pt-1")}>organize deadlines</div>
             </div>
-            <nav>
-              <div className="mt-12 flex">
-                <Button to="/upload" variant="filled" className="text-lg py-4 hidden md:block mr-2">Get Started</Button>
-                <Button to="/workflow" variant="text" className="text-lg px-4 py-4 -ml-4 -mt-6 md:ml-0 md:mt-0">Learn more</Button>
-              </div>
-            </nav>
+
+            <div className={classnames("mr-10 sm:mr-0 lg:mr-10", "text-md sm:text-lg md:text-xl lg:text-xl")}>
+              Lifeline takes the stress out of managing important dates for your
+              courses. Start saving more time and always keep track of your
+              deadlines in just a few clicks.
+              Start for free today to make your scheduling a breeze.
+            </div>
+
+            <div
+              className={classnames(
+                "flex justify-start",
+                "text-md sm:text-lg",
+                "sm:justify-center lg:justify-start"
+              )}
+            >
+              <Button to="/upload" variant="filled" className="py-4 hidden sm:block mr-2">Get Started</Button>
+              <Button to="/workflow" variant="text" className="px-4 py-4 -ml-4 -mt-6 sm:ml-0 sm:mt-0">Learn more</Button>
+            </div>
           </div>
         </div>
-        <div className="mt-10 xl:mt-0 col-span-4 md:col-span-3 lg:col-span-5">
-          <img src={illustration1} alt="illustration 1" />
+
+        {/* Right section */}
+        <div
+          className={classnames(
+            "mt-4 sm:mt-12 md:mt-12 lg:mt-0",
+            "col-span-4 sm:col-span-8 lg:col-span-5",
+            "flex justify-center lg:justify-start"
+          )}
+        >
+          <img src={illustration1} alt="an illustration of a girl scheduling her calendar" />
         </div>
       </div>
+
 
       <div className="flex flex-row w-4/5 mt-36 mx-auto font-poppins">
         <div className="w-1/2">
