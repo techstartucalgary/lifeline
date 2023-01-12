@@ -159,7 +159,7 @@ export default function Landing() {
           )}
         >
           <img src={blob4} alt="" className="blob absolute left-0 top-[50%] translate-x-[-50%] translate-y-[20%]" aria-hidden={true} />
-          
+
           <div className="space-y-2">
             <p className="text-xl sm:text-xl md:text-2xl lg:text-2xl leading-6 font-semibold">
               Easily integrates into your favourite calendar
@@ -214,15 +214,17 @@ export default function Landing() {
       </div>
 
       {/* Footer */}
-      <div className="bg-on-secondary-container text-white">
+      <div className="bg-on-secondary-container">
         <div className="bg-sys-background rounded-b-[3rem] h-10 sm:h-16 lg:h-20"></div>
       </div>
-      <div className="bg-on-secondary-container text-white font-body font-light text-lg">
+      <div className="bg-on-secondary-container">
         <div
           className={classnames(
-            "gap-3 grid max-w-7xl mx-auto",
+            "text-secondary-95 font-body font-light text-lg",
+            "gap-6 grid max-w-7xl mx-auto",
             "px-5 sm:px-14 md:px-16 lg:px-20 pt-14 pb-16",
-            "grid-cols-4 sm:grid-cols-8 md:grid-cols-8 lg:grid-cols-12"
+            "grid-cols-4 sm:grid-cols-8 md:grid-cols-8 lg:grid-cols-12",
+            "text-md sm:text-lg md:text-lg lg:text-lg"
           )}
         >
           <div className="col-span-7 flex flex-col justify-center">
@@ -232,13 +234,13 @@ export default function Landing() {
             </div>
           </div>
           <div className="col-span-5">
-            <div className="grid grid-cols-2">
-              <div className="col-span-1 space-y-2">
+            <div className="grid grid-cols-2 gap-3">
+              <div className="col-span-2 sm:col-span-1 space-y-2">
                 <div>Disclaimer</div>
                 <div>Feedback</div>
                 <div>Privacy Policy</div>
               </div>
-              <div className="col-span-1 space-y-2">
+              <div className="col-span-2 sm:col-span-1 space-y-2">
                 <div>About</div>
                 <div>GitHub</div>
                 <div>University of Calgary</div>
