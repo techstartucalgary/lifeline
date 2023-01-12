@@ -1,5 +1,4 @@
 import { useEffect } from "react";
-import { Link } from "react-router-dom";
 import { twMerge as classnames } from "tailwind-merge";
 
 import Button from "../../components/Button";
@@ -8,9 +7,6 @@ import NavigationBar from "../../components/NavigationBar/NavigationBar";
 import illustration1 from "./illustration1.svg";
 import illustration10 from "./illustration10.svg";
 import illustration19 from "./illustration19.svg";
-import uploadIcon from "../../assets/upload.svg";
-import editIcon from "../../assets/edit.svg";
-import exportIcon from "../../assets/export-icon.svg";
 
 import "./Landing.css";
 
