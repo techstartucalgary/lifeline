@@ -5,3 +5,11 @@
     background-clip: text;
     text-shadow: 0px 71px 80px rgba(255, 36, 128, 0.07), 0px 21.4044px 24.1177px rgba(255, 36, 128, 0.0456112), 0px 8.8903px 10.0172px rgba(255, 36, 128, 0.035), 0px 3.21545px 3.62304px rgba(255, 36, 128, 0.0243888);
 }
+
+* {
+    z-index: 1;
+}
+
+.blob {
+    z-index: -10;
+}

@@ -7,6 +7,10 @@ import NavigationBar from "../../components/NavigationBar/NavigationBar";
 import illustration1 from "./illustration1.svg";
 import illustration10 from "./illustration10.svg";
 import illustration19 from "./illustration19.svg";
+import blob1 from "./blob1.svg";
+import blob2 from "./blob2.svg";
+import blob3 from "./blob3.svg";
+import blob4 from "./blob4.svg";
 
 import "./Landing.css";
 
@@ -46,7 +50,7 @@ export default function Landing() {
 
   return (
     <>
-      <div className="font-display max-w-7xl mx-auto px-5 sm:px-14 md:px-16 lg:px-20">
+      <div className="font-display max-w-7xl mx-auto px-5 sm:px-14 md:px-16 lg:px-20 relative">
         <NavigationBar />
 
         {/* Hero section */}
@@ -57,6 +61,9 @@ export default function Landing() {
             "grid-cols-4 sm:grid-cols-8 md:grid-cols-8 lg:grid-cols-12"
           )}
         >
+          <img src={blob1} alt="" className="blob absolute right-0 top-0 translate-x-[50%] translate-y-[-60%]" aria-hidden={true} />
+          <img src={blob2} alt="" className="blob absolute left-0 top-[26rem] translate-x-[-40%] translate-y-[0%]" aria-hidden={true} />
+
           {/* Left section */}
           <div
             className={classnames(
@@ -111,6 +118,8 @@ export default function Landing() {
             "grid-cols-4 sm:grid-cols-8 md:grid-cols-8 lg:grid-cols-12",
           )}
         >
+          <img src={blob3} alt="" className="blob absolute right-0 top-[50%] translate-x-[50%] translate-y-[0%]" aria-hidden={true} />
+
           {/* Left section */}
           <div
             className={classnames(
@@ -145,10 +154,12 @@ export default function Landing() {
         {/* Introduction section */}
         <div
           className={classnames(
-            "text-center",
+            "text-center relative",
             "mt-16 sm:mt-20 md:mt-24 lg:mt-28",
           )}
         >
+          <img src={blob4} alt="" className="blob absolute left-0 top-[50%] translate-x-[-50%] translate-y-[20%]" aria-hidden={true} />
+          
           <div className="space-y-2">
             <p className="text-xl sm:text-xl md:text-2xl lg:text-2xl leading-6 font-semibold">
               Easily integrates into your favourite calendar

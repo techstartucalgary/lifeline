@@ -24,3 +24,7 @@
   line-height: 1.43;
   overflow-x: hidden;
 }
+
+body {
+  overflow-x: hidden;
+}
