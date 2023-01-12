@@ -226,12 +226,12 @@ export default function Landing() {
           </div>
           <div className="col-span-5">
             <div className="grid grid-cols-2">
-              <div className="col-span-1">
+              <div className="col-span-1 space-y-2">
                 <div>Disclaimer</div>
                 <div>Feedback</div>
                 <div>Privacy Policy</div>
               </div>
-              <div className="col-span-1">
+              <div className="col-span-1 space-y-2">
                 <div>About</div>
                 <div>GitHub</div>
                 <div>University of Calgary</div>
