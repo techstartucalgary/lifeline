@@ -71,8 +71,8 @@ export default function Landing() {
           >
             <div className="space-y-10 flex flex-col">
               <div className={classnames("font-bold", "text-4xl sm:text-5xl md:text-6xl xl:text-6xl")}>
-                <div className="whitespace-nowrap">A better way to </div>
-                <div className={classnames("text-primary-50 title-highlight whitespace-nowrap", "pb-2 sm:pt-1")}>organize deadlines</div>
+                <div className="sm:whitespace-nowrap">A better way to </div>
+                <div className={classnames("text-primary-50 title-highlight sm:whitespace-nowrap", "pb-2 sm:pt-1")}>organize deadlines</div>
               </div>
 
               <div className={classnames("mr-8 sm:mr-0 lg:mr-20", "text-md sm:text-lg md:text-xl lg:text-xl")}>
@@ -126,7 +126,7 @@ export default function Landing() {
               "flex justify-center lg:justify-start",
             )}
           >
-            <img src={illustration19} alt="illustration of two boys discussing ideas over calendar" className=" w-11/12 lg:w-full max-w-sm lg:max-w-none" />
+            <img src={illustration19} alt="illustration of two boys discussing ideas over calendar" className="w-10/12 lg:w-full max-w-md lg:max-w-none" />
           </div>
 
           {/* Right section */}
@@ -154,15 +154,17 @@ export default function Landing() {
           )}
         >
           <div className="space-y-2">
-            <p className="text-md sm:text-lg md:text-xl lg:text-xl leading-6 font-semibold">
+            <p className="text-xl sm:text-xl md:text-2xl lg:text-2xl leading-6 font-semibold">
               Easily integrates into your favourite calendar
             </p>
-            <p className="text-sm sm:text-md md:text-lg lg:text-lg">
-              Lifeline generates your schedule in a convenient format, allowing you
-              to comfortably share calendar information. Import your schedule
-              details into a digital calendar such as Microsoft Outlook, Google
-              Calendar, or Apple Calendar.
-            </p>
+            <div className="flex justify-center text-md sm:text-lg md:text-xl lg:text-xl">
+              <p className="lg:w-8/12">
+                Lifeline generates your schedule in a convenient format, allowing you
+                to comfortably share calendar information. Import your schedule
+                details into a digital calendar such as Microsoft Outlook, Google
+                Calendar, or Apple Calendar.
+              </p>
+            </div>
           </div>
 
           <div className="mt-8 flex justify-center">
@@ -179,20 +181,22 @@ export default function Landing() {
             )}
           >
             <div className="space-y-2">
-              <p className="text-md sm:text-lg md:text-xl lg:text-xl leading-6 font-semibold">
+              <p className="text-xl sm:text-xl md:text-2xl lg:text-2xl leading-6 font-semibold">
                 Ready to schedule with ease?
               </p>
-              <p className="text-sm sm:text-md md:text-lg lg:text-lg">
-                Start using Lifeline today to take control of your time and never
-                worry about handling deadlines anymore.
-              </p>
+              <div className="flex justify-center text-md sm:text-lg md:text-xl lg:text-xl">
+                <p className="lg:w-8/12">
+                  Start using Lifeline today to take control of your time and never
+                  worry about handling deadlines anymore.
+                </p>
+              </div>
             </div>
           </div>
 
           <div className="sticky bottom-0 sm:relative">
             <div
               className={classnames(
-                "flex justify-center py-8",
+                "flex justify-center pt-8 pb-4",
                 "text-md sm:text-lg",
               )}
             >
@@ -202,11 +206,39 @@ export default function Landing() {
         </>
       </div>
 
-      
+      {/* Footer */}
       <div className="bg-on-secondary-container text-white">
-        <div className="bg-sys-background rounded-b-3xl h-10"></div>
-        Designed with &hearts; in 2022
-        <span className="block">All rights reserved.</span>
+        <div className="bg-sys-background rounded-b-[3rem] h-10 sm:h-16 lg:h-20"></div>
+      </div>
+      <div className="bg-on-secondary-container text-white font-body font-light text-lg">
+        <div
+          className={classnames(
+            "gap-3 grid max-w-7xl mx-auto",
+            "px-5 sm:px-14 md:px-16 lg:px-20 pt-14 pb-16",
+            "grid-cols-4 sm:grid-cols-8 md:grid-cols-8 lg:grid-cols-12"
+          )}
+        >
+          <div className="col-span-7 flex flex-col justify-center">
+            <div>
+              <p>Designed with &hearts; in 2022</p>
+              <p className="block">All rights reserved.</p>
+            </div>
+          </div>
+          <div className="col-span-5">
+            <div className="grid grid-cols-2">
+              <div className="col-span-1">
+                <div>Disclaimer</div>
+                <div>Feedback</div>
+                <div>Privacy Policy</div>
+              </div>
+              <div className="col-span-1">
+                <div>About</div>
+                <div>GitHub</div>
+                <div>University of Calgary</div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </>
   );

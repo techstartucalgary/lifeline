@@ -22,4 +22,5 @@
   user-select: none; */
   font-size: 14px;
   line-height: 1.43;
+  overflow-x: hidden;
 }
