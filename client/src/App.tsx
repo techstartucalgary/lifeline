@@ -1,5 +1,4 @@
-import { Routes, Route } from "react-router-dom";
-import { BrowserRouter } from "react-router-dom";
+import { Routes, Route, BrowserRouter } from "react-router-dom";
 import axios from "axios";
 
 import Landing from "./pages/Landing/Landing";
