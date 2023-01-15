@@ -75,7 +75,7 @@ export default function Landing() {
             )}
           >
             <div className="flex flex-col">
-              <div className={classnames("font-black tracking-[-0.075rem] sm:tracking-[-0.1rem]", "text-3xl sm:text-4xl md:text-5xl xl:text-6xl")}>
+              <div className={classnames("font-bold tracking-[-0.075rem] sm:tracking-[-0.1rem]", "text-3xl sm:text-4xl md:text-5xl xl:text-6xl")}>
                 <div className="sm:whitespace-nowrap text-on-surface">A better way to </div>
                 <div
                   className={classnames(
