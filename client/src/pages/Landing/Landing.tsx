@@ -1,6 +1,6 @@
 import { useEffect } from "react";
-import { twMerge as classnames } from "tailwind-merge";
 
+import { classnames } from "../../Utilities";
 import Button from "../../components/Button";
 import NavigationBar from "../../components/NavigationBar/NavigationBar";
 
@@ -35,7 +35,7 @@ const FlowStep = (
         </div>
       </div>
       <div className="space-y-1">
-        <div className={classnames("font-semibold text-on-surface", landingTitle)}>{title}</div>
+        <div className={classnames("font-semibold text-on-surface", "text-[1.18rem] sm:text-[1.32rem] md:text-[1.38rem] lg:text-[1.4rem]")}>{title}</div>
         <div className={classnames("text-sys-on-surface/87 leading-6 text-on-surface-variant", landingText)}>{description}</div>
       </div>
     </div>
@@ -43,7 +43,6 @@ const FlowStep = (
 };
 
 const landingText = "text-[1.16rem] sm:text-[1.3rem] md:text-[1.36rem] lg:text-1.5xl";
-const landingTitle = "text-[1.18rem] sm:text-[1.32rem] md:text-[1.38rem] lg:text-[1.4rem]";
 
 
 export default function Landing() {
@@ -173,7 +172,7 @@ export default function Landing() {
           <img src={blob3} alt="" className="blob absolute w-[32rem] left-0 top-[50%] translate-x-[-50%] sm:translate-x-[-40%] lg:translate-x-[-90%] translate-y-[-10%]" aria-hidden={true} />
 
           <div className="space-y-2">
-            <p className={classnames("text-on-surface leading-6 font-semibold", landingTitle)}>
+            <p className={classnames("text-on-surface font-semibold", "text-1.5xl sm:text-3xl md:text-3xl lg:text-3xl")}>
               Easily integrates into your favourite calendar
             </p>
             <div className="text-on-surface-variant flex justify-center">
@@ -202,7 +201,7 @@ export default function Landing() {
           >
             <img src={divider} alt="" aria-hidden={true} className="w-full my-20 sm:my-20 md:my-24 lg:my-28" />
             <div className="space-y-2">
-              <p className={classnames("text-on-surface leading-6 font-semibold", landingTitle)}>
+              <p className={classnames("text-on-surface leading-6 font-semibold", "text-1.5xl sm:text-3xl md:text-3xl lg:text-3xl")}>
                 Ready to schedule with ease?
               </p>
               <div className="text-on-surface-variant flex justify-center">
