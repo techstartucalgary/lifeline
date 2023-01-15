@@ -32,11 +32,6 @@
                 "name": "Quiz 5",
                 "date": "2022-12-06T00:00:00.000",
                 "weight": "6"
-            },
-            {
-                "name": "Registrar Scheduled Final Exam",
-                "date": "TBD",
-                "weight": "40"
             }
         ]
     }
