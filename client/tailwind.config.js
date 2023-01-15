@@ -150,9 +150,9 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        "sans": ["Lexend", "ui-sans-serif", "system-ui"],
-        "display": ["Poppins", "system-ui"],
-        "body": ["Lexend", "system-ui"],
+        "sans": ["Google Sans Text", "ui-sans-serif", "system-ui"],
+        "display": ["Google Sans", "system-ui"],
+        "body": ["Google Sans Text", "system-ui"],
       },
       opacity: {
         8: "0.08",
@@ -166,6 +166,9 @@ module.exports = {
         ref: ref,
         "state-layers": stateLayers,
       },
+      fontSize: {
+        "1.5xl": ["1.36rem"],
+      }
     },
   },
   plugins: [
