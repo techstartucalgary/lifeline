@@ -1,4 +1,4 @@
-import LogoBar from "../components/LogoBar";
+import NavigationBar from "../components/NavigationBar/NavigationBar";
 import React, { useState } from "react";
 import Button from "../components/Button";
 import axios from "axios";
@@ -6,7 +6,7 @@ import clsx from "clsx";
 import { useNavigate } from "react-router-dom";
 
 export default function Upload() {
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
 
   const [outlineUploadLoading, setOutlineUploadLoading] = useState(false);
   const supportedFileTypes = [
@@ -14,7 +14,7 @@ export default function Upload() {
   ];
 
   const handleOutlineUpload = async (event?: React.ChangeEvent<HTMLInputElement>) => {
-    if (event?.target.files != null ) {
+    if (event?.target.files != null) {
 
       const file = event.target.files[0];
 
@@ -32,11 +32,11 @@ export default function Upload() {
 
       console.log("Uploading file: " + file.name);
       const uploadFiletype =
-      file.type === supportedFileTypes[0]
-        ? ".pdf"
-        : supportedFileTypes[1]
-          ? ".doc"
-          : ".docx";
+        file.type === supportedFileTypes[0]
+          ? ".pdf"
+          : supportedFileTypes[1]
+            ? ".doc"
+            : ".docx";
       const uploadFilename = file.name + uploadFiletype;
 
       const formData = new FormData();
@@ -47,14 +47,14 @@ export default function Upload() {
       axios.post("/files", formData, {
         headers: { "Content-Type": "multipart/form-data" }
       })
-        .then (res => {
+        .then(res => {
           console.log(uploadFilename + "was uploaded");
           console.log(res);
         })
         .catch((error) => {
           console.log(error);
         })
-        .finally (() => {
+        .finally(() => {
           setOutlineUploadLoading(false);
         });
     }
@@ -62,7 +62,7 @@ export default function Upload() {
 
   return (
     <div>
-      <LogoBar/>
+      <NavigationBar />
 
       <div
         className="h-auto md:h-screen md:pb-0  font-display text-left overflow-x-hidden pt-22 md:pt-20 border border-green-200"
@@ -71,24 +71,24 @@ export default function Upload() {
           <h1
             className="text-black text-xl md:text-xl font-bold landing-title mb-0 fade-in-top"
           >
-              Upload and view your course outlines here
+            Upload and view your course outlines here
           </h1>
         </div>
-        <hr className="my-0 md:my-5 mx-10 w-4/12 h-0.5 bg-black-10 rounded border-0 dark:bg-gray-200"/>
-          
+        <hr className="my-0 md:my-5 mx-10 w-4/12 h-0.5 bg-black-10 rounded border-0 dark:bg-gray-200" />
+
         <div className="flex flex-row mx-9 h-2/3">
           <div className="basis-1/2 border border-red-100 ">
             <h1 className="text-secondary-30 text-lg md:text-lg font-bold landing-title mb-14 fade-in-top">
-                My course outlines
+              My course outlines
             </h1>
-              
-			
+
+
           </div>
           <div className="basis-1/2 ">
             <h1 className="text-secondary-30 text-lg md:text-lg font-bold landing-title mb-14 fade-in-top">
-                Upload a new file
+              Upload a new file
             </h1>
-         
+
             <div className="is-flex is-align-items-center is-justify-content-center is-flex-direction-column">
               <input
                 name="fileInput"
@@ -116,7 +116,7 @@ export default function Upload() {
 
         <Button onClick={() => navigate("/loading")} variant="filled" className="text-xl absolute bottom-38 right-24">Next</Button>
       </div>
-      
+
     </div>
   );
 }
