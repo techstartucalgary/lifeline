@@ -2,43 +2,30 @@
 
 import { Link } from "react-router-dom";
 import { useState } from "react";
+import Button from "../components/Button";
 import axios from "axios";
-import generate, { Course } from "../logic/icsGen2";
+import jsonToICS, { Course } from "../logic/icsGen";
 
 export default function Review() {
-  const [text, setText] = useState<string>("");
   const [json, setJson] = useState<Course[]>([]);
 
-  const handleDownloadClick = () => {
-    const ics: string = generate(json);
+  const handleCompileClick = () => {
+    const ics: string = jsonToICS(json);
     console.log(ics);
-
     const link = document.getElementById("ics-download");
 
     if (link === null) {
       console.log("link is null");
       return;
     }
+
     link.setAttribute("href", "data:text/plain;charset=utf-8," + encodeURIComponent(ics));
-    link.setAttribute("download", "calendar.ics");
-    link.click();
-
-    // // Create a Blob containing the text in the text box
-    // const textBlob = new Blob([text], { type: "text/plain" });
-
-    // // Create a link element and trigger a click event to start the download
-    // const link = document.createElement("a");
-    // link.href = URL.createObjectURL(textBlob);
-    // link.download = "words.txt";
-    // link.click();
+    link.setAttribute("download", "deadlines.ics");
   };
 
   const handleFetchClick = () => {
-    // send a get request to /test-calendar-json
     axios.get("/test-calendar-json")
       .then((res) => {
-        // set the text box to the response data
-        setText(JSON.stringify(res.data));
         setJson(res.data);
       })
       .catch((err) => {
@@ -56,19 +43,19 @@ export default function Review() {
         <Link to="/upload">Add more files</Link>
       </nav>
       <div>
-        <button
+        <Button
+          variant="filled"
           onClick={handleFetchClick}
-        >Get JSON</button>
+        >Get JSON</Button>
       </div>
-
 
       <div>
-        <textarea value={text} onChange={(e) => setText(e.target.value)} />
-        <br />
-        <button onClick={handleDownloadClick}>Download</button>
+        <p>{JSON.stringify(json)}</p>
+        <Button variant="tonal" onClick={handleCompileClick}>Compile</Button>
       </div>
-      <a id="ics-download">Download ics</a>
-
+      <a id="ics-download" href="/">
+        <Button variant="filled">Download</Button>
+      </a>
     </>
   );
 }
