@@ -9,20 +9,6 @@ import jsonToICS, { Course } from "../logic/icsGen";
 export default function Review() {
   const [json, setJson] = useState<Course[]>([]);
 
-  const handleCompileClick = () => {
-    const ics: string = jsonToICS(json);
-    console.log(ics);
-    const link = document.getElementById("ics-download");
-
-    if (link === null) {
-      console.log("link is null");
-      return;
-    }
-
-    link.setAttribute("href", "data:text/plain;charset=utf-8," + encodeURIComponent(ics));
-    link.setAttribute("download", "deadlines.ics");
-  };
-
   const handleFetchClick = () => {
     axios.get("/test-calendar-json")
       .then((res) => {
@@ -32,7 +18,6 @@ export default function Review() {
         console.log(err);
       });
   };
-
 
   return (
     <>
@@ -46,15 +31,24 @@ export default function Review() {
         <Button
           variant="filled"
           onClick={handleFetchClick}
-        >Get JSON</Button>
+        >
+          Get JSON
+        </Button>
       </div>
-
       <div>
         <p>{JSON.stringify(json)}</p>
-        <Button variant="tonal" onClick={handleCompileClick}>Compile</Button>
       </div>
-      <a id="ics-download" href="/">
-        <Button variant="filled">Download</Button>
+      <a id="ics-download"
+        href={`data:text/plain;charset=utf-8, ${encodeURIComponent(jsonToICS(json))}`}
+        download="deadlines.ics"
+      >
+        <Button
+          variant="filled"
+          id="download"
+          disabled={!json.length}
+        >
+          Download
+        </Button>
       </a>
     </>
   );
