@@ -30,9 +30,9 @@ async def show_calendar():
 
 
 @app.post("/files")
-async def sendOutlineFile(outlineFile: UploadFile = File(...)):
+async def send_outline_file(outline_file: UploadFile = File(...)):
     # return {"The File that you just passed is ": outlineFile.filename}
-    return file_handler.handle_upload_file(outlineFile)
+    return file_handler.handle_upload_file(outline_file)
 
 
 if __name__ == "__main__":
