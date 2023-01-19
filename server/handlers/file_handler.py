@@ -1,11 +1,13 @@
-from pdfminer.high_level import extract_text
+"""Handles the file upload and extraction of text from the file"""
+
 import shutil
 from pathlib import Path
 from tempfile import NamedTemporaryFile
+from pdfminer.high_level import extract_text
 from fastapi import UploadFile
 
-# Handles creating a temp and returns the temporary path for it
 def save_upload_file_tmp(upload_file: UploadFile):
+    """Handles creating a temp and returns the temporary path for it"""
     try:
         suffix = Path(upload_file.filename).suffix
         with NamedTemporaryFile(delete=False, suffix=suffix) as tmp:
@@ -16,8 +18,8 @@ def save_upload_file_tmp(upload_file: UploadFile):
     return tmp_path
 
 
-# Handles generating text from the file uploaded and returns it as json
 def handle_upload_file(upload_file: UploadFile):
+    """Handles generating text from the file uploaded and returns it as json"""
     extracted_text = ""
     tmp_path = save_upload_file_tmp(upload_file)
     try:
