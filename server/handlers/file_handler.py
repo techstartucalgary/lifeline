@@ -6,6 +6,7 @@ from tempfile import NamedTemporaryFile
 from pdfminer.high_level import extract_text
 from fastapi import UploadFile
 
+
 def save_upload_file_tmp(upload_file: UploadFile):
     """Handles creating a temp and returns the temporary path for it"""
     try:
