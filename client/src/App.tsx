@@ -1,19 +1,16 @@
-import { Routes, Route } from "react-router-dom";
-import axios from 'axios';
+import { Routes, Route, BrowserRouter } from "react-router-dom";
+import axios from "axios";
 
-import Landing from "./pages/Landing";
+import Landing from "./pages/Landing/Landing";
 import Loading from "./pages/Loading";
 import Review from "./pages/Review";
-import ThankYou from "./components/ThankYou";
 import Upload from "./pages/Upload";
-import Workflow from "./pages/Workflow";
-
 
 const hostname = window.location.hostname;
 const port = window.location.port;
 
 if (hostname === "localhost" || hostname === "127.0.0.1" || port === "3000") {
-  axios.defaults.baseURL = `//${hostname}:3001`;
+  axios.defaults.baseURL = `//${hostname}:8000`;
   console.log("Running on Localhost", axios.defaults.baseURL);
 } else {
   axios.defaults.baseURL = `https://api.${hostname}`;
@@ -25,15 +22,16 @@ axios.defaults.timeout = 30000;
 
 function App() {
   return (
-    <div className="App">
-      <Routes>
-        <Route path="/" element={<Landing />} />
-        <Route path="/loading" element={<Loading />} />
-        <Route path="/review" element={<Review />} />
-        <Route path="/thankyou" element={<ThankYou />} />
-        <Route path="/upload" element={<Upload />} />
-        <Route path="/workflow" element={<Workflow />} />
-      </Routes>
+    <div className="app bg-sys-background">
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Landing />} />
+          <Route path="/landing" element={<Landing />} />
+          <Route path="/loading" element={<Loading />} />
+          <Route path="/review" element={<Review />} />
+          <Route path="/upload" element={<Upload />} />
+        </Routes>
+      </BrowserRouter>
     </div>
   );
 }

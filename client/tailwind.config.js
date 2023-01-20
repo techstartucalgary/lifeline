@@ -1,8 +1,2 @@
-/** @type {import('tailwindcss').Config} */
-module.exports = {
-  content: ["./src/*.{tsx}"],
-  theme: {
-    extend: {},
-  },
-  plugins: [],
-};
+// Please configure Tailwind in src/tailwind.config.js instead of this file.
+module.exports = require("./src/tailwind.config");

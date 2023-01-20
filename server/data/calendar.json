@@ -1,0 +1,38 @@
+[
+    {
+        "course": "MATH 376",
+        "topic": "Differential Equations I",
+        "assessments": [
+            {
+                "name": "Quiz 1",
+                "date": "2022-09-22T00:00:00.000",
+                "weight": "6"
+            },
+            {
+                "name": "Quiz 2",
+                "date": "2022-10-13T00:00:00.000",
+                "weight": "6"
+            },
+            {
+                "name": "Quiz 3",
+                "date": "2022-11-03T00:00:00.000",
+                "weight": "6"
+            },
+            {
+                "name": "Midterm",
+                "date": "2022-11-15T18:00:00.000",
+                "weight": "30"
+            },
+            {
+                "name": "Quiz 4",
+                "date": "2022-11-24T00:00:00.000",
+                "weight": "6"
+            },
+            {
+                "name": "Quiz 5",
+                "date": "2022-12-06T00:00:00.000",
+                "weight": "6"
+            }
+        ]
+    }
+]
