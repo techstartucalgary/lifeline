@@ -1,7 +1,7 @@
 import { Routes, Route, BrowserRouter } from "react-router-dom";
 import axios from "axios";
 
-import Landing from "./pages/Landing/Landing";
+import Landing from "./pages/Landing";
 import Loading from "./pages/Loading";
 import Review from "./pages/Review";
 import Upload from "./pages/Upload";
