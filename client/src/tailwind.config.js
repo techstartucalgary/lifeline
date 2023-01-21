@@ -164,7 +164,7 @@ const stateLayers = {
   "primary": "#6750A4",
 };
 
-module.exports = {
+const config = {
   content: ["./**/src/**/*.{tsx, ts, jsx, js}"],
   theme: {
     extend: {
@@ -197,3 +197,5 @@ module.exports = {
     require("@tailwindcss/aspect-ratio"),
   ],
 };
+
+export default config;
