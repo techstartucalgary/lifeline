@@ -1,5 +1,4 @@
-"""Handles sending the calendar json to the client"""
-
+"""package for working with json"""
 import json
 
 
