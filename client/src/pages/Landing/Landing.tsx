@@ -2,7 +2,7 @@ import { useEffect } from "react";
 
 import { classnames } from "../../Utilities";
 import Button from "../../components/Button";
-import NavigationBar from "../../components/NavigationBar/NavigationBar";
+import NavigationBar from "../../components/NavigationBar";
 
 import illustration1 from "./illustration1.svg";
 import illustration10 from "./illustration10.svg";
