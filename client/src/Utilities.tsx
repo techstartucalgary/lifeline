@@ -2,7 +2,8 @@ import { Config as TailwindConfig } from "tailwindcss";
 import { extendTailwindMerge, getDefaultConfig, Config as TailwindMergeConfig, mergeConfigs } from "tailwind-merge";
 import { ClassNameValue } from "tailwind-merge/dist/lib/tw-join";
 
-import projectConfig from "./tailwind.config";
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const projectConfig = require("./tailwind.config");
 
 const classnames = (...args: ClassNameValue[]) => {
 
