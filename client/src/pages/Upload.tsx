@@ -1,6 +1,6 @@
 import NavigationBar from "../components/NavigationBar/NavigationBar";
 import React, { useState } from "react";
-import Button from "../components/Button/Button";
+import Button from "../components/Button";
 import axios from "axios";
 import clsx from "clsx";
 import { useNavigate } from "react-router-dom";

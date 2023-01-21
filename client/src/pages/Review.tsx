@@ -2,7 +2,7 @@
 
 import { Link } from "react-router-dom";
 import { useState } from "react";
-import Button from "../components/Button/Button";
+import Button from "../components/Button";
 import axios from "axios";
 import jsonToICS, { Course } from "../logic/icsGen";
 
