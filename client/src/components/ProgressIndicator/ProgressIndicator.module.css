@@ -1,4 +1,4 @@
-.css-n9w9ys {
+.container {
     display: inline-block;
     animation: 1.4s linear 0s infinite normal none running animation-61bdi0;
 }
@@ -20,7 +20,7 @@
 }
 
 
-.css-14891ef {
+.circle {
     stroke-dasharray: 80px, 200px;
     stroke-dashoffset: 0;
     animation: animation-1p2h4ri 1.4s ease-in-out infinite;
