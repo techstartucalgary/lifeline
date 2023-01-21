@@ -9,4 +9,5 @@
 **/.env.test
 **/.env.production
 server/.venv
-__pycache__
+**/__pycache__
+**/build
