@@ -1,6 +1,11 @@
 /* eslint-disable no-undef */
 /** @type {import("tailwindcss").Config} */
 
+import AspectRatio from "@tailwindcss/aspect-ratio";
+import Forms from "@tailwindcss/forms";
+import LineClamp from "@tailwindcss/line-clamp";
+import Typography from "@tailwindcss/typography";
+
 // eslint-disable-next-line no-unused-vars, @typescript-eslint/no-unused-vars
 const _ = {};
 
@@ -190,12 +195,7 @@ const config = {
       }
     },
   },
-  plugins: [
-    require("@tailwindcss/typography"),
-    require("@tailwindcss/forms"),
-    require("@tailwindcss/line-clamp"),
-    require("@tailwindcss/aspect-ratio"),
-  ],
+  plugins: [AspectRatio, Forms, LineClamp, Typography],
 };
 
 export default config;
