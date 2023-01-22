@@ -4,9 +4,9 @@ import { classnames } from "../../Utilities";
 import Button from "../../components/Button";
 import NavigationBar from "../../components/NavigationBar/NavigationBar";
 
-import wfh1 from "./WFH_svg/wfh_1.svg";
-import wfh7 from "./WFH_svg/wfh_7.svg";
-import wfh8 from "./WFH_svg/wfh_8.svg";
+import wfh1 from "./wfh_1.svg";
+import wfh7 from "./wfh_7.svg";
+import wfh8 from "./wfh_8.svg";
 import blob1 from "./blob1.svg";
 import blob2 from "./blob2.svg";
 import blob3 from "./blob3.svg";
