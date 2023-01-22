@@ -11,7 +11,7 @@ jobs:
     permissions:
       contents: read
     concurrency:
-      group: ${{ github.workflow }}-${{ github.ref }}
+      group: ${{ github.workflow }}-${{ github.ref }}--job1
     steps:
       - name: git-clone
         uses: actions/checkout@v3
@@ -39,7 +39,7 @@ jobs:
     permissions:
       contents: read
     concurrency:
-      group: ${{ github.workflow }}-${{ github.ref }}
+      group: ${{ github.workflow }}-${{ github.ref }}--job2
     steps:
       - name: git-clone
         uses: actions/checkout@v3
