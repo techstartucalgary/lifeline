@@ -116,7 +116,7 @@ export default function Landing() {
               "flex justify-center lg:justify-start",
             )}
           >
-            <img src={wfh1} className="w-10/12 max-w-sm md:w-8/12 md:max-w-lg lg:scale-125 lg:w-full lg:max-w-full" alt="an illustration of a girl scheduling her calendar" />
+            <img src={wfh1} className="w-10/12 max-w-sm md:w-8/12 md:max-w-lg lg:scale-125 lg:w-full lg:max-w-full" alt="a girl using laptop and concentrating in work on her desk" />
           </div>
         </div>
 
@@ -141,7 +141,7 @@ export default function Landing() {
               "flex justify-center lg:justify-start",
             )}
           >
-            <img src={wfh7} className="w-10/12 max-w-sm md:w-8/12 md:max-w-lg lg:w-full lg:scale-110 lg:max-w-full" alt="illustration of two boys discussing ideas over calendar" />
+            <img src={wfh7} className="w-10/12 max-w-sm md:w-8/12 md:max-w-lg lg:w-full lg:scale-110 lg:max-w-full" alt="two friends solving puzzle" />
           </div>
 
           {/* Right section */}
@@ -186,7 +186,7 @@ export default function Landing() {
           </div>
 
           <div className="mt-8 flex justify-center mt-12">
-            <img src={wfh8} className="w-10/12 max-w-sm md:w-8/12 md:max-w-lg lg:w-6/12 lg:max-w-full" alt="illustration of a girl finishing the last piece of a puzzle" />
+            <img src={wfh8} className="w-10/12 max-w-sm md:w-8/12 md:max-w-lg lg:w-6/12 lg:max-w-full" alt="a girl sitting on a stool and working in her laptop by the window" />
           </div>
         </div>
 

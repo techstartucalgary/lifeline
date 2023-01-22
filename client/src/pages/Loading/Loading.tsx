@@ -16,7 +16,7 @@ export default function Loading() {
       )}>
         <img
           src={wfh2}
-          alt="a boy sitting on a piece of cloud working on his work"
+          alt="a boy delivering a package by driving a scooter"
           className={classnames(
             "w-9/12",
             "min-w-[330px], min-w-[270px]",
