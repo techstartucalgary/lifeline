@@ -6,56 +6,56 @@ on:
       - main
 
 jobs:
-  # format-check:
-  #   runs-on: ubuntu-20.04
-  #   permissions:
-  #     contents: read
-  #   concurrency:
-  #     group: ${{ github.workflow }}-${{ github.ref }}
-  #   steps:
-  #     - name: git-clone
-  #       uses: actions/checkout@v3
-  #       with:
-  #         fetch-depth: 0
+  format-check:
+    runs-on: ubuntu-20.04
+    permissions:
+      contents: read
+    concurrency:
+      group: ${{ github.workflow }}-${{ github.ref }}
+    steps:
+      - name: git-clone
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
 
-  #     - name: dependencies
-  #       run: |
-  #         sudo apt-get -y update
-  #         sudo apt-get -y install pip nodejs
+      - name: dependencies
+        run: |
+          sudo apt-get -y update
+          sudo apt-get -y install pip nodejs
 
-  #     - name: format-check-server
-  #       run: |
-  #         pip install -r ./server/requirements.txt
-  #         pylint ./server
+      - name: format-check-server
+        run: |
+          pip install -r ./server/requirements.txt
+          pylint ./server
 
-  #     - name: format-check-client
-  #       run: |
-  #         cd client
-  #         npm install eslint
-  #         npm run check-lint
+      - name: format-check-client
+        run: |
+          cd client
+          npm install eslint
+          npm run check-lint
 
-  # test:
-  #   runs-on: ubuntu-20.04
-  #   permissions:
-  #     contents: read
-  #   concurrency:
-  #     group: ${{ github.workflow }}-${{ github.ref }}
-  #   steps:
-  #     - name: git-clone
-  #       uses: actions/checkout@v3
-  #       with:
-  #         fetch-depth: 0
+  test:
+    runs-on: ubuntu-20.04
+    permissions:
+      contents: read
+    concurrency:
+      group: ${{ github.workflow }}-${{ github.ref }}
+    steps:
+      - name: git-clone
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
 
-  #     - name: dependencies
-  #       run: |
-  #         sudo apt-get -y update
-  #         sudo apt-get -y install pip
+      - name: dependencies
+        run: |
+          sudo apt-get -y update
+          sudo apt-get -y install pip
 
-  #     - name: test-server
-  #       run: |
-  #         cd server
-  #         pip install -r requirements.txt
-  #         pytest test_app.py
+      - name: test-server
+        run: |
+          cd server
+          pip install -r requirements.txt
+          pytest test_app.py
 
   build-check:
     runs-on: ubuntu-20.04
