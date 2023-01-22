@@ -116,7 +116,7 @@ export default function Landing() {
               "flex justify-center lg:justify-start",
             )}
           >
-            <img src={wfh1} className="w-full md:w-8/12 lg:scale-125 lg:w-full" alt="an illustration of a girl scheduling her calendar" />
+            <img src={wfh1} className="w-10/12 max-w-sm md:w-8/12 md:max-w-lg lg:scale-125 lg:w-full lg:max-w-full" alt="an illustration of a girl scheduling her calendar" />
           </div>
         </div>
 
@@ -141,7 +141,7 @@ export default function Landing() {
               "flex justify-center lg:justify-start",
             )}
           >
-            <img src={wfh7} className="w-full md:w-8/12 lg:w-full" alt="illustration of two boys discussing ideas over calendar" />
+            <img src={wfh7} className="w-10/12 max-w-sm md:w-8/12 md:max-w-lg lg:w-full lg:scale-110 lg:max-w-full" alt="illustration of two boys discussing ideas over calendar" />
           </div>
 
           {/* Right section */}
@@ -186,7 +186,7 @@ export default function Landing() {
           </div>
 
           <div className="mt-8 flex justify-center mt-12">
-            <img src={wfh8} className="w-full md:w-8/12 lg:w-6/12" alt="illustration of a girl finishing the last piece of a puzzle" />
+            <img src={wfh8} className="w-10/12 max-w-sm md:w-8/12 md:max-w-lg lg:w-6/12 lg:max-w-full" alt="illustration of a girl finishing the last piece of a puzzle" />
           </div>
         </div>
 
@@ -199,7 +199,7 @@ export default function Landing() {
               landingText
             )}
           >
-            <img src={divider} alt="" aria-hidden={true} className="w-full my-20 sm:my-20 md:my-24 lg:my-28" />
+            <img src={divider} alt="" aria-hidden={true} className="w-full my-16 sm:my-20 md:my-24 lg:my-28" />
             <div className="space-y-2">
               <p className={classnames("text-on-surface leading-6 font-semibold", "text-1.5xl sm:text-3xl md:text-3xl lg:text-3xl")}>
                 Ready to schedule with ease?

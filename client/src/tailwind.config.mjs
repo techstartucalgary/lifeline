@@ -192,6 +192,14 @@ const config = {
       },
       fontSize: {
         "1.5xl": "1.36rem",
+      },
+      maxWidth: {
+        "8xl": "88rem",
+        "9xl": "96rem",
+      },
+      scale: {
+        "105": "1.05",
+        "110": "1.1",
       }
     },
   },
