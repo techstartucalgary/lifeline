@@ -1,8 +1,7 @@
 import { classnames } from "../../Utilities";
+import ProgressIndicator from "../../components/ProgressIndicator";
 
 import illustration14 from "./illustration14.svg";
-import circularIndicator from "./circularIndicator.svg";
-import "./Loading.css";
 
 export default function Loading() {
   return (
@@ -26,9 +25,7 @@ export default function Loading() {
           )}
         />
       </div>
-      <div className={classnames(
-        "mt-[30px]"
-      )}>
+      <div className="mt-[30px]">
         <p
           className={classnames(
             "w-full",
@@ -37,15 +34,9 @@ export default function Loading() {
         >We’re preparing it for you on the cloud...
         </p>
       </div>
-      <div className={classnames(
-        "mt-[24px]",
-        "spin"
-      )}>
-        <img
-          src={circularIndicator}
-          alt="a circular progress indicator"
-        />
+      <div className="mt-[24px]">
+        <ProgressIndicator determinate={false} />
       </div>
-    </div>
+    </div >
   );
 }
