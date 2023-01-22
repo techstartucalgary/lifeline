@@ -6,10 +6,10 @@ on:
       - main
 
 jobs:
-  format:
+  format-check:
     runs-on: ubuntu-20.04
     permissions:
-      contents: write
+      contents: read
     concurrency:
       group: ${{ github.workflow }}-${{ github.ref }}
     steps:
@@ -21,18 +21,17 @@ jobs:
       - name: dependencies
         run: |
           sudo apt-get -y update
-          sudo apt-get -y install pip nodejs yarn
+          sudo apt-get -y install pip nodejs
 
-      - name: format-server
+      - name: format-check-server
         run: |
-          cd server
-          pip install -r requirements.txt
-          black --check .
+          pip install pylint
+          pylint ./server
 
-      - name: format-client
+      - name: format-check-client
         run: |
           cd client
-          npm install
+          npm install eslint
           npm run check-lint
 
   test:
