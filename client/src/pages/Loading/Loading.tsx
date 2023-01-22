@@ -1,7 +1,7 @@
 import { classnames } from "../../Utilities";
 import ProgressIndicator from "../../components/ProgressIndicator";
 
-import illustration14 from "./illustration14.svg";
+import wfh2 from "./wfh_2.svg";
 
 export default function Loading() {
   return (
@@ -15,7 +15,7 @@ export default function Loading() {
       <div className={classnames(
       )}>
         <img
-          src={illustration14}
+          src={wfh2}
           alt="a boy sitting on a piece of cloud working on his work"
           className={classnames(
             "w-9/12",
