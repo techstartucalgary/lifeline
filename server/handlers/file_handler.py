@@ -1,6 +1,5 @@
 """Handles the file upload and extraction of assessments from the file"""
 
-import json
 import shutil
 from pathlib import Path
 import pickle
@@ -67,11 +66,19 @@ def extract_assessments(table):
                     # Ignore dates that are too short to avoid false positives.
                     # The shortest a date can realistically be is 5 characters. e.g. Dec 1
                     continue
+                name = row[0]
+                # identify if there is a cell in this row with the percent symbol in it '%'
+                # if there is, use that as the weight
+                weight = "unknown"
+                for cell in row:
+                    if cell and "%" in cell:
+                        weight = cell
+
                 assessments.append(
                     {
-                        "name": row[0],
+                        "name": name,
                         "date": date.strftime("%Y-%m-%dT%H:%M:%S.%f"),
-                        "weight": "unknown",
+                        "weight": weight,
                         "source": source,  # use this to highlight the date in the pdf
                     }
                 )
