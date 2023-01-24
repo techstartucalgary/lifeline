@@ -253,13 +253,29 @@ export default function Landing() {
             <div className="grid grid-cols-2 gap-3">
               <div className="col-span-2 sm:col-span-1 space-y-2">
                 <div>Disclaimer</div>
-                <div>Feedback</div>
+                <div>
+                  <a href="mailto:lifeline@techstartucalgary.com">
+                    Feedback
+                  </a>
+                </div>
                 <div>Privacy Policy</div>
               </div>
               <div className="col-span-2 sm:col-span-1 space-y-2">
-                <div>About</div>
-                <div>GitHub</div>
-                <div>University of Calgary</div>
+                <div>
+                  <a href="https://techstartucalgary.com/projects" target="_blank" rel="noreferrer">
+                    About
+                  </a>
+                </div>
+                <div>
+                  <a href="https://github.com/techstartucalgary/lifeline" target="_blank" rel="noreferrer">
+                    GitHub
+                  </a>
+                </div>
+                <div>
+                  <a href="https://techstartucalgary.com/" target="_blank" rel="noreferrer">
+                    Tech Start UCalgary
+                  </a>
+                </div>
               </div>
             </div>
           </div>
