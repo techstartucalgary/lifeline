@@ -1,5 +1,6 @@
 """Handles the file upload and extraction of assessments from the file"""
 
+import json
 import shutil
 from pathlib import Path
 import pickle
@@ -62,6 +63,10 @@ def extract_assessments(table):
             dates = list(datefinder.find_dates(cell, source=True))
             if dates:
                 date, source = dates[0]
+                if len(source) < 5:
+                    # Ignore dates that are too short to avoid false positives.
+                    # The shortest a date can realistically be is 5 characters. e.g. Dec 1
+                    continue
                 assessments.append(
                     {
                         "name": row[0],
@@ -84,7 +89,7 @@ def get_response(tmp_path):
 
     result = {
         "course": get_course_name(tmp_path),
-        "topic": "unknown topic",   # will get this later
+        "topic": "unknown topic",  # will get this later
         "assessments": assessments,
     }
     return result
@@ -109,4 +114,4 @@ def handle_upload_file(upload_file: UploadFile):
         response = get_response(tmp_path)
     finally:
         tmp_path.unlink()  # Delete the temp file
-    return [response]   # inside an array because there could be multiple courses
+    return [response]  # inside an array because there could be multiple courses
