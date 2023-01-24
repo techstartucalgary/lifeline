@@ -3,7 +3,7 @@ name: deploy-front
 on:
   push:
     branches:
-      - production
+      - main
 
 jobs:
   deploy:
