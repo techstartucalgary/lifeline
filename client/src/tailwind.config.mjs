@@ -201,6 +201,14 @@ const config = {
         "emphasized-decelerate": "cubic-bezier(0.05, 0.7, 0.1, 1.0)",
         "emphasized-accelerate": "cubic-bezier(0.3, 0.0, 0.8, 0.15)",
       },
+      maxWidth: {
+        "8xl": "88rem",
+        "9xl": "96rem",
+      },
+      scale: {
+        "105": "1.05",
+        "110": "1.1",
+      }
     },
   },
   plugins: [AspectRatio, Forms, LineClamp, Typography],
