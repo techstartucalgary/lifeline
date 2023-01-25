@@ -2,7 +2,7 @@ import { useEffect } from "react";
 
 import { classnames } from "../../Utilities";
 import Button from "../../components/Button";
-import NavigationBar from "../../components/NavigationBar/NavigationBar";
+import NavigationBar from "../../components/NavigationBar";
 
 import wfh1 from "./wfh_1.svg";
 import wfh7 from "./wfh_7.svg";
@@ -13,7 +13,7 @@ import blob3 from "./blob3.svg";
 import blob4 from "./blob4.svg";
 import divider from "./divider.svg";
 
-import "./Landing.css";
+import styles from "./Landing.module.css";
 
 const FlowStep = (
   {
@@ -63,8 +63,8 @@ export default function Landing() {
             "grid-cols-4 sm:grid-cols-8 md:grid-cols-8 lg:grid-cols-12"
           )}
         >
-          <img src={blob1} alt="" className="blob absolute w-[35rem] right-0 top-0 translate-x-[50%] translate-y-[-50%]" aria-hidden={true} />
-          <img src={blob2} alt="" className="blob absolute w-[26rem] left-0 top-[28rem] translate-x-[-50%] sm:translate-x-[-50%] lg:translate-x-[-90%] translate-y-[0%]" aria-hidden={true} />
+          <img src={blob1} alt="" className={classnames(styles.blob, "absolute w-[35rem] right-0 top-0 translate-x-[50%] translate-y-[-50%]")} aria-hidden={true} />
+          <img src={blob2} alt="" className={classnames(styles.blob, "absolute w-[26rem] left-0 top-[28rem] translate-x-[-50%] sm:translate-x-[-50%] lg:translate-x-[-90%] translate-y-[0%]")} aria-hidden={true} />
 
           {/* Left section */}
           <div
@@ -79,7 +79,8 @@ export default function Landing() {
                 <div className="sm:whitespace-nowrap text-on-surface">A better way to </div>
                 <div
                   className={classnames(
-                    "text-primary-60 title-highlight sm:whitespace-nowrap",
+                    styles["title-highlight"],
+                    "text-primary-60 sm:whitespace-nowrap",
                     "text-5xl sm:text-6xl md:text-7xl xl:text-7xl",
                     "pb-2"
                   )}
@@ -128,7 +129,7 @@ export default function Landing() {
             "grid-cols-4 sm:grid-cols-8 md:grid-cols-8 lg:grid-cols-12",
           )}
         >
-          <img src={blob4} alt="" className="blob absolute w-[28rem] right-0 top-[50%] translate-x-[50%] sm:translate-x-[40%] lg:translate-x-[90%] translate-y-[-40%]" aria-hidden={true} />
+          <img src={blob4} alt="" className={classnames(styles.blob, "absolute w-[28rem] right-0 top-[50%] translate-x-[50%] sm:translate-x-[40%] lg:translate-x-[90%] translate-y-[-40%]")} aria-hidden={true} />
 
           {/* Left section */}
           <div
@@ -169,7 +170,7 @@ export default function Landing() {
             landingText
           )}
         >
-          <img src={blob3} alt="" className="blob absolute w-[32rem] left-0 top-[50%] translate-x-[-50%] sm:translate-x-[-40%] lg:translate-x-[-90%] translate-y-[-10%]" aria-hidden={true} />
+          <img src={blob3} alt="" className={classnames(styles.blob, "absolute w-[32rem] left-0 top-[50%] translate-x-[-50%] sm:translate-x-[-40%] lg:translate-x-[-90%] translate-y-[-10%]")} aria-hidden={true} />
 
           <div className="space-y-2">
             <p className={classnames("text-on-surface font-semibold", "text-1.5xl sm:text-3xl md:text-3xl lg:text-3xl")}>
