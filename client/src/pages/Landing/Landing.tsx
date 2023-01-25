@@ -4,9 +4,9 @@ import { classnames } from "../../Utilities";
 import Button from "../../components/Button";
 import NavigationBar from "../../components/NavigationBar";
 
-import illustration1 from "./illustration1.svg";
-import illustration10 from "./illustration10.svg";
-import illustration19 from "./illustration19.svg";
+import wfh1 from "./wfh_1.svg";
+import wfh7 from "./wfh_7.svg";
+import wfh8 from "./wfh_8.svg";
 import blob1 from "./blob1.svg";
 import blob2 from "./blob2.svg";
 import blob3 from "./blob3.svg";
@@ -114,10 +114,10 @@ export default function Landing() {
             className={classnames(
               "mt-4 sm:mt-12 md:mt-12 lg:mt-0",
               "col-span-4 sm:col-span-8 lg:col-span-5",
-              "flex justify-center lg:justify-start"
+              "flex justify-center lg:justify-start",
             )}
           >
-            <img src={illustration1} alt="an illustration of a girl scheduling her calendar" className="w-9/12 lg:w-full max-w-sm lg:max-w-none" />
+            <img src={wfh1} className="w-10/12 max-w-sm md:w-8/12 md:max-w-lg lg:scale-125 lg:w-full lg:max-w-full" alt="a girl using laptop and concentrating in work on her desk" />
           </div>
         </div>
 
@@ -125,7 +125,7 @@ export default function Landing() {
         <div
           className={classnames(
             "gap-3 grid",
-            "mt-16 sm:mt-20 md:mt-24 lg:mt-28",
+            "mt-16 sm:mt-20 md:mt-24 lg:mt-48",
             "grid-cols-4 sm:grid-cols-8 md:grid-cols-8 lg:grid-cols-12",
           )}
         >
@@ -142,7 +142,7 @@ export default function Landing() {
               "flex justify-center lg:justify-start",
             )}
           >
-            <img src={illustration19} alt="illustration of two boys discussing ideas over calendar" className="w-10/12 lg:w-full max-w-md lg:max-w-none" />
+            <img src={wfh7} className="w-10/12 max-w-sm md:w-8/12 md:max-w-lg lg:w-full lg:scale-110 lg:max-w-full" alt="two friends solving puzzle" />
           </div>
 
           {/* Right section */}
@@ -166,7 +166,7 @@ export default function Landing() {
         <div
           className={classnames(
             "text-center relative",
-            "mt-16 sm:mt-20 md:mt-24 lg:mt-32",
+            "mt-16 sm:mt-20 md:mt-24 lg:mt-48",
             landingText
           )}
         >
@@ -186,8 +186,8 @@ export default function Landing() {
             </div>
           </div>
 
-          <div className="mt-8 flex justify-center">
-            <img src={illustration10} alt="illustration of a girl finishing the last piece of a puzzle" className="w-8/12 max-w-sm" />
+          <div className="mt-8 flex justify-center mt-12">
+            <img src={wfh8} className="w-10/12 max-w-sm md:w-8/12 md:max-w-lg lg:w-6/12 lg:max-w-full" alt="a girl sitting on a stool and working in her laptop by the window" />
           </div>
         </div>
 
@@ -200,7 +200,7 @@ export default function Landing() {
               landingText
             )}
           >
-            <img src={divider} alt="" aria-hidden={true} className="w-full my-20 sm:my-20 md:my-24 lg:my-28" />
+            <img src={divider} alt="" aria-hidden={true} className="w-full my-16 sm:my-20 md:my-24 lg:my-28" />
             <div className="space-y-2">
               <p className={classnames("text-on-surface leading-6 font-semibold", "text-1.5xl sm:text-3xl md:text-3xl lg:text-3xl")}>
                 Ready to schedule with ease?

@@ -6,12 +6,12 @@ on:
       - main
 
 jobs:
-  format:
+  format-check:
     runs-on: ubuntu-20.04
     permissions:
-      contents: write
+      contents: read
     concurrency:
-      group: ${{ github.workflow }}-${{ github.ref }}
+      group: ${{ github.workflow }}-${{ github.ref }}--job1
     steps:
       - name: git-clone
         uses: actions/checkout@v3
@@ -21,26 +21,25 @@ jobs:
       - name: dependencies
         run: |
           sudo apt-get -y update
-          sudo apt-get -y install pip nodejs yarn
+          sudo apt-get -y install pip nodejs
 
-      - name: format-server
+      - name: format-check-server
         run: |
-          cd server
-          pip install -r requirements.txt
-          black --check .
+          pip install -r ./server/requirements.txt
+          pylint ./server
 
-      - name: format-client
+      - name: format-check-client
         run: |
           cd client
-          npm install
+          npm install eslint
           npm run check-lint
 
   test:
     runs-on: ubuntu-20.04
     permissions:
-      contents: write
+      contents: read
     concurrency:
-      group: ${{ github.workflow }}-${{ github.ref }}
+      group: ${{ github.workflow }}-${{ github.ref }}--job2
     steps:
       - name: git-clone
         uses: actions/checkout@v3
@@ -57,3 +56,26 @@ jobs:
           cd server
           pip install -r requirements.txt
           pytest test_app.py
+
+  build-check:
+    runs-on: ubuntu-20.04
+    permissions:
+      contents: write
+    concurrency:
+      group: ${{ github.workflow }}-${{ github.ref }}--job3
+    steps:
+      - name: git-clone
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: dependencies
+        run: |
+          sudo apt-get -y update
+          sudo apt-get -y install nodejs
+      
+      - name: build
+        run: |
+          cd client
+          npm install
+          npm run build
