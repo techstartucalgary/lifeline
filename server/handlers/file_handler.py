@@ -6,7 +6,8 @@ import pickle
 from tempfile import NamedTemporaryFile
 from fastapi import UploadFile
 import pdfplumber
-import datefinder
+from datefinder import find_dates
+from dateparser.search import search_dates
 
 
 # supported course codes taken from
@@ -58,30 +59,40 @@ def extract_assessments(table):
         for cell in row:
             if not cell:  # skip empty cells
                 continue
-
-            dates = list(datefinder.find_dates(cell, source=True))
+            # first try dateparser
+            dates = search_dates(
+                cell, languages=["en"], settings={"REQUIRE_PARTS": ["day", "month"]}
+            )
             if dates:
-                date, source = dates[0]
-                if len(source) < 5:
-                    # Ignore dates that are too short to avoid false positives.
-                    # The shortest a date can realistically be is 5 characters. e.g. Dec 1
-                    continue
-                name = row[0]
-                # identify if there is a cell in this row with the percent symbol in it '%'
-                # if there is, use that as the weight
-                weight = "unknown"
-                for cell in row:
-                    if cell and "%" in cell:
-                        weight = cell
+                source, date = dates[0]
+            else:  # try datefinder if dateparser fails
+                dates = list(find_dates(cell, source=True))
+                if dates:
+                    date, source = dates[0]
+            if not dates:
+                continue
 
-                assessments.append(
-                    {
-                        "name": name,
-                        "date": date.strftime("%Y-%m-%dT%H:%M:%S.%f"),
-                        "weight": weight,
-                        "source": source,  # use this to highlight the date in the pdf
-                    }
-                )
+            if len(source) < 5:
+                # Ignore dates that are too short to avoid false positives.
+                # The shortest a date can realistically be is 5 characters. e.g. Dec 1
+                continue
+            name = row[0]  # use the text in the first cell as the name
+
+            weight = "unknown"
+            for cell in row:
+                if cell and "%" in cell:
+                    weight = cell
+
+            assessments.append(
+                {
+                    "name": name,
+                    "date": date.strftime("%Y-%m-%dT%H:%M:%S.%f"),
+                    "weight": weight,
+                    "source": source,  # use this to highlight the date in the pdf
+                }
+            )
+            # move to the next row to avoid double counting
+            break
     return assessments
 
 
