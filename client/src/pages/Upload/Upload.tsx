@@ -1,6 +1,6 @@
-import NavigationBar from "../components/NavigationBar/NavigationBar";
+import NavigationBar from "../../components/NavigationBar/NavigationBar";
 import React, { useState } from "react";
-import Button from "../components/Button";
+import Button from "../../components/Button";
 import axios from "axios";
 import clsx from "clsx";
 import { useNavigate } from "react-router-dom";
@@ -115,6 +115,7 @@ export default function Upload() {
         </div>
 
         <Button onClick={() => navigate("/loading")} variant="filled" className="text-xl absolute bottom-38 right-24">Next</Button>
+        <Button onClick={() => navigate("/review")} variant="filled" className="text-xl absolute bottom-38 right-50">review</Button>
       </div>
 
     </div>
