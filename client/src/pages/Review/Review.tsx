@@ -2,9 +2,9 @@
 
 import { Link } from "react-router-dom";
 import { useState } from "react";
-import Button from "../components/Button";
+import Button from "../../components/Button";
 import axios from "axios";
-import jsonToICS, { Course } from "../logic/icsGen";
+import jsonToICS, { Course } from "../../logic/icsGen";
 
 export default function Review() {
   const [json, setJson] = useState<Course[]>([]);
