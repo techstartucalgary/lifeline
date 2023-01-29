@@ -31,6 +31,7 @@ function jsonToICS(semester: Course[]): string {
 
   const { error, value } = createEvents(events);
   if (error) {
+    alert(error);
     return "error";
   }
   if (value) {
