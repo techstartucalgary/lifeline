@@ -19,25 +19,18 @@ export default function Upload() {
       const file = event.target.files[0];
 
       if (file.size > 3000000) {
-        console.log("fileInput", "The maximum file size is 3MB");
+        alert("The maximum file size is 3MB");
         return;
       }
 
       if (!supportedFileTypes.includes(file.type)) {
-        console.log("fileInput", "This file type is not supported yet");
+        alert("This file type is not supported yet");
         return;
       }
 
       setOutlineUploadLoading(true);
 
       console.log("Uploading file: " + file.name);
-      const uploadFiletype =
-        file.type === supportedFileTypes[0]
-          ? ".pdf"
-          : supportedFileTypes[1]
-            ? ".doc"
-            : ".docx";
-      const uploadFilename = file.name + uploadFiletype;
 
       const formData = new FormData();
       formData.append(
@@ -48,11 +41,10 @@ export default function Upload() {
         headers: { "Content-Type": "multipart/form-data" }
       })
         .then(res => {
-          console.log(uploadFilename + "was uploaded");
           console.log(res);
         })
         .catch((error) => {
-          console.log(error);
+          alert("An error occurred while uploading the file.");
         })
         .finally(() => {
           setOutlineUploadLoading(false);
