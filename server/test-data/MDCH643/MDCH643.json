@@ -1,0 +1,36 @@
+{
+    "course": "MDCH 643",
+    "topic": "unknown topic",
+    "assessments": [
+        {
+            "name": "Mid-Term Exam (Take-home)",
+            "date": "2021-02-24T23:59:00.000000",
+            "weight": "20%",
+            "source": "February 24, 2021"
+        },
+        {
+            "name": "Outline Paper and Presentation",
+            "date": "2021-03-03T23:59:00.000000",
+            "weight": "10%",
+            "source": "Due by 11:59 pm on March 3, 2021"
+        },
+        {
+            "name": "Final Examination (Take-Home)",
+            "date": "2021-04-07T00:00:00.000000",
+            "weight": "30%",
+            "source": "Exam posted on April\n7, 2021."
+        },
+        {
+            "name": "Presentation",
+            "date": "2021-04-14T00:00:00.000000",
+            "weight": "30%",
+            "source": "on on April 14, 2021"
+        },
+        {
+            "name": "Paper",
+            "date": "2021-04-16T11:59:00.000000",
+            "weight": "30%",
+            "source": "11:59 on April 16, 2021"
+        }
+    ]
+}
