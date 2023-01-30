@@ -5,10 +5,19 @@ import { Link, useLocation } from "react-router-dom";
 import Button from "../../components/Button";
 import jsonToICS, { Course } from "../../logic/icsGen";
 
+import "./Review.module.css";
+
 export default function Review() {
   const location = useLocation();
   const [course, setCourse] = useState<Course>(
-    JSON.parse(decodeURIComponent(location.search.split("=")[1]))[0]);
+    JSON.parse(decodeURIComponent(location.search.split("=")[1]))[0]
+  );
+  // sort the assessments by date
+  const sortbyDate = () =>
+    course.assessments.sort((a, b) =>
+      a.date >= b.date ? 1 : -1
+    );
+  sortbyDate();
 
   return (
     <>
@@ -20,14 +29,8 @@ export default function Review() {
       </nav>
 
       <div>
-        <table style={{
-          border: "1px solid black",
-          borderCollapse: "collapse",
-          width: "100%",
-        }}>
-          <thead style={{
-            border: "1px solid black",
-          }}>
+        <table>
+          <thead>
             <tr>
               <th>Course</th>
               <th>Assessment</th>
@@ -42,6 +45,12 @@ export default function Review() {
                 <td>
                   <input
                     type="text"
+                    style={{
+                      textAlign: "center",
+                      width: "100%",
+                      border: "none",
+                      background: "transparent",
+                    }}
                     value={assessment.name}
                     onChange={(e) => {
                       setCourse({
@@ -61,6 +70,12 @@ export default function Review() {
                 </td>
                 <td>
                   <input type="datetime-local"
+                    style={{
+                      textAlign: "center",
+                      width: "100%",
+                      border: "none",
+                      background: "transparent"
+                    }}
                     value={assessment.date}
                     onChange={(e) => {
                       setCourse({
@@ -75,6 +90,7 @@ export default function Review() {
                           return a;
                         }),
                       });
+                      sortbyDate();
                     }}
                   />
                 </td>
