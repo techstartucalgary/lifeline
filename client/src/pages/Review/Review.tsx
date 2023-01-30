@@ -1,12 +1,14 @@
 // Route: /review
 
+import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import Button from "../../components/Button";
 import jsonToICS, { Course } from "../../logic/icsGen";
 
 export default function Review() {
   const location = useLocation();
-  const data: Course[] = JSON.parse(decodeURIComponent(location.search.split("=")[1]));
+  const [course, setCourse] = useState<Course>(
+    JSON.parse(decodeURIComponent(location.search.split("=")[1]))[0]);
 
   return (
     <>
@@ -18,43 +20,83 @@ export default function Review() {
       </nav>
 
       <div>
-        {/* some quick inline styling */}
-        <table
-          style={{
+        <table style={{
+          border: "1px solid black",
+          borderCollapse: "collapse",
+          width: "100%",
+        }}>
+          <thead style={{
             border: "1px solid black",
-            borderCollapse: "collapse",
-            width: "100%",
-          }
-          }
-        >
-          <thead style={
-            {
-              border: "1px solid black",
-              borderCollapse: "collapse",
-            }
-          }>
+          }}>
             <tr>
               <th>Course</th>
               <th>Assessment</th>
               <th>Date</th>
+              <th>Delete</th>
             </tr>
           </thead>
-          {/* Inline styling for column separating lines */}
-          <tbody          >
-            {data[0].assessments.map(assessment => (
-              // eslint-disable-next-line react/jsx-key
-              <tr>
-                <td>{data[0].course}</td>
-                <td>{assessment.name}</td>
-                {/* Print as month name day, year */}
-                <td>{new Date(assessment.date).toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" })}</td>
+          <tbody>
+            {course.assessments.map((assessment, index) => (
+              <tr key={index}>
+                <td>{course.name}</td>
+                <td>
+                  <input
+                    type="text"
+                    value={assessment.name}
+                    onChange={(e) => {
+                      setCourse({
+                        ...course,
+                        assessments: course.assessments.map((a, i) => {
+                          if (i === index) {
+                            return {
+                              ...a,
+                              name: e.target.value,
+                            };
+                          }
+                          return a;
+                        }),
+                      });
+                    }}
+                  />
+                </td>
+                <td>
+                  <input type="datetime-local"
+                    value={assessment.date}
+                    onChange={(e) => {
+                      setCourse({
+                        ...course,
+                        assessments: course.assessments.map((a, i) => {
+                          if (i === index) {
+                            return {
+                              ...a,
+                              date: e.target.value,
+                            };
+                          }
+                          return a;
+                        }),
+                      });
+                    }}
+                  />
+                </td>
+                <td>
+                  <button
+                    onClick={() => {
+                      setCourse({
+                        ...course,
+                        assessments: course.assessments.filter((_, i) => i !== index),
+                      });
+                    }}>
+                    <span className="material-icons">delete</span>
+                  </button>
+                </td>
               </tr>
-            ))}
+            ))
+            }
           </tbody>
         </table>
       </div>
       <a id="ics-download"
-        href={`data:text/plain;charset=utf-8, ${encodeURIComponent(jsonToICS(data))}`}
+        href={`data:text/plain;charset=utf-8, ${encodeURIComponent(jsonToICS([course]))}`}
         download="deadlines.ics"
       >
         <Button

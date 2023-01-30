@@ -86,7 +86,7 @@ def extract_assessments(table):
             assessments.append(
                 {
                     "name": name,
-                    "date": date.strftime("%Y-%m-%dT%H:%M:%S.%f"),
+                    "date": date.strftime("%Y-%m-%dT%H:%M:%S.%f")[:-3],
                     "weight": weight,
                     "source": source,  # use this to highlight the date in the pdf
                 }
@@ -106,7 +106,7 @@ def get_response(tmp_path):
         assessments.extend(extract_assessments(table))
 
     result = {
-        "course": get_course_name(tmp_path),
+        "name": get_course_name(tmp_path),
         "topic": "unknown topic",  # will get this later
         "assessments": assessments,
     }
