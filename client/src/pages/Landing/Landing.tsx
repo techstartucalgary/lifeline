@@ -253,13 +253,21 @@ export default function Landing() {
           <div className="col-span-5">
             <div className="grid grid-cols-2 gap-3">
               <div className="col-span-2 sm:col-span-1 space-y-2">
-                <div>Disclaimer</div>
+                <div>
+                  <a href="/disclaimer.html">
+                    Disclaimer
+                  </a>
+                </div>
                 <div>
                   <a href="mailto:lifeline@techstartucalgary.com">
                     Feedback
                   </a>
                 </div>
-                <div>Privacy Policy</div>
+                <div>
+                  <a href="/privacy.html">
+                    Privacy Policy
+                  </a>
+                </div>
               </div>
               <div className="col-span-2 sm:col-span-1 space-y-2">
                 <div>
