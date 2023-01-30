@@ -109,11 +109,6 @@ export default function Upload() {
             disabled={file === null}
           >Next
           </Button>
-          <Button
-            onClick={() => navigate("/review")}
-            variant="filled"
-            className="text-xl absolute bottom-38 right-50"
-          >Review</Button>
         </div>
       </div>
   );
