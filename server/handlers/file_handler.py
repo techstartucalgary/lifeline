@@ -78,10 +78,13 @@ def extract_assessments(table):
                 continue
             name = row[0]  # use the text in the first cell as the name
 
-            weight = "unknown"
+            weight = ""
             for cell in row:
                 if cell and "%" in cell:
-                    weight = cell
+                    try:
+                        weight = float(cell.strip("%"))
+                    except ValueError:
+                        pass
 
             assessments.append(
                 {

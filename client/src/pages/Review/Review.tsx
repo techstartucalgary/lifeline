@@ -35,6 +35,7 @@ export default function Review() {
               <th>Course</th>
               <th>Assessment</th>
               <th>Date</th>
+              <th>Weight</th>
               <th>Delete</th>
             </tr>
           </thead>
@@ -95,6 +96,34 @@ export default function Review() {
                   />
                 </td>
                 <td>
+                  <input
+                    type="number"
+                    style={{
+                      textAlign: "center",
+                      // wide enough for 3 digits
+                      width: "5em",
+                      border: "none",
+                      background: "transparent",
+                    }}
+                    value={assessment.weight}
+                    onChange={(e) => {
+                      setCourse({
+                        ...course,
+                        assessments: course.assessments.map((a, i) => {
+                          if (i === index) {
+                            return {
+                              ...a,
+                              weight: e.target.value,
+                            };
+                          }
+                          return a;
+                        }),
+                      });
+                    }}
+                  />
+                  %
+                </td>
+                <td>
                   <button
                     onClick={() => {
                       setCourse({
@@ -108,6 +137,27 @@ export default function Review() {
               </tr>
             ))
             }
+            <tr>
+              <td colSpan={5}>
+                <button
+                  onClick={() => {
+                    setCourse({
+                      ...course,
+                      assessments: [
+                        ...course.assessments,
+                        {
+                          name: "",
+                          date: new Date().toISOString().slice(0, 16),
+                          weight: "0",
+                        },
+                      ],
+                    });
+                  }}
+                >
+                  <span className="material-icons">add</span>
+                </button>
+              </td>
+            </tr>
           </tbody>
         </table>
       </div>

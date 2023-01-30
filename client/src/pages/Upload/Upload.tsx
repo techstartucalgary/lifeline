@@ -22,10 +22,12 @@ export default function Upload() {
     }
     if (file.size > 3000000) {
       alert("The maximum file size is 3MB");
+      setFile(null);
       return;
     }
     if (!supportedFileTypes.includes(file.type)) {
       alert("This file type is not supported yet");
+      setFile(null);
       return;
     }
 
