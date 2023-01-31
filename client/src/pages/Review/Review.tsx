@@ -162,7 +162,7 @@ export default function Review() {
         </table>
       </div>
       <a id="ics-download"
-        href={`data:text/plain;charset=utf-8, ${encodeURIComponent(jsonToICS([course]))}`}
+        href={`data:text/plain;charset=utf-8,${encodeURIComponent(jsonToICS([course]))}`}
         download="deadlines.ics"
       >
         <Button
