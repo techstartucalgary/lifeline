@@ -1,18 +1,6 @@
 import { createEvents, EventAttributes } from "ics";
+import { Course } from "../types";
 
-interface Assessment {
-  course:string;
-  name: string;
-  date: string;
-  weight: string;
-  complete: string;
-}
-
-export interface Course {
-  course: string;
-  topic: string;
-  assessments: Assessment[];
-}
 
 function jsonToICS(semester: Course[]): string {
   const events: EventAttributes[] = [];
