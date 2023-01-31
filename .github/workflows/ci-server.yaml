@@ -1,9 +1,11 @@
-name: CI
+name: CI Server
 
 on:
-  push:
-    branches-ignore:
+  pull_request:
+    branches:
       - main
+    paths:
+      - server/**
 
 jobs:
   format-check:
@@ -21,18 +23,12 @@ jobs:
       - name: dependencies
         run: |
           sudo apt-get -y update
-          sudo apt-get -y install pip nodejs
+          sudo apt-get -y install pip
 
-      - name: format-check-server
+      - name: check
         run: |
           pip install -r ./server/requirements.txt
           pylint ./server
-
-      - name: format-check-client
-        run: |
-          cd client
-          npm install eslint
-          npm run check-lint
 
   test:
     runs-on: ubuntu-20.04
@@ -56,26 +52,3 @@ jobs:
           cd server
           pip install -r requirements.txt
           pytest test_app.py
-
-  build-check:
-    runs-on: ubuntu-20.04
-    permissions:
-      contents: write
-    concurrency:
-      group: ${{ github.workflow }}-${{ github.ref }}--job3
-    steps:
-      - name: git-clone
-        uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
-
-      - name: dependencies
-        run: |
-          sudo apt-get -y update
-          sudo apt-get -y install nodejs
-      
-      - name: build
-        run: |
-          cd client
-          npm install
-          npm run build
