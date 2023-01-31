@@ -5,7 +5,7 @@ export interface Assessment {
 }
 
 export interface Course {
-    course: string;
+    name: string;
     topic: string;
     assessments: Assessment[];
 }

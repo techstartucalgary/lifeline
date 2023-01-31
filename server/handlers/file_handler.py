@@ -1,10 +1,119 @@
-"""Handles the file upload and extraction of text from the file"""
+"""Handles the file upload and extraction of assessments from the file"""
 
 import shutil
 from pathlib import Path
+import pickle
 from tempfile import NamedTemporaryFile
-from pdfminer.high_level import extract_text
 from fastapi import UploadFile
+import pdfplumber
+from datefinder import find_dates
+from dateparser.search import search_dates
+
+
+# supported course codes taken from
+# https://www.ucalgary.ca/pubs/calendar/current/course-desc-main.html
+with open("./data/course_codes.pkl", "rb") as file:
+    course_codes = pickle.load(file)
+
+
+def get_course_name(path):
+    """Attempts to get the course name from the first page of the pdf
+    by matching words against the list of course codes"""
+    with pdfplumber.open(path) as pdf:
+        first_page_words = pdf.pages[0].extract_text().split()
+
+        course_number = None
+        course_code = None
+
+        for index, word in enumerate(first_page_words):
+            if word in course_codes:
+                course_code = word
+                potential_course_number = first_page_words[index + 1]
+                try:
+                    course_number = int(potential_course_number.strip(".,"))
+                except ValueError:
+                    pass
+                break
+
+    if course_number:
+        return f"{course_code} {course_number}"
+    if course_code:
+        return course_code
+    return "unknown course"
+
+
+def read_tables(path):
+    """Returns all tables in a pdf as a list of 2d lists"""
+    with pdfplumber.open(path) as pdf:
+        tables = []
+        for page in pdf.pages:
+            tables.extend(page.extract_tables())
+    return tables
+
+
+def extract_assessments(table):
+    """Returns the assessments in a table by identifying a date
+    in a cell and using the text in the first cell as the name"""
+    assessments = []
+    for row in table:
+        for cell in row:
+            if not cell:  # skip empty cells
+                continue
+            # first try dateparser
+            dates = search_dates(
+                cell, languages=["en"], settings={"REQUIRE_PARTS": ["day", "month"]}
+            )
+            if dates:
+                source, date = dates[0]
+            else:  # try datefinder if dateparser fails
+                dates = list(find_dates(cell, source=True))
+                if dates:
+                    date, source = dates[0]
+            if not dates:
+                continue
+
+            if len(source) < 5:
+                # Ignore dates that are too short to avoid false positives.
+                # The shortest a date can realistically be is 5 characters. e.g. Dec 1
+                continue
+            name = row[0]  # use the text in the first cell as the name
+
+            weight = ""
+            for cell in row:
+                if cell and "%" in cell:
+                    try:
+                        weight = float(cell.strip("%"))
+                    except ValueError:
+                        pass
+
+            assessments.append(
+                {
+                    "name": name,
+                    "date": date.strftime("%Y-%m-%dT%H:%M:%S.%f")[:-3],
+                    "weight": weight,
+                    "source": source,  # use this to highlight the date in the pdf
+                }
+            )
+            # move to the next row to avoid double counting
+            break
+    return assessments
+
+
+def get_response(tmp_path):
+    """Compiles assessments into the correct format and returns
+    the body of the response"""
+    tables = read_tables(tmp_path)
+
+    assessments = []
+    for table in tables:
+        assessments.extend(extract_assessments(table))
+
+    result = {
+        "name": get_course_name(tmp_path),
+        "topic": "unknown topic",  # will get this later
+        "assessments": assessments,
+    }
+    return result
 
 
 def save_upload_file_tmp(upload_file: UploadFile):
@@ -20,11 +129,10 @@ def save_upload_file_tmp(upload_file: UploadFile):
 
 
 def handle_upload_file(upload_file: UploadFile):
-    """Handles generating text from the file uploaded and returns it as json"""
-    extracted_text = ""
+    """Main function for handling the post request"""
     tmp_path = save_upload_file_tmp(upload_file)
     try:
-        extracted_text = extract_text(tmp_path)  # Do something with the saved temp file
+        response = get_response(tmp_path)
     finally:
         tmp_path.unlink()  # Delete the temp file
-    return {"text": extracted_text}
+    return [response]  # inside an array because there could be multiple courses

@@ -12,7 +12,7 @@ function jsonToICS(semester: Course[]): string {
       const [hours, minutes, milis] = time.split(":");
 
       events.push({
-        title: `${course.course} ${assessment.name} (${assessment.weight}%)`,
+        title: `${course.name} ${assessment.name} (${assessment.weight}%)`,
         start: [parseInt(year), parseInt(month), parseInt(day), parseInt(hours), parseInt(minutes)],
         duration: { hours: 0, minutes: 0, seconds: 0 },
       });
@@ -21,6 +21,7 @@ function jsonToICS(semester: Course[]): string {
 
   const { error, value } = createEvents(events);
   if (error) {
+    alert(error);
     return "error";
   }
   if (value) {
