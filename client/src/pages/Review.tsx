@@ -4,7 +4,8 @@ import { Link } from "react-router-dom";
 import { useState } from "react";
 import Button from "../components/Button";
 import axios from "axios";
-import jsonToICS, { Course } from "../logic/icsGen";
+import jsonToICS from "../logic/icsGen";
+import { Course } from "../types";
 import jsonToXLSX from "../logic/xlsxGen";
 export default function Review() {
   const [json, setJson] = useState<Course[]>([]);
@@ -50,19 +51,14 @@ export default function Review() {
           Download
         </Button>
       </a>
-      {<a id="ics-download"
-        href={`data:application/vnd.ms-excel, ${window.URL.createObjectURL(jsonToXLSX(json))}`}
-        download="lifelines.xlsx"
+      <Button
+        variant="filled"
+        id="download"
+        disabled={!json.length}
+        onClick={() => jsonToXLSX(json)}
       >
-        <Button
-          variant="filled"
-          id="download"
-          disabled={!json.length}
-        >
-          Download XLSX
-        </Button>
-      </a>
-      }
+        Download XLSX
+      </Button>
     </>
   );
 }
