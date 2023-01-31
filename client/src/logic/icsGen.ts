@@ -1,9 +1,11 @@
 import { createEvents, EventAttributes } from "ics";
 
 interface Assessment {
+  course:string;
   name: string;
   date: string;
   weight: string;
+  complete: string;
 }
 
 export interface Course {
