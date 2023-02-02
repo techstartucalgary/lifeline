@@ -1,6 +1,7 @@
 ![version](https://img.shields.io/badge/version-1.0.0-red)
-![Frontend](https://github.com/techstartucalgary/lifeline/actions/workflows/deploy-frontend.yaml/badge.svg)
-![Frontend](https://github.com/techstartucalgary/lifeline/actions/workflows/ci.yaml/badge.svg)
+![Deployment](https://github.com/techstartucalgary/lifeline/actions/workflows/deploy-frontend.yaml/badge.svg)
+![Frontend](https://github.com/techstartucalgary/lifeline/actions/workflows/ci-client.yaml/badge.svg)
+![Backend](https://github.com/techstartucalgary/lifeline/actions/workflows/ci-server.yaml/badge.svg)
 [![License](https://img.shields.io/badge/license-MIT-brown.svg)](https://opensource.org/licenses/MIT)
 ![Python](https://img.shields.io/badge/python-v3.6+-blue.svg)
 ![React](https://img.shields.io/badge/react-v18.2-blue.svg)
@@ -16,8 +17,16 @@
   </h2>
 </div>
 
+<<<<<<< HEAD
 <p>Lifeline is here to ensure you stay organized and on top of your schedule, all through a fast and easy process. Say goodbye to the stress of managing important dates yourself and <a href="https://lifeline.techstartucalgary.com" target="_blank">discover a better way</a>.</p>
 
 
 
 
+=======
+<p>Lifeline is here to ensure you stay organized and on top of your schedule, all through a fast and easy process. Say goodbye to the stress of managing important dates yourself and discover a better way.</p>
+
+_Lifeline uses AI to extract and organize deadlines from your course documents for you to download._
+
+# **[Try it out here](https://lifeline.techstartucalgary.com)**
+>>>>>>> 650d404b22bf68daa1cabd0b9957744912dcce11

@@ -1,0 +1,55 @@
+name: CI Client
+
+on:
+  pull_request:
+    branches:
+      - main
+    paths:
+      - client/**
+
+jobs:
+  format-check:
+    runs-on: ubuntu-20.04
+    permissions:
+      contents: read
+    concurrency:
+      group: ${{ github.workflow }}-${{ github.ref }}--job1
+    steps:
+      - name: git-clone
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: dependencies
+        run: |
+          sudo apt-get -y update
+          sudo apt-get -y install nodejs
+
+      - name: check
+        run: |
+          cd client
+          npm install eslint
+          npm run check-lint
+
+  build-check:
+    runs-on: ubuntu-20.04
+    permissions:
+      contents: write
+    concurrency:
+      group: ${{ github.workflow }}-${{ github.ref }}--job2
+    steps:
+      - name: git-clone
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: dependencies
+        run: |
+          sudo apt-get -y update
+          sudo apt-get -y install nodejs
+      
+      - name: build
+        run: |
+          cd client
+          npm install
+          npm run build

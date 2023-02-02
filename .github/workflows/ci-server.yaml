@@ -1,17 +1,19 @@
-name: CI
+name: CI Server
 
 on:
-  push:
-    branches-ignore:
+  pull_request:
+    branches:
       - main
+    paths:
+      - server/**
 
 jobs:
-  format:
+  format-check:
     runs-on: ubuntu-20.04
     permissions:
-      contents: write
+      contents: read
     concurrency:
-      group: ${{ github.workflow }}-${{ github.ref }}
+      group: ${{ github.workflow }}-${{ github.ref }}--job1
     steps:
       - name: git-clone
         uses: actions/checkout@v3
@@ -21,26 +23,19 @@ jobs:
       - name: dependencies
         run: |
           sudo apt-get -y update
-          sudo apt-get -y install pip nodejs yarn
+          sudo apt-get -y install pip
 
-      - name: format-server
+      - name: check
         run: |
-          cd server
-          pip install -r requirements.txt
-          black --check .
-
-      - name: format-client
-        run: |
-          cd client
-          npm install
-          npm run check-lint
+          pip install -r ./server/requirements.txt
+          pylint ./server
 
   test:
     runs-on: ubuntu-20.04
     permissions:
-      contents: write
+      contents: read
     concurrency:
-      group: ${{ github.workflow }}-${{ github.ref }}
+      group: ${{ github.workflow }}-${{ github.ref }}--job2
     steps:
       - name: git-clone
         uses: actions/checkout@v3

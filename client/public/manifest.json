@@ -1,6 +1,7 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "Lifeline",
+  "name": "Lifeline",
+  "description": "Lifeline: a much needed lifeline to help you never miss a deadline.",
   "icons": [
     {
       "src": "favicon.ico",
@@ -11,15 +12,10 @@
       "src": "logo192.png",
       "type": "image/png",
       "sizes": "192x192"
-    },
-    {
-      "src": "logo512.png",
-      "type": "image/png",
-      "sizes": "512x512"
     }
   ],
   "start_url": ".",
   "display": "standalone",
-  "theme_color": "#000000",
+  "theme_color": "#B7194A",
   "background_color": "#ffffff"
 }
