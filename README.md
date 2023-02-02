@@ -17,3 +17,7 @@
 </div>
 
 <p>Lifeline is here to ensure you stay organized and on top of your schedule, all through a fast and easy process. Say goodbye to the stress of managing important dates yourself and <a href="https://lifeline.techstartucalgary.com" target="_blank">discover a better way</a>.</p>
+
+
+
+
