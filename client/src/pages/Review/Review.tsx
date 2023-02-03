@@ -1,39 +1,31 @@
 import Button from "../../components/Button";
 
-const Review = () => {
+const Layout = () => {
   return (
-    <div className="grid grid-cols-6">
-      {/* Left column: navigation bar */}
-      <nav className="col-span-1 bg-gray-400 flex flex-col p-4">
-        <Button variant="filled">CPSC 413</Button>
-        <Button variant="filled">SENG 513</Button>
-        <Button variant="filled">CPSC 481</Button>
-        <Button variant="filled">CPSC 457</Button>
+    <div className="flex h-screen">
+      <nav className="w-64 bg-gray-600 h-full fixed left-0 top-0">\
+        <div className="flex flex-col h-full">
+          <Button variant="filled">CPSC 413</Button>
+          <Button variant="filled">CPSC 413</Button>
+          <Button variant="filled">CPSC 413</Button>
+          <Button variant="filled">CPSC 413</Button>
+          <Button variant="filled">CPSC 413</Button>
+        </div>
       </nav>
-
-      {/* Right column: content */}
-      <div className="col-span-5">
-        {/* Top app bar */}
-        <header className="bg-gray-900 p-4 text-white">
-          <h1>CPSC 413</h1>
-          <h2>Design and analysis of algorithms</h2>
-        </header>
-        <div className="row-span-5 bg-gray-100">
-          {/* Two equal width columns */}
-          <div className="grid grid-cols-2">
-            <div className="col-span-1 bg-gray-300 p-4">
-              {/* Column 1 content */}
-              <h2>Assessments</h2>
-              <ul>
-                <li>Midterm 1</li>
-                <li>Midterm 2</li>
-                <li>Final</li>
-              </ul>
-            </div>
-            <div className="col-span-1 bg-gray-500 p-4">
-              {/* Column 2 content */}
-              <img src="/pdf.png" alt="pdf" />
-            </div>
+      <div className="flex flex-col w-full ml-64">
+        <header className="bg-gray-300 w-full p-4">Bradley&apos;s app top bar</header>
+        <div className="flex h-full">
+          <div className="w-1/2 bg-yellow-400 p-4">
+            <ul>
+              <li>Assignment 1</li>
+              <li>Assignment 2</li>
+              <li>Assignment 3</li>
+              <li>Assignment 4</li>
+              <li>Assignment 5</li>
+            </ul>
+          </div>
+          <div className="w-1/2 bg-green-400 p-4">
+            <img src="./pdf.png" alt="the pdf viewer" />
           </div>
         </div>
       </div>
@@ -41,4 +33,4 @@ const Review = () => {
   );
 };
 
-export default Review;
+export default Layout;
