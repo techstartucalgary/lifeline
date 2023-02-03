@@ -14,27 +14,26 @@ const Review = () => {
     <div className="flex h-screen">
       <nav
         className={classnames(
-          "w-full", "sm:w-64", "bg-gray-600", "h-full", "fixed", "left-0", "top-0", "flex", "flex-col", "p-4", "items-center", "z-0", !courseId && "z-20"
+          "w-full", "md:w-64", "bg-gray-600", "h-full", "fixed", "left-0", "top-0", "flex", "flex-col", "p-4", "items-center", "z-0", !courseId && "z-20"
         )}
       >
         <div className="flex flex-col h-full">
           {courses.map((course) => (
             <Link to={`/review/${course}`} key={course}>
-              <Button variant={
-                courseId === course ? "filled" : "tonal"
-              } onClick={() => { console.log(course); }
-              }>{format(course)}</Button>
+              <Button variant={courseId === course ? "filled" : "tonal"}>
+                {format(course)}
+              </Button>
             </Link>
           ))}
         </div>
       </nav>
-      <div className="flex flex-col w-full ml-0 sm:ml-64 z-10">
+      <div className="flex flex-col w-full ml-0 md:ml-64 z-10">
         {courseId ? (
           <>
             <header className="bg-gray-300 w-full p-4 text-xl">
               <Link to="/review">
                 <span
-                  className={classnames("material-icons", "sm:hidden", "inline")}
+                  className={classnames("material-icons", "md:hidden", "inline")}
                   style={{ fontSize: "1.5rem", verticalAlign: "middle" }}
                 >
                   arrow_back
@@ -43,8 +42,8 @@ const Review = () => {
               </Link>
               COURSE NAME: {format(courseId)}
             </header>
-            <div className="flex flex-col sm:flex-row">
-              <div className="w-full sm:hidden flex flex-row">
+            <div className="flex flex-col md:flex-row">
+              <div className="w-full md:hidden flex flex-row">
                 <button
                   className={`w-full bg-gray-300 p-2 ${selectedTab === 0 && "bg-red-500"}`}
                   onClick={() => setSelectedTab(0)}
@@ -59,7 +58,7 @@ const Review = () => {
                 </button>
               </div>
               <div
-                className={`w-full sm:w-1/2 border border-gray-300 bg-gray-200 p-4 h-screen ${selectedTab === 0 ? "" : "hidden sm:block"}`}
+                className={`w-full md:w-1/2 border border-gray-300 bg-gray-200 p-4 h-screen ${selectedTab === 0 ? "" : "hidden md:block"}`}
               >
                 <ul>
                   <li>Assessment 1</li>
@@ -70,7 +69,7 @@ const Review = () => {
                 </ul>
               </div>
               <div
-                className={`w-full sm:w-1/2 border border-gray-300 bg-gray-600 p-4 h-screen ${selectedTab === 1 ? "" : "hidden sm:block"}`}
+                className={`w-full md:w-1/2 border border-gray-300 bg-gray-600 p-4 h-screen ${selectedTab === 1 ? "" : "hidden md:block"}`}
               >
                 <img src="../pdf.png" alt="the pdf viewer" />
               </div>
