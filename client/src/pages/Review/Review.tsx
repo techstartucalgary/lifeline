@@ -12,7 +12,6 @@ const Review = () => {
 
   return (
     <div className="flex h-screen">
-      {/* Fills the whole screen on mobile */}
       <nav
         className={classnames(
           "w-full", "sm:w-64", "bg-gray-600", "h-full", "fixed", "left-0", "top-0", "flex", "flex-col", "p-4", "items-center", "z-0", !courseId && "z-20"
@@ -21,7 +20,9 @@ const Review = () => {
         <div className="flex flex-col h-full">
           {courses.map((course) => (
             <Link to={`/review/${course}`} key={course}>
-              <Button variant="filled" onClick={() => { console.log(course); }
+              <Button variant={
+                courseId === course ? "filled" : "tonal"
+              } onClick={() => { console.log(course); }
               }>{format(course)}</Button>
             </Link>
           ))}
@@ -42,7 +43,6 @@ const Review = () => {
               </Link>
               COURSE NAME: {format(courseId)}
             </header>
-            {/* <div className="flex h-full"> */}
             <div className="flex flex-col sm:flex-row">
               <div className="w-full sm:hidden flex flex-row">
                 <button
@@ -76,7 +76,6 @@ const Review = () => {
               </div>
 
             </div>
-            {/* </div> */}
           </>
         ) : (
           <p>upload</p>
