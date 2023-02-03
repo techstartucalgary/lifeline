@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import Button from "../../components/Button";
 import { classnames } from "../../Utilities";
@@ -5,6 +6,7 @@ import { classnames } from "../../Utilities";
 const courses = ["cpsc-413", "seng-513", "cpsc-481", "cpsc-449", "cpsc-457"];
 
 const Review = () => {
+  const [selectedTab, setSelectedTab] = useState(0);
   const { courseId } = useParams();
   const format = (courseId: string | undefined) => courseId?.replace("-", " ").toUpperCase();
 
@@ -38,21 +40,43 @@ const Review = () => {
                 </span>
 
               </Link>
-              COURSE NAME: {format(courseId)}</header>
-            <div className="flex h-full">
-              <div className="w-1/2 bg-yellow-400 p-4">
+              COURSE NAME: {format(courseId)}
+            </header>
+            {/* <div className="flex h-full"> */}
+            <div className="flex flex-col sm:flex-row">
+              <div className="w-full sm:hidden flex flex-row">
+                <button
+                  className={`w-full bg-gray-300 p-2 ${selectedTab === 0 && "bg-red-500"}`}
+                  onClick={() => setSelectedTab(0)}
+                >
+                  Assessments
+                </button>
+                <button
+                  className={`w-full bg-gray-300 p-2 ${selectedTab === 1 && "bg-red-500"}`}
+                  onClick={() => setSelectedTab(1)}
+                >
+                  Document
+                </button>
+              </div>
+              <div
+                className={`w-full sm:w-1/2 border border-gray-300 bg-gray-200 p-4 h-screen ${selectedTab === 0 ? "" : "hidden sm:block"}`}
+              >
                 <ul>
-                  <li>Assignment 1</li>
-                  <li>Assignment 2</li>
-                  <li>Assignment 3</li>
-                  <li>Assignment 4</li>
-                  <li>Assignment 5</li>
+                  <li>Assessment 1</li>
+                  <li>Assessment 2</li>
+                  <li>Assessment 3</li>
+                  <li>Assessment 4</li>
+                  <li>Assessment 5</li>
                 </ul>
               </div>
-              <div className="w-1/2 bg-green-400 p-4">
+              <div
+                className={`w-full sm:w-1/2 border border-gray-300 bg-gray-600 p-4 h-screen ${selectedTab === 1 ? "" : "hidden sm:block"}`}
+              >
                 <img src="../pdf.png" alt="the pdf viewer" />
               </div>
+
             </div>
+            {/* </div> */}
           </>
         ) : (
           <p>upload</p>
