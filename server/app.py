@@ -31,7 +31,7 @@ async def show_calendar():
 
 
 @app.post("/files")
-async def send_outline_file(outline_files: List[UploadFile] = File(...)):
+async def get_deadlines(outline_files: List[UploadFile] = File(...)):
     """Returns the extracted dates from the uploaded file(s)"""
     return [
             file_handler.handle_upload_file(file) for file in outline_files
