@@ -33,11 +33,9 @@ async def show_calendar():
 @app.post("/files")
 async def send_outline_file(outline_files: List[UploadFile] = File(...)):
     """Returns the extracted dates from the uploaded file(s)"""
-    return {
-        "extracted_calendar": [
+    return [
             file_handler.handle_upload_file(file) for file in outline_files
         ]
-    }
 
 
 if __name__ == "__main__":
