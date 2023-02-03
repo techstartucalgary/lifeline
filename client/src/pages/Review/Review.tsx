@@ -1,55 +1,39 @@
-// Route: /review
-
-import { Link } from "react-router-dom";
-import { useState } from "react";
 import Button from "../../components/Button";
-import axios from "axios";
-import jsonToICS, { Course } from "../../logic/icsGen";
 
-export default function Review() {
-  const [json, setJson] = useState<Course[]>([]);
-
-  const handleFetchClick = () => {
-    axios.get("/test-calendar-json")
-      .then((res) => {
-        setJson(res.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-
+const Review = () => {
   return (
-    <>
-      <main>
-        <h2>Review/Edit page</h2>
-      </main>
-      <nav>
-        <Link to="/upload">Add more files</Link>
+    <div className="grid grid-cols-5">
+      {/* Left column: navigation bar */}
+      <nav className="col-span-1 bg-gray-800 p-4 flex flex-col">
+        {/* Navigation content */}
+        <Button variant="filled">CPSC 100</Button>
+        <Button variant="filled">CPSC 100</Button>
+        <Button variant="filled">CPSC 100</Button>
+        <Button variant="filled">CPSC 100</Button>
+        <Button variant="filled">CPSC 100</Button>
       </nav>
-      <div>
-        <Button
-          variant="filled"
-          onClick={handleFetchClick}
-        >
-          Get JSON
-        </Button>
+
+      {/* Right column */}
+      <div className="col-span-4">
+        {/* Top app bar */}
+        <header className="bg-gray-600 p-4 text-white">
+          {/* Top app bar content */}
+          <h1>CPSC 413</h1>
+        </header>
+
+        {/* Two equal width columns */}
+        <div className="grid grid-cols-2">
+          <div className="col-span-1 bg-gray-500 p-4">
+            {/* Column 1 content */}
+          </div>
+          <div className="col-span-1 bg-gray-900 p-4">
+            {/* Column 2 content */}
+            <img src="./pdf.png" />
+          </div>
+        </div>
       </div>
-      <div>
-        <p>{JSON.stringify(json)}</p>
-      </div>
-      <a id="ics-download"
-        href={`data:text/plain;charset=utf-8, ${encodeURIComponent(jsonToICS(json))}`}
-        download="deadlines.ics"
-      >
-        <Button
-          variant="filled"
-          id="download"
-          disabled={!json.length}
-        >
-          Download
-        </Button>
-      </a>
-    </>
+    </div>
   );
-}
+};
+
+export default Review;
