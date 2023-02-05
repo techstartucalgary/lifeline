@@ -17,16 +17,8 @@
   </h2>
 </div>
 
-<<<<<<< HEAD
-<p>Lifeline is here to ensure you stay organized and on top of your schedule, all through a fast and easy process. Say goodbye to the stress of managing important dates yourself and <a href="https://lifeline.techstartucalgary.com" target="_blank">discover a better way</a>.</p>
-
-
-
-
-=======
 <p>Lifeline is here to ensure you stay organized and on top of your schedule, all through a fast and easy process. Say goodbye to the stress of managing important dates yourself and discover a better way.</p>
 
 _Lifeline uses AI to extract and organize deadlines from your course documents for you to download._
 
 # **[Try it out here](https://lifeline.techstartucalgary.com)**
->>>>>>> 650d404b22bf68daa1cabd0b9957744912dcce11
