@@ -45,40 +45,11 @@ def get_course_name(path):
 def read_tables(path):
     """Returns all tables in a pdf as a list of 2d lists"""
     with pdfplumber.open(path) as pdf:
-        full_text = ""
         tables = []
         for page in pdf.pages:
             tables.extend(page.extract_tables())
     return tables
 
-def subtract_tables(path):
-    """Returns all plain text contained within pdf with the exception of the tables"""
-    # Retreving all of the content of the pdf 
-    with pdfplumber.open(path) as pdf:
-        full_text = ""
-        for page_num in range(len(pdf.pages)):
-            text = pdf.pages[page_num].extract_text().split()
-            full_text += '\n' + str(text)
-
-    # Retrieving the coordinates of the tables in pdf so we can avoid it 
-    cropped_text = ""
-    ts = {
-        "vertical_strategy": "lines",
-        "horizontal_strategy": "lines",
-    }
-
-    bboxes = [table.bbox for table in pdf.find_tables(table_settings=ts)] # Will contain list of (x0, top, x1, bottom)
-
-    # Cropping the pdf such that the tables are only retained 
-    for coor in range(len(bboxes)):
-        for page_num in range(len(pdf.pages)):
-            table_text = pdf.pages[page_num].crop(bboxes[coor]).extract_text().split()
-            cropped_text += "\n" + str(table_text)
-    
-    # Replacing the final text with the tables taken out 
-    final_text = full_text.replace(cropped_text, " ")
-
-    print("The text without the tables", final_text)
 
 def extract_assessments(table):
     """Returns the assessments in a table by identifying a date
@@ -106,6 +77,7 @@ def extract_assessments(table):
                 # The shortest a date can realistically be is 5 characters. e.g. Dec 1
                 continue
             name = row[0]  # use the text in the first cell as the name
+
             weight = "unknown"
             for cell in row:
                 if cell and "%" in cell:
