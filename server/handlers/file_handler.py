@@ -132,4 +132,4 @@ def handle_upload_file(upload_file: UploadFile):
         response = get_response(tmp_path)
     finally:
         tmp_path.unlink()  # Delete the temp file
-    return [response]  # Inside an array because there could be multiple courses
+    return response
