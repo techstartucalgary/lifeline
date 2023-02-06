@@ -6,22 +6,34 @@ const NavigationDrawer = ({ courses, currentCourse }: { courses: string[], curre
 
   return (
     <div className="flex flex-col w-full md:p-4 p-0 bg-surface">
-      <p className="m-5 ml-2">Courses</p>
+      <p className="m-5 ml-2 font-bold">Courses</p>
 
       {courses.map((course) => (
         <Button
           variant="text"
           to={`/review/${course}`}
           key={course}
-          className={`text-gray-900 mt-2 flex flex-row p-4 ${currentCourse === course && "bg-primary-90"}`}
+          className={classnames(
+            "text-gray-900",
+            "mt-2",
+            "flex",
+            "flex-row",
+            "p-4",
+            currentCourse === course && "bg-primary-90",
+          )}
         >
           <span className="material-icons text-gray-600 text-base flex items-center justify-center">
             {["circle", "square", "pentagon"][Math.abs(course.split("").reduce((a, b) => a + b.charCodeAt(0), 0)) % 3]}
           </span>
-          <p className="flex items-center ml-2">
-            {format(course)}
-          </p>
-          <p className="ml-auto">
+          <div className="flex flex-col ml-2 min-w-0">
+            <p className="flex items-center font-bold">
+              {format(course)}
+            </p>
+            <p className={classnames("truncate", "md:hidden")}>
+              The course descriptions can be quite long, so we truncate them to save space.
+            </p>
+          </div>
+          <p className="ml-auto flex items-center justify-center">
             {Math.abs(course.split("").reduce((a, b) => a + b.charCodeAt(0), 0)) % 10 + 5}
           </p>
           <span className="material-icons text-gray-600 flex items-center justify-center block md:hidden">
@@ -51,7 +63,8 @@ const NavigationDrawer = ({ courses, currentCourse }: { courses: string[], curre
         >
           add
         </span>
-        <p className="flex items-center ml-2">
+        <p className="flex items-center ml-2"
+          style={{ transform: "translateX(-0.4rem)", }}>
           Add course
         </p>
       </Button>
