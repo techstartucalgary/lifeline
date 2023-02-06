@@ -1,11 +1,11 @@
 import { useState } from "react";
 import { useParams, Link } from "react-router-dom";
-import Button from "../../components/Button";
+import NavigationDrawer from "../../components/NavigationDrawer";
 import { classnames } from "../../Utilities";
 
 
 const Review = () => {
-  const courses = ["cpsc-413", "seng-513", "cpsc-481", "cpsc-449", "cpsc-457"];
+  const courses = ["seng-550", "cpsc-329", "data-501", "cpsc-457", "arhi-201"];
   const [selectedTab, setSelectedTab] = useState(0);
   const { courseId } = useParams();
   const format = (courseId: string | undefined) => courseId?.replace("-", " ").toUpperCase();
@@ -14,15 +14,9 @@ const Review = () => {
     <div className="flex flex-row h-screen">
       <nav
         className={classnames(
-          "w-full", "md:w-64", "bg-gray-600", "h-full", "fixed", "flex", "flex-col", "p-4", "items-center", "z-0", !courseId && "z-20"
+          "w-full", "md:w-64", "h-full", "fixed", "flex", "flex-col", "items-center", "z-0", !courseId && "z-20"
         )}>
-        <div className="flex flex-col h-full">
-          {courses.map((course) => (
-            <Button variant={courseId === course ? "filled" : "tonal"} to={`/review/${course}`} key={course}>
-              {format(course)}
-            </Button>
-          ))}
-        </div>
+        <NavigationDrawer courses={courses} currentCourse={courseId} />
       </nav>
       <main className="flex flex-col w-full ml-0 md:ml-64 z-10">
         {courseId ? (
@@ -79,7 +73,10 @@ const Review = () => {
             </div>
           </>
         ) : (
-          <p>upload</p>
+          <p className={classnames(
+            "hidden", "md:block", "bg-gray-300", "w-full", "p-4", "text-xl"
+          )}
+          >Upload</p>
         )}
       </main>
     </div >
