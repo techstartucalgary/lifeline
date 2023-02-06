@@ -3,31 +3,28 @@ import { useParams, Link } from "react-router-dom";
 import Button from "../../components/Button";
 import { classnames } from "../../Utilities";
 
-const courses = ["cpsc-413", "seng-513", "cpsc-481", "cpsc-449", "cpsc-457"];
 
 const Review = () => {
+  const courses = ["cpsc-413", "seng-513", "cpsc-481", "cpsc-449", "cpsc-457"];
   const [selectedTab, setSelectedTab] = useState(0);
   const { courseId } = useParams();
   const format = (courseId: string | undefined) => courseId?.replace("-", " ").toUpperCase();
 
   return (
-    <div className="flex h-screen">
+    <div className="flex flex-row h-screen">
       <nav
         className={classnames(
-          "w-full", "md:w-64", "bg-gray-600", "h-full", "fixed", "left-0", "top-0", "flex", "flex-col", "p-4", "items-center", "z-0", !courseId && "z-20"
-        )}
-      >
+          "w-full", "md:w-64", "bg-gray-600", "h-full", "fixed", "flex", "flex-col", "p-4", "items-center", "z-0", !courseId && "z-20"
+        )}>
         <div className="flex flex-col h-full">
           {courses.map((course) => (
-            <Link to={`/review/${course}`} key={course}>
-              <Button variant={courseId === course ? "filled" : "tonal"}>
-                {format(course)}
-              </Button>
-            </Link>
+            <Button variant={courseId === course ? "filled" : "tonal"} to={`/review/${course}`} key={course}>
+              {format(course)}
+            </Button>
           ))}
         </div>
       </nav>
-      <div className="flex flex-col w-full ml-0 md:ml-64 z-10">
+      <main className="flex flex-col w-full ml-0 md:ml-64 z-10">
         {courseId ? (
           <>
             <header className="bg-gray-300 w-full p-4 text-xl">
@@ -40,7 +37,12 @@ const Review = () => {
                 </span>
 
               </Link>
-              COURSE NAME: {format(courseId)}
+              <h1 className="text-4xl">
+                {format(courseId)}
+              </h1>
+              <h2 className="text-2xl">
+                Explorations in Information Security and Privacy
+              </h2>
             </header>
             <div className="flex flex-col md:flex-row">
               <div className="w-full md:hidden flex flex-row">
@@ -57,9 +59,9 @@ const Review = () => {
                   Document
                 </button>
               </div>
-              <div
-                className={`w-full md:w-1/2 border border-gray-300 bg-gray-200 p-4 h-screen ${selectedTab === 0 ? "" : "hidden md:block"}`}
-              >
+              <section className={classnames(
+                "w-full", "md:w-1/2", "border", "border-gray-300", "bg-gray-200", "p-4", "h-screen", selectedTab === 0 ? "" : "hidden md:block"
+              )}>
                 <ul>
                   <li>Assessment 1</li>
                   <li>Assessment 2</li>
@@ -67,21 +69,55 @@ const Review = () => {
                   <li>Assessment 4</li>
                   <li>Assessment 5</li>
                 </ul>
-              </div>
-              <div
-                className={`w-full md:w-1/2 border border-gray-300 bg-gray-600 p-4 h-screen ${selectedTab === 1 ? "" : "hidden md:block"}`}
-              >
+              </section>
+              <section
+                className={classnames(
+                  "w-full", "md:w-1/2", "border", "border-gray-300", "bg-gray-600", "p-4", "h-screen", selectedTab === 1 ? "" : "hidden md:block"
+                )}>
                 <img src="../pdf.png" alt="the pdf viewer" />
-              </div>
-
+              </section>
             </div>
           </>
         ) : (
           <p>upload</p>
         )}
-      </div>
+      </main>
     </div >
   );
 };
 
 export default Review;
+
+
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const LayoutNoHeader = () => (
+  <div className="flex flex-row">
+    <div className="flex flex-row justify-between bg-gray-300 w-1/2">
+      <nav style={{ width: 260, minWidth: 260, backgroundColor: "red" }}>
+      </nav>
+      <section
+        className={classnames(
+          "bg-blue-300",
+          "h-screen",
+          "max-w-screen-sm",
+          "overflow-x-scroll",
+        )}>
+        <h1 className={classnames("text-4xl")}
+        >CPSC 413</h1>
+        <h2 className={classnames("text-2xl")}>
+          Explorations in Information Security and Privacy
+        </h2>
+        <p>
+          Left section content! Left section content! Left section content! Left section content! Left section content! Left section content! Left section content! Left section content! Left section content! Left section content! Left section content! Left section content!
+        </p>
+      </section>
+    </div>
+    <div className="flex flex-row justify-between bg-gray-300 w-1/2">
+      <section className="bg-red-200 h-screen max-w-screen-sm">
+        <p>
+          Right section content! Right section content! Right section content! Right section content! Right section content! Right section content! Right section content! Right section content! Right section content! Right section content! Right section content!
+        </p>
+      </section>
+    </div>
+  </div>
+);
