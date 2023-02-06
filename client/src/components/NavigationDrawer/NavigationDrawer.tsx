@@ -1,10 +1,11 @@
+import { classnames } from "../../Utilities";
 import Button from "../Button";
 
 const NavigationDrawer = ({ courses, currentCourse }: { courses: string[], currentCourse: string | undefined }) => {
   const format = (courseId: string | undefined) => courseId?.replace("-", " ").toUpperCase();
 
   return (
-    <div className="flex flex-col h-full w-full p-4">
+    <div className="flex flex-col w-full md:p-4 p-0 bg-surface">
       <p className="m-5 ml-2">Courses</p>
 
       {courses.map((course) => (
@@ -14,20 +15,20 @@ const NavigationDrawer = ({ courses, currentCourse }: { courses: string[], curre
           key={course}
           className={`text-gray-900 mt-2 flex flex-row p-4 ${currentCourse === course && "bg-primary-90"}`}
         >
-          {/* Random choice of shape: circle, triangle, square, pentagon, based on the hash of the name */}
           <span className="material-icons text-gray-600 text-base flex items-center justify-center">
             {["circle", "square", "pentagon"][Math.abs(course.split("").reduce((a, b) => a + b.charCodeAt(0), 0)) % 3]}
           </span>
           <p className="flex items-center ml-2">
             {format(course)}
           </p>
-          {/* Random int between 3 and 15, should be at the right end of the button */}
           <p className="ml-auto">
             {Math.abs(course.split("").reduce((a, b) => a + b.charCodeAt(0), 0)) % 10 + 5}
           </p>
+          <span className="material-icons text-gray-600 flex items-center justify-center block md:hidden">
+            arrow_right
+          </span>
         </Button>
       ))}
-      {/* File upload button (html input) */}
       <Button
         variant="text"
         onClick={() => {
@@ -54,9 +55,10 @@ const NavigationDrawer = ({ courses, currentCourse }: { courses: string[], curre
           Add course
         </p>
       </Button>
-      <hr className="border-gray-300 p-2" />
+      <hr className="border-gray-300 p-2 hidden md:block" />
       <Button variant="filled"
-        className="p-4 rounded-3xl"
+        // on mobile it sits in the absolute bottom right and is only as wide as the text. Has a shadow on mobile
+        className={classnames("fixed", "bottom-0", "right-0", "md:relative", "p-4", "m-5", "mb-10", "md:m-0", "shadow-lg", "md:shadow-none", "rounded-2xl", "md:rounded-3xl")}
       >
         <span className="material-icons flex items-center justify-center"
           style={{ marginLeft: "-0.4rem" }}
@@ -67,17 +69,6 @@ const NavigationDrawer = ({ courses, currentCourse }: { courses: string[], curre
           Export
         </p>
       </Button>
-      {/* <Button
-        variant="text"
-        className={"text-gray-900 mt-2 flex flex-row p-4 bg-primary-90"}
-      >
-        <span className="material-icons text-gray-600 text-base flex items-center justify-center">
-          add
-        </span>
-        <p className="flex items-center ml-2">
-          Add
-        </p>
-      </Button> */}
     </div >
   );
 };

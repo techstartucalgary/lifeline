@@ -14,7 +14,7 @@ const Review = () => {
     <div className="flex flex-row h-screen">
       <nav
         className={classnames(
-          "w-full", "md:w-64", "h-full", "fixed", "flex", "flex-col", "items-center", "z-0", !courseId && "z-20"
+          "w-full", "md:w-64", "h-full", "absolute", "flex", "flex-col", "items-center", "z-0", !courseId && "z-20"
         )}>
         <NavigationDrawer courses={courses} currentCourse={courseId} />
       </nav>
