@@ -35,10 +35,11 @@ const NavigationDrawer = ({ data, currentCourse, setData }:
         }
 
         setData({ ...data, ...res.data });
-        setLoading([]);
       })
       .catch((error) => {
         console.log(error);
+      }).finally(() => {
+        setLoading([]);
       });
   };
 
