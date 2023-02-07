@@ -36,9 +36,9 @@ def get_course_name(path):
                 break
 
     if course_number:
-        return f"{course_code.lower()}-{course_number}"
+        return f"{course_code} {course_number}"
     if course_code:
-        return course_code.lower()
+        return course_code
     return "unknown course"
 
 

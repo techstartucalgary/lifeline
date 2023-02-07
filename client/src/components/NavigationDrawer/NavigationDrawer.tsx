@@ -2,14 +2,16 @@ import axios from "axios";
 import { classnames } from "../../Utilities";
 import Button from "../Button";
 import jsonToICS, { Response } from "../../logic/icsGen";
+import { useState } from "react";
 
 const NavigationDrawer = ({ data, currentCourse, setData }:
   { data: Response, currentCourse: string | undefined, setData: (data: Response) => void }) => {
-  const format = (courseId: string | undefined) => courseId?.replace("-", " ").toUpperCase();
-  const unformat = (courseId: string | undefined) => courseId?.replace(" ", "-").toLowerCase();
+  const [loading, setLoading] = useState<string[]>([]);
 
   const handleOutlineUpload = (e: any) => {
     const files = e.target.files;
+    setLoading(Array.from(files).map((f: any) => f.name));
+
     const formData = new FormData();
     for (let i = 0; i < files.length; i++)
       formData.append("outline_files", files[i]);
@@ -18,7 +20,19 @@ const NavigationDrawer = ({ data, currentCourse, setData }:
       headers: { "Content-Type": "multipart/form-data" }
     })
       .then(res => {
+        // if they share a key, rename the new one
+        for (const key in res.data) {
+          if (key in data) {
+            let i = 1;
+            while (`${key} (${i})` in data)
+              i++;
+            res.data[`${key} (${i})`] = res.data[key];
+            delete res.data[key];
+          }
+        }
+
         setData({ ...data, ...res.data });
+        setLoading([]);
       })
       .catch((error) => {
         console.log(error);
@@ -32,7 +46,7 @@ const NavigationDrawer = ({ data, currentCourse, setData }:
       {data && Object.entries(data).map(([course, courseData]) => (
         <Button
           variant="text"
-          to={`/review/${unformat(course)}`}
+          to={`/review/${course}`}
           key={course}
           className={classnames(
             "text-gray-900",
@@ -40,7 +54,7 @@ const NavigationDrawer = ({ data, currentCourse, setData }:
             "flex",
             "flex-row",
             "p-4",
-            currentCourse === format(course) && "bg-primary-90",
+            currentCourse === course && "bg-primary-90",
           )}
         >
           <span className="material-icons text-gray-600 text-base flex items-center justify-center">
@@ -48,11 +62,10 @@ const NavigationDrawer = ({ data, currentCourse, setData }:
           </span>
           <div className="flex flex-col ml-2 min-w-0">
             <p className="flex items-center font-bold">
-              {format(course)}
+              {course}
             </p>
             <p className={classnames("truncate", "md:hidden")}>
-              {/* {courseData.topic}  */}
-              The course.course descriptions can be quite long, so we truncate them to save space.
+              {courseData.topic} - The course.course descriptions can be quite long, so we truncate them to save space.
             </p>
           </div>
           <p className="ml-auto flex items-center justify-center">
@@ -63,6 +76,26 @@ const NavigationDrawer = ({ data, currentCourse, setData }:
           </span>
         </Button>
       ))}
+      {loading.length > 0 && (
+        <div className="flex flex-col w-full">
+          {loading.map((file) => (
+            <Button
+              variant="text"
+              key={file}
+              className={classnames("text-gray-900", "mt-2", "flex", "flex-row", "p-4", "opacity-50", "pointer-events-none",
+              )}>
+              <span className="material-icons text-gray-600 text-base flex items-center justify-center animate-spin">
+                autorenew
+              </span>
+              <div className="flex flex-col ml-2 min-w-0">
+                <p className={classnames("truncate")}>
+                  {file}
+                </p>
+              </div>
+            </Button>
+          ))}
+        </div>
+      )}
       <Button
         variant="text"
         onClick={() => {

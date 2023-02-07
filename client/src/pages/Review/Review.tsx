@@ -10,7 +10,6 @@ import { Response, Assessment } from "../../logic/icsGen";
 const Review = () => {
   const [selectedTab, setSelectedTab] = useState(0);
   const { courseId } = useParams();
-  const format = (courseId: string | undefined): string | undefined => courseId?.replace("-", " ").toUpperCase();
 
   const [data, setData] = useState<Response>({});
 
@@ -20,7 +19,7 @@ const Review = () => {
         className={classnames(
           "w-full", "md:w-64", "h-full", "absolute", "flex", "flex-col", "items-center", "z-0", !courseId && "z-20"
         )}>
-        <NavigationDrawer currentCourse={format(courseId)} data={data} setData={setData} />
+        <NavigationDrawer currentCourse={courseId} data={data} setData={setData} />
       </nav>
       <main className="flex flex-col w-full ml-0 md:ml-64 z-10">
         {courseId ? (
@@ -36,10 +35,10 @@ const Review = () => {
 
               </Link>
               <h1 className="text-4xl">
-                {format(courseId)}
+                {courseId}
               </h1>
               <h2 className="text-2xl">
-                Explorations in Information Security and Privacy
+                {data[courseId]?.topic}
               </h2>
             </header>
             <div className="flex flex-col md:flex-row">
