@@ -2,9 +2,7 @@ import { useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import NavigationDrawer from "../../components/NavigationDrawer";
 import { classnames } from "../../Utilities";
-import { Course } from "../../logic/icsGen";
-import Button from "../../components/Button";
-import { Response, Assessment } from "../../logic/icsGen";
+import { Response } from "../../logic/icsGen";
 
 
 const Review = () => {

@@ -2,15 +2,18 @@ import axios from "axios";
 import { classnames } from "../../Utilities";
 import Button from "../Button";
 import jsonToICS, { Response } from "../../logic/icsGen";
-import { useState } from "react";
+import { useState, useRef } from "react";
 
 const NavigationDrawer = ({ data, currentCourse, setData }:
   { data: Response, currentCourse: string | undefined, setData: (data: Response) => void }) => {
   const [loading, setLoading] = useState<string[]>([]);
+  const inputRef = useRef<HTMLInputElement>(null);
 
-  const handleOutlineUpload = (e: any) => {
+  const handleOutlineUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
-    setLoading(Array.from(files).map((f: any) => f.name));
+    if (!files)
+      return;
+    setLoading(Array.from(files).map((f: File) => f.name));
 
     const formData = new FormData();
     for (let i = 0; i < files.length; i++)
@@ -99,16 +102,18 @@ const NavigationDrawer = ({ data, currentCourse, setData }:
       <Button
         variant="text"
         onClick={() => {
-          const input = document.createElement("input");
-          input.type = "file";
-          input.accept = ".pdf";
-          // allow multiple files to be uploaded
-          input.multiple = true;
-          input.onchange = handleOutlineUpload;
-          input.click();
+          inputRef.current?.click();
         }}
         className="text-gray-900 mt-2 p-4"
       >
+        <input
+          ref={inputRef}
+          type="file"
+          accept=".pdf"
+          multiple
+          onChange={handleOutlineUpload}
+          className="hidden"
+        />
         <span
           className="material-icons text-gray-600 flex items-center justify-center"
           style={{ marginLeft: "-0.4rem" }}
