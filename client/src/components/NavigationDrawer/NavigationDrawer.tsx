@@ -1,7 +1,7 @@
 import axios from "axios";
 import { classnames } from "../../Utilities";
 import Button from "../Button";
-import { Response } from "../../logic/icsGen";
+import jsonToICS, { Response } from "../../logic/icsGen";
 
 const NavigationDrawer = ({ data, currentCourse, setData }:
   { data: Response, currentCourse: string | undefined, setData: (data: Response) => void }) => {
@@ -13,7 +13,6 @@ const NavigationDrawer = ({ data, currentCourse, setData }:
     const formData = new FormData();
     for (let i = 0; i < files.length; i++)
       formData.append("outline_files", files[i]);
-
 
     axios.post("/files", formData, {
       headers: { "Content-Type": "multipart/form-data" }
@@ -92,6 +91,12 @@ const NavigationDrawer = ({ data, currentCourse, setData }:
       <Button variant="filled"
         // on mobile it sits in the absolute bottom right and is only as wide as the text. Has a shadow on mobile
         className={classnames("fixed", "bottom-0", "right-0", "md:relative", "p-4", "m-5", "mb-10", "md:m-0", "shadow-lg", "md:shadow-none", "rounded-2xl", "md:rounded-3xl")}
+        onClick={() => {
+          const a = document.createElement("a");
+          a.href = `data:text/plain;charset=utf-8,${encodeURIComponent(jsonToICS(data))}`;
+          a.download = "deadlines.ics";
+          a.click();
+        }}
       >
         <span className="material-icons flex items-center justify-center"
           style={{ marginLeft: "-0.4rem" }}

@@ -1,6 +1,6 @@
 import { createEvents, EventAttributes } from "ics";
 
-interface Assessment {
+export interface Assessment {
   name: string;
   date: string;
   weight: string;
@@ -21,22 +21,22 @@ export interface Response {
   [key: string]: CourseData;
 }
 
-function jsonToICS(semester: Course[]): string {
+function jsonToICS(data: Response): string {
   const events: EventAttributes[] = [];
-  for (const course of semester) {
-    for (const assessment of course.assessments) {
+  Object.entries(data).forEach(([course, courseData]) => {
+    for (const assessment of courseData.assessments) {
       const [date, time] = assessment.date.split("T");
       const [year, month, day] = date.split("-");
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const [hours, minutes, milis] = time.split(":");
 
       events.push({
-        title: `${course.course} ${assessment.name} (${assessment.weight}%)`,
+        title: `${course} ${assessment.name} (${assessment.weight}%)`,
         start: [parseInt(year), parseInt(month), parseInt(day), parseInt(hours), parseInt(minutes)],
         duration: { hours: 0, minutes: 0, seconds: 0 },
       });
     }
-  }
+  });
 
   const { error, value } = createEvents(events);
   if (error) {

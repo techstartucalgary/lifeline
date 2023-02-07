@@ -4,7 +4,7 @@ import NavigationDrawer from "../../components/NavigationDrawer";
 import { classnames } from "../../Utilities";
 import { Course } from "../../logic/icsGen";
 import Button from "../../components/Button";
-import { Response } from "../../logic/icsGen";
+import { Response, Assessment } from "../../logic/icsGen";
 
 
 const Review = () => {
