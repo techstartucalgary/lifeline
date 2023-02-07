@@ -9,6 +9,8 @@ const NavigationDrawer = ({ data, currentCourse, setData }:
   const [loading, setLoading] = useState<string[]>([]);
   const inputRef = useRef<HTMLInputElement>(null);
 
+  const urlFormat = (course: string) => (course.replace(/ /g, "-").toLowerCase());
+
   const handleOutlineUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
     if (!files)
@@ -50,7 +52,7 @@ const NavigationDrawer = ({ data, currentCourse, setData }:
       {data && Object.entries(data).map(([course, courseData]) => (
         <Button
           variant="text"
-          to={`/review/${course}`}
+          to={`/review/${urlFormat(course)}`}
           key={course}
           className={classnames(
             "text-gray-900",

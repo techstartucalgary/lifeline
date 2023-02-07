@@ -7,7 +7,10 @@ import { Response } from "../../logic/icsGen";
 
 const Review = () => {
   const [selectedTab, setSelectedTab] = useState(0);
-  const { courseId } = useParams();
+  const displayFormat = (course: string) => (course.replace(/-/g, " ").toUpperCase());
+
+  let { courseId } = useParams();
+  courseId = courseId ? displayFormat(courseId) : undefined;
 
   const [data, setData] = useState<Response>({});
 
