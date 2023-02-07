@@ -2,13 +2,17 @@ import { useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import NavigationDrawer from "../../components/NavigationDrawer";
 import { classnames } from "../../Utilities";
+import { Course } from "../../logic/icsGen";
+import Button from "../../components/Button";
+import { Response } from "../../logic/icsGen";
 
 
 const Review = () => {
-  const courses = ["seng-550", "cpsc-329", "data-501", "cpsc-457", "arhi-201"];
   const [selectedTab, setSelectedTab] = useState(0);
   const { courseId } = useParams();
-  const format = (courseId: string | undefined) => courseId?.replace("-", " ").toUpperCase();
+  const format = (courseId: string | undefined): string | undefined => courseId?.replace("-", " ").toUpperCase();
+
+  const [data, setData] = useState<Response>({});
 
   return (
     <div className="flex flex-row h-screen">
@@ -16,7 +20,7 @@ const Review = () => {
         className={classnames(
           "w-full", "md:w-64", "h-full", "absolute", "flex", "flex-col", "items-center", "z-0", !courseId && "z-20"
         )}>
-        <NavigationDrawer courses={courses} currentCourse={courseId} />
+        <NavigationDrawer currentCourse={format(courseId)} data={data} setData={setData} />
       </nav>
       <main className="flex flex-col w-full ml-0 md:ml-64 z-10">
         {courseId ? (
@@ -57,11 +61,11 @@ const Review = () => {
                 "w-full", "md:w-1/2", "border", "border-gray-300", "bg-gray-200", "p-4", "h-screen", selectedTab === 0 ? "" : "hidden md:block"
               )}>
                 <ul>
-                  <li>Assessment 1</li>
-                  <li>Assessment 2</li>
-                  <li>Assessment 3</li>
-                  <li>Assessment 4</li>
-                  <li>Assessment 5</li>
+                  {data[courseId]?.assessments.map((assessment, index) => (
+                    <li key={index}>
+                      <h3 className="text-2xl">{assessment.name}</h3>
+                    </li>
+                  ))}
                 </ul>
               </section>
               <section

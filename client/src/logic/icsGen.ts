@@ -12,6 +12,15 @@ export interface Course {
   assessments: Assessment[];
 }
 
+export interface CourseData {
+  topic: string;
+  assessments: Assessment[];
+}
+
+export interface Response {
+  [key: string]: CourseData;
+}
+
 function jsonToICS(semester: Course[]): string {
   const events: EventAttributes[] = [];
   for (const course of semester) {

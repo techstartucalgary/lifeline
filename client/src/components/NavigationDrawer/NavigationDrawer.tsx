@@ -1,17 +1,39 @@
+import axios from "axios";
 import { classnames } from "../../Utilities";
 import Button from "../Button";
+import { Response } from "../../logic/icsGen";
 
-const NavigationDrawer = ({ courses, currentCourse }: { courses: string[], currentCourse: string | undefined }) => {
+const NavigationDrawer = ({ data, currentCourse, setData }:
+  { data: Response, currentCourse: string | undefined, setData: (data: Response) => void }) => {
   const format = (courseId: string | undefined) => courseId?.replace("-", " ").toUpperCase();
+  const unformat = (courseId: string | undefined) => courseId?.replace(" ", "-").toLowerCase();
+
+  const handleOutlineUpload = (e: any) => {
+    const files = e.target.files;
+    const formData = new FormData();
+    for (let i = 0; i < files.length; i++)
+      formData.append("outline_files", files[i]);
+
+
+    axios.post("/files", formData, {
+      headers: { "Content-Type": "multipart/form-data" }
+    })
+      .then(res => {
+        setData({ ...data, ...res.data });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
   return (
     <div className="flex flex-col w-full md:p-4 p-0 bg-surface">
       <p className="m-5 ml-2 font-bold">Courses</p>
 
-      {courses.map((course) => (
+      {data && Object.entries(data).map(([course, courseData]) => (
         <Button
           variant="text"
-          to={`/review/${course}`}
+          to={`/review/${unformat(course)}`}
           key={course}
           className={classnames(
             "text-gray-900",
@@ -19,7 +41,7 @@ const NavigationDrawer = ({ courses, currentCourse }: { courses: string[], curre
             "flex",
             "flex-row",
             "p-4",
-            currentCourse === course && "bg-primary-90",
+            currentCourse === format(course) && "bg-primary-90",
           )}
         >
           <span className="material-icons text-gray-600 text-base flex items-center justify-center">
@@ -30,11 +52,12 @@ const NavigationDrawer = ({ courses, currentCourse }: { courses: string[], curre
               {format(course)}
             </p>
             <p className={classnames("truncate", "md:hidden")}>
-              The course descriptions can be quite long, so we truncate them to save space.
+              {/* {courseData.topic}  */}
+              The course.course descriptions can be quite long, so we truncate them to save space.
             </p>
           </div>
           <p className="ml-auto flex items-center justify-center">
-            {Math.abs(course.split("").reduce((a, b) => a + b.charCodeAt(0), 0)) % 10 + 5}
+            {courseData.assessments.length}
           </p>
           <span className="material-icons text-gray-600 flex items-center justify-center block md:hidden">
             arrow_right
@@ -47,12 +70,9 @@ const NavigationDrawer = ({ courses, currentCourse }: { courses: string[], curre
           const input = document.createElement("input");
           input.type = "file";
           input.accept = ".pdf";
-          input.onchange = (e) => {
-            const file = (e.target as HTMLInputElement).files?.[0];
-            if (file) {
-              console.log(file);
-            }
-          };
+          // allow multiple files to be uploaded
+          input.multiple = true;
+          input.onchange = handleOutlineUpload;
           input.click();
         }}
         className="text-gray-900 mt-2 p-4"
