@@ -4,6 +4,7 @@ import shutil
 from pathlib import Path
 import pickle
 from tempfile import NamedTemporaryFile
+from typing import List
 from fastapi import UploadFile
 import pdfplumber
 from datefinder import find_dates
@@ -120,7 +121,7 @@ def save_upload_file_tmp(upload_file: UploadFile):
     return tmp_path
 
 
-def handle_files(files: list[UploadFile]):
+def handle_files(files: List[UploadFile]):
     """Handles multiple files"""
     result = {}
     for file in files:
