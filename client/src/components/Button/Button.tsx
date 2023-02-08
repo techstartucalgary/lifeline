@@ -52,8 +52,6 @@ const Button = ({ variant = "text", children, className, to, ...props }: ButtonP
     if (props.onMouseDown) props.onMouseDown(event);
   }, [props]);
 
-  console.log(styles);
-
   return (
     <button
       {...props}
