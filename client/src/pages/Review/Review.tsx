@@ -107,37 +107,3 @@ const Review = () => {
 };
 
 export default Review;
-
-
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const LayoutNoHeader = () => (
-  <div className="flex flex-row">
-    <div className="flex flex-row justify-between bg-gray-300 w-1/2">
-      <nav style={{ width: 260, minWidth: 260, backgroundColor: "red" }}>
-      </nav>
-      <section
-        className={classnames(
-          "bg-blue-300",
-          "h-screen",
-          "max-w-screen-sm",
-          "overflow-x-scroll",
-        )}>
-        <h1 className={classnames("text-4xl")}
-        >CPSC 413</h1>
-        <h2 className={classnames("text-2xl")}>
-          Explorations in Information Security and Privacy
-        </h2>
-        <p>
-          Left section content! Left section content! Left section content! Left section content! Left section content! Left section content! Left section content! Left section content! Left section content! Left section content! Left section content! Left section content!
-        </p>
-      </section>
-    </div>
-    <div className="flex flex-row justify-between bg-gray-300 w-1/2">
-      <section className="bg-red-200 h-screen max-w-screen-sm">
-        <p>
-          Right section content! Right section content! Right section content! Right section content! Right section content! Right section content! Right section content! Right section content! Right section content! Right section content! Right section content!
-        </p>
-      </section>
-    </div>
-  </div>
-);
