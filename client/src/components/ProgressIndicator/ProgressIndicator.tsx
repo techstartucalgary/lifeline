@@ -10,7 +10,7 @@ interface ProgressIndicatorProps extends HTMLAttributes<HTMLDivElement> {
   progress?: number;
   strokeWidth?: number | string;
 }
-
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const ProgressIndicator = ({ determinate, className, strokeWidth = "0.5rem" }: ProgressIndicatorProps) => {
   return (
     <>

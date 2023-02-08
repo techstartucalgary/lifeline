@@ -8,7 +8,7 @@ import styles from "./Button.module.css";
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: "filled" | "tonal" | "text";
   to?: To;
-};
+}
 
 const base = `
   bg-transparent text-primary text-center font-medium tracking-[0.01rem]
