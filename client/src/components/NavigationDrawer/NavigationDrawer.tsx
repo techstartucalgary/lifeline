@@ -1,12 +1,17 @@
 import axios from "axios";
 import { classnames } from "../../Utilities";
 import Button from "../Button";
-import jsonToICS, { Response } from "../../logic/icsGen";
+import jsonToICS, { Courses } from "../../logic/icsGen";
 import { useState, useRef } from "react";
 
-const NavigationDrawer = ({ data, currentCourse, setData }:
-  { data: Response, currentCourse: string | undefined, setData: (data: Response) => void }) => {
-  const [loading, setLoading] = useState<string[]>([]);
+interface NavigationDrawerProps {
+  courses: Courses;
+  currentCourseKeyString: string | undefined;
+  onCoursesChanged: (courses: Courses) => void;
+}
+
+const NavigationDrawer = ({ courses, currentCourseKeyString, onCoursesChanged }: NavigationDrawerProps) => {
+  const [loading, setLoading] = useState<string[]>(["long is long super longpdf.pdf"]);
   const inputRef = useRef<HTMLInputElement>(null);
 
   const urlFormat = (course: string) => (course.replace(/ /g, "-").toLowerCase());
@@ -27,16 +32,16 @@ const NavigationDrawer = ({ data, currentCourse, setData }:
       .then(res => {
         // if they share a key, rename the new one
         for (const key in res.data) {
-          if (key in data) {
+          if (key in courses) {
             let i = 1;
-            while (`${key} (${i})` in data)
+            while (`${key} (${i})` in courses)
               i++;
             res.data[`${key} (${i})`] = res.data[key];
             delete res.data[key];
           }
         }
 
-        setData({ ...data, ...res.data });
+        onCoursesChanged(res.data);
       })
       .catch((error) => {
         console.log(error);
@@ -45,11 +50,18 @@ const NavigationDrawer = ({ data, currentCourse, setData }:
       });
   };
 
+  const handleExport = () => {
+    const a = document.createElement("a");
+    a.href = `data:text/plain;charset=utf-8,${encodeURIComponent(jsonToICS(courses))}`;
+    a.download = "deadlines.ics";
+    a.click();
+  };
+
   return (
     <div className="flex flex-col w-full md:p-4 p-0 bg-surface">
       <p className="m-5 ml-2 font-bold">Courses</p>
 
-      {data && Object.entries(data).map(([course, courseData]) => (
+      {courses && Object.entries(courses).map(([course, courseData]) => (
         <Button
           variant="text"
           to={`/review/${urlFormat(course)}`}
@@ -60,7 +72,7 @@ const NavigationDrawer = ({ data, currentCourse, setData }:
             "flex",
             "flex-row",
             "p-4",
-            currentCourse === course && "bg-primary-90",
+            currentCourseKeyString === course && "bg-primary-90",
           )}
         >
           <span className="material-icons text-gray-600 text-base flex items-center justify-center">
@@ -88,8 +100,9 @@ const NavigationDrawer = ({ data, currentCourse, setData }:
             <Button
               variant="text"
               key={file}
-              className={classnames("text-gray-900", "mt-2", "flex", "flex-row", "p-4", "opacity-50", "pointer-events-none",
-              )}>
+              disabled
+              className={classnames("mt-2", "flex-row", "p-4",)}
+            >
               <span className="material-icons text-gray-600 text-base flex items-center justify-center animate-spin">
                 autorenew
               </span>
@@ -132,12 +145,7 @@ const NavigationDrawer = ({ data, currentCourse, setData }:
       <Button variant="filled"
         // on mobile it sits in the absolute bottom right and is only as wide as the text. Has a shadow on mobile
         className={classnames("fixed", "bottom-0", "right-0", "md:relative", "p-4", "m-5", "mb-10", "md:m-0", "shadow-lg", "md:shadow-none", "rounded-2xl", "md:rounded-3xl")}
-        onClick={() => {
-          const a = document.createElement("a");
-          a.href = `data:text/plain;charset=utf-8,${encodeURIComponent(jsonToICS(data))}`;
-          a.download = "deadlines.ics";
-          a.click();
-        }}
+        onClick={handleExport}
       >
         <span className="material-icons flex items-center justify-center"
           style={{ marginLeft: "-0.4rem" }}
@@ -153,3 +161,4 @@ const NavigationDrawer = ({ data, currentCourse, setData }:
 };
 
 export default NavigationDrawer;
+export type { NavigationDrawerProps };

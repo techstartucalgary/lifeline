@@ -7,21 +7,15 @@ export interface Assessment {
 }
 
 export interface Course {
-  course: string;
   topic: string;
   assessments: Assessment[];
 }
 
-export interface CourseData {
-  topic: string;
-  assessments: Assessment[];
+export interface Courses {
+  [key: string]: Course;
 }
 
-export interface Response {
-  [key: string]: CourseData;
-}
-
-function jsonToICS(data: Response): string {
+function jsonToICS(data: Courses): string {
   const events: EventAttributes[] = [];
   Object.entries(data).forEach(([course, courseData]) => {
     for (const assessment of courseData.assessments) {

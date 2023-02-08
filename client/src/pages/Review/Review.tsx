@@ -2,17 +2,21 @@ import { useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import NavigationDrawer from "../../components/NavigationDrawer";
 import { classnames } from "../../Utilities";
-import { Response } from "../../logic/icsGen";
+import { Courses } from "../../logic/icsGen";
 
 
 const Review = () => {
   const [selectedTab, setSelectedTab] = useState(0);
+  const [courses, setCourses] = useState<Courses>({});
   const displayFormat = (course: string) => (course.replace(/-/g, " ").toUpperCase());
 
   let { courseId } = useParams();
   courseId = courseId ? displayFormat(courseId) : undefined;
 
-  const [data, setData] = useState<Response>({});
+  const onCoursesChanged = (newCourses: Courses) => {
+    setCourses({ ...courses, ...newCourses });
+  };
+
 
   return (
     <div className="flex flex-row h-screen">
@@ -20,7 +24,7 @@ const Review = () => {
         className={classnames(
           "w-full", "md:w-64", "h-full", "absolute", "flex", "flex-col", "items-center", "z-0", !courseId && "z-20"
         )}>
-        <NavigationDrawer currentCourse={courseId} data={data} setData={setData} />
+        <NavigationDrawer currentCourseKeyString={courseId} courses={courses} onCoursesChanged={onCoursesChanged} />
       </nav>
       <main className="flex flex-col w-full ml-0 md:ml-64 z-10">
         {courseId ? (
@@ -39,7 +43,7 @@ const Review = () => {
                 {courseId}
               </h1>
               <h2 className="text-2xl">
-                {data[courseId]?.topic}
+                {courses[courseId]?.topic}
               </h2>
             </header>
             <div className="flex flex-col md:flex-row">
@@ -61,7 +65,7 @@ const Review = () => {
                 "w-full", "md:w-1/2", "border", "border-gray-300", "bg-gray-200", "p-4", "h-screen", selectedTab === 0 ? "" : "hidden md:block"
               )}>
                 <ul>
-                  {data[courseId]?.assessments.map((assessment, index) => (
+                  {courses[courseId]?.assessments.map((assessment, index) => (
                     <li key={index}>
                       <h3 className="text-2xl">{assessment.name}</h3>
                     </li>
@@ -88,37 +92,3 @@ const Review = () => {
 };
 
 export default Review;
-
-
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const LayoutNoHeader = () => (
-  <div className="flex flex-row">
-    <div className="flex flex-row justify-between bg-gray-300 w-1/2">
-      <nav style={{ width: 260, minWidth: 260, backgroundColor: "red" }}>
-      </nav>
-      <section
-        className={classnames(
-          "bg-blue-300",
-          "h-screen",
-          "max-w-screen-sm",
-          "overflow-x-scroll",
-        )}>
-        <h1 className={classnames("text-4xl")}
-        >CPSC 413</h1>
-        <h2 className={classnames("text-2xl")}>
-          Explorations in Information Security and Privacy
-        </h2>
-        <p>
-          Left section content! Left section content! Left section content! Left section content! Left section content! Left section content! Left section content! Left section content! Left section content! Left section content! Left section content! Left section content!
-        </p>
-      </section>
-    </div>
-    <div className="flex flex-row justify-between bg-gray-300 w-1/2">
-      <section className="bg-red-200 h-screen max-w-screen-sm">
-        <p>
-          Right section content! Right section content! Right section content! Right section content! Right section content! Right section content! Right section content! Right section content! Right section content! Right section content! Right section content!
-        </p>
-      </section>
-    </div>
-  </div>
-);
