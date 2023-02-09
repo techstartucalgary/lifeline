@@ -1,14 +1,23 @@
 import { useState } from "react";
 import { useParams, Link } from "react-router-dom";
-import Button from "../../components/Button";
+import NavigationDrawer from "../../components/NavigationDrawer";
 import { classnames } from "../../Utilities";
+import { Courses } from "../../logic/icsGen";
 import styles from "./Review.module.css";
 
 
 const Review = () => {
   const [selectedTab, setSelectedTab] = useState(0);
-  const { courseId } = useParams();
-  const format = (courseId: string | undefined) => courseId?.replace("-", " ").toUpperCase();
+  const [courses, setCourses] = useState<Courses>({});
+  const displayFormat = (course: string) => (course.replace(/-/g, " ").toUpperCase());
+
+  let { courseId } = useParams();
+  courseId = courseId ? displayFormat(courseId) : undefined;
+
+  const onCoursesChanged = (newCourses: Courses) => {
+    setCourses({ ...courses, ...newCourses });
+  };
+
 
   return (
     <div className="flex flex-row justify-between">
@@ -16,9 +25,10 @@ const Review = () => {
         className={classnames("md:w-64", "w-full", "flex-shrink-0", courseId && "hidden", "md:block", "bg-gray-100",
         )}
       >
-        <Button to={"/review/example1"}>Example1</Button>
-        <Button to={"/review/example2"}>Example2</Button>
-        <Button to={"/review/example3"}>Example2</Button>
+        <NavigationDrawer
+          courses={courses}
+          currentCourseKeyString={courseId}
+          onCoursesChanged={onCoursesChanged} />
       </nav>
       <main
         className={classnames(
@@ -36,7 +46,7 @@ const Review = () => {
             </span>
           </Link>
           <h1 className="text-4xl">
-            {format(courseId)}
+            {courseId && displayFormat(courseId)}
           </h1>
           <h2 className="text-2xl">
             Explorations in Information Security and Privacy

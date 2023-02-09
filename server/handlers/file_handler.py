@@ -6,6 +6,7 @@ import shutil
 from pathlib import Path
 import pickle
 from tempfile import NamedTemporaryFile
+from typing import List
 from fastapi import UploadFile
 import pdfplumber
 from datefinder import find_dates
@@ -14,6 +15,7 @@ from dateparser.search import search_dates
 
 # supported course codes taken from
 # https://www.ucalgary.ca/pubs/calendar/current/course-desc-main.html
+
 def cache_course_codes():
     """
     Returns a list of all course codes
@@ -152,7 +154,7 @@ def extract_assessments(table):
     return assessments
 
 
-def get_response(tmp_path):
+def get_assessments(tmp_path):
     """Compiles assessments into the correct format and returns
     the body of the response"""
 
@@ -183,11 +185,17 @@ def save_upload_file_tmp(upload_file: UploadFile):
     return tmp_path
 
 
-def handle_upload_file(upload_file: UploadFile):
-    """Main function for handling the post request"""
-    tmp_path = save_upload_file_tmp(upload_file)
-    try:
-        response = get_response(tmp_path)
-    finally:
-        tmp_path.unlink()  # Delete the temp file
-    return response
+def handle_files(files: List[UploadFile]):
+    """Handles multiple files"""
+    result = {}
+    for file in files:
+        try:
+            tmp_path = save_upload_file_tmp(file)
+            name = get_course_name(tmp_path)
+            topic = "unknown topic"
+            assessments = get_assessments(tmp_path)
+            result[name] = {"topic": topic, "assessments": assessments}
+        finally:
+            tmp_path.unlink()
+
+    return result
