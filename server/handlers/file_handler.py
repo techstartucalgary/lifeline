@@ -51,24 +51,23 @@ with open("./data/course-info.jsonlines", "r") as file:
         course_info[key] = ci
 
 
-def get_course_key(path):
+def get_course_key(pdf):
     """Attempts to get the course name from the first page of the pdf
     by matching words against the list of course codes"""
-    with pdfplumber.open(path) as pdf:
-        first_page_words = pdf.pages[0].extract_text().split()
+    first_page_words = pdf.pages[0].extract_text().split()
 
-        course_number = None
-        course_code = None
+    course_number = None
+    course_code = None
 
-        for index, word in enumerate(first_page_words):
-            if word in course_codes:
-                course_code = word
-                potential_course_number = first_page_words[index + 1]
-                try:
-                    course_number = int(potential_course_number.strip(".,"))
-                except ValueError:
-                    pass
-                break
+    for index, word in enumerate(first_page_words):
+        if word in course_codes:
+            course_code = word
+            potential_course_number = first_page_words[index + 1]
+            try:
+                course_number = int(potential_course_number.strip(".,"))
+            except ValueError:
+                pass
+            break
 
     if course_number:
         return f"{course_code} {course_number}"
@@ -82,12 +81,11 @@ def get_course_info(course_key):
     return course_info[course_key]
 
 
-def read_tables(path):
+def read_tables(pdf):
     """Returns all tables in a pdf as a list of 2d lists"""
-    with pdfplumber.open(path) as pdf:
-        tables = []
-        for page in pdf.pages:
-            tables.extend(page.extract_tables())
+    tables = []
+    for page in pdf.pages:
+        tables.extend(page.extract_tables())
     return tables
 
 
@@ -139,17 +137,19 @@ def extract_assessments(table):
 def get_response(tmp_path):
     """Compiles assessments into the correct format and returns
     the body of the response"""
-    tables = read_tables(tmp_path)
+    
+    with pdfplumber.open(tmp_path) as pdf:
+        tables = read_tables(pdf)
 
-    assessments = []
-    for table in tables:
-        assessments.extend(extract_assessments(table))
+        assessments = []
+        for table in tables:
+            assessments.extend(extract_assessments(table))
 
-    result = {
-        "course": get_course_key(tmp_path),
-        "topic": "unknown topic",  # will get this later
-        "assessments": assessments,
-    }
+        result = {
+            "course": get_course_key(pdf),
+            "topic": "unknown topic",  # will get this later
+            "assessments": assessments,
+        }
     return result
 
 
