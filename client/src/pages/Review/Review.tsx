@@ -4,7 +4,6 @@ import NavigationDrawer from "../../components/NavigationDrawer";
 import { classnames } from "../../Utilities";
 import { Courses } from "../../logic/icsGen";
 import styles from "./Review.module.css";
-import Button from "../../components/Button";
 
 
 const Review = () => {
