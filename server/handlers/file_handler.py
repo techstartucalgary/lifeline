@@ -114,7 +114,9 @@ def extract_assessments(table):
                 # Ignore dates that are too short to avoid false positives.
                 # The shortest a date can realistically be is 5 characters. e.g. Dec 1
                 continue
-            name = row[0].replace("\n", ' ')  # use the text in the first cell as the name
+            name = row[0].replace(
+                "\n", " "
+            )  # use the text in the first cell as the name
 
             weight = "unknown"
             for cell in row:
@@ -137,7 +139,7 @@ def extract_assessments(table):
 def get_response(tmp_path):
     """Compiles assessments into the correct format and returns
     the body of the response"""
-    
+
     with pdfplumber.open(tmp_path) as pdf:
         tables = read_tables(pdf)
 
