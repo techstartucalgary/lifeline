@@ -28,7 +28,7 @@ const Review = () => {
           </div>
           <div className="col-span-1 bg-gray-900 p-4">
             {/* Column 2 content */}
-            <img src="./pdf.png" />
+            <img src="./pdf.png" alt="the pdf viewer" />
           </div>
         </div>
       </div>
