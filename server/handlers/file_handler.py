@@ -145,11 +145,11 @@ def get_response(tmp_path):
         for table in tables:
             assessments.extend(extract_assessments(table))
 
-        result = {
-            "course": get_course_key(pdf),
-            "topic": "unknown topic",  # will get this later
-            "assessments": assessments,
-        }
+        course_key = get_course_key(pdf)
+        course_info = get_course_info(course_key)
+
+        course_info["assessments"] = assessments
+        result = course_info
     return result
 
 
