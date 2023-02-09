@@ -24,6 +24,7 @@ def cache_course_codes():
         course_codes = pickle.load(file)
     return course_codes
 
+
 COURSE_CODES = cache_course_codes()
 
 
@@ -154,7 +155,7 @@ def extract_assessments(table):
     return assessments
 
 
-def get_assessments(tmp_path):
+def get_course(tmp_path):
     """Compiles assessments into the correct format and returns
     the body of the response"""
 
@@ -191,10 +192,11 @@ def handle_files(files: List[UploadFile]):
     for file in files:
         try:
             tmp_path = save_upload_file_tmp(file)
-            name = get_course_name(tmp_path)
-            topic = "unknown topic"
-            assessments = get_assessments(tmp_path)
-            result[name] = {"topic": topic, "assessments": assessments}
+
+            course = get_course(tmp_path)
+            name = course["title"]
+
+            result[name] = course
         finally:
             tmp_path.unlink()
 
