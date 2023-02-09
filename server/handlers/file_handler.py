@@ -17,38 +17,44 @@ from dateparser.search import search_dates
 with open("./data/course_codes.pkl", "rb") as file:
     course_codes = pickle.load(file)
 
-with open("./data/faculty.jsonlines", "rb") as file:
-    faculty_raw = [json.loads(line) for line in file]
-    FACULTIES = defaultdict(lambda: None)
 
-    for f in faculty_raw:
-        fid = f["fid"]
-        FACULTIES[fid] = f
+def cache_course_info():
+    with open("./data/faculty.jsonlines", "rb") as file:
+        faculties_raw = [json.loads(line) for line in file]
+        faculties = defaultdict(lambda: None)
 
-with open("./data/course-code.jsonlines", "rb") as file:
-    course_code_raw = [json.loads(line) for line in file]
-    COURSE_CODES = defaultdict(lambda: None)
+        for f in faculties_raw:
+            fid = f["fid"]
+            faculties[fid] = f
 
-    for cc in course_code_raw:
-        fid = cc["faculty"]
-        cc["faculty"] = FACULTIES[fid]
-        COURSE_CODES[cc["code"]] = cc
+    with open("./data/course-code.jsonlines", "rb") as file:
+        course_codes_raw = [json.loads(line) for line in file]
+        course_codes = defaultdict(lambda: None)
+
+        for cc in course_codes_raw:
+            fid = cc["faculty"]
+            cc["faculty"] = faculties[fid]
+            course_codes[cc["code"]] = cc
+
+    with open("./data/course-info.jsonlines", "rb") as file:
+        course_infos_raw = [json.loads(line) for line in file]
+        course_infos = defaultdict(lambda: None)
+
+        for ci in course_infos_raw:
+            code = ci["code"]
+            number = ci["number"]
+            key = f"{code} {number}"
+            cc = course_codes[code]
+
+            ci["title"] = cc["title"]
+            ci["faculty"] = cc["faculty"]
+
+            course_infos[key] = ci
+    return course_infos
 
 
-with open("./data/course-info.jsonlines", "rb") as file:
-    course_info_raw = [json.loads(line) for line in file]
-    COURSE_INFOS = defaultdict(lambda: None)
+COURSE_INFOS = cache_course_info()
 
-    for ci in course_info_raw:
-        code = ci["code"]
-        number = ci["number"]
-        key = f"{code} {number}"
-        cc = COURSE_CODES[code]
-
-        ci["title"] = cc["title"]
-        ci["faculty"] = cc["faculty"]
-
-        COURSE_INFOS[key] = ci
 
 
 def get_course_key(pdf):
