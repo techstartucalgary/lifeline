@@ -56,7 +56,6 @@ def cache_course_info():
 COURSE_INFOS = cache_course_info()
 
 
-
 def get_course_key(pdf):
     """Attempts to get the course name from the first page of the pdf
     by matching words against the list of course codes"""
