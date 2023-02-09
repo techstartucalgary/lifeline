@@ -59,7 +59,7 @@ const Button = ({ variant = "text", children, className, to, ...props }: ButtonP
       onClick={onClick}
       onMouseDown={onMouseDown}
     >
-      {typeof children === "string" ? <>{children}</> : <div className="flex flex-row gap-2">{children}</div>}
+      {typeof children === "string" ? <>{children}</> : <div className="flex flex-row gap-2 w-full">{children}</div>}
       <div className="absolute top-0 left-0 overflow-hidden h-full w-full rounded-full">
         <div
           className={classnames(styles.ripple, showRipple && styles["animation-ripple"])}
