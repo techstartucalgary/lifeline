@@ -19,36 +19,36 @@ with open("./data/course_codes.pkl", "rb") as file:
 
 with open("./data/faculty.jsonlines", "rb") as file:
     faculty_raw = [json.loads(line) for line in file]
-    faculty = defaultdict(lambda: None)
+    FACULTIES = defaultdict(lambda: None)
 
     for f in faculty_raw:
         fid = f["fid"]
-        faculty[fid] = f
+        FACULTIES[fid] = f
 
-with open("./data/course-code.jsonlines", "r") as file:
+with open("./data/course-code.jsonlines", "rb") as file:
     course_code_raw = [json.loads(line) for line in file]
-    course_code = defaultdict(lambda: None)
+    COURSE_CODES = defaultdict(lambda: None)
 
     for cc in course_code_raw:
         fid = cc["faculty"]
-        cc["faculty"] = faculty[fid]
-        course_code[cc["code"]] = cc
+        cc["faculty"] = FACULTIES[fid]
+        COURSE_CODES[cc["code"]] = cc
 
 
-with open("./data/course-info.jsonlines", "r") as file:
+with open("./data/course-info.jsonlines", "rb") as file:
     course_info_raw = [json.loads(line) for line in file]
-    course_info = defaultdict(lambda: None)
+    COURSE_INFOS = defaultdict(lambda: None)
 
     for ci in course_info_raw:
         code = ci["code"]
         number = ci["number"]
         key = f"{code} {number}"
-        cc = course_code[code]
+        cc = COURSE_CODES[code]
 
         ci["title"] = cc["title"]
         ci["faculty"] = cc["faculty"]
 
-        course_info[key] = ci
+        COURSE_INFOS[key] = ci
 
 
 def get_course_key(pdf):
@@ -78,7 +78,7 @@ def get_course_key(pdf):
 
 def get_course_info(course_key):
     """Returns the course info for a given course key"""
-    return course_info[course_key]
+    return COURSE_INFOS[course_key]
 
 
 def read_tables(pdf):
