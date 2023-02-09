@@ -28,3 +28,9 @@
         opacity: 0;
     }
 }
+
+.icon {
+    margin-right: 0.66rem;
+    aspect-ratio: 1 / 1;
+    font-size: clamp(1rem, 3vh, 2rem);
+}
