@@ -30,6 +30,7 @@
   },
   "scripts": {
     "dev": "vite --host --port 3000",
+    "start": "vite --host --port 3000",
     "build": "vite build",
     "check-lint": "eslint . --ext .js,.jsx,.ts,.tsx",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx --fix",
