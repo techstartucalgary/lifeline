@@ -29,6 +29,7 @@ function App() {
           <Route path="/landing" element={<Landing />} />
           <Route path="/loading" element={<Loading />} />
           <Route path="/review" element={<Review />} />
+          <Route path="/review/:courseId" element={<Review />} />
           <Route path="/upload" element={<Upload />} />
         </Routes>
       </BrowserRouter>
