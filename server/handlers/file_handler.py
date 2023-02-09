@@ -1,5 +1,7 @@
 """Handles the file upload and extraction of assessments from the file"""
 
+from collections import defaultdict
+import json
 import shutil
 from pathlib import Path
 import pickle
@@ -15,8 +17,41 @@ from dateparser.search import search_dates
 with open("./data/course_codes.pkl", "rb") as file:
     course_codes = pickle.load(file)
 
+with open("./data/faculty.jsonlines", "rb") as file:
+    faculty_raw = [json.loads(line) for line in file]
+    faculty = defaultdict(lambda: None)
 
-def get_course_name(path):
+    for f in faculty_raw:
+        fid = f["fid"]
+        faculty[fid] = f
+
+with open("./data/course-code.jsonlines", "r") as file:
+    course_code_raw = [json.loads(line) for line in file]
+    course_code = defaultdict(lambda: None)
+
+    for cc in course_code_raw:
+        fid = cc["faculty"]
+        cc["faculty"] = faculty[fid]
+        course_code[cc["code"]] = cc
+
+
+with open("./data/course-info.jsonlines", "r") as file:
+    course_info_raw = [json.loads(line) for line in file]
+    course_info = defaultdict(lambda: None)
+
+    for ci in course_info_raw:
+        code = ci["code"]
+        number = ci["number"]
+        key = f"{code} {number}"
+        cc = course_code[code]
+
+        ci["title"] = cc["title"]
+        ci["faculty"] = cc["faculty"]
+
+        course_info[key] = ci
+
+
+def get_course_key(path):
     """Attempts to get the course name from the first page of the pdf
     by matching words against the list of course codes"""
     with pdfplumber.open(path) as pdf:
@@ -40,6 +75,11 @@ def get_course_name(path):
     if course_code:
         return course_code
     return "unknown course"
+
+
+def get_course_info(course_key):
+    """Returns the course info for a given course key"""
+    return course_info[course_key]
 
 
 def read_tables(path):
@@ -76,7 +116,7 @@ def extract_assessments(table):
                 # Ignore dates that are too short to avoid false positives.
                 # The shortest a date can realistically be is 5 characters. e.g. Dec 1
                 continue
-            name = row[0].replace("\n",' ')  # use the text in the first cell as the name
+            name = row[0].replace("\n", ' ')  # use the text in the first cell as the name
 
             weight = "unknown"
             for cell in row:
@@ -106,7 +146,7 @@ def get_response(tmp_path):
         assessments.extend(extract_assessments(table))
 
     result = {
-        "course": get_course_name(tmp_path),
+        "course": get_course_key(tmp_path),
         "topic": "unknown topic",  # will get this later
         "assessments": assessments,
     }
