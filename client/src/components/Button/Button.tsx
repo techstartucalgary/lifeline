@@ -8,7 +8,7 @@ import styles from "./Button.module.css";
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: "filled" | "tonal" | "text";
   to?: To;
-  icon?: ReactNode | string;
+  icon?: ReactNode | string | undefined;
 };
 
 const base = `
@@ -62,14 +62,17 @@ const Button = ({ variant = "text", children, className, to, icon, ...props }: B
       onClick={onClick}
       onMouseDown={onMouseDown}
     >
-      {typeof icon === "string"
-        ? <i className={classnames("material-symbols-outlined", styles.icon)}>{icon}</i>
-        : <i className={styles.icon}>{icon}</i>
-      }
-      {typeof children === "string"
-        ? <>{children}</>
-        : <div className="flex flex-row gap-2 w-full">{children}</div>
-      }
+      {icon && (
+        typeof icon === "string"
+          ? <i className={classnames("material-symbols-outlined", styles.icon)}>{icon}</i>
+          : <i className={styles.icon}>{icon}</i>
+      )}
+      {children && (
+        typeof children === "string"
+          ? <>{children}</>
+          : <div className="flex flex-row gap-2 w-full">{children}</div>
+      )}
+      {/* RIPPLE */}
       <div className="absolute top-0 left-0 overflow-hidden h-full w-full pointer-events-none">
         <div
           className={classnames(styles.ripple, showRipple && styles["animation-ripple"])}
