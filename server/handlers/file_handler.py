@@ -77,7 +77,9 @@ def extract_assessments(table):
                 # Ignore dates that are too short to avoid false positives.
                 # The shortest a date can realistically be is 5 characters. e.g. Dec 1
                 continue
-            name = row[0].replace("\n",' ') if row[0] else "Unknown"  # use the text in the first cell as the name
+
+            # use the text in the first cell as the name
+            name = row[0].replace("\n", " ") if row[0] else "Unknown"
 
             weight = "unknown"
             for cell in row:
