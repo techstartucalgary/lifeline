@@ -11,7 +11,7 @@ interface NavigationDrawerProps {
 }
 
 const NavigationDrawer = ({ courses, currentCourseKeyString, onCoursesChanged }: NavigationDrawerProps) => {
-  const [loading, setLoading] = useState<string[]>(["long is long super longpdf.pdf"]);
+  const [loading, setLoading] = useState<string[]>([]);
   const inputRef = useRef<HTMLInputElement>(null);
 
   const urlFormat = (course: string) => (course.replace(/ /g, "-").toLowerCase());
