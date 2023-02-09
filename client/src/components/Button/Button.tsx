@@ -92,18 +92,18 @@ const Button = ({ variant = "text", color = "primary", children, className, to, 
     setRippleQueue([...rippleQueue]);
 
     if (props.onMouseDown) props.onMouseDown(event);
-  }, [props, rippleQueue]);
+  }, [color, props, rippleQueue, variant]);
 
   const onUnpersistRipple = useCallback(() => {
     const ripple = rippleQueue.slice().reverse()[0];
     ripple.persist = false;
     setRippleQueue([...rippleQueue]);
 
-    // setTimeout(() => {
-    //   const t = rippleQueue.indexOf(ripple);
-    //   rippleQueue.splice(t, 1);
-    //   setRippleQueue([...rippleQueue]);
-    // }, 5000);
+    setTimeout(() => {
+      const t = rippleQueue.indexOf(ripple);
+      rippleQueue.splice(t, 1);
+      setRippleQueue([...rippleQueue]);
+    }, 5000);
   }, [rippleQueue]);
 
   const onMouseLeave = useCallback((event: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>) => {
