@@ -33,9 +33,9 @@ const cls2 = {
     tertiary: "bg-tertiary text-white hover:before:bg-sys-on-tertiary/8 focus:before:bg-sys-on-tertiary/12 active:before:bg-sys-on-tertiary/12",
   },
   text: {
-    primary: "px-3 text-primary disabled:bg-transparent disable:before:bg-transparent",
-    secondary: "px-3 text-secondary disabled:bg-transparent disable:before:bg-transparent",
-    tertiary: "px-3 text-tertiary disabled:bg-transparent disable:before:bg-transparent",
+    primary: "px-3 text-primary hover:before:bg-state-layers-primary/8 disabled:bg-transparent disable:before:bg-transparent",
+    secondary: "px-3 text-secondary hover:before:bg-state-layers-primary/8 disabled:bg-transparent disable:before:bg-transparent",
+    tertiary: "px-3 text-tertiary hover:before:bg-state-layers-primary/8 disabled:bg-transparent disable:before:bg-transparent",
   },
   tonal: {
     primary: "bg-sys-primary-container text-sys-on-primary-container hover:before:bg-state-layers-on-primary-container/8 focus:before:bg-state-layers-on-primary-container/12 active:before:bg-state-layers-on-primary-container/12",
