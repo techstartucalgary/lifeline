@@ -2,7 +2,7 @@
 
 @layer components {
     .ripple {
-        @apply bg-state-layers-primary absolute rounded-full w-full scale-100 origin-center;
+        @apply absolute rounded-full w-full scale-100 origin-center;
         aspect-ratio: 1 / 1;
         transform: translate(-50%, -50%) scale(0);
         animation: ripple 0.6s cubic-bezier(0.2, 0.0, 0, 1.0) forwards;
@@ -21,7 +21,7 @@
 
     100% {
         transform: translate(-50%, -50%) scale(2);
-        opacity: 0.2;
+        opacity: 1;
     }
 }
 

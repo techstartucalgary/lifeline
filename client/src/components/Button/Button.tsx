@@ -9,20 +9,16 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: "filled" | "tonal" | "text";
   to?: To;
   icon?: ReactNode | string;
-  color?: string;
+  color?: "primary" | "secondary" | "tertiary";
 };
 
 const base = `
-  bg-transparent text-primary text-center font-medium tracking-[0.01rem] overflow-hidden
+  bg-transparent text-center font-medium tracking-[0.01rem] overflow-hidden
   px-7 py-3 pt-[0.67rem] align-middle rounded-full relative
   transition-color transition-opacity ease-emphasized before:transition-all before:ease-emphasized
 
   before:block before:absolute before:top-0 before:left-0 before:bottom-0 before:right-0
   before:bg-transparent before:user-select-none before:-z-1
-
-  hover:before:bg-state-layers-primary/8
-  focus:before:bg-state-layers-primary/12
-  active:before:bg-state-layers-primary/12
 
   disabled:bg-state-layers-on-surface/12 disabled:text-sys-on-surface/[.38] disabled:cursor-not-allowed
   disabled:before:bg-transparent
@@ -30,27 +26,58 @@ const base = `
   flex flex-row items-center
 `;
 
-const cls = {
-  filled: classnames(base, "bg-primary text-white hover:before:bg-sys-on-primary/8 focus:before:bg-sys-on-primary/12 active:before:bg-sys-on-primary/12"),
-  text: classnames(base, "px-3 disabled:bg-transparent disable:before:bg-transparent"),
-  tonal: classnames(base, "bg-sys-secondary-container text-sys-on-secondary-container hover:before:bg-state-layers-on-secondary-container/8 focus:before:bg-state-layers-on-secondary-container/12 active:before:bg-state-layers-on-secondary-container/12")
+const cls2 = {
+  filled: {
+    primary: "bg-primary text-white hover:before:bg-sys-on-primary/8 focus:before:bg-sys-on-primary/12 active:before:bg-sys-on-primary/12",
+    secondary: "bg-secondary text-white hover:before:bg-sys-on-secondary/8 focus:before:bg-sys-on-secondary/12 active:before:bg-sys-on-secondary/12",
+    tertiary: "bg-tertiary text-white hover:before:bg-sys-on-tertiary/8 focus:before:bg-sys-on-tertiary/12 active:before:bg-sys-on-tertiary/12",
+  },
+  text: {
+    primary: "px-3 text-primary disabled:bg-transparent disable:before:bg-transparent",
+    secondary: "px-3 text-secondary disabled:bg-transparent disable:before:bg-transparent",
+    tertiary: "px-3 text-tertiary disabled:bg-transparent disable:before:bg-transparent",
+  },
+  tonal: {
+    primary: "bg-sys-primary-container text-sys-on-primary-container hover:before:bg-state-layers-on-primary-container/8 focus:before:bg-state-layers-on-primary-container/12 active:before:bg-state-layers-on-primary-container/12",
+    secondary: "bg-sys-secondary-container text-sys-on-secondary-container hover:before:bg-state-layers-on-secondary-container/8 focus:before:bg-state-layers-on-secondary-container/12 active:before:bg-state-layers-on-secondary-container/12",
+    tertiary: "bg-sys-tertiary-container text-sys-on-tertiary-container hover:before:bg-state-layers-on-tertiary-container/8 focus:before:bg-state-layers-on-tertiary-container/12 active:before:bg-state-layers-on-tertiary-container/12",
+  },
+};
+
+const cls3 = {
+  filled: {
+    primary: "bg-black/20",
+    secondary: "bg-black/20",
+    tertiary: "bg-black/20",
+  },
+  text: {
+    primary: "bg-primary/12",
+    secondary: "bg-secondary/12",
+    tertiary: "bg-tertiary/12",
+  },
+  tonal: {
+    primary: "bg-state-layers-on-primary-container/8",
+    secondary: "bg-state-layers-on-secondary-container/8",
+    tertiary: "bg-state-layers-on-tertiary-container/8",
+  },
 };
 
 interface RippleProps {
   x: number;
   y: number;
   persist: boolean;
+  className?: string;
 }
 
-const Ripple = ({ x, y, persist }: RippleProps) => {
+const Ripple = ({ x, y, persist, className }: RippleProps) => {
   return (
     <div className={classnames("opacity-0", persist && "opacity-100", styles.container)}>
-      <div className={styles.ripple} style={{ top: y, left: x }} />
+      <div className={classnames(styles.ripple, className)} style={{ top: y, left: x }} />
     </div>
   );
 };
 
-const Button = ({ variant = "text", children, className, to, icon, ...props }: ButtonProps) => {
+const Button = ({ variant = "text", color = "primary", children, className, to, icon, ...props }: ButtonProps) => {
   const navigate = useNavigate();
   const [rippleQueue, setRippleQueue] = useState<RippleProps[]>([]);
 
@@ -61,7 +88,7 @@ const Button = ({ variant = "text", children, className, to, icon, ...props }: B
 
   const onMouseDown = useCallback((event: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>) => {
     const rect = event.currentTarget.getBoundingClientRect();
-    rippleQueue.push({ x: event.clientX - rect.left, y: event.clientY - rect.top, persist: true });
+    rippleQueue.push({ x: event.clientX - rect.left, y: event.clientY - rect.top, persist: true, className: cls3[variant][color] });
     setRippleQueue([...rippleQueue]);
 
     if (props.onMouseDown) props.onMouseDown(event);
@@ -72,11 +99,11 @@ const Button = ({ variant = "text", children, className, to, icon, ...props }: B
     ripple.persist = false;
     setRippleQueue([...rippleQueue]);
 
-    setTimeout(() => {
-      const t = rippleQueue.indexOf(ripple);
-      rippleQueue.splice(t, 1);
-      setRippleQueue([...rippleQueue]);
-    }, 5000);
+    // setTimeout(() => {
+    //   const t = rippleQueue.indexOf(ripple);
+    //   rippleQueue.splice(t, 1);
+    //   setRippleQueue([...rippleQueue]);
+    // }, 5000);
   }, [rippleQueue]);
 
   const onMouseLeave = useCallback((event: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>) => {
@@ -97,7 +124,7 @@ const Button = ({ variant = "text", children, className, to, icon, ...props }: B
   return (
     <button
       {...props}
-      className={classnames(cls[variant], className)}
+      className={classnames(base, cls2[variant][color], className)}
       onClick={onClick}
       onMouseDown={onMouseDown}
       onMouseLeave={onMouseLeave}
@@ -117,8 +144,8 @@ const Button = ({ variant = "text", children, className, to, icon, ...props }: B
       {/* RIPPLE */}
       <div className="absolute top-0 left-0 overflow-hidden h-full w-full pointer-events-none -z-10">
         {
-          rippleQueue.map(({ x, y, persist }, i) => (
-            <Ripple key={i} x={x} y={y} persist={persist} />
+          rippleQueue.map(({ x, y, persist, className }, i) => (
+            <Ripple key={i} x={x} y={y} persist={persist} className={className} />
           ))
         }
       </div>
