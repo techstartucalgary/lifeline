@@ -21,7 +21,7 @@ const base = `
 
   hover:before:bg-state-layers-primary/8
   focus:before:bg-state-layers-primary/12
-  active:before:bg-state-layers-primary/12
+  active:before:bg-transparent
 
   disabled:bg-state-layers-on-surface/12 disabled:text-sys-on-surface/[.38] disabled:cursor-not-allowed
   disabled:before:bg-transparent
@@ -35,10 +35,23 @@ const cls = {
   tonal: classnames(base, "bg-sys-secondary-container text-sys-on-secondary-container hover:before:bg-state-layers-on-secondary-container/8 focus:before:bg-state-layers-on-secondary-container/12 active:before:bg-state-layers-on-secondary-container/12")
 };
 
+interface RippleProps {
+  x: number;
+  y: number;
+  persist: boolean;
+}
+
+const Ripple = ({ x, y, persist }: RippleProps) => {
+  return (
+    <div className={classnames("opacity-0", persist && "opacity-100", styles.container)}>
+      <div className={styles.ripple} style={{ top: y, left: x }} />
+    </div>
+  );
+};
+
 const Button = ({ variant = "text", children, className, to, icon, ...props }: ButtonProps) => {
   const navigate = useNavigate();
-  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
-  const [showRipple, setShowRipple] = useState(false);
+  const [rippleQueue, setRippleQueue] = useState<RippleProps[]>([]);
 
   const onClick = useCallback((event: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>) => {
     if (to) navigate(to);
@@ -46,14 +59,39 @@ const Button = ({ variant = "text", children, className, to, icon, ...props }: B
   }, [navigate, props, to]);
 
   const onMouseDown = useCallback((event: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>) => {
-    setShowRipple(true);
-    setTimeout(() => setShowRipple(false), 600);
-
     const rect = event.currentTarget.getBoundingClientRect();
-    setMousePos({ x: event.clientX - rect.left, y: event.clientY - rect.top });
+    rippleQueue.push({ x: event.clientX - rect.left, y: event.clientY - rect.top, persist: true });
+    setRippleQueue([...rippleQueue]);
 
     if (props.onMouseDown) props.onMouseDown(event);
-  }, [props]);
+  }, [props, rippleQueue]);
+
+  const onUnpersistRipple = useCallback(() => {
+    const ripple = rippleQueue.reverse()[0];
+    ripple.persist = false;
+    setRippleQueue([...rippleQueue]);
+
+    setTimeout(() => {
+      const t = rippleQueue.indexOf(ripple);
+      rippleQueue.splice(t, 1);
+      setRippleQueue([...rippleQueue]);
+    }, 5000);
+  }, [rippleQueue]);
+
+  const onMouseLeave = useCallback((event: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>) => {
+    onUnpersistRipple();
+    if (props.onMouseLeave) props.onMouseLeave(event);
+  }, [onUnpersistRipple, props]);
+
+  const onMouseUp = useCallback((event: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>) => {
+    onUnpersistRipple();
+    if (props.onMouseUp) props.onMouseUp(event);
+  }, [onUnpersistRipple, props]);
+
+  const onMouseOut = useCallback((event: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>) => {
+    onUnpersistRipple();
+    if (props.onMouseOut) props.onMouseOut(event);
+  }, [onUnpersistRipple, props]);
 
   return (
     <button
@@ -61,6 +99,9 @@ const Button = ({ variant = "text", children, className, to, icon, ...props }: B
       className={classnames(cls[variant], className)}
       onClick={onClick}
       onMouseDown={onMouseDown}
+      onMouseLeave={onMouseLeave}
+      onMouseUp={onMouseUp}
+      onMouseOut={onMouseOut}
     >
       {icon && (
         typeof icon === "string"
@@ -74,10 +115,11 @@ const Button = ({ variant = "text", children, className, to, icon, ...props }: B
       )}
       {/* RIPPLE */}
       <div className="absolute top-0 left-0 overflow-hidden h-full w-full pointer-events-none">
-        <div
-          className={classnames(styles.ripple, showRipple && styles["animation-ripple"])}
-          style={{ top: mousePos.y, left: mousePos.x }}
-        />
+        {
+          rippleQueue.map(({ x, y, persist }, i) => (
+            <Ripple key={i} x={x} y={y} persist={persist} />
+          ))
+        }
       </div>
     </button>
   );
