@@ -14,42 +14,53 @@ from dateparser.search import search_dates
 
 # supported course codes taken from
 # https://www.ucalgary.ca/pubs/calendar/current/course-desc-main.html
-with open("./data/course_codes.pkl", "rb") as file:
-    course_codes = pickle.load(file)
+def cache_course_codes():
+    """
+    Returns a list of all course codes
+    """
+    with open("./data/course_codes.pkl", "rb") as file:
+        course_codes = pickle.load(file)
+    return course_codes
+
+COURSE_CODES = cache_course_codes()
 
 
 def cache_course_info():
+    """
+    Returns a dictionary of course info for all courses
+    """
+    faculties = defaultdict(lambda: None)
+    course_codes = defaultdict(lambda: None)
+    course_infos = defaultdict(lambda: None)
+
     with open("./data/faculty.jsonlines", "rb") as file:
         faculties_raw = [json.loads(line) for line in file]
-        faculties = defaultdict(lambda: None)
 
-        for f in faculties_raw:
-            fid = f["fid"]
-            faculties[fid] = f
+        for faculty in faculties_raw:
+            fid = faculty["fid"]
+            faculties[fid] = faculty
 
     with open("./data/course-code.jsonlines", "rb") as file:
         course_codes_raw = [json.loads(line) for line in file]
-        course_codes = defaultdict(lambda: None)
 
-        for cc in course_codes_raw:
-            fid = cc["faculty"]
-            cc["faculty"] = faculties[fid]
-            course_codes[cc["code"]] = cc
+        for code in course_codes_raw:
+            fid = code["faculty"]
+            code["faculty"] = faculties[fid]
+            course_codes[code["code"]] = code
 
     with open("./data/course-info.jsonlines", "rb") as file:
         course_infos_raw = [json.loads(line) for line in file]
-        course_infos = defaultdict(lambda: None)
 
-        for ci in course_infos_raw:
-            code = ci["code"]
-            number = ci["number"]
+        for info in course_infos_raw:
+            code = info["code"]
+            number = info["number"]
             key = f"{code} {number}"
-            cc = course_codes[code]
+            code = course_codes[code]
 
-            ci["title"] = cc["title"]
-            ci["faculty"] = cc["faculty"]
+            info["title"] = code["title"]
+            info["faculty"] = code["faculty"]
 
-            course_infos[key] = ci
+            course_infos[key] = info
     return course_infos
 
 
@@ -65,7 +76,7 @@ def get_course_key(pdf):
     course_code = None
 
     for index, word in enumerate(first_page_words):
-        if word in course_codes:
+        if word in COURSE_CODES:
             course_code = word
             potential_course_number = first_page_words[index + 1]
             try:
