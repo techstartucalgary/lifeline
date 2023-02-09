@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import Button from "../../components/Button";
 import { classnames } from "../../Utilities";
-import "./Review.css";
+import styles from "./Review.module.css";
 
 
 const Review = () => {
@@ -13,14 +13,19 @@ const Review = () => {
   return (
     <div className="flex flex-row justify-between">
       <nav
-        className={classnames("md:w-64", "w-full", "flex-shrink-0", "z-0", courseId && "hidden", "md:block", "bg-gray-100",
+        className={classnames("md:w-64", "w-full", "flex-shrink-0", courseId && "hidden", "md:block", "bg-gray-100",
         )}
       >
         <Button to={"/review/example1"}>Example1</Button>
         <Button to={"/review/example2"}>Example2</Button>
         <Button to={"/review/example3"}>Example2</Button>
       </nav>
-      <main className="bg-gray-300 flex-shrink-0 text-center z-30 w-full">
+      <main
+        className={classnames(
+          "bg-gray-300 flex-shrink-0 text-center w-full",
+          styles.main
+        )}
+      >
         <header className="bg-gray-300 w-full p-4 text-xl">
           <Link to="/review">
             <span
@@ -75,7 +80,5 @@ const Review = () => {
     </div >
   );
 };
-
-
 
 export default Review;
