@@ -8,7 +8,8 @@ import styles from "./Button.module.css";
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: "filled" | "tonal" | "text";
   to?: To;
-  icon?: ReactNode | string | undefined;
+  icon?: ReactNode | string;
+  color?: string;
 };
 
 const base = `
@@ -67,7 +68,7 @@ const Button = ({ variant = "text", children, className, to, icon, ...props }: B
   }, [props, rippleQueue]);
 
   const onUnpersistRipple = useCallback(() => {
-    const ripple = rippleQueue.reverse()[0];
+    const ripple = rippleQueue.slice().reverse()[0];
     ripple.persist = false;
     setRippleQueue([...rippleQueue]);
 
@@ -114,7 +115,7 @@ const Button = ({ variant = "text", children, className, to, icon, ...props }: B
           : <div className="flex flex-row gap-2 w-full">{children}</div>
       )}
       {/* RIPPLE */}
-      <div className="absolute top-0 left-0 overflow-hidden h-full w-full pointer-events-none">
+      <div className="absolute top-0 left-0 overflow-hidden h-full w-full pointer-events-none -z-10">
         {
           rippleQueue.map(({ x, y, persist }, i) => (
             <Ripple key={i} x={x} y={y} persist={persist} />
