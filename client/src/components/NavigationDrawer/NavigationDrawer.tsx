@@ -83,7 +83,7 @@ const NavigationDrawer = ({ courses, currentCourseKeyString, onCoursesChanged }:
               {course}
             </p>
             <p className={classnames("truncate", "md:hidden")}>
-              {courseData.topic} - The course.course descriptions can be quite long, so we truncate them to save space.
+              {courseData.topic}
             </p>
           </div>
           <p className="ml-auto flex items-center justify-center">
