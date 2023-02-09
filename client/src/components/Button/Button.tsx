@@ -21,7 +21,7 @@ const base = `
 
   hover:before:bg-state-layers-primary/8
   focus:before:bg-state-layers-primary/12
-  active:before:bg-transparent
+  active:before:bg-state-layers-primary/12
 
   disabled:bg-state-layers-on-surface/12 disabled:text-sys-on-surface/[.38] disabled:cursor-not-allowed
   disabled:before:bg-transparent
