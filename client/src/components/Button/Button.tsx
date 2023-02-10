@@ -24,7 +24,7 @@ const base = `
   transition-color transition-opacity ease-emphasized before:transition-all before:ease-emphasized
 
   before:block before:absolute before:top-0 before:left-0 before:bottom-0 before:right-0
-  before:bg-transparent before:user-select-none before:-z-1
+  before:bg-transparent before:user-select-none before:pointer-events-none before:-z-1
 
   disabled:bg-state-layers-on-surface/12 disabled:text-sys-on-surface/[.38] disabled:cursor-not-allowed
   disabled:before:bg-transparent
