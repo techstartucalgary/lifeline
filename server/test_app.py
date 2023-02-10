@@ -48,19 +48,19 @@ def test_one_expected_outline():
 def test_many_outlines():
     """Similar to test_one_expected_outline, but sends many outlines to the
     endpoint and only checks that the status code is 200."""
-    files = [
-        ("outline_files", open("test-data/CPSC413/CPSC413.pdf", "rb")),
-        ("outline_files", open("test-data/CPSC331/CPSC331.pdf", "rb")),
-    ]
+    files = []
 
     # Iterate over all files in test-data
     for path in Path("test-data").iterdir():
-        if path.is_dir():
-            course_name = path.name
+        if not path.is_dir():
+            continue
+        
+        course_name = path.name
+        with open(f"test-data/{course_name}/{course_name}.pdf", "rb") as file:
+            print(f"Sending {course_name}.pdf")
             files.append(
                 (
-                    "outline_files",
-                    open(f"test-data/{course_name}/{course_name}.pdf", "rb"),
+                    "outline_files", file
                 )
             )
 
