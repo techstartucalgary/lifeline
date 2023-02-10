@@ -54,15 +54,11 @@ def test_many_outlines():
     for path in Path("test-data").iterdir():
         if not path.is_dir():
             continue
-        
+
         course_name = path.name
         with open(f"test-data/{course_name}/{course_name}.pdf", "rb") as file:
-            print(f"Sending {course_name}.pdf")
-            files.append(
-                (
-                    "outline_files", file
-                )
-            )
+            file_content = file.read()
+            files.append(("outline_files", file_content))
 
     response = client.post("/files", files=files)
     assert response.status_code == 200
