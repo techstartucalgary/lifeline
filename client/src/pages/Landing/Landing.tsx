@@ -103,7 +103,7 @@ export default function Landing() {
                   "sm:justify-center lg:justify-start"
                 )}
               >
-                <Button to="/upload" variant="filled" className="py-5 px-7 hidden sm:block mr-2">Get Started</Button>
+                <Button to="/app" variant="filled" className="py-5 px-7 hidden sm:block mr-2">Get Started</Button>
                 <Button to="/workflow" variant="text" className="py-5 px-4 -ml-4 -mt-6 sm:ml-0 sm:mt-0">Learn more</Button>
               </div>
             </div>
@@ -217,7 +217,7 @@ export default function Landing() {
           <div className="sticky bottom-0 sm:relative">
             <div className="flex justify-center pt-8 pb-4">
               <Button
-                to="/upload"
+                to="/app"
                 variant="filled"
                 className={classnames(
                   "py-5 px-8",
