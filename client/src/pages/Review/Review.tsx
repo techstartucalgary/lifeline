@@ -42,7 +42,7 @@ const testState: Courses = {
       },
       {
         name: "Exam 3/Final Exam",
-        date: "TBD",
+        date: "",
         weight: "31%",
       },
     ],

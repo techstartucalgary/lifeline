@@ -19,6 +19,9 @@ function jsonToICS(data: Courses): string {
   const events: EventAttributes[] = [];
   Object.entries(data).forEach(([course, courseData]) => {
     for (const assessment of courseData.assessments) {
+      if (!assessment.date) {
+        continue;
+      }
       const [date, time] = assessment.date.split("T");
       const [year, month, day] = date.split("-");
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -26,7 +29,13 @@ function jsonToICS(data: Courses): string {
 
       events.push({
         title: `${course} ${assessment.name} (${assessment.weight}%)`,
-        start: [parseInt(year), parseInt(month), parseInt(day), parseInt(hours), parseInt(minutes)],
+        start: [
+          parseInt(year),
+          parseInt(month),
+          parseInt(day),
+          parseInt(hours),
+          parseInt(minutes),
+        ],
         duration: { hours: 0, minutes: 0, seconds: 0 },
       });
     }
