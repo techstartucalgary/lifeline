@@ -64,7 +64,7 @@ const NavigationDrawer = ({ courses, currentCourseKeyString, onCoursesChanged }:
       {courses && Object.entries(courses).map(([course, courseData]) => (
         <Button
           variant="text"
-          to={`/review/${urlFormat(course)}`}
+          to={`/app/${urlFormat(course)}`}
           key={course}
           className={classnames(
             "text-gray-900",
