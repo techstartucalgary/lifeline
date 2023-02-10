@@ -95,6 +95,8 @@ const Button = ({ variant = "text", color = "primary", children, className, to, 
   }, [color, props, rippleQueue, variant]);
 
   const onUnpersistRipple = useCallback(() => {
+    if (rippleQueue.length === 0) return;
+
     const ripple = rippleQueue.slice().reverse()[0];
     ripple.persist = false;
     setRippleQueue([...rippleQueue]);
