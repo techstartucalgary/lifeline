@@ -1,6 +1,7 @@
-"""tests for app.py"""
+"""Tests for the server. Run with `pytest test_app.py -s` to see print statements`"""
 
 import json
+from pathlib import Path
 from handlers import calendar_handler
 from fastapi.testclient import TestClient
 
@@ -24,3 +25,44 @@ def test_api():
     response = client.get("/test-calendar-json")
     assert response.status_code == 200
     assert response.json() == EXPECTEDCALENDARJSON
+
+
+def test_one_expected_outline():
+    """Sends a single outline PDF to the endpoint and checks that the response is correct.
+    If this test fails but the status code is 200, check that the expected.json file is up
+    to date with the latest parsing algorithm."""
+
+    base_path = "test-data/CPSC331"
+
+    with open(f"{base_path}/CPSC331.pdf", "rb") as file:
+        request_data = {"outline_files": ("CPSC331.pdf", file, "application/pdf")}
+        response = client.post("/files", files=request_data)
+
+    with open(f"{base_path}/expected.json", "r", encoding="utf8") as file:
+        expected_response = json.load(file)
+
+    assert response.status_code == 200
+    assert response.json() == expected_response
+
+
+def test_many_outlines():
+    """Similar to test_one_expected_outline, but sends many outlines to the
+    endpoint and only checks that the status code is 200."""
+    files = [
+        ("outline_files", open("test-data/CPSC413/CPSC413.pdf", "rb")),
+        ("outline_files", open("test-data/CPSC331/CPSC331.pdf", "rb")),
+    ]
+
+    # Iterate over all files in test-data
+    for path in Path("test-data").iterdir():
+        if path.is_dir():
+            course_name = path.name
+            files.append(
+                (
+                    "outline_files",
+                    open(f"test-data/{course_name}/{course_name}.pdf", "rb"),
+                )
+            )
+
+    response = client.post("/files", files=files)
+    assert response.status_code == 200
