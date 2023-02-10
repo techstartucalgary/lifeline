@@ -194,9 +194,8 @@ def handle_files(files: List[UploadFile]):
             tmp_path = save_upload_file_tmp(file)
 
             course = get_course(tmp_path)
-            name = course["title"]
-
-            result[name] = course
+            key = course["code"] + " " + str(course["number"])
+            result[key] = course
         finally:
             tmp_path.unlink()
 
