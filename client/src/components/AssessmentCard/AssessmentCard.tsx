@@ -59,9 +59,9 @@ const AssessmentCard = ({ assessment, onAssessmentClick }: AssessmentCardProps) 
         </span>
       </div>
       <div className={classnames("flex", "flex-col", "items-start", "text-left")}>
-        <h1 className="font-bold text-black">{assessment.name}</h1>
+        <h1 className="font-bold text-sys-on-tertiary-container">{assessment.name}</h1>
         <h2>{formatDate(assessment.date)}</h2>
-        <p className="text-gray-400 mt-2">
+        <p className="text-sys-outline mt-2">
           Weight: {assessment.weight}
           <br />
           {"Hello, additional information can be added here. This is a placeholder. Additional information can be added here. This is a placeholder."

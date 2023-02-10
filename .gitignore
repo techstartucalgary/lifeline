@@ -2,7 +2,6 @@
 **/yarn-error.log
 **/.DS_Store
 **/.idea
-**/.vscode
 **/.env
 **/.env.local
 **/.env.development
@@ -11,3 +10,4 @@
 server/.venv
 **/__pycache__
 **/build
+**/.ipynb_checkpoints
