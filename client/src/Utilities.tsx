@@ -1,19 +1,22 @@
 import { Config as TailwindConfig } from "tailwindcss";
-import { extendTailwindMerge, getDefaultConfig, Config as TailwindMergeConfig, mergeConfigs } from "tailwind-merge";
+import {
+  extendTailwindMerge,
+  getDefaultConfig,
+  Config as TailwindMergeConfig,
+  mergeConfigs,
+} from "tailwind-merge";
 import { ClassNameValue } from "tailwind-merge/dist/lib/tw-join";
+import projectConfig from "@tailwind.config";
 
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const projectConfig = require("./tailwind.config");
 
 const classnames = (...args: ClassNameValue[]) => {
-
   const extract = (config: TailwindConfig): TailwindMergeConfig => {
     const defaultConfig: TailwindMergeConfig = getDefaultConfig();
     const extractedConfig: TailwindMergeConfig = {
       cacheSize: 0,
       theme: {},
       classGroups: {},
-      conflictingClassGroups: {}
+      conflictingClassGroups: {},
     };
 
     if (!config.theme?.extend) return defaultConfig;
@@ -36,9 +39,14 @@ const classnames = (...args: ClassNameValue[]) => {
 
         if (typeof first === "object") {
           const keyzz = Object.keys(first)[0];
-          extractedConfig.classGroups[keyz] = [{ [keyzz]: [...first[keyzz], ...vals] }];
+          extractedConfig.classGroups[keyz] = [
+            { [keyzz]: [...first[keyzz], ...vals] },
+          ];
         } else if (typeof first === "string") {
-          extractedConfig.classGroups[keyz] = [...defaultConfig.classGroups[keyz], ...vals];
+          extractedConfig.classGroups[keyz] = [
+            ...defaultConfig.classGroups[keyz],
+            ...vals,
+          ];
         }
       }
     }
@@ -52,4 +60,3 @@ const classnames = (...args: ClassNameValue[]) => {
 };
 
 export { classnames };
-

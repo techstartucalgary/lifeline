@@ -9,7 +9,8 @@ import styles from "./Review.module.css";
 const Review = () => {
   const [selectedTab, setSelectedTab] = useState(0);
   const [courses, setCourses] = useState<Courses>({});
-  const displayFormat = (course: string) => (course.replace(/-/g, " ").toUpperCase());
+  const displayFormat = (course: string) =>
+    course.replace(/-/g, " ").toUpperCase();
 
   let { courseId } = useParams();
   courseId = courseId ? displayFormat(courseId) : undefined;
@@ -18,17 +19,23 @@ const Review = () => {
     setCourses({ ...courses, ...newCourses });
   };
 
-
   return (
     <div className="flex flex-row justify-between">
       <nav
-        className={classnames("md:w-64", "w-full", "flex-shrink-0", courseId && "hidden", "md:block", "bg-gray-100",
+        className={classnames(
+          "md:w-64",
+          "w-full",
+          "flex-shrink-0",
+          courseId && "hidden",
+          "md:block",
+          "bg-gray-100"
         )}
       >
         <NavigationDrawer
           courses={courses}
           currentCourseKeyString={courseId}
-          onCoursesChanged={onCoursesChanged} />
+          onCoursesChanged={onCoursesChanged}
+        />
       </nav>
       <main
         className={classnames(
@@ -45,9 +52,7 @@ const Review = () => {
               arrow_back
             </span>
           </Link>
-          <h1 className="text-4xl">
-            {courseId && displayFormat(courseId)}
-          </h1>
+          <h1 className="text-4xl">{courseId && displayFormat(courseId)}</h1>
           <h2 className="text-2xl">
             Explorations in Information Security and Privacy
           </h2>
@@ -55,21 +60,34 @@ const Review = () => {
         <div className="flex flex-col md:flex-row">
           <div className="w-full md:hidden flex flex-row">
             <button
-              className={`w-full bg-gray-300 p-2 ${selectedTab === 0 && "bg-red-500"}`}
+              className={`w-full bg-gray-300 p-2 ${
+                selectedTab === 0 && "bg-red-500"
+              }`}
               onClick={() => setSelectedTab(0)}
             >
               Assessments
             </button>
             <button
-              className={`w-full bg-gray-300 p-2 ${selectedTab === 1 && "bg-red-500"}`}
+              className={`w-full bg-gray-300 p-2 ${
+                selectedTab === 1 && "bg-red-500"
+              }`}
               onClick={() => setSelectedTab(1)}
             >
               Document
             </button>
           </div>
-          <section className={classnames(
-            "w-full", "md:w-1/2", "border", "border-gray-300", "bg-gray-200", "p-4", "h-screen", selectedTab === 1 && "hidden md:block"
-          )}>
+          <section
+            className={classnames(
+              "w-full",
+              "md:w-1/2",
+              "border",
+              "border-gray-300",
+              "bg-gray-200",
+              "p-4",
+              "h-screen",
+              selectedTab === 1 && "hidden md:block"
+            )}
+          >
             <ul>
               <li>Assessment 1</li>
               <li>Assessment 2</li>
@@ -80,14 +98,22 @@ const Review = () => {
           </section>
           <section
             className={classnames(
-              "w-full", "md:w-1/2", "border", "border-gray-300", "bg-gray-200", "p-4", "h-screen", selectedTab === 0 && "hidden md:block"
-            )}>
+              "w-full",
+              "md:w-1/2",
+              "border",
+              "border-gray-300",
+              "bg-gray-200",
+              "p-4",
+              "h-screen",
+              selectedTab === 0 && "hidden md:block"
+            )}
+          >
             <img src="../pdf.png" alt="the pdf viewer" />
           </section>
         </div>
       </main>
       <div className="w-64"></div>
-    </div >
+    </div>
   );
 };
 
