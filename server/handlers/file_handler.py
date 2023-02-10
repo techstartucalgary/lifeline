@@ -118,7 +118,9 @@ def extract_assessments(table):
             if not cell:  # skip empty cells
                 continue
             # first try dateparser
-            dates = search_dates(cell, languages=["en"], settings={"REQUIRE_PARTS": ["day", "month"]})
+            dates = search_dates(
+                cell, languages=["en"], settings={"REQUIRE_PARTS": ["day", "month"]}
+            )
             if dates:
                 source, date = dates[0]
             else:  # try datefinder if dateparser fails
