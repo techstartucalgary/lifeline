@@ -53,8 +53,14 @@ const testState: Courses = {
   },
 };
 
+// Enum for the tabs
+enum Tab {
+  Assessments,
+  Document
+}
+
 const Review = () => {
-  const [selectedTab, setSelectedTab] = useState(0);
+  const [selectedTab, setSelectedTab] = useState<Tab>(Tab.Assessments);
   const [courses, setCourses] = useState<Courses>(testState);
 
   const { courseKey } = useParams();
@@ -114,7 +120,7 @@ const Review = () => {
               <button
                 className={classnames(
                   "w-full bg-gray-300 p-2",
-                  selectedTab === 0 && "bg-red-500"
+                  selectedTab === Tab.Assessments && "bg-red-500"
                 )}
                 onClick={() => setSelectedTab(0)}
               >
@@ -123,7 +129,7 @@ const Review = () => {
               <button
                 className={classnames(
                   "w-full bg-gray-300 p-2",
-                  selectedTab === 1 && "bg-red-500"
+                  selectedTab === Tab.Document && "bg-red-500"
                 )}
                 onClick={() => setSelectedTab(1)}
               >
@@ -137,7 +143,7 @@ const Review = () => {
                 "border",
                 "p-4",
                 "h-screen",
-                selectedTab === 1 && "hidden md:block"
+                selectedTab === Tab.Document && "hidden md:block"
               )}
             >
               <ul className="flex flex-col">
@@ -161,7 +167,7 @@ const Review = () => {
                 "bg-gray-200",
                 "p-4",
                 "h-screen",
-                selectedTab === 0 && "hidden md:block"
+                selectedTab === Tab.Assessments && "hidden md:block"
               )}
             >
               <img src="../pdf.png" alt="the pdf viewer" />
