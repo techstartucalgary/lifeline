@@ -1,15 +1,16 @@
-{
-  "cpsc-331": {
-    "cid": 3628,
+[
+  {
     "code": "CPSC",
     "number": 331,
-    "key": "cpsc-331",
+    "cid": 3628,
     "topic": "Data Structures, Algorithms, and Their Analysis",
     "description": "Fundamental data structures, including arrays, lists, stacks, queues, trees, hash tables, and graphs. Algorithms for searching and sorting. Introduction to the correctness and analysis of algorithms. For computer science majors and those interested in algorithm design and analysis, information security, and other mathematically-intensive areas.",
     "sub_topics": null,
     "units": 3.0,
     "credits": null,
-    "hours": ["3-2T"],
+    "hours": [
+      "3-2T"
+    ],
     "time_length": null,
     "prereq": "3 units from <course cid=\"44642\">Computer Science 251</course>, <course cid=\"6947\">Mathematics 271</course> or <course cid=\"6948\">273</course>; and 3 units from <course cid=\"3620\">Computer Science 219</course>, <course cid=\"3622\">233</course>, <course cid=\"3623\">235</course>, <course cid=\"43065\">Computer Engineering 335</course>, 339 or <course cid=\"43066\">Software Engineering for Engineers 337</course>.",
     "coreq": null,
@@ -28,8 +29,12 @@
         "+1 (403) 282-9154 (Fax)",
         "+1 (403) 220-8600 (Undergraduate Science Centre)"
       ],
-      "rooms": ["Biological Sciences 540"],
-      "email": ["scidean@ucalgary.ca"],
+      "rooms": [
+        "Biological Sciences 540"
+      ],
+      "email": [
+        "scidean@ucalgary.ca"
+      ],
       "website": [
         "http://science.ucalgary.ca/",
         "http://science.ucalgary.ca/usc"
@@ -93,4 +98,4 @@
       }
     ]
   }
-}
+]
