@@ -168,7 +168,7 @@ def get_course(tmp_path):
             assessments.extend(extract_assessments(table))
 
         course_key = get_course_key(pdf)
-        course_info = get_course_info(course_key)
+        course_info = get_course_info(course_key) or {"code": "unknown", "number": "unknown"}
 
         course_info["assessments"] = assessments
         result = course_info
