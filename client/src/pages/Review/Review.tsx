@@ -2,7 +2,7 @@ import { useState, useEffect, useMemo } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import NavigationDrawer from "../../components/NavigationDrawer";
 import AssessmentCard from "../../components/AssessmentCard";
-import { classnames, formatDate } from "../../Utilities";
+import { classnames } from "../../Utilities";
 import { Course, Courses } from "../../logic/icsGen";
 import styles from "./Review.module.css";
 
@@ -17,43 +17,36 @@ const testState: Courses = [
       {
         name: "Identity Assignment",
         date: "2021-10-21T18:00:00.000",
-        dateFormatted: "October 21, 2021 at 18:00",
         weight: "6%",
       },
       {
         name: "Coping Profile Assignment",
         date: "2021-10-29T18:00:00.000",
-        dateFormatted: "October 29, 2021 at 18:00",
         weight: "2%",
       },
       {
         name: "Self-Reflection/Goal Setting Assignment",
         date: "2021-12-07T18:00:00.000",
-        dateFormatted: "December 7, 2021 at 18:00",
         weight: "7%",
       },
       {
         name: "Experiential-Learning/Article-Evaluation Course Component",
         date: "2021-12-08T23:59:59.999",
-        dateFormatted: "December 8, 2021 at 23:59",
         weight: "4%",
       },
       {
         name: "Exam 1",
         date: "2021-10-14T00:00:00.000",
-        dateFormatted: "October 14, 2021 at 00:00",
         weight: "25%",
       },
       {
         name: "Exam 2",
         date: "2021-11-18T00:00:00.000",
-        dateFormatted: "November 18, 2021 at 00:00",
         weight: "25%",
       },
       {
         name: "Exam 3/Final Exam",
         date: "",
-        dateFormatted: "",
         weight: "31%",
       },
     ],

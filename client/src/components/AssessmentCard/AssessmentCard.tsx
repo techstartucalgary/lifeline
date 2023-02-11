@@ -8,6 +8,22 @@ interface AssessmentCardProps {
   onAssessmentClick: (assessment: Assessment) => void;
 }
 
+const formatDate = (dateString: string): string | null => {
+  try {
+    const date = new Date(dateString);
+    return date.toLocaleString("en-US", {
+      month: "long",
+      day: "numeric",
+      year: "numeric",
+      hour: "numeric",
+      minute: "numeric",
+      hour12: false,
+    });
+  } catch (e) {
+    return null;
+  }
+};
+
 const AssessmentCard = ({ assessment, onAssessmentClick }: AssessmentCardProps) => {
   return (
     <Button
@@ -60,7 +76,7 @@ const AssessmentCard = ({ assessment, onAssessmentClick }: AssessmentCardProps) 
         <h1 className="font-bold text-sys-on-primary-container">
           {assessment.name}
         </h1>
-        <h2>{assessment.dateFormatted}</h2>
+        <h2>{formatDate(assessment.date)}</h2>
         <p className="text-sys-outline mt-2">
           Weight: {assessment.weight}
           <br />

@@ -3,7 +3,6 @@ import { createEvents, EventAttributes } from "ics";
 export interface Assessment {
   name: string;
   date: string;
-  dateFormatted: string;
   weight: string;
 }
 
