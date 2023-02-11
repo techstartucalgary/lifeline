@@ -89,11 +89,7 @@ def get_course_key(pdf):
                 pass
             break
 
-    if course_number:
-        return f"{course_code} {course_number}"
-    if course_code:
-        return course_code
-    return "unknown course"
+    return course_code, course_number
 
 
 def get_course_info(course_key):
@@ -161,18 +157,26 @@ def get_course(tmp_path):
     the body of the response"""
 
     with pdfplumber.open(tmp_path) as pdf:
-        tables = read_tables(pdf)
+        course = {}
 
+        # Extract course code and number from the first page
+        course_code, course_number = get_course_key(pdf)
+        course["code"] = course_code
+        course["number"] = course_number
+
+        if course_code and course_number:
+            course_key = f"{course_code} {course_number}"
+            course_info = get_course_info(course_key)
+            course = {**course, **course_info}
+
+        # Extract assessments from all tables
         assessments = []
+        tables = read_tables(pdf)
         for table in tables:
             assessments.extend(extract_assessments(table))
+        course["assessments"] = assessments
 
-        course_key = get_course_key(pdf)
-        course_info = get_course_info(course_key) or {"code": "unknown", "number": "unknown"}
-
-        course_info["assessments"] = assessments
-        result = course_info
-    return result
+    return course
 
 
 def save_upload_file_tmp(upload_file: UploadFile):
@@ -189,15 +193,24 @@ def save_upload_file_tmp(upload_file: UploadFile):
 
 def handle_files(files: List[UploadFile]):
     """Handles multiple files"""
-    result = {}
+    courses = []
     for file in files:
         try:
             tmp_path = save_upload_file_tmp(file)
-
             course = get_course(tmp_path)
-            key = course["code"] + " " + str(course["number"])
-            result[key] = course
+            courses.append(course)
         finally:
             tmp_path.unlink()
 
-    return result
+    results = {}
+    for index, course in enumerate(courses):
+
+        if not course["code"] or not course["number"]:
+            course["code"] = "Course"
+            course["number"] = index + 1
+            course["title"] = "Course"
+
+        key = f"{course['code']}-{course['number']}".lower()
+        course["key"] = key
+        results[key] = course
+    return results
