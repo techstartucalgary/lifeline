@@ -174,9 +174,9 @@ const config = {
   theme: {
     extend: {
       fontFamily: {
-        "sans": ["volksans", "ui-sans-serif", "system-ui"],
-        "display": ["volksans", "system-ui"],
-        "body": ["volksans", "system-ui"],
+        "sans": ["Rubik", "ui-sans-serif", "system-ui"],
+        "display": ["Rubik", "system-ui"],
+        "body": ["Rubik", "system-ui"],
       },
       opacity: {
         8: "0.08",
