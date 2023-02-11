@@ -1,19 +1,21 @@
 import axios from "axios";
 import { classnames } from "../../Utilities";
 import Button from "../Button";
-import jsonToICS, { Courses } from "../../logic/icsGen";
+import jsonToICS, { Course, Courses } from "../../logic/icsGen";
 import { useState, useRef } from "react";
 
 interface NavigationDrawerProps {
   courses: Courses;
-  currentCourseKey: string | undefined;
+  currentCourseKey: string | null;
   onCoursesChanged: (courses: Courses) => void;
+  onCourseClick: (course: Course) => void;
 }
 
 const NavigationDrawer = ({
   courses,
   currentCourseKey,
   onCoursesChanged,
+  onCourseClick,
 }: NavigationDrawerProps) => {
   const [loading, setLoading] = useState<string[]>([]);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -58,7 +60,7 @@ const NavigationDrawer = ({
         courses.map((course, t) => (
           <Button
             variant="text"
-            to={`/app/${course.key}`}
+            onClick={() => onCourseClick(course)}
             key={t}
             className={classnames(
               "text-gray-900",

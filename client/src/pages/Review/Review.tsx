@@ -1,5 +1,5 @@
 import { useState, useEffect, useMemo } from "react";
-import { useParams, Link, useNavigate } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import NavigationDrawer from "../../components/NavigationDrawer";
 import AssessmentCard from "../../components/AssessmentCard";
 import { classnames } from "../../Utilities";
@@ -60,12 +60,22 @@ enum Tab {
 }
 
 const Review = () => {
+  const { courseKey: courseKeyUrlParam } = useParams();
+
   const [selectedTab, setSelectedTab] = useState<Tab>(Tab.Assessments);
   const [courses, setCourses] = useState<Courses>(testState);
+  const [currentCourseKey, setCurrentCourseKey] = useState<string | null>(null);
 
-  const { courseKey: currentCourseKey } = useParams();
-  const navigate = useNavigate();
-
+  // At first render of the page, check if the course key is valid 
+  // and assign value to current course key
+  useEffect(() => {
+    if (courseKeyUrlParam === undefined || courseKeyLookup[courseKeyUrlParam] === undefined) {
+      setCurrentCourseKey(null);
+    } else {
+      setCurrentCourseKey(courseKeyUrlParam);
+    }
+  }, []);
+  
   // Callback for when the courses are changed
   const onCoursesChanged = (newCourses: Courses) => {
     for (const course of newCourses) {
@@ -103,12 +113,10 @@ const Review = () => {
     [currentCourseKey, courseKeyLookup[currentCourseKey || ""]]
   );
 
-  // Redirect to the app page if the course key is invalid
-  useEffect(() => {
-    if (!currentCourseKey || courseKeyLookup[currentCourseKey] === undefined) {
-      navigate("/app");
-    }
-  }, [currentCourseKey]);
+  const onCourseClick = (course: Course) => {
+    setCurrentCourseKey(course.key);
+    setTimeout(() => history.pushState(null, "", `/app/${course.key}`), 100);
+  };
 
   return (
     <div className="flex flex-row justify-between">
@@ -126,6 +134,7 @@ const Review = () => {
           courses={courses}
           currentCourseKey={currentCourseKey}
           onCoursesChanged={onCoursesChanged}
+          onCourseClick={onCourseClick}
         />
       </nav>
       {currentCourse && (
