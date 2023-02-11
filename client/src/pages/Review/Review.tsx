@@ -1,9 +1,11 @@
 import { useState, useEffect, useMemo } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import NavigationDrawer from "../../components/NavigationDrawer";
 import AssessmentCard from "../../components/AssessmentCard";
 import { classnames } from "../../Utilities";
 import { Course, Courses } from "../../logic/icsGen";
+import Button from "../../components/Button";
+
 import styles from "./Review.module.css";
 
 const testState: Courses = [
@@ -113,9 +115,14 @@ const Review = () => {
     [currentCourseKey, courseKeyLookup[currentCourseKey || ""]]
   );
 
-  const onCourseClick = (course: Course) => {
-    setCurrentCourseKey(course.key);
-    setTimeout(() => history.pushState(null, "", `/app/${course.key}`), 100);
+  const onCourseClick = (course: Course | null) => {
+    if (course === null) {
+      setCurrentCourseKey(null);
+      setTimeout(() => history.pushState(null, "", "/app"), 10);
+    } else {
+      setCurrentCourseKey(course.key);
+      setTimeout(() => history.pushState(null, "", `/app/${course.key}`), 100);
+    }
   };
 
   return (
@@ -145,14 +152,14 @@ const Review = () => {
           )}
         >
           <header className="bg-gray-300 w-full p-4 text-xl">
-            <Link to="/app">
+            <Button onClick={() => onCourseClick(null)}>
               <span
                 className={classnames("material-icons", "md:hidden", "inline")}
                 style={{ fontSize: "1.5rem", verticalAlign: "middle" }}
               >
                 arrow_back
               </span>
-            </Link>
+            </Button>
             <h1 className="text-4xl">
               {currentCourse.title} {currentCourse.number}
             </h1>
