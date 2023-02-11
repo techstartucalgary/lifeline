@@ -202,15 +202,4 @@ def handle_files(files: List[UploadFile]):
         finally:
             tmp_path.unlink()
 
-    results = {}
-    for index, course in enumerate(courses):
-
-        if not course["code"] or not course["number"]:
-            course["code"] = "Course"
-            course["number"] = index + 1
-            course["title"] = "Course"
-
-        key = f"{course['code']}-{course['number']}".lower()
-        course["key"] = key
-        results[key] = course
-    return results
+    return courses
