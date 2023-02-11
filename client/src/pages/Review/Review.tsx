@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import NavigationDrawer from "../../components/NavigationDrawer";
 import AssessmentCard from "../../components/AssessmentCard";
@@ -56,7 +56,7 @@ const testState: Courses = {
 // Enum for the tabs
 enum Tab {
   Assessments,
-  Document
+  Document,
 }
 
 const Review = () => {
@@ -69,6 +69,11 @@ const Review = () => {
   const onCoursesChanged = (newCourses: Courses) => {
     setCourses({ ...courses, ...newCourses });
   };
+
+  const course = useMemo(
+    () => (courseKey && courseKey in courses ? courses[courseKey] : null),
+    [courseKey, courses[courseKey || 0]]
+  );
 
   useEffect(() => {
     if (!courseKey || courses[courseKey] === undefined) {
@@ -94,7 +99,7 @@ const Review = () => {
           onCoursesChanged={onCoursesChanged}
         />
       </nav>
-      {courseKey && courses[courseKey] && (
+      {course && (
         <main
           className={classnames(
             "flex-shrink-0 text-center w-full",
@@ -111,9 +116,9 @@ const Review = () => {
               </span>
             </Link>
             <h1 className="text-4xl">
-              {courses[courseKey].title} {courses[courseKey].number}
+              {course.title} {course.number}
             </h1>
-            <h2 className="text-2xl">{courses[courseKey].topic}</h2>
+            <h2 className="text-2xl">{course.topic}</h2>
           </header>
           <div className="flex flex-col md:flex-row">
             <div className="w-full md:hidden flex flex-row">
@@ -147,7 +152,7 @@ const Review = () => {
               )}
             >
               <ul className="flex flex-col">
-                {courses[courseKey].assessments.map((assessment) => (
+                {course.assessments.map((assessment) => (
                   <AssessmentCard
                     key={assessment.name + assessment.date + assessment.weight} // should be assessment.source eventually
                     assessment={assessment}
