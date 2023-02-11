@@ -8,7 +8,6 @@ import Landing from "./pages/Landing";
 import Loading from "./pages/Loading";
 import Review from "./pages/Review";
 
-
 const hostname = window.location.hostname;
 const port = window.location.port;
 
@@ -32,16 +31,15 @@ function App() {
           <Route path="/landing" element={<Landing />} />
           <Route path="/loading" element={<Loading />} />
           <Route path="/app" element={<Review />} />
-          <Route path="/app/:courseId" element={<Review />} />
+          <Route path="/app/:courseKey" element={<Review />} />
         </Routes>
       </BrowserRouter>
     </div>
   );
 }
 
-
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
     <App />
-  </React.StrictMode>,
+  </React.StrictMode>
 );
