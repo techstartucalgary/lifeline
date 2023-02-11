@@ -6,14 +6,14 @@ import { useState, useRef } from "react";
 
 interface NavigationDrawerProps {
   courses: Courses;
-  currentCourseKey: string | null;
+  currentCourse: Course | null;
   onCoursesChanged: (courses: Courses) => void;
   onCourseClick: (course: Course) => void;
 }
 
 const NavigationDrawer = ({
   courses,
-  currentCourseKey,
+  currentCourse,
   onCoursesChanged,
   onCourseClick,
 }: NavigationDrawerProps) => {
@@ -68,7 +68,7 @@ const NavigationDrawer = ({
               "flex",
               "flex-row",
               "p-4",
-              currentCourseKey === course.key && "bg-primary-90"
+              currentCourse?.key === course.key && "bg-primary-90"
             )}
           >
             <span className="material-icons text-gray-600 text-base flex items-center justify-center">

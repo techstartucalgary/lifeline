@@ -132,7 +132,7 @@ const Review = () => {
       >
         <NavigationDrawer
           courses={courses}
-          currentCourseKey={currentCourseKey}
+          currentCourse={currentCourse}
           onCoursesChanged={onCoursesChanged}
           onCourseClick={onCourseClick}
         />
