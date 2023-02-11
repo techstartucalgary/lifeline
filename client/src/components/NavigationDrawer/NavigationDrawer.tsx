@@ -6,13 +6,13 @@ import { useState, useRef } from "react";
 
 interface NavigationDrawerProps {
   courses: Courses;
-  currentCourseKeyString: string | undefined;
+  currentCourseKey: string | undefined;
   onCoursesChanged: (courses: Courses) => void;
 }
 
 const NavigationDrawer = ({
   courses,
-  currentCourseKeyString,
+  currentCourseKey,
   onCoursesChanged,
 }: NavigationDrawerProps) => {
   const [loading, setLoading] = useState<string[]>([]);
@@ -32,19 +32,7 @@ const NavigationDrawer = ({
         headers: { "Content-Type": "multipart/form-data" },
       })
       .then((res) => {
-        for (const course of res.data) {
-          if (!course.code || !course.number) {
-            course.code = "Course";
-            course.number = Object.values(courses).length + 1;
-            course.title = "Course";
-          }
-
-          const key = `${course.code}-${course.number}`.toLowerCase();
-          course.key = key;
-          courses[key] = course;
-        }
-
-        onCoursesChanged(courses);
+        onCoursesChanged(res.data);
       })
       .catch((error) => {
         console.log(error);
@@ -68,25 +56,25 @@ const NavigationDrawer = ({
       <p className="m-5 ml-2 font-bold">Courses</p>
 
       {courses &&
-        Object.entries(courses).map(([courseKey, course]) => (
+        courses.map((course) => (
           <Button
             variant="text"
-            to={`/app/${courseKey}`}
-            key={courseKey}
+            to={`/app/${course.key}`}
+            key={course.key}
             className={classnames(
               "text-gray-900",
               "mt-2",
               "flex",
               "flex-row",
               "p-4",
-              currentCourseKeyString === courseKey && "bg-primary-90"
+              currentCourseKey === course.key && "bg-primary-90"
             )}
           >
             <span className="material-icons text-gray-600 text-base flex items-center justify-center">
               {
                 ["circle", "square", "pentagon"][
                   Math.abs(
-                    courseKey.split("").reduce((a, b) => a + b.charCodeAt(0), 0)
+                    course.key.split("").reduce((a, b) => a + b.charCodeAt(0), 0)
                   ) % 3
                 ]
               }

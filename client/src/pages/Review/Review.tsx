@@ -2,14 +2,14 @@ import { useState, useEffect, useMemo } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import NavigationDrawer from "../../components/NavigationDrawer";
 import AssessmentCard from "../../components/AssessmentCard";
-import { classnames } from "../../Utilities";
-import { Courses } from "../../logic/icsGen";
+import { classnames, formatDate } from "../../Utilities";
+import { Course, Courses } from "../../logic/icsGen";
 import styles from "./Review.module.css";
 
-const testState: Courses = {
-  "psyc-203": {
+const testState: Courses = [
+  {
     code: "PYSC",
-    number: "203",
+    number: 203,
     title: "Psychology",
     key: "psyc-203",
     topic: "Psychology of Everyday Life",
@@ -17,41 +17,48 @@ const testState: Courses = {
       {
         name: "Identity Assignment",
         date: "2021-10-21T18:00:00.000",
+        dateFormatted: "October 21, 2021 at 18:00",
         weight: "6%",
       },
       {
         name: "Coping Profile Assignment",
         date: "2021-10-29T18:00:00.000",
+        dateFormatted: "October 29, 2021 at 18:00",
         weight: "2%",
       },
       {
         name: "Self-Reflection/Goal Setting Assignment",
         date: "2021-12-07T18:00:00.000",
+        dateFormatted: "December 7, 2021 at 18:00",
         weight: "7%",
       },
       {
         name: "Experiential-Learning/Article-Evaluation Course Component",
         date: "2021-12-08T23:59:59.999",
+        dateFormatted: "December 8, 2021 at 23:59",
         weight: "4%",
       },
       {
         name: "Exam 1",
         date: "2021-10-14T00:00:00.000",
+        dateFormatted: "October 14, 2021 at 00:00",
         weight: "25%",
       },
       {
         name: "Exam 2",
         date: "2021-11-18T00:00:00.000",
+        dateFormatted: "November 18, 2021 at 00:00",
         weight: "25%",
       },
       {
         name: "Exam 3/Final Exam",
         date: "",
+        dateFormatted: "",
         weight: "31%",
       },
     ],
   },
-};
+];
 
 // Enum for the tabs
 enum Tab {
@@ -66,17 +73,52 @@ const Review = () => {
   const { courseKey } = useParams();
   const navigate = useNavigate();
 
+  // Callback for when the courses are changed
   const onCoursesChanged = (newCourses: Courses) => {
-    setCourses({ ...courses, ...newCourses });
+    for (const course of newCourses) {
+      // Numbering undetermined courses
+      if (!course.code || !course.number) {
+        course.code = "Course";
+        course.number = Object.values(courses).length + 1;
+        course.title = "Course";
+      }
+
+      // Generate the unique course key
+      const key = `${course.code}-${course.number}`.toLowerCase();
+      course.key = key;
+
+      // Cache the formatted dates
+      for (const assessment of course.assessments) {
+        assessment.dateFormatted = formatDate(assessment.date) || "";
+      }
+
+      courses.push(course);
+    }
+
+    setCourses([...courses]);
   };
 
-  const course = useMemo(
-    () => (courseKey && courseKey in courses ? courses[courseKey] : null),
-    [courseKey, courses[courseKey || 0]]
+  // Memoize the course key lookup in format of { [key]: course } for performance
+  const courseKeyLookup = useMemo(
+    () =>
+      Object.fromEntries(
+        courses.map((course) => [course.key, course])
+      ) as Record<string, Course>,
+    [courses]
   );
 
+  // Memoize the course based on the course key
+  const course = useMemo(
+    () =>
+      courseKey && courseKey in courseKeyLookup
+        ? courseKeyLookup[courseKey]
+        : null,
+    [courseKey, courseKeyLookup[courseKey || ""]]
+  );
+
+  // Redirect to the app page if the course key is invalid
   useEffect(() => {
-    if (!courseKey || courses[courseKey] === undefined) {
+    if (!courseKey || courseKeyLookup[courseKey] === undefined) {
       navigate("/app");
     }
   }, [courseKey]);
@@ -95,7 +137,7 @@ const Review = () => {
       >
         <NavigationDrawer
           courses={courses}
-          currentCourseKeyString={courseKey}
+          currentCourseKey={courseKey}
           onCoursesChanged={onCoursesChanged}
         />
       </nav>
