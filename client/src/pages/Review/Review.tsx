@@ -112,17 +112,19 @@ const Review = () => {
           <div className="flex flex-col md:flex-row">
             <div className="w-full md:hidden flex flex-row">
               <button
-                className={`w-full bg-gray-300 p-2 ${
+                className={classnames(
+                  "w-full bg-gray-300 p-2",
                   selectedTab === 0 && "bg-red-500"
-                }`}
+                )}
                 onClick={() => setSelectedTab(0)}
               >
                 Assessments
               </button>
               <button
-                className={`w-full bg-gray-300 p-2 ${
+                className={classnames(
+                  "w-full bg-gray-300 p-2",
                   selectedTab === 1 && "bg-red-500"
-                }`}
+                )}
                 onClick={() => setSelectedTab(1)}
               >
                 Document
