@@ -14,8 +14,6 @@ const NavigationDrawer = ({ courses, currentCourseKeyString, onCoursesChanged }:
   const [loading, setLoading] = useState<string[]>([]);
   const inputRef = useRef<HTMLInputElement>(null);
 
-  const urlFormat = (course: string) => (course.replace(/ /g, "-").toLowerCase());
-
   const handleOutlineUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
     if (!files)
@@ -61,33 +59,33 @@ const NavigationDrawer = ({ courses, currentCourseKeyString, onCoursesChanged }:
     <div className="flex flex-col w-full md:p-4 p-0 bg-surface">
       <p className="m-5 ml-2 font-bold">Courses</p>
 
-      {courses && Object.entries(courses).map(([course, courseData]) => (
+      {courses && Object.entries(courses).map(([courseKey, course]) => (
         <Button
           variant="text"
-          to={`/app/${urlFormat(course)}`}
-          key={course}
+          to={`/app/${courseKey}`}
+          key={courseKey}
           className={classnames(
             "text-gray-900",
             "mt-2",
             "flex",
             "flex-row",
             "p-4",
-            currentCourseKeyString === course && "bg-primary-90",
+            currentCourseKeyString === courseKey && "bg-primary-90",
           )}
         >
           <span className="material-icons text-gray-600 text-base flex items-center justify-center">
-            {["circle", "square", "pentagon"][Math.abs(course.split("").reduce((a, b) => a + b.charCodeAt(0), 0)) % 3]}
+            {["circle", "square", "pentagon"][Math.abs(courseKey.split("").reduce((a, b) => a + b.charCodeAt(0), 0)) % 3]}
           </span>
           <div className="flex flex-col ml-2 min-w-0">
             <p className="flex items-center font-bold">
-              {course}
+              {course.code} {course.number}
             </p>
             <p className={classnames("truncate", "md:hidden")}>
-              {courseData.topic}
+              {course.topic}
             </p>
           </div>
           <p className="ml-auto flex items-center justify-center">
-            {courseData.assessments.length}
+            {course.assessments.length}
           </p>
           <span className="material-icons text-gray-600 flex items-center justify-center block md:hidden">
             arrow_right

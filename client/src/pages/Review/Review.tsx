@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { useParams, Link, useNavigate } from "react-router-dom";
 import NavigationDrawer from "../../components/NavigationDrawer";
 import AssessmentCard from "../../components/AssessmentCard";
 import { classnames } from "../../Utilities";
@@ -7,7 +7,11 @@ import { Courses } from "../../logic/icsGen";
 import styles from "./Review.module.css";
 
 const testState: Courses = {
-  "PSYC 203": {
+  "psyc-203": {
+    code: "PYSC",
+    number: "203",
+    title: "Psychology",
+    key: "psyc-203",
     topic: "Psychology of Everyday Life",
     assessments: [
       {
@@ -52,26 +56,47 @@ const testState: Courses = {
 const Review = () => {
   const [selectedTab, setSelectedTab] = useState(0);
   const [courses, setCourses] = useState<Courses>(testState);
-  const displayFormat = (course: string) => course.replace(/-/g, " ").toUpperCase();
 
-  let { courseId } = useParams();
-  courseId = courseId ? displayFormat(courseId) : undefined;
+  const { courseKey } = useParams();
+  const navigate = useNavigate();
 
   const onCoursesChanged = (newCourses: Courses) => {
     setCourses({ ...courses, ...newCourses });
   };
 
+  useEffect(() => {
+    if (!courseKey || courses[courseKey] === undefined) {
+      navigate("/app");
+    }
+  }, [courseKey]);
+
   return (
     <div className="flex flex-row justify-between">
       <nav
-        className={classnames("md:w-64", "w-full", "flex-shrink-0", courseId && "hidden", "md:block", "bg-gray-100")}
+        className={classnames(
+          "md:w-64",
+          "w-full",
+          "flex-shrink-0",
+          courseKey && "hidden",
+          "md:block",
+          "bg-gray-100"
+        )}
       >
-        <NavigationDrawer courses={courses} currentCourseKeyString={courseId} onCoursesChanged={onCoursesChanged} />
+        <NavigationDrawer
+          courses={courses}
+          currentCourseKeyString={courseKey}
+          onCoursesChanged={onCoursesChanged}
+        />
       </nav>
-      {courseId && (
-        <main className={classnames("flex-shrink-0 text-center w-full", styles.main)}>
+      {courseKey && courses[courseKey] && (
+        <main
+          className={classnames(
+            "flex-shrink-0 text-center w-full",
+            styles.main
+          )}
+        >
           <header className="bg-gray-300 w-full p-4 text-xl">
-            <Link to="/review">
+            <Link to="/app">
               <span
                 className={classnames("material-icons", "md:hidden", "inline")}
                 style={{ fontSize: "1.5rem", verticalAlign: "middle" }}
@@ -79,19 +104,25 @@ const Review = () => {
                 arrow_back
               </span>
             </Link>
-            <h1 className="text-4xl">{courseId && displayFormat(courseId)}</h1>
-            <h2 className="text-2xl">{courses[courseId]?.topic}</h2>
+            <h1 className="text-4xl">
+              {courses[courseKey].title} {courses[courseKey].number}
+            </h1>
+            <h2 className="text-2xl">{courses[courseKey].topic}</h2>
           </header>
           <div className="flex flex-col md:flex-row">
             <div className="w-full md:hidden flex flex-row">
               <button
-                className={`w-full bg-gray-300 p-2 ${selectedTab === 0 && "bg-red-500"}`}
+                className={`w-full bg-gray-300 p-2 ${
+                  selectedTab === 0 && "bg-red-500"
+                }`}
                 onClick={() => setSelectedTab(0)}
               >
                 Assessments
               </button>
               <button
-                className={`w-full bg-gray-300 p-2 ${selectedTab === 1 && "bg-red-500"}`}
+                className={`w-full bg-gray-300 p-2 ${
+                  selectedTab === 1 && "bg-red-500"
+                }`}
                 onClick={() => setSelectedTab(1)}
               >
                 Document
@@ -108,7 +139,7 @@ const Review = () => {
               )}
             >
               <ul className="flex flex-col">
-                {courses[courseId]?.assessments.map((assessment) => (
+                {courses[courseKey].assessments.map((assessment) => (
                   <AssessmentCard
                     key={assessment.name + assessment.date + assessment.weight} // should be assessment.source eventually
                     assessment={assessment}
