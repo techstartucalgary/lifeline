@@ -63,7 +63,7 @@ const Review = () => {
   const [selectedTab, setSelectedTab] = useState<Tab>(Tab.Assessments);
   const [courses, setCourses] = useState<Courses>(testState);
 
-  const { courseKey } = useParams();
+  const { courseKey: currentCourseKey } = useParams();
   const navigate = useNavigate();
 
   // Callback for when the courses are changed
@@ -95,20 +95,20 @@ const Review = () => {
   );
 
   // Memoize the course based on the course key
-  const course = useMemo(
+  const currentCourse = useMemo(
     () =>
-      courseKey && courseKey in courseKeyLookup
-        ? courseKeyLookup[courseKey]
+      currentCourseKey && currentCourseKey in courseKeyLookup
+        ? courseKeyLookup[currentCourseKey]
         : null,
-    [courseKey, courseKeyLookup[courseKey || ""]]
+    [currentCourseKey, courseKeyLookup[currentCourseKey || ""]]
   );
 
   // Redirect to the app page if the course key is invalid
   useEffect(() => {
-    if (!courseKey || courseKeyLookup[courseKey] === undefined) {
+    if (!currentCourseKey || courseKeyLookup[currentCourseKey] === undefined) {
       navigate("/app");
     }
-  }, [courseKey]);
+  }, [currentCourseKey]);
 
   return (
     <div className="flex flex-row justify-between">
@@ -117,18 +117,18 @@ const Review = () => {
           "md:w-64",
           "w-full",
           "flex-shrink-0",
-          courseKey && "hidden",
+          currentCourseKey && "hidden",
           "md:block",
           "bg-gray-100"
         )}
       >
         <NavigationDrawer
           courses={courses}
-          currentCourseKey={courseKey}
+          currentCourseKey={currentCourseKey}
           onCoursesChanged={onCoursesChanged}
         />
       </nav>
-      {course && (
+      {currentCourse && (
         <main
           className={classnames(
             "flex-shrink-0 text-center w-full",
@@ -145,9 +145,9 @@ const Review = () => {
               </span>
             </Link>
             <h1 className="text-4xl">
-              {course.title} {course.number}
+              {currentCourse.title} {currentCourse.number}
             </h1>
-            <h2 className="text-2xl">{course.topic}</h2>
+            <h2 className="text-2xl">{currentCourse.topic}</h2>
           </header>
           <div className="flex flex-col md:flex-row">
             <div className="w-full md:hidden flex flex-row">
@@ -181,7 +181,7 @@ const Review = () => {
               )}
             >
               <ul className="flex flex-col">
-                {course.assessments.map((assessment, t) => (
+                {currentCourse.assessments.map((assessment, t) => (
                   <AssessmentCard
                     key={t}
                     assessment={assessment}
