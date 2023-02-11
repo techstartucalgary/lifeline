@@ -7,6 +7,10 @@ export interface Assessment {
 }
 
 export interface Course {
+  code: string;
+  number: string;
+  title: string;
+  key: string;
   topic: string;
   assessments: Assessment[];
 }
