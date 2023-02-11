@@ -86,12 +86,6 @@ const Review = () => {
       // Generate the unique course key
       const key = `${course.code}-${course.number}`.toLowerCase();
       course.key = key;
-
-      // Cache the formatted dates
-      for (const assessment of course.assessments) {
-        assessment.dateFormatted = formatDate(assessment.date) || "";
-      }
-
       courses.push(course);
     }
 
@@ -194,9 +188,9 @@ const Review = () => {
               )}
             >
               <ul className="flex flex-col">
-                {course.assessments.map((assessment) => (
+                {course.assessments.map((assessment, t) => (
                   <AssessmentCard
-                    key={assessment.name + assessment.date + assessment.weight} // should be assessment.source eventually
+                    key={t}
                     assessment={assessment}
                     onAssessmentClick={() => {
                       console.log("clicked");

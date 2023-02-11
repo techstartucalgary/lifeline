@@ -54,13 +54,12 @@ const NavigationDrawer = ({
   return (
     <div className="flex flex-col w-full md:p-4 p-0 bg-surface">
       <p className="m-5 ml-2 font-bold">Courses</p>
-
       {courses &&
-        courses.map((course) => (
+        courses.map((course, t) => (
           <Button
             variant="text"
             to={`/app/${course.key}`}
-            key={course.key}
+            key={t}
             className={classnames(
               "text-gray-900",
               "mt-2",
