@@ -174,9 +174,9 @@ const config = {
   theme: {
     extend: {
       fontFamily: {
-        "sans": ["Google Sans Text", "ui-sans-serif", "system-ui"],
-        "display": ["Google Sans", "system-ui"],
-        "body": ["Google Sans Text", "system-ui"],
+        "sans": ["volksans", "ui-sans-serif", "system-ui"],
+        "display": ["volksans", "system-ui"],
+        "body": ["volksans", "system-ui"],
       },
       opacity: {
         8: "0.08",
