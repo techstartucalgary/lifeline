@@ -35,7 +35,11 @@ async def show_calendar():
 @app.post("/files")
 async def get_deadlines(outline_files: List[UploadFile] = File(...)):
     """Returns the extracted dates from the uploaded file(s)"""
-    return file_handler.handle_files(outline_files)
+    try:
+        return file_handler.handle_files(outline_files)
+    except Exception as e:
+        print(e)
+        return {"error": f'Something went wrong: {e}'}
 
 
 if __name__ == "__main__":
