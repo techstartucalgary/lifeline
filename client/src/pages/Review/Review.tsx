@@ -80,6 +80,7 @@ const Review = () => {
   
   // Callback for when the courses are changed
   const onCoursesChanged = (newCourses: Courses) => {
+    const existingCourseKeys = courses.map((course) => course.key);
     for (const course of newCourses) {
       // Numbering undetermined courses
       if (!course.code || !course.number) {
@@ -88,10 +89,13 @@ const Review = () => {
         course.title = "Course";
       }
 
-      // Generate the unique course key
+      // Generate course key
       const key = `${course.code}-${course.number}`.toLowerCase();
+      if (existingCourseKeys.includes(key)) continue;
+
       course.key = key;
       courses.push(course);
+      existingCourseKeys.push(key);
     }
 
     setCourses([...courses]);
