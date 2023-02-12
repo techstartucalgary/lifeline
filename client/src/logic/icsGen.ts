@@ -7,28 +7,32 @@ export interface Assessment {
 }
 
 export interface Course {
+  code: string;
+  number: number;
+  title: string;
+  key: string;
   topic: string;
   assessments: Assessment[];
 }
 
-export interface Courses {
-  [key: string]: Course;
+export interface Courses extends Array<Course> {
+  [index: number]: Course;
 }
 
-function jsonToICS(data: Courses): string {
+function jsonToICS(courses: Courses): string {
   const events: EventAttributes[] = [];
-  Object.entries(data).forEach(([course, courseData]) => {
-    for (const assessment of courseData.assessments) {
+
+  for (const course of courses) {
+    for (const assessment of course.assessments) {
       if (!assessment.date) {
         continue;
       }
       const [date, time] = assessment.date.split("T");
       const [year, month, day] = date.split("-");
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      const [hours, minutes, milis] = time.split(":");
+      const [hours, minutes, ] = time.split(":");
 
       events.push({
-        title: `${course} ${assessment.name} (${assessment.weight}%)`,
+        title: `${course.code} ${course.number} - ${assessment.name} (${assessment.weight}%)`,
         start: [
           parseInt(year),
           parseInt(month),
@@ -39,12 +43,9 @@ function jsonToICS(data: Courses): string {
         duration: { hours: 0, minutes: 0, seconds: 0 },
       });
     }
-  });
-
-  const { error, value } = createEvents(events);
-  if (error) {
-    return "error";
   }
+
+  const { value } = createEvents(events);
   if (value) {
     return value;
   }
