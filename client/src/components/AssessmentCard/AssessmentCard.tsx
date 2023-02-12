@@ -8,8 +8,8 @@ interface AssessmentCardProps {
   onAssessmentClick: (assessment: Assessment) => void;
 }
 
-const AssessmentCard = ({ assessment, onAssessmentClick }: AssessmentCardProps) => {
-  function formatDate(dateString: string): string {
+const formatDate = (dateString: string): string | null => {
+  try {
     const date = new Date(dateString);
     return date.toLocaleString("en-US", {
       month: "long",
@@ -19,8 +19,12 @@ const AssessmentCard = ({ assessment, onAssessmentClick }: AssessmentCardProps) 
       minute: "numeric",
       hour12: false,
     });
+  } catch (e) {
+    return null;
   }
+};
 
+const AssessmentCard = ({ assessment, onAssessmentClick }: AssessmentCardProps) => {
   return (
     <Button
       className={classnames(
@@ -38,7 +42,13 @@ const AssessmentCard = ({ assessment, onAssessmentClick }: AssessmentCardProps) 
         <img
           src={blob}
           alt="assessment icon background"
-          className={classnames("absolute", "top-0", "left-0", "w-full", "h-full")}
+          className={classnames(
+            "absolute",
+            "top-0",
+            "left-0",
+            "w-full",
+            "h-full"
+          )}
         />
         <span
           className={classnames(
@@ -54,12 +64,18 @@ const AssessmentCard = ({ assessment, onAssessmentClick }: AssessmentCardProps) 
           )}
         >
           {
-            ["event", "star"][Math.floor((assessment.name.charCodeAt(0) + 1) % 2)] // TODO: replace with a better way to determine icon
+            ["event", "star"][
+              Math.floor((assessment.name.charCodeAt(0) + 1) % 2)
+            ] // TODO: replace with a better way to determine icon
           }
         </span>
       </div>
-      <div className={classnames("flex", "flex-col", "items-start", "text-left")}>
-        <h1 className="font-bold text-sys-on-tertiary-container">{assessment.name}</h1>
+      <div
+        className={classnames("flex", "flex-col", "items-start", "text-left")}
+      >
+        <h1 className="font-bold text-sys-on-primary-container">
+          {assessment.name}
+        </h1>
         <h2>{formatDate(assessment.date)}</h2>
         <p className="text-sys-outline mt-2">
           Weight: {assessment.weight}
