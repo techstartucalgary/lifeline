@@ -72,8 +72,7 @@ const Review = () => {
           "w-full",
           "flex-shrink-0",
           courseId && "hidden",
-          "md:block",
-          "bg-gray-100"
+          "md:block"
         )}
       >
         <NavigationDrawer
@@ -89,7 +88,7 @@ const Review = () => {
             styles.main
           )}
         >
-          <header className="bg-gray-300 w-full p-4 text-xl">
+          <header className=" w-full p-4 text-left">
             <Link to="/review">
               <span
                 className={classnames("material-icons", "md:hidden", "inline")}
@@ -98,8 +97,8 @@ const Review = () => {
                 arrow_back
               </span>
             </Link>
-            <h1 className="text-4xl">{courseId && displayFormat(courseId)}</h1>
-            <h2 className="text-2xl">{courses[courseId]?.topic}</h2>
+            <h1 className="text-2xl font-bold">{courseId && displayFormat(courseId)}</h1>
+            <h2 className="text-lg">{courses[courseId]?.topic}</h2>
           </header>
           <div className="flex flex-col md:flex-row">
             <div className="w-full md:hidden flex flex-row">
@@ -124,14 +123,13 @@ const Review = () => {
               className={classnames(
                 "w-full",
                 "md:w-1/2",
-                "border",
                 "p-4",
                 "h-screen",
                 selectedTab === 1 && "hidden md:block",
                 "text-left"
               )}
             >
-              <CourseInfo/>
+              <CourseInfo />
               <div
                 className={classnames(
                   "w-full",
@@ -166,15 +164,27 @@ const Review = () => {
               className={classnames(
                 "w-full",
                 "md:w-1/2",
-                "border",
-                "border-gray-300",
-                "bg-gray-200",
                 "p-4",
                 "h-screen",
                 selectedTab === 0 && "hidden md:block"
               )}
             >
-              <img src="../pdf.png" alt="the pdf viewer" />
+              <img
+                src="../pdf.png"
+                alt="the pdf viewer"
+                className={classnames(
+                  // dashed border with radius
+                  // thin border
+                  // very small dashes
+                  "border-x",
+                  "border-y",
+                  "border-dashed",
+                  "border-gray-400",
+                  "rounded-3xl",
+                  "w-full",
+                  "mt-2"
+                )}
+              />
             </section>
           </div>
         </main>

@@ -13,7 +13,7 @@ const BentoBase = [
   "flex",
   "flex-col",
   "p-4",
-  "m-2",
+  "my-2",
   "rounded-3xl",
   "bg-primary-95",
   "hover:bg-primary-90",
@@ -24,12 +24,12 @@ const BentoBase = [
 const CourseInfo = () => {
   return (
     <>
-      <div className={classnames("flex", "flex-row")}>
-        <button className={classnames(...BentoBase, "w-1/2")}>
+      <div className={classnames("flex", "flex-row", "gap-4")}>
+        <button className={classnames(...BentoBase, "md:w-1/2")}>
           <h1 className={classnames("text-lg", "font-bold")}>Hours</h1>
           <p>H(3-2)T</p>
         </button>
-        <button className={classnames(...BentoBase, "w-1/2")}>
+        <button className={classnames(...BentoBase, "md:w-1/2", "w-full")}>
           <h1 className={classnames("text-lg", "font-bold")}>
             Department / Faculty
           </h1>
@@ -47,7 +47,7 @@ const Description = () => {
   const [showMore, setShowMore] = useState(false);
 
   return (
-    <button className={classnames(...BentoBase, "w-full")}>
+    <button className={classnames(...BentoBase, "w-full", "mb-4")}>
       <p>
         Lorem ipsum, dolor sit amet consectetur adipisicing elit. Necessitatibus
         dolorem nam delectus ullam praesentium ea?
