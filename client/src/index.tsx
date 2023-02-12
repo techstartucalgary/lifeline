@@ -7,6 +7,7 @@ import "./index.css";
 import Landing from "./pages/Landing";
 import Loading from "./pages/Loading";
 import Review from "./pages/Review";
+import NotFound from "./pages/NotFound";
 
 
 const hostname = window.location.hostname;
@@ -33,6 +34,7 @@ function App() {
           <Route path="/loading" element={<Loading />} />
           <Route path="/app" element={<Review />} />
           <Route path="/app/:courseId" element={<Review />} />
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
     </div>
