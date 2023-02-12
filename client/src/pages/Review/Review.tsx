@@ -5,6 +5,8 @@ import AssessmentCard from "../../components/AssessmentCard";
 import { classnames } from "../../Utilities";
 import { Courses } from "../../logic/icsGen";
 import styles from "./Review.module.css";
+import Button from "../../components/Button";
+import CourseInfo from "../../components/CourseInfo";
 
 const testState: Courses = {
   "PSYC 203": {
@@ -52,7 +54,8 @@ const testState: Courses = {
 const Review = () => {
   const [selectedTab, setSelectedTab] = useState(0);
   const [courses, setCourses] = useState<Courses>(testState);
-  const displayFormat = (course: string) => course.replace(/-/g, " ").toUpperCase();
+  const displayFormat = (course: string) =>
+    course.replace(/-/g, " ").toUpperCase();
 
   let { courseId } = useParams();
   courseId = courseId ? displayFormat(courseId) : undefined;
@@ -64,12 +67,28 @@ const Review = () => {
   return (
     <div className="flex flex-row justify-between">
       <nav
-        className={classnames("md:w-64", "w-full", "flex-shrink-0", courseId && "hidden", "md:block", "bg-gray-100")}
+        className={classnames(
+          "md:w-64",
+          "w-full",
+          "flex-shrink-0",
+          courseId && "hidden",
+          "md:block",
+          "bg-gray-100"
+        )}
       >
-        <NavigationDrawer courses={courses} currentCourseKeyString={courseId} onCoursesChanged={onCoursesChanged} />
+        <NavigationDrawer
+          courses={courses}
+          currentCourseKeyString={courseId}
+          onCoursesChanged={onCoursesChanged}
+        />
       </nav>
       {courseId && (
-        <main className={classnames("flex-shrink-0 text-center w-full", styles.main)}>
+        <main
+          className={classnames(
+            "flex-shrink-0 text-center w-full",
+            styles.main
+          )}
+        >
           <header className="bg-gray-300 w-full p-4 text-xl">
             <Link to="/review">
               <span
@@ -85,13 +104,17 @@ const Review = () => {
           <div className="flex flex-col md:flex-row">
             <div className="w-full md:hidden flex flex-row">
               <button
-                className={`w-full bg-gray-300 p-2 ${selectedTab === 0 && "bg-red-500"}`}
+                className={`w-full bg-gray-300 p-2 ${
+                  selectedTab === 0 && "bg-red-500"
+                }`}
                 onClick={() => setSelectedTab(0)}
               >
                 Assessments
               </button>
               <button
-                className={`w-full bg-gray-300 p-2 ${selectedTab === 1 && "bg-red-500"}`}
+                className={`w-full bg-gray-300 p-2 ${
+                  selectedTab === 1 && "bg-red-500"
+                }`}
                 onClick={() => setSelectedTab(1)}
               >
                 Document
@@ -104,9 +127,29 @@ const Review = () => {
                 "border",
                 "p-4",
                 "h-screen",
-                selectedTab === 1 && "hidden md:block"
+                selectedTab === 1 && "hidden md:block",
+                "text-left"
               )}
             >
+              <CourseInfo/>
+              <div
+                className={classnames(
+                  "w-full",
+                  "flex flex-row",
+                  "justify-between",
+                  "items-center",
+                  "mb-3"
+                )}
+              >
+                <h1 className={classnames("text-sys-primary", "font-bold")}>
+                  ASSESSMENTS
+                </h1>
+                <Button variant="filled" className={classnames("px-5", "py-2")}>
+                  <span className={classnames("material-icons", "text-4xl")}>
+                    add
+                  </span>
+                </Button>
+              </div>
               <ul className="flex flex-col">
                 {courses[courseId]?.assessments.map((assessment) => (
                   <AssessmentCard
