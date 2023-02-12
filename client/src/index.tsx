@@ -34,7 +34,7 @@ function App() {
           <Route path="/loading" element={<Loading />} />
           <Route path="/app" element={<Review />} />
           <Route path="/app/:courseId" element={<Review />} />
-          <Route path="/*" element={<NotFound />} />
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
     </div>
