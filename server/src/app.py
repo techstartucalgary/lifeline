@@ -5,8 +5,10 @@ import uvicorn
 from fastapi import FastAPI, File, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
 from handlers import calendar_handler, file_handler
+from mangum import Mangum
 
 app = FastAPI()
+handler = Mangum(app)
 
 origins = [
     "http://localhost:3000",
