@@ -52,7 +52,7 @@ const AssessmentCard = ({ assessment, onAssessmentClick }: AssessmentCardProps) 
         />
         <span
           className={classnames(
-            "material-icons",
+            "material-symbols-outlined",
             "absolute",
             "top-1/2",
             "left-1/2",
