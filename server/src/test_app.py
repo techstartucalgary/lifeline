@@ -32,7 +32,7 @@ def test_one_expected_outline():
     If this test fails but the status code is 200, check that the expected.json file is up
     to date with the latest parsing algorithm."""
 
-    base_path = "test-data/CPSC331"
+    base_path = "../test-data/CPSC331"
 
     with open(f"{base_path}/CPSC331.pdf", "rb") as file:
         request_data = {"outline_files": ("CPSC331.pdf", file, "application/pdf")}
@@ -50,13 +50,13 @@ def test_many_outlines():
     endpoint and only checks that the status code is 200."""
     files = []
 
-    # Iterate over all files in test-data
-    for path in Path("test-data").iterdir():
+    # Iterate over all files in ../test-data
+    for path in Path("../test-data").iterdir():
         if not path.is_dir():
             continue
 
         course_name = path.name
-        with open(f"test-data/{course_name}/{course_name}.pdf", "rb") as file:
+        with open(f"../test-data/{course_name}/{course_name}.pdf", "rb") as file:
             file_content = file.read()
             files.append(("outline_files", file_content))
 
