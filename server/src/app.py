@@ -38,11 +38,5 @@ async def get_deadlines(outline_files: List[UploadFile] = File(...)):
     return file_handler.handle_files(outline_files)
 
 
-@app.post("/file-names")
-async def get_filenames(outline_files: List[UploadFile] = File(...)):
-    """Returns the extracted dates from the uploaded file(s)"""
-    return {"filenames": [file.filename for file in outline_files]}
-
-
 if __name__ == "__main__":
     uvicorn.run("app:app", host="127.0.0.1", port=8000)
