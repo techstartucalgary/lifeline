@@ -194,6 +194,7 @@ def save_upload_file_tmp(upload_file: UploadFile):
 def handle_files(files: List[UploadFile]):
     """Handles multiple files"""
     courses = []
+    tmp_path = None
     for file in files:
         try:
             tmp_path = save_upload_file_tmp(file)

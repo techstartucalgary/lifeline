@@ -4,8 +4,8 @@ from typing import List
 import uvicorn
 from fastapi import FastAPI, File, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
-from handlers import calendar_handler, file_handler
 from mangum import Mangum
+from handlers import calendar_handler, file_handler
 
 app = FastAPI()
 handler = Mangum(app)
@@ -35,21 +35,13 @@ async def show_calendar():
 @app.post("/files")
 async def get_deadlines(outline_files: List[UploadFile] = File(...)):
     """Returns the extracted dates from the uploaded file(s)"""
-    try:
-        return file_handler.handle_files(outline_files)
-    except Exception as e:
-        print(e)
-        return {"error": f"Something went wrong: {e}"}
+    return file_handler.handle_files(outline_files)
 
 
 @app.post("/file-names")
 async def get_filenames(outline_files: List[UploadFile] = File(...)):
     """Returns the extracted dates from the uploaded file(s)"""
-    try:
-        return {"filenames": [file.filename for file in outline_files]}
-    except Exception as e:
-        print(e)
-        return {"error": f"Something went wrong: {e}"}
+    return {"filenames": [file.filename for file in outline_files]}
 
 
 if __name__ == "__main__":
