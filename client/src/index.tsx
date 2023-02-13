@@ -12,13 +12,15 @@ import NotFound from "./pages/NotFound";
 const hostname = window.location.hostname;
 const port = window.location.port;
 
-if (hostname === "localhost" || hostname === "127.0.0.1" || port === "3000") {
-  axios.defaults.baseURL = `//${hostname}:8000`;
-  console.log("Running on Localhost", axios.defaults.baseURL);
-} else {
-  axios.defaults.baseURL = `https://api.${hostname}`;
-  console.log("Running on Production", axios.defaults.baseURL);
-}
+// if (hostname === "localhost" || hostname === "127.0.0.1" || port === "3000") {
+//   axios.defaults.baseURL = `//${hostname}:8000`;
+//   console.log("Running on Localhost", axios.defaults.baseURL);
+// } else {
+//   axios.defaults.baseURL = `https://api.${hostname}`;
+//   console.log("Running on Production", axios.defaults.baseURL);
+// }
+
+axios.defaults.baseURL = "https://ac4tpfie32ijjcmbkn6wjhv4aa0cudbl.lambda-url.us-west-2.on.aws";
 
 axios.defaults.withCredentials = true;
 axios.defaults.timeout = 30000;
