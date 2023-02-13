@@ -27,8 +27,9 @@ jobs:
 
       - name: check
         run: |
+          cd server
           pip install -r ./server/requirements.txt
-          pylint ./server
+          pylint ./src
 
   test:
     runs-on: ubuntu-20.04
@@ -52,6 +53,6 @@ jobs:
 
       - name: test-server
         run: |
-          cd server
+          cd server/src
           pip install -r requirements.txt
           pytest test_app.py
