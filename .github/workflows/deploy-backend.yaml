@@ -1,0 +1,44 @@
+name: deploy-back
+
+on:
+  push:
+    branches:
+      # - main
+      - tim/126-deploy-server
+    paths:
+      - server/src/**
+
+jobs:
+  deploy:
+    runs-on: ubuntu-20.04
+    permissions:
+      contents: write
+    concurrency:
+      group: ${{ github.workflow }}-${{ github.ref }}
+    steps:
+      - name: git-clone
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: dependencies
+        run: |
+          cd server
+          sudo apt-get -y update
+          sudo apt-get -y install pip
+          mkdir prod deploy
+          cp -r src/. prod/
+          pip install -r requirements.txt -t prod
+          cd prod
+          zip ../deploy/deploy-me.zip -r .
+
+      - name: deploy
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          force_orphan: true
+          full_commit_message: ${{ github.event.head_commit.message }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_branch: server-production
+          publish_dir: server/deploy
+          user_name: github-actions[bot]
+          user_email: github-actions[bot]@users.noreply.github.com

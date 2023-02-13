@@ -4,9 +4,11 @@ from typing import List
 import uvicorn
 from fastapi import FastAPI, File, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
+from mangum import Mangum
 from handlers import calendar_handler, file_handler
 
 app = FastAPI()
+handler = Mangum(app)
 
 origins = [
     "http://localhost:3000",
@@ -34,6 +36,12 @@ async def show_calendar():
 async def get_deadlines(outline_files: List[UploadFile] = File(...)):
     """Returns the extracted dates from the uploaded file(s)"""
     return file_handler.handle_files(outline_files)
+
+
+@app.post("/file-names")
+async def get_filenames(outline_files: List[UploadFile] = File(...)):
+    """Returns the extracted dates from the uploaded file(s)"""
+    return {"filenames": [file.filename for file in outline_files]}
 
 
 if __name__ == "__main__":
