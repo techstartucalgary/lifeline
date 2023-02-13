@@ -10,8 +10,8 @@ import styles from "./Review.module.css";
 
 const testState: Courses = [
   {
-    code: "PYSC",
-    number: 203,
+    code: "TEST",
+    number: 999,
     title: "Psychology",
     key: "psyc-203",
     topic: "Psychology of Everyday Life",

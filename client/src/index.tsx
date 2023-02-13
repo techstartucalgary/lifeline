@@ -9,8 +9,8 @@ import Loading from "./pages/Loading";
 import Review from "./pages/Review";
 import NotFound from "./pages/NotFound";
 
-const hostname = window.location.hostname;
-const port = window.location.port;
+// const hostname = window.location.hostname;
+// const port = window.location.port;
 
 // if (hostname === "localhost" || hostname === "127.0.0.1" || port === "3000") {
 //   axios.defaults.baseURL = `//${hostname}:8000`;
@@ -21,6 +21,7 @@ const port = window.location.port;
 // }
 
 axios.defaults.baseURL = "https://rj6crp3mqwnq6vskrxd5umir4a0tgcqv.lambda-url.us-west-2.on.aws";
+// axios.defaults.baseURL = "http://localhost:8000";
 
 axios.defaults.withCredentials = false;
 axios.defaults.timeout = 30000;
