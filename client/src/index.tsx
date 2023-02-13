@@ -20,9 +20,9 @@ const port = window.location.port;
 //   console.log("Running on Production", axios.defaults.baseURL);
 // }
 
-axios.defaults.baseURL = "https://ac4tpfie32ijjcmbkn6wjhv4aa0cudbl.lambda-url.us-west-2.on.aws";
+axios.defaults.baseURL = "https://rj6crp3mqwnq6vskrxd5umir4a0tgcqv.lambda-url.us-west-2.on.aws";
 
-axios.defaults.withCredentials = true;
+axios.defaults.withCredentials = false;
 axios.defaults.timeout = 30000;
 
 function App() {

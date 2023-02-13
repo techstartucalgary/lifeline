@@ -39,7 +39,17 @@ async def get_deadlines(outline_files: List[UploadFile] = File(...)):
         return file_handler.handle_files(outline_files)
     except Exception as e:
         print(e)
-        return {"error": f'Something went wrong: {e}'}
+        return {"error": f"Something went wrong: {e}"}
+
+
+@app.post("/file-names")
+async def get_filenames(outline_files: List[UploadFile] = File(...)):
+    """Returns the extracted dates from the uploaded file(s)"""
+    try:
+        return {"filenames": [file.filename for file in outline_files]}
+    except Exception as e:
+        print(e)
+        return {"error": f"Something went wrong: {e}"}
 
 
 if __name__ == "__main__":
