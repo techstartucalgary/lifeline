@@ -5,8 +5,8 @@ on:
     branches:
       # - main
       - tim/126-deploy-server
-    paths:
-      - server/src/**
+    # paths:
+    #   - server/src/**
 
 jobs:
   deploy:
