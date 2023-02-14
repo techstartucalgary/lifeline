@@ -3,47 +3,15 @@ name: deploy-back
 on:
   push:
     branches:
-      # - main
-      - tim/126-deploy-server
-    # paths:
-    #   - server/src/**
+      - main
+    paths:
+      - server/src/**
+      - server/Dockerfile
 
 jobs:
-  deploy:
-    runs-on: ubuntu-20.04
-    permissions:
-      contents: write
-    concurrency:
-      group: ${{ github.workflow }}-${{ github.ref }}
+  build:
+    runs-on: ubuntu-latest
     steps:
-      - name: git-clone
-        uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
-
-      - name: dependencies
+      - name: TODO
         run: |
-          cd server
-          sudo apt-get -y update
-          sudo apt-get -y install containerd.io docker.io
-          curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
-          unzip awscliv2.zip
-          sudo ./aws/install
-          aws configure set aws_access_key_id ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws configure set aws_secret_access_key ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws configure set default.region us-west-2
-          aws configure set default.output json
-          aws ecr get-login-password --region us-west-2 | docker login --username AWS --password-stdin ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.us-west-2.amazonaws.com
-
-      - name: deploy
-        run: |
-          cd server
-          docker build -t server-image .
-          docker tag server-image:latest ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.us-west-2.amazonaws.com/lifeline-server:latest
-          fingerprint=$(docker push ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.us-west-2.amazonaws.com/lifeline-server:latest \
-            | grep -oP 'sha256:\w{64}')
-          
-          aws lambda update-function-code \
-            --function-name test-docker \
-            --image-uri ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.us-west-2.amazonaws.com/lifeline-server@$fingerprint
-          
+          echo 'Use docker and aws cli with github secrets to deploy the backend'
