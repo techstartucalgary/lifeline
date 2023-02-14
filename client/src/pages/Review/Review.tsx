@@ -11,8 +11,8 @@ import CourseInfo from "../../components/CourseInfo";
 
 const testState: Courses = [
   {
-    code: "TEST",
-    number: 999,
+    code: "PSYC",
+    number: 203,
     title: "Psychology",
     key: "psyc-203",
     topic: "Psychology of Everyday Life",
@@ -141,8 +141,7 @@ const Review = () => {
           "w-full",
           "flex-shrink-0",
           currentCourseKey && "hidden",
-          "md:block",
-          "bg-gray-100"
+          "md:block"
         )}
       >
         <NavigationDrawer
@@ -155,7 +154,7 @@ const Review = () => {
       {currentCourse && (
         <main
           className={classnames(
-            "flex-shrink-0 text-center w-full",
+            "flex-shrink-0 text-center w-full text-left",
             styles.main
           )}
         >
@@ -203,7 +202,11 @@ const Review = () => {
                 selectedTab === Tab.Document && "hidden md:block"
               )}
             >
-              <CourseInfo />
+              <CourseInfo
+                hours="H(3-2T)"
+                department="Computer Science"
+                description="This course is an introduction to the design and analysis of algorithms. Topics include: algorithmic problem solving, algorithmic efficiency, sorting and searching, divide-and-conquer, greedy algorithms, dynamic programming, and graph algorithms. Prerequisite: CSE 143 or equivalent."
+              />
               <div
                 className={classnames(
                   "w-full",

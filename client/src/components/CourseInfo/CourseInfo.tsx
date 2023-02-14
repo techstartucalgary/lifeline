@@ -1,12 +1,10 @@
 import { useState } from "react";
 import { classnames } from "../../Utilities";
-import Button from "../Button";
 
 interface CourseInfoProps {
-  title?: string;
+  hours: string;
+  department: string;
   description: string;
-  onClick: () => void;
-  className?: string;
 }
 
 const BentoBase = [
@@ -21,45 +19,55 @@ const BentoBase = [
   "text-left",
 ];
 
-const CourseInfo = () => {
+const CourseInfo = ({ hours, department, description }: CourseInfoProps) => {
   return (
     <>
-      <div className={classnames("flex", "flex-row", "gap-4")}>
-        <button className={classnames(...BentoBase, "md:w-1/2")}>
+      <div
+        className={classnames(
+          "flex",
+          "flex-row",
+          "gap-4",
+          "text-sys-on-secondary-container"
+        )}
+      >
+        <div className={classnames(...BentoBase, "md:w-1/2")}>
           <h1 className={classnames("text-lg", "font-bold")}>Hours</h1>
-          <p>H(3-2)T</p>
-        </button>
-        <button className={classnames(...BentoBase, "md:w-1/2", "w-full")}>
+          <p>{hours}</p>
+        </div>
+        <div className={classnames(...BentoBase, "md:w-1/2", "flex-grow")}>
           <h1 className={classnames("text-lg", "font-bold")}>
             Department / Faculty
           </h1>
-          <p>Computer Science, Science</p>
-        </button>
+          <p>{department}</p>
+        </div>
       </div>
-      <Description />
+      <Description text={description} />
     </>
   );
 };
 
 export default CourseInfo;
 
-const Description = () => {
+const Description = ({ text }: { text: string }) => {
   const [showMore, setShowMore] = useState(false);
+  
+  const maxChars = 150;
+  const overflow = text.length > maxChars;
 
   return (
-    <button className={classnames(...BentoBase, "w-full", "mb-4")}>
+    <button
+      className={classnames(
+        ...BentoBase,
+        "w-full",
+        "mb-4",
+        "text-sys-on-secondary-container"
+      )}
+      onClick={() => setShowMore(!showMore)}
+    >
       <p>
-        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Necessitatibus
-        dolorem nam delectus ullam praesentium ea?
-        {showMore &&
-          " Unde nihil dicta illum consequuntur at explicabo corrupti, expedita, atque modi maiores, temporibus et officiis."}
+        {overflow ? (showMore ? text : text.slice(0, maxChars) + "...") : text}
       </p>
-      <p
-        className={classnames("text-secondary")}
-        onClick={() => setShowMore(!showMore)}
-      >
-        {showMore ? "Less" : "More"}
-      </p>
+      <p>{overflow && (showMore ? "Less" : "More")}</p>
     </button>
   );
 };
