@@ -11,6 +11,7 @@ from fastapi import Response, UploadFile, status
 import pdfplumber
 from datefinder import find_dates
 from dateparser.search import search_dates
+from pdfminer.pdfparser import PDFSyntaxError
 
 
 # supported course codes taken from
@@ -212,9 +213,9 @@ def handle_files(files: List[UploadFile], response: Response):
             course = get_course(tmp_path)
             print(f"Finished processing file: {tmp_path}")
             courses.append(course)
-        except Exception as ex:
+        except PDFSyntaxError as ex:
             print(f"Error processing file: {ex}")
-            response.status_code = status.HTTP_500_INTERNAL_SERVER_ERROR
+            response.status_code = status.HTTP_422_UNPROCESSABLE_ENTITY
             return {"Error processing file": ex.args}
         finally:
             tmp_path.unlink()
