@@ -9,7 +9,6 @@ import Loading from "./pages/Loading";
 import Review from "./pages/Review";
 import NotFound from "./pages/NotFound";
 
-
 const hostname = window.location.hostname;
 const port = window.location.port;
 
@@ -17,11 +16,11 @@ if (hostname === "localhost" || hostname === "127.0.0.1" || port === "3000") {
   axios.defaults.baseURL = `//${hostname}:8000`;
   console.log("Running on Localhost", axios.defaults.baseURL);
 } else {
-  axios.defaults.baseURL = `https://api.${hostname}`;
+  axios.defaults.baseURL = "https://rj6crp3mqwnq6vskrxd5umir4a0tgcqv.lambda-url.us-west-2.on.aws";
   console.log("Running on Production", axios.defaults.baseURL);
 }
 
-axios.defaults.withCredentials = true;
+axios.defaults.withCredentials = false;
 axios.defaults.timeout = 30000;
 
 function App() {
@@ -33,7 +32,7 @@ function App() {
           <Route path="/landing" element={<Landing />} />
           <Route path="/loading" element={<Loading />} />
           <Route path="/app" element={<Review />} />
-          <Route path="/app/:courseId" element={<Review />} />
+          <Route path="/app/:courseKey" element={<Review />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
@@ -41,9 +40,8 @@ function App() {
   );
 }
 
-
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
     <App />
-  </React.StrictMode>,
+  </React.StrictMode>
 );

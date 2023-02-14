@@ -1,15 +1,20 @@
-import { useState } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useState, useEffect, useMemo } from "react";
+import { useParams } from "react-router-dom";
 import NavigationDrawer from "../../components/NavigationDrawer";
 import AssessmentCard from "../../components/AssessmentCard";
 import { classnames } from "../../Utilities";
-import { Courses } from "../../logic/icsGen";
-import styles from "./Review.module.css";
+import { Course, Courses } from "../../logic/icsGen";
 import Button from "../../components/Button";
+
+import styles from "./Review.module.css";
 import CourseInfo from "../../components/CourseInfo";
 
-const testState: Courses = {
-  "PSYC 203": {
+const testState: Courses = [
+  {
+    code: "TEST",
+    number: 999,
+    title: "Psychology",
+    key: "psyc-203",
     topic: "Psychology of Everyday Life",
     assessments: [
       {
@@ -49,19 +54,83 @@ const testState: Courses = {
       },
     ],
   },
-};
+];
+
+// Enum for the tabs
+enum Tab {
+  Assessments,
+  Document,
+}
 
 const Review = () => {
-  const [selectedTab, setSelectedTab] = useState(0);
+  const { courseKey: courseKeyUrlParam } = useParams();
+
+  const [selectedTab, setSelectedTab] = useState<Tab>(Tab.Assessments);
   const [courses, setCourses] = useState<Courses>(testState);
-  const displayFormat = (course: string) =>
-    course.replace(/-/g, " ").toUpperCase();
+  const [currentCourseKey, setCurrentCourseKey] = useState<string | null>(null);
 
-  let { courseId } = useParams();
-  courseId = courseId ? displayFormat(courseId) : undefined;
+  // At first render of the page, check if the course key is valid
+  // and assign value to current course key
+  useEffect(() => {
+    if (
+      courseKeyUrlParam === undefined ||
+      courseKeyLookup[courseKeyUrlParam] === undefined
+    ) {
+      setCurrentCourseKey(null);
+    } else {
+      setCurrentCourseKey(courseKeyUrlParam);
+    }
+  }, []);
 
+  // Callback for when the courses are changed
   const onCoursesChanged = (newCourses: Courses) => {
-    setCourses({ ...courses, ...newCourses });
+    const existingCourseKeys = courses.map((course) => course.key);
+    for (const course of newCourses) {
+      // Numbering undetermined courses
+      if (!course.code || !course.number) {
+        course.code = "Course";
+        course.number = Object.values(courses).length + 1;
+        course.title = "Course";
+      }
+
+      // Generate course key
+      const key = `${course.code}-${course.number}`.toLowerCase();
+      if (existingCourseKeys.includes(key)) continue;
+
+      course.key = key;
+      courses.push(course);
+      existingCourseKeys.push(key);
+    }
+
+    setCourses([...courses]);
+  };
+
+  // Memoize the course key lookup in format of { [key]: course } for performance
+  const courseKeyLookup = useMemo(
+    () =>
+      Object.fromEntries(
+        courses.map((course) => [course.key, course])
+      ) as Record<string, Course>,
+    [courses]
+  );
+
+  // Memoize the course based on the course key
+  const currentCourse = useMemo(
+    () =>
+      currentCourseKey && currentCourseKey in courseKeyLookup
+        ? courseKeyLookup[currentCourseKey]
+        : null,
+    [currentCourseKey, courseKeyLookup[currentCourseKey || ""]]
+  );
+
+  const onCourseClick = (course: Course | null) => {
+    if (course === null) {
+      setCurrentCourseKey(null);
+      setTimeout(() => history.pushState(null, "", "/app"), 10);
+    } else {
+      setCurrentCourseKey(course.key);
+      setTimeout(() => history.pushState(null, "", `/app/${course.key}`), 100);
+    }
   };
 
   return (
@@ -71,49 +140,55 @@ const Review = () => {
           "md:w-64",
           "w-full",
           "flex-shrink-0",
-          courseId && "hidden",
-          "md:block"
+          currentCourseKey && "hidden",
+          "md:block",
+          "bg-gray-100"
         )}
       >
         <NavigationDrawer
           courses={courses}
-          currentCourseKeyString={courseId}
+          currentCourse={currentCourse}
           onCoursesChanged={onCoursesChanged}
+          onCourseClick={onCourseClick}
         />
       </nav>
-      {courseId && (
+      {currentCourse && (
         <main
           className={classnames(
             "flex-shrink-0 text-center w-full",
             styles.main
           )}
         >
-          <header className=" w-full p-4 text-left">
-            <Link to="/review">
+          <header className="bg-gray-300 w-full p-4 text-xl">
+            <Button onClick={() => onCourseClick(null)}>
               <span
                 className={classnames("material-icons", "md:hidden", "inline")}
                 style={{ fontSize: "1.5rem", verticalAlign: "middle" }}
               >
                 arrow_back
               </span>
-            </Link>
-            <h1 className="text-2xl font-bold">{courseId && displayFormat(courseId)}</h1>
-            <h2 className="text-lg">{courses[courseId]?.topic}</h2>
+            </Button>
+            <h1 className="text-4xl">
+              {currentCourse.title} {currentCourse.number}
+            </h1>
+            <h2 className="text-2xl">{currentCourse.topic}</h2>
           </header>
           <div className="flex flex-col md:flex-row">
             <div className="w-full md:hidden flex flex-row">
               <button
-                className={`w-full bg-gray-300 p-2 ${
-                  selectedTab === 0 && "bg-red-500"
-                }`}
+                className={classnames(
+                  "w-full bg-gray-300 p-2",
+                  selectedTab === Tab.Assessments && "bg-red-500"
+                )}
                 onClick={() => setSelectedTab(0)}
               >
                 Assessments
               </button>
               <button
-                className={`w-full bg-gray-300 p-2 ${
-                  selectedTab === 1 && "bg-red-500"
-                }`}
+                className={classnames(
+                  "w-full bg-gray-300 p-2",
+                  selectedTab === Tab.Document && "bg-red-500"
+                )}
                 onClick={() => setSelectedTab(1)}
               >
                 Document
@@ -125,8 +200,7 @@ const Review = () => {
                 "md:w-1/2",
                 "p-4",
                 "h-screen",
-                selectedTab === 1 && "hidden md:block",
-                "text-left"
+                selectedTab === Tab.Document && "hidden md:block"
               )}
             >
               <CourseInfo />
@@ -149,9 +223,9 @@ const Review = () => {
                 </Button>
               </div>
               <ul className="flex flex-col">
-                {courses[courseId]?.assessments.map((assessment) => (
+                {currentCourse.assessments.map((assessment, t) => (
                   <AssessmentCard
-                    key={assessment.name + assessment.date + assessment.weight} // should be assessment.source eventually
+                    key={t}
                     assessment={assessment}
                     onAssessmentClick={() => {
                       console.log("clicked");
@@ -166,7 +240,7 @@ const Review = () => {
                 "md:w-1/2",
                 "p-4",
                 "h-screen",
-                selectedTab === 0 && "hidden md:block"
+                selectedTab === Tab.Assessments && "hidden md:block"
               )}
             >
               <img

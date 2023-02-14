@@ -4,9 +4,11 @@ from typing import List
 import uvicorn
 from fastapi import FastAPI, File, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
+from mangum import Mangum
 from handlers import calendar_handler, file_handler
 
 app = FastAPI()
+handler = Mangum(app)
 
 origins = [
     "http://localhost:3000",
