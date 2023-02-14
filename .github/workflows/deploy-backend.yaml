@@ -25,20 +25,25 @@ jobs:
         run: |
           cd server
           sudo apt-get -y update
-          sudo apt-get -y install pip
-          mkdir prod deploy
-          cp -r src/. prod/
-          pip install -r requirements.txt -t prod
-          cd prod
-          zip ../deploy/deploy-me.zip -r .
+          sudo apt-get -y install docker.io
+          curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+          unzip awscliv2.zip
+          sudo ./aws/install
+          aws configure set aws_access_key_id ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws configure set aws_secret_access_key ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws configure set default.region us-west-2
+          aws configure set default.output json
+          aws ecr get-login-password --region us-west-2 | docker login --username AWS --password-stdin ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.us-west-2.amazonaws.com
 
       - name: deploy
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          force_orphan: true
-          full_commit_message: ${{ github.event.head_commit.message }}
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_branch: server-production
-          publish_dir: server/deploy
-          user_name: github-actions[bot]
-          user_email: github-actions[bot]@users.noreply.github.com
+        run: |
+          cd server
+          docker build -t server-image .
+          docker tag server-image:latest ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.us-west-2.amazonaws.com/lifeline-server:latest
+          fingerprint=$(docker push ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.us-west-2.amazonaws.com/lifeline-server:latest \
+            | grep -oP 'sha256:\w{64}')
+          
+          aws lambda update-function-code \
+            --function-name test-docker \
+            --image-uri ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.us-west-2.amazonaws.com/lifeline-server@$fingerprint
+          
