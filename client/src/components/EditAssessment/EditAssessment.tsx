@@ -7,80 +7,151 @@ const EditAssessment = () => {
   const [name, setName] = useState("Assignment 1");
   const [date, setDate] = useState("2021-10-21T18:00:00.000");
   const [weight, setWeight] = useState("5.0");
-  const [location, setLocation] = useState("Location");
-  const [modality, setModality] = useState("Modality");
+  const [location, setLocation] = useState("");
+  const [modality, setModality] = useState("");
   const [notes, setNotes] = useState("Late submission policy applied.");
 
   const handleWeightChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (isNaN(Number(e.target.value))) return;
-    setWeight(e.target.value);
+    if (isNaN(Number(e.target.value.trim()))) return;
+    setWeight(e.target.value.trim());
   };
 
   return (
-    <form className="w-full grid grid-cols-7 py-20 px-10 gap-4">
-      <h1 className="col-span-6 text-2xl font-bold text-on-surface">
-        Edit assessment
-      </h1>
-      <button>
-        <span className="col-span-1 material-symbols-outlined text2xl text-right">
-          close
-        </span>
-      </button>
-      <BlobIcon icon="label" />
-      <input
-        className="col-span-6 rounded-xl"
-        type="text"
-        value={name}
-        onChange={(e) => setName(e.target.value)}
-      />
-      <input
-        type="datetime-local"
-        className="col-start-2 col-span-6 rounded-xl"
-        value={date}
-        onChange={(e) => setDate(e.target.value)}
-      />
-      <BlobIcon icon="text_snippet" />
-      <div className="col-start-2 col-span-6 rounded-xl relative">
-        <input
-          type="text"
-          className="w-full rounded-xl"
-          placeholder="Enter value"
-          value={weight}
-          onChange={handleWeightChange}
-        />
-        <div className="absolute inset-y-0 right-0 pr-4 flex items-center pointer-events-none">
-          <span className="text-xl">%</span>
+    <form className="w-full px-10 py-20 bg-surface flex flex-col gap-4 text-on-surface">
+      <div className="flex flex-row justify-between items-center">
+        <h1 className="text-2xl font-bold">Edit assessment</h1>
+        <button onClick={(e) => e.preventDefault()}>
+          <span className="material-symbols-outlined text2xl text-right">
+            close
+          </span>
+        </button>
+      </div>
+
+      <div className="flex flex-row w-full h-14">
+        <BlobIcon icon="label" />
+        <div className="relative w-full ml-2">
+          {/* Adapted from https://flowbite.com/docs/forms/floating-label/ */}
+          <input
+            type="text"
+            id="assessment_name"
+            className="block px-2.5 pb-2.5 pt-4 w-full bg-transparent rounded-xl peer"
+            placeholder=" "
+            onChange={(e) => setName(e.target.value)}
+            value={name}
+          />
+          <label
+            htmlFor="assessment_name"
+            className="absolute duration-300 transform -translate-y-4 scale-75 top-2 z-10 bg-white px-2 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1"
+          >
+            Name
+          </label>
         </div>
       </div>
-      <input
-        type="text"
-        className="col-start-2 col-span-6 rounded-xl"
-        value={location}
-        onChange={(e) => setLocation(e.target.value)}
-      />
-      <input
-        type="text"
-        className="col-start-2 col-span-6 rounded-xl"
-        value={modality}
-        onChange={(e) => setModality(e.target.value)}
-      />
-      <div className="col-start-2 col-span-6 flex flex-row justify-center items-center">
+      <div className="flex flex-row w-full h-14">
+        <div className="w-14"></div>
+        <input
+          type="datetime-local"
+          className="rounded-xl w-full ml-2"
+          value={date}
+          onChange={(e) => setDate(e.target.value)}
+        />
+      </div>
+      <div className="flex flex-row w-full h-14">
+        <BlobIcon icon="text_snippet" />
+        <div className="relative w-full ml-2">
+          <input
+            type="text"
+            id="assessment_name"
+            className="block px-2.5 pb-2.5 pt-4 w-full bg-transparent rounded-xl peer"
+            placeholder=" "
+            onChange={handleWeightChange}
+            value={weight}
+          />
+          <div className="absolute inset-y-0 right-0 pr-4 flex items-center pointer-events-none">
+            <span className="text-xl">%</span>
+          </div>
+          <label
+            htmlFor="assessment_name"
+            className="absolute duration-300 transform -translate-y-4 scale-75 top-2 z-10 bg-white px-2 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1"
+          >
+            Weight
+          </label>
+        </div>
+      </div>
+      <div className="flex flex-row w-full h-14">
+        <div className="w-14"></div>
+        <div className="relative w-full ml-2">
+          <input
+            type="text"
+            id="assessment_location"
+            className="block px-2.5 pb-2.5 pt-4 w-full bg-transparent rounded-xl peer"
+            placeholder=" "
+            onChange={(e) => setLocation(e.target.value)}
+            value={location}
+          />
+          <label
+            htmlFor="assessment_location"
+            className="absolute duration-300 transform -translate-y-4 scale-75 top-2 z-10 bg-white px-2 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1"
+          >
+            Location
+          </label>
+        </div>
+      </div>
+      <div className="flex flex-row w-full h-14">
+        <div className="w-14"></div>
+        <div className="relative w-full ml-2">
+          <input
+            type="text"
+            id="assessment_modality"
+            className="block px-2.5 pb-2.5 pt-4 w-full bg-transparent rounded-xl peer"
+            placeholder=" "
+            onChange={(e) => setModality(e.target.value)}
+            value={modality}
+          />
+          <label
+            htmlFor="assessment_modality"
+            className="absolute duration-300 transform -translate-y-4 scale-75 top-2 z-10 bg-white px-2 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1"
+          >
+            Modality
+          </label>
+        </div>
+      </div>
+      <div className="flex flex-row justify-center items-center">
+        <div className="w-14"></div>
         <Button
+          onClick={(e) => e.preventDefault()}
           variant="filled"
           className="text-3xl h-10 text-center flex flex-row justify-center items-center px-4"
         >
           <span className="material-symbols-outlined">add</span>
         </Button>
       </div>
-      {/* Start the next row */}
-      <BlobIcon icon="speaker_notes" />
-      <textarea
-        className="col-start-2 col-span-6 rounded-xl h-40"
-        value={notes}
-        onChange={(e) => setNotes(e.target.value)}
-      />
-      <div className="col-start-1 col-span-7 flex justify-center items-center">
-        <Button variant="filled">Save</Button>
+      <div className="flex flex-row w-full h-14">
+        <BlobIcon icon="speaker_notes" />
+        <div className="relative w-full ml-2">
+          <textarea
+            id="assessment_notes"
+            className="block px-2.5 pb-2.5 pt-4 w-full bg-transparent rounded-xl peer h-48"
+            placeholder=" "
+            onChange={(e) => setNotes(e.target.value)}
+            value={notes}
+          />
+          <label
+            htmlFor="assessment_notes"
+            className="absolute duration-300 transform -translate-y-4 scale-75 top-2 z-10 bg-white px-2 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1"
+          >
+            Notes
+          </label>
+        </div>
+      </div>
+      <div className="flex justify-center items-center">
+        <Button
+          onClick={(e) => e.preventDefault()}
+          variant="filled"
+          className="mt-36"
+        >
+          Save
+        </Button>
       </div>
     </form>
   );
@@ -90,7 +161,7 @@ export default EditAssessment;
 
 const BlobIcon = ({ icon }: { icon: string }) => {
   return (
-    <div className="relative w-10 h-10 col-start-1 col-span-1">
+    <div className="relative w-14">
       <img
         src={blob}
         alt="icon background"
