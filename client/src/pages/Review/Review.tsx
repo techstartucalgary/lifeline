@@ -158,7 +158,7 @@ const Review = () => {
           <header className="bg-gray-300 w-full p-4 text-xl">
             <Button onClick={() => onCourseClick(null)}>
               <span
-                className={classnames("material-icons", "md:hidden", "inline")}
+                className={classnames("material-symbols-outlined", "md:hidden", "inline")}
                 style={{ fontSize: "1.5rem", verticalAlign: "middle" }}
               >
                 arrow_back
