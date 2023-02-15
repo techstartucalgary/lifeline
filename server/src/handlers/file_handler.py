@@ -183,7 +183,7 @@ def save_upload_file_tmp(upload_file: UploadFile):
     """Handles creating a temp and returns the temporary path for it"""
     try:
         suffix = Path(upload_file.filename).suffix
-        with NamedTemporaryFile(dir="/tmp", delete=False, suffix=suffix) as tmp:
+        with NamedTemporaryFile(delete=False, suffix=suffix) as tmp:
             shutil.copyfileobj(upload_file.file, tmp)
             tmp_path = Path(tmp.name)
     finally:

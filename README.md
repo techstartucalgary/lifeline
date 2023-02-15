@@ -3,7 +3,7 @@
 ![Frontend](https://github.com/techstartucalgary/lifeline/actions/workflows/ci-client.yaml/badge.svg)
 ![Backend](https://github.com/techstartucalgary/lifeline/actions/workflows/ci-server.yaml/badge.svg)
 [![License](https://img.shields.io/badge/license-MIT-brown.svg)](https://opensource.org/licenses/MIT)
-![Python](https://img.shields.io/badge/python-v3.6+-blue.svg)
+![Python](https://img.shields.io/badge/python-v3.8-blue.svg)
 ![React](https://img.shields.io/badge/react-v18.2-blue.svg)
 
 <div align="center" style="margin: 2.5rem 0rem;">
