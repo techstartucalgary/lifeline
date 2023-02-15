@@ -71,7 +71,7 @@ const NavigationDrawer = ({
               currentCourse?.key === course.key && "bg-primary-90"
             )}
           >
-            <span className="material-icons text-gray-600 text-base flex items-center justify-center">
+            <span className="material-symbols-outlined text-gray-600 text-base flex items-center justify-center">
               {
                 ["circle", "square", "pentagon"][
                   Math.abs(
@@ -91,7 +91,7 @@ const NavigationDrawer = ({
             <p className="ml-auto flex items-center justify-center">
               {course.assessments.length}
             </p>
-            <span className="material-icons text-gray-600 flex items-center justify-center block md:hidden">
+            <span className="material-symbols-outlined text-gray-600 flex items-center justify-center block md:hidden">
               arrow_right
             </span>
           </Button>
@@ -105,7 +105,7 @@ const NavigationDrawer = ({
               disabled
               className={classnames("mt-2", "flex-row", "p-4")}
             >
-              <span className="material-icons text-gray-600 text-base flex items-center justify-center animate-spin">
+              <span className="material-symbols-outlined text-gray-600 text-base flex items-center justify-center animate-spin">
                 autorenew
               </span>
               <div className="flex flex-col ml-2 min-w-0">
@@ -131,7 +131,7 @@ const NavigationDrawer = ({
           className="hidden"
         />
         <span
-          className="material-icons text-gray-600 flex items-center justify-center"
+          className="material-symbols-outlined text-gray-600 flex items-center justify-center"
           style={{ marginLeft: "-0.4rem" }}
         >
           add
@@ -165,7 +165,7 @@ const NavigationDrawer = ({
         disabled={courses.length === 0}
       >
         <span
-          className="material-icons flex items-center justify-center"
+          className="material-symbols-outlined flex items-center justify-center"
           style={{ marginLeft: "-0.4rem" }}
         >
           save_alt

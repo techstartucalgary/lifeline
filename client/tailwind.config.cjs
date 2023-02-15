@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
 /* eslint-disable no-undef */
 /** @type {import("tailwindcss").Config} */
 
@@ -30,7 +31,7 @@ const sys = {
   "on-primary": "#FFFFFF",
   "primary-container": "#FFD9DD",
   "on-primary-container": "#400013",
-  "secondary": "#8B4483",
+  // "secondary": "#8B4483",
   "on-secondary": "#FFFFFF",
   "secondary-container": "#FFD7F4",
   "on-secondary-container": "#380037",
@@ -161,7 +162,7 @@ const stateLayers = {
   "on-secondary-container": "#1D192B",
   "on-secondary": "#FFFFFF",
   "secondary-container": "#E8DEF8",
-  // "secondary": "#625B71",
+  "secondary": "#625B71",
   "inverse-primary": "#D0BCFF",
   "on-primary-container": "#21005D",
   "on-primary": "#FFFFFF",
@@ -174,9 +175,12 @@ const config = {
   theme: {
     extend: {
       fontFamily: {
-        "sans": ["Google Sans Text", "ui-sans-serif", "system-ui"],
-        "display": ["Google Sans", "system-ui"],
-        "body": ["Google Sans Text", "system-ui"],
+        "sans": ["Rubik", "ui-sans-serif", "system-ui"],
+        "serif": ["Arvo", "ui-serif", "Georgia"],
+
+        "display": ["Hanson Bold", "system-ui"],
+        "headline": ["Arvo", "ui-serif", "Georgia"],
+        "body": ["Rubik", "system-ui"],
       },
       opacity: {
         8: "0.08",
