@@ -52,7 +52,7 @@ export default function Landing() {
 
   return (
     <>
-      <div className="font-display max-w-7xl mx-auto px-5 sm:px-14 md:px-16 lg:px-20 relative">
+      <div className="max-w-7xl mx-auto px-5 sm:px-14 md:px-16 lg:px-20 relative">
         <NavigationBar />
 
         {/* Hero section */}
@@ -75,7 +75,7 @@ export default function Landing() {
             )}
           >
             <div className="flex flex-col">
-              <div className={classnames("font-bold tracking-[-0.075rem] sm:tracking-[-0.1rem]", "text-3xl sm:text-4xl md:text-5xl xl:text-6xl")}>
+              <div className={classnames("font-bold font-headline tracking-[-0.075rem] sm:tracking-[-0.1rem]", "text-3xl sm:text-4xl md:text-5xl xl:text-6xl")}>
                 <div className="sm:whitespace-nowrap text-on-surface">A better way to </div>
                 <div
                   className={classnames(
