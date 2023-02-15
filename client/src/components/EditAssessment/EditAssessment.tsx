@@ -2,11 +2,22 @@ import { useState } from "react";
 import { classnames } from "../../Utilities";
 import Button from "../Button";
 import blob from "./blob-small.svg";
+import { Assessment } from "../../logic/icsGen";
 
-const EditAssessment = () => {
-  const [name, setName] = useState("Assignment 1");
-  const [date, setDate] = useState("2021-10-21T18:00:00.000");
-  const [weight, setWeight] = useState("5.0");
+interface EditAssessmentProps {
+  onClose: () => void;
+  onSave: () => void;
+  assessment: Assessment;
+}
+
+const EditAssessment = ({
+  onClose,
+  onSave,
+  assessment,
+}: EditAssessmentProps) => {
+  const [name, setName] = useState(assessment.name);
+  const [date, setDate] = useState(assessment.date);
+  const [weight, setWeight] = useState(assessment.weight);
   const [location, setLocation] = useState("");
   const [modality, setModality] = useState("");
   const [notes, setNotes] = useState("Late submission policy applied.");
@@ -17,10 +28,15 @@ const EditAssessment = () => {
   };
 
   return (
-    <form className="w-full px-10 py-20 bg-surface flex flex-col gap-4 text-on-surface">
+    <form className="w-full bg-surface flex flex-col gap-4 text-on-surface">
       <div className="flex flex-row justify-between items-center">
         <h1 className="text-2xl font-bold">Edit assessment</h1>
-        <button onClick={(e) => e.preventDefault()}>
+        <button
+          onClick={(e) => {
+            e.preventDefault();
+            onClose();
+          }}
+        >
           <span className="material-symbols-outlined text2xl text-right">
             close
           </span>
@@ -146,7 +162,10 @@ const EditAssessment = () => {
       </div>
       <div className="flex justify-center items-center">
         <Button
-          onClick={(e) => e.preventDefault()}
+          onClick={(e) => {
+            e.preventDefault();
+            onSave();
+          }}
           variant="filled"
           className="mt-36"
         >

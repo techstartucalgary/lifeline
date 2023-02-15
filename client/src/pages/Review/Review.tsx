@@ -3,10 +3,11 @@ import { useParams } from "react-router-dom";
 import NavigationDrawer from "../../components/NavigationDrawer";
 import AssessmentCard from "../../components/AssessmentCard";
 import { classnames } from "../../Utilities";
-import { Course, Courses } from "../../logic/icsGen";
+import { Course, Courses, Assessment } from "../../logic/icsGen";
 import Button from "../../components/Button";
 
 import styles from "./Review.module.css";
+import EditAssessment from "../../components/EditAssessment/EditAssessment";
 
 const testState: Courses = [
   {
@@ -67,17 +68,23 @@ const Review = () => {
   const [selectedTab, setSelectedTab] = useState<Tab>(Tab.Assessments);
   const [courses, setCourses] = useState<Courses>(testState);
   const [currentCourseKey, setCurrentCourseKey] = useState<string | null>(null);
+  const [editingAssessment, setEditingAssessment] = useState<Assessment | null>(
+    null
+  );
 
-  // At first render of the page, check if the course key is valid 
+  // At first render of the page, check if the course key is valid
   // and assign value to current course key
   useEffect(() => {
-    if (courseKeyUrlParam === undefined || courseKeyLookup[courseKeyUrlParam] === undefined) {
+    if (
+      courseKeyUrlParam === undefined ||
+      courseKeyLookup[courseKeyUrlParam] === undefined
+    ) {
       setCurrentCourseKey(null);
     } else {
       setCurrentCourseKey(courseKeyUrlParam);
     }
   }, []);
-  
+
   // Callback for when the courses are changed
   const onCoursesChanged = (newCourses: Courses) => {
     const existingCourseKeys = courses.map((course) => course.key);
@@ -158,7 +165,11 @@ const Review = () => {
           <header className="bg-gray-300 w-full p-4 text-xl">
             <Button onClick={() => onCourseClick(null)}>
               <span
-                className={classnames("material-symbols-outlined", "md:hidden", "inline")}
+                className={classnames(
+                  "material-symbols-outlined",
+                  "md:hidden",
+                  "inline"
+                )}
                 style={{ fontSize: "1.5rem", verticalAlign: "middle" }}
               >
                 arrow_back
@@ -200,17 +211,25 @@ const Review = () => {
                 selectedTab === Tab.Document && "hidden md:block"
               )}
             >
-              <ul className="flex flex-col">
-                {currentCourse.assessments.map((assessment, t) => (
-                  <AssessmentCard
-                    key={t}
-                    assessment={assessment}
-                    onAssessmentClick={() => {
-                      console.log("clicked");
-                    }}
-                  />
-                ))}
-              </ul>
+              {editingAssessment === null ? (
+                <ul className="flex flex-col">
+                  {currentCourse.assessments.map((assessment, t) => (
+                    <AssessmentCard
+                      key={t}
+                      assessment={assessment}
+                      onAssessmentClick={() => {
+                        setEditingAssessment(assessment);
+                      }}
+                    />
+                  ))}
+                </ul>
+              ) : (
+                <EditAssessment
+                  assessment={editingAssessment}
+                  onClose={() => setEditingAssessment(null)}
+                  onSave={() => setEditingAssessment(null)}
+                />
+              )}
             </section>
             <section
               className={classnames(
