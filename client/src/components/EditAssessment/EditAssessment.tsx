@@ -14,15 +14,15 @@ const Row = ({
     <div
       className={classnames(
         "col-span-1",
-        "bg-gray-300",
         "border",
         "flex",
         "row-span-1",
-        "items-center"
+        "items-center",
+        "justify-center"
       )}
     >
       {icon && (
-        <div className="relative h-[4rem] w-[4rem] text-right bg-red-200">
+        <div className="relative h-[4rem] w-[4rem]">
           <img
             src={blob}
             alt="icon background"
@@ -36,7 +36,7 @@ const Row = ({
           />
           <span
             className={classnames(
-              "material-icons",
+              "material-symbols-outlined",
               "absolute",
               "top-1/2",
               "left-1/2",
@@ -55,7 +55,6 @@ const Row = ({
     <div
       className={classnames(
         "col-span-5",
-        "bg-blue-300",
         "border",
         "row-span-1",
         "flex",
@@ -75,66 +74,90 @@ const EditAssessment = () => {
       className={classnames(
         "grid",
         "grid-cols-6",
-        "grid-rows-12",
         "h-full",
         "py-20",
-        "px-10",
-        "bg-green-100"
+        "px-10"
       )}
     >
-      <div className={classnames("col-span-5", "bg-blue-200")}>
+      <div className={classnames("col-span-5")}>
         <h1 className={classnames("text-4xl", "font-bold", "text-on-surface")}>
           Edit assessment
         </h1>
       </div>
-      <div className={classnames("col-span-1", "bg-gray-200 flex justify-end")}>
-        <span className={classnames("material-icons", "text-4xl")}>close</span>
+      <div className={classnames("col-span-1", " flex justify-end")}>
+        <span className={classnames("material-symbols-outlined", "text-4xl")}>
+          close
+        </span>
       </div>
       <Row
         icon="label"
         rightElement={
-          <input className="w-full" type="text" placeholder="Assignment 1" />
+          <input
+            className="w-full rounded-xl"
+            type="text"
+            placeholder="Assignment 1"
+          />
         }
       />
-      <Row rightElement={<input className="w-full" type="datetime-local" />} />
+      <Row
+        rightElement={
+          <input className="w-full rounded-xl" type="datetime-local" />
+        }
+      />
       <Row
         icon="text_snippet"
         rightElement={
-          <div className="bg-red-200 w-full">
-            <input className="w-full" type="text" value={"5.0"} />
+          <div className="w-full">
+            <div className="relative">
+              <input
+                type="text"
+                className="w-full rounded-xl"
+                placeholder="Enter value"
+                value={"5.0"}
+              />
+              <div className="absolute inset-y-0 right-0 pr-4 flex items-center pointer-events-none">
+                <span className="text-xl">%</span>
+              </div>
+            </div>
           </div>
         }
       />
       <Row
         rightElement={
-          <input className="w-full" type="text" placeholder="Location" />
+          <input
+            className="w-full rounded-xl"
+            type="text"
+            placeholder="Location"
+          />
         }
       />
       <Row
         rightElement={
-          <input className="w-full" type="text" placeholder="Modality" />
+          <input
+            className="w-full rounded-xl"
+            type="text"
+            placeholder="Modality"
+          />
         }
       />
       <Row
         rightElement={
-          // negative 4 y margin
-          <Button variant="filled" className="-my-4">
-            <span className="material-icons text-5xl">add</span>
+          <Button variant="filled" className="text-3xl h-10">
+            <span className="material-symbols-outlined">add</span>
           </Button>
         }
       />
       <Row
         icon="speaker_notes"
         rightElement={
-          <input
-            className="w-full h-full"
-            type="text"
+          <textarea
+            className="w-full h-full rounded-xl block"
             value="Late submission policy applied"
           />
         }
       />
-      <div className="col-span-6 bg-blue-200 flex justify-center items-center">
-        <Button variant="filled" className="text-3xl">
+      <div className="col-span-6 flex justify-center items-center">
+        <Button variant="filled" className="text-lg h-10">
           Save
         </Button>
       </div>
@@ -143,3 +166,20 @@ const EditAssessment = () => {
 };
 
 export default EditAssessment;
+
+const test = () => {
+  return (
+    <div className="relative">
+      <input
+        type="text"
+        className="pl-3 pr-10 py-2 border rounded-lg w-full"
+        placeholder="Enter value"
+      />
+      <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+        <span className="text-gray-500">%</span>
+      </div>
+    </div>
+  );
+};
+
+// export default test;
