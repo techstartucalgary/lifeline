@@ -162,6 +162,7 @@ const NavigationDrawer = ({
           "md:rounded-3xl"
         )}
         onClick={handleExport}
+        disabled={courses.length === 0}
       >
         <span
           className="material-icons flex items-center justify-center"

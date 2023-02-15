@@ -66,7 +66,7 @@ const Review = () => {
   const { courseKey: courseKeyUrlParam } = useParams();
 
   const [selectedTab, setSelectedTab] = useState<Tab>(Tab.Assessments);
-  const [courses, setCourses] = useState<Courses>(testState);
+  const [courses, setCourses] = useState<Courses>([]);
   const [currentCourseKey, setCurrentCourseKey] = useState<string | null>(null);
 
   // At first render of the page, check if the course key is valid
@@ -250,9 +250,6 @@ const Review = () => {
                 src="../pdf.png"
                 alt="the pdf viewer"
                 className={classnames(
-                  // dashed border with radius
-                  // thin border
-                  // very small dashes
                   "border-x",
                   "border-y",
                   "border-dashed",
