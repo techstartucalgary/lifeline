@@ -66,7 +66,7 @@ const Review = () => {
   const { courseKey: courseKeyUrlParam } = useParams();
 
   const [selectedTab, setSelectedTab] = useState<Tab>(Tab.Assessments);
-  const [courses, setCourses] = useState<Courses>([]);
+  const [courses, setCourses] = useState<Courses>(testState);
   const [currentCourseKey, setCurrentCourseKey] = useState<string | null>(null);
 
   // At first render of the page, check if the course key is valid
@@ -220,7 +220,7 @@ const Review = () => {
                   ASSESSMENTS
                 </h1>
                 <Button variant="filled" className={classnames("px-5", "py-2")}>
-                  <span className={classnames("material-icons", "text-4xl")}>
+                  <span className={classnames("material-symbols-outlined", "text-4xl")}>
                     add
                   </span>
                 </Button>

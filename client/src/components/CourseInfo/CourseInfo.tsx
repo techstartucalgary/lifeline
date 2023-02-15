@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { classnames } from "../../Utilities";
 
 interface CourseInfoProps {
@@ -13,8 +13,8 @@ const BentoBase = [
   "p-4",
   "my-2",
   "rounded-3xl",
-  "bg-primary-95",
-  "hover:bg-primary-90",
+  "bg-secondary-95",
+  "hover:bg-secondary-90",
   "transition-all",
   "text-left",
 ];
@@ -50,9 +50,17 @@ export default CourseInfo;
 
 const Description = ({ text }: { text: string }) => {
   const [showMore, setShowMore] = useState(false);
-  
-  const maxChars = 150;
-  const overflow = text.length > maxChars;
+  const [clampable, setClampable] = useState(true);
+  const paragraphRef = useRef<HTMLParagraphElement>(null);
+
+  useEffect(() => {
+    if (!paragraphRef.current) return;
+    paragraphRef.current.classList.remove("line-clamp-3");
+    const originalHeight = paragraphRef.current.clientHeight;
+    paragraphRef.current.classList.add("line-clamp-3");
+    const clampedHeight = paragraphRef.current.clientHeight;
+    setClampable(originalHeight !== clampedHeight);
+  }, [text]);
 
   return (
     <button
@@ -64,10 +72,10 @@ const Description = ({ text }: { text: string }) => {
       )}
       onClick={() => setShowMore(!showMore)}
     >
-      <p>
-        {overflow ? (showMore ? text : text.slice(0, maxChars) + "...") : text}
+      <p ref={paragraphRef} className={showMore ? "" : "line-clamp-3"}>
+        {text}
       </p>
-      <p>{overflow && (showMore ? "Less" : "More")}</p>
+      <p>{clampable && (showMore ? "LESS" : "MORE")}</p>
     </button>
   );
 };
