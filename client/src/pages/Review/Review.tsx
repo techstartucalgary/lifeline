@@ -154,7 +154,7 @@ const Review = () => {
       {currentCourse && (
         <main
           className={classnames(
-            "flex-shrink-0 text-center w-full text-left",
+            "flex-shrink-0 w-full text-left",
             styles.main
           )}
         >
