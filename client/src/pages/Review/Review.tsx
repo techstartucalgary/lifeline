@@ -8,6 +8,7 @@ import Button from "../../components/Button";
 
 import styles from "./Review.module.css";
 import CourseInfo from "../../components/CourseInfo";
+import AppTopBar from "../../components/AppTopBar";
 
 const testState: Courses = [
   {
@@ -158,19 +159,31 @@ const Review = () => {
             styles.main
           )}
         >
-          <header className="bg-gray-300 w-full p-4 text-xl">
-            <Button onClick={() => onCourseClick(null)}>
-              <span
-                className={classnames("material-symbols-outlined", "md:hidden", "inline")}
-                style={{ fontSize: "1.5rem", verticalAlign: "middle" }}
-              >
-                arrow_back
-              </span>
-            </Button>
-            <h1 className="text-4xl">
+          <header className="bg-surface w-full p-4 text-xl">
+            <div className="flex flex-row justify-between">
+              <Button onClick={() => onCourseClick(null)}>
+                <span
+                  className={classnames("material-symbols-outlined", "md:hidden", "inline")}
+                  style={{ fontSize: "1.5rem", verticalAlign: "middle" }}
+                >
+                  arrow_back
+                </span>
+              </Button>
+              <Button onClick={() => onCourseClick(null)}>
+                <span 
+                  className={classnames("material-symbols-outlined", "md:hidden", "inline")}
+                  style={{ fontSize: "1.5rem", verticalAlign: "middle" }}
+                >
+                  more_vert
+                </span>
+              </Button>
+            </div>
+            
+            {/* <h1 className="text-4xl">
               {currentCourse.title} {currentCourse.number}
             </h1>
-            <h2 className="text-2xl">{currentCourse.topic}</h2>
+            <h2 className="text-2xl">{currentCourse.topic}</h2> */}
+            <AppTopBar courseId={currentCourse.key} description={currentCourse.topic}/>
           </header>
           <div className="flex flex-col md:flex-row">
             <div className="w-full md:hidden flex flex-row">
