@@ -6,7 +6,7 @@ import { Assessment } from "../../logic/icsGen";
 
 interface EditAssessmentProps {
   onClose: () => void;
-  onSave: () => void;
+  onSave: (assessment: Assessment) => void;
   assessment: Assessment;
 }
 
@@ -27,16 +27,26 @@ const EditAssessment = ({
     setWeight(e.target.value.trim());
   };
 
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    onSave({
+      name,
+      date,
+      weight,
+    });
+  };
+
   return (
-    <form className="w-full bg-surface flex flex-col gap-4 text-on-surface">
+    <form
+      className="w-full bg-surface flex flex-col gap-4 text-on-surface"
+      onSubmit={handleSubmit}
+      onKeyDown={(e) => {
+        if (e.key === "Escape") onClose();
+      }}
+    >
       <div className="flex flex-row justify-between items-center">
         <h1 className="text-2xl font-bold">Edit assessment</h1>
-        <button
-          onClick={(e) => {
-            e.preventDefault();
-            onClose();
-          }}
-        >
+        <button type="button" onClick={onClose}>
           <span className="material-symbols-outlined text2xl text-right">
             close
           </span>
@@ -135,6 +145,7 @@ const EditAssessment = ({
       <div className="flex flex-row justify-center items-center">
         <div className="w-14"></div>
         <Button
+          type="button"
           onClick={(e) => e.preventDefault()}
           variant="filled"
           className="text-3xl h-10 text-center flex flex-row justify-center items-center px-4"
@@ -161,14 +172,7 @@ const EditAssessment = ({
         </div>
       </div>
       <div className="flex justify-center items-center">
-        <Button
-          onClick={(e) => {
-            e.preventDefault();
-            onSave();
-          }}
-          variant="filled"
-          className="mt-36"
-        >
+        <Button type="submit" variant="filled" className="mt-36">
           Save
         </Button>
       </div>

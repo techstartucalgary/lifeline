@@ -68,9 +68,10 @@ const Review = () => {
   const [selectedTab, setSelectedTab] = useState<Tab>(Tab.Assessments);
   const [courses, setCourses] = useState<Courses>(testState);
   const [currentCourseKey, setCurrentCourseKey] = useState<string | null>(null);
-  const [editingAssessment, setEditingAssessment] = useState<Assessment | null>(
-    null
-  );
+  const [editingAssessment, setEditingAssessment] = useState<{
+    assessment: Assessment;
+    index: number;
+  } | null>(null);
 
   // At first render of the page, check if the course key is valid
   // and assign value to current course key
@@ -213,21 +214,32 @@ const Review = () => {
             >
               {editingAssessment === null ? (
                 <ul className="flex flex-col">
-                  {currentCourse.assessments.map((assessment, t) => (
+                  {currentCourse.assessments.map((assessment, index) => (
                     <AssessmentCard
-                      key={t}
+                      key={index}
                       assessment={assessment}
                       onAssessmentClick={() => {
-                        setEditingAssessment(assessment);
+                        setEditingAssessment({ assessment, index });
                       }}
                     />
                   ))}
                 </ul>
               ) : (
                 <EditAssessment
-                  assessment={editingAssessment}
+                  assessment={editingAssessment.assessment}
                   onClose={() => setEditingAssessment(null)}
-                  onSave={() => setEditingAssessment(null)}
+                  onSave={(newAssessment: Assessment) => {
+                    setCourses(
+                      courses.map((course) => {
+                        if (course.key === currentCourseKey) {
+                          course.assessments[editingAssessment.index] =
+                            newAssessment;
+                        }
+                        return course;
+                      })
+                    );
+                    setEditingAssessment(null);
+                  }}
                 />
               )}
             </section>
