@@ -105,9 +105,11 @@ const NavigationDrawer = ({
               disabled
               className={classnames("mt-2", "flex-row", "p-4")}
             >
-              <span className="material-symbols-outlined text-gray-600 text-base flex items-center justify-center animate-spin">
-                autorenew
-              </span>
+              <div>
+                <span className="material-symbols-outlined text-gray-600 text-base animate-spin">
+                  autorenew
+                </span>
+              </div>
               <div className="flex flex-col ml-2 min-w-0">
                 <p className={classnames("truncate")}>{file}</p>
               </div>
