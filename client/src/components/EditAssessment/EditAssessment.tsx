@@ -87,7 +87,7 @@ const EditAssessment = ({
         <div className="relative w-full ml-2">
           <input
             type="text"
-            id="assessment_name"
+            id="assessment_weight"
             className="block px-2.5 pb-2.5 pt-4 w-full bg-transparent rounded-xl peer"
             placeholder=" "
             onChange={handleWeightChange}
@@ -97,7 +97,7 @@ const EditAssessment = ({
             <span className="text-xl">%</span>
           </div>
           <label
-            htmlFor="assessment_name"
+            htmlFor="assessment_weight"
             className="absolute duration-300 transform -translate-y-4 scale-75 top-2 z-10 bg-white px-2 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1"
           >
             Weight
