@@ -8,11 +8,12 @@ import Button from "../../components/Button";
 import EditAssessment from "../../components/EditAssessment/EditAssessment";
 
 import styles from "./Review.module.css";
+import CourseInfo from "../../components/CourseInfo";
 
 const testState: Courses = [
   {
-    code: "TEST",
-    number: 999,
+    code: "PSYC",
+    number: 203,
     title: "Psychology",
     key: "psyc-203",
     topic: "Psychology of Everyday Life",
@@ -86,6 +87,10 @@ const Review = () => {
     }
   }, []);
 
+  useEffect(() => {
+    setEditingAssessment(null);
+  }, [currentCourseKey]);
+
   // Callback for when the courses are changed
   const onCoursesChanged = (newCourses: Courses) => {
     const existingCourseKeys = courses.map((course) => course.key);
@@ -145,8 +150,7 @@ const Review = () => {
           "w-full",
           "flex-shrink-0",
           currentCourseKey && "hidden",
-          "md:block",
-          "bg-gray-100"
+          "md:block"
         )}
       >
         <NavigationDrawer
@@ -158,10 +162,7 @@ const Review = () => {
       </nav>
       {currentCourse && (
         <main
-          className={classnames(
-            "flex-shrink-0 text-center w-full",
-            styles.main
-          )}
+          className={classnames("flex-shrink-0 w-full text-left", styles.main)}
         >
           <header className="bg-gray-300 w-full p-4 text-xl">
             <Button onClick={() => onCourseClick(null)}>
@@ -206,24 +207,56 @@ const Review = () => {
               className={classnames(
                 "w-full",
                 "md:w-1/2",
-                "border",
                 "p-4",
                 "h-screen",
                 selectedTab === Tab.Document && "hidden md:block"
               )}
             >
               {editingAssessment === null ? (
-                <ul className="flex flex-col">
-                  {currentCourse.assessments.map((assessment, index) => (
-                    <AssessmentCard
-                      key={index}
-                      assessment={assessment}
-                      onAssessmentClick={() => {
-                        setEditingAssessment({ assessment, index });
-                      }}
-                    />
-                  ))}
-                </ul>
+                <>
+                  <CourseInfo
+                    hours="H(3-2T)"
+                    department="Computer Science"
+                    description="This course is an introduction to the design and analysis of algorithms. Topics include: algorithmic problem solving, algorithmic efficiency, sorting and searching, divide-and-conquer, greedy algorithms, dynamic programming, and graph algorithms. Prerequisite: CSE 143 or equivalent."
+                  />
+                  <div
+                    className={classnames(
+                      "w-full",
+                      "flex flex-row",
+                      "justify-between",
+                      "items-center",
+                      "mb-3"
+                    )}
+                  >
+                    <h1 className={classnames("text-sys-primary", "font-bold")}>
+                      ASSESSMENTS
+                    </h1>
+                    <Button
+                      variant="filled"
+                      className={classnames("px-5", "py-2")}
+                    >
+                      <span
+                        className={classnames(
+                          "material-symbols-outlined",
+                          "text-4xl"
+                        )}
+                      >
+                        add
+                      </span>
+                    </Button>
+                  </div>
+                  <ul className="flex flex-col">
+                    {currentCourse.assessments.map((assessment, index) => (
+                      <AssessmentCard
+                        key={index}
+                        assessment={assessment}
+                        onAssessmentClick={() => {
+                          setEditingAssessment({ assessment, index });
+                        }}
+                      />
+                    ))}
+                  </ul>
+                </>
               ) : (
                 <EditAssessment
                   assessment={editingAssessment.assessment}
@@ -247,15 +280,24 @@ const Review = () => {
               className={classnames(
                 "w-full",
                 "md:w-1/2",
-                "border",
-                "border-gray-300",
-                "bg-gray-200",
                 "p-4",
                 "h-screen",
                 selectedTab === Tab.Assessments && "hidden md:block"
               )}
             >
-              <img src="../pdf.png" alt="the pdf viewer" />
+              <img
+                src="../pdf.png"
+                alt="the pdf viewer"
+                className={classnames(
+                  "border-x",
+                  "border-y",
+                  "border-dashed",
+                  "border-gray-400",
+                  "rounded-3xl",
+                  "w-full",
+                  "mt-2"
+                )}
+              />
             </section>
           </div>
         </main>
