@@ -5,9 +5,9 @@ import AssessmentCard from "../../components/AssessmentCard";
 import { classnames } from "../../Utilities";
 import { Course, Courses, Assessment } from "../../logic/icsGen";
 import Button from "../../components/Button";
+import EditAssessment from "../../components/EditAssessment/EditAssessment";
 
 import styles from "./Review.module.css";
-import EditAssessment from "../../components/EditAssessment/EditAssessment";
 
 const testState: Courses = [
   {
