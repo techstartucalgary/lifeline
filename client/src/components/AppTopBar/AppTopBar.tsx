@@ -1,6 +1,7 @@
 import { HTMLAttributes } from "react";
 import { Link, useParams } from "react-router-dom";
 import { classnames } from "../../Utilities";
+import Button from "../../components/Button";
 
 interface AppTopBarProps extends HTMLAttributes<HTMLDivElement> {
   courseId: string | undefined;
@@ -22,8 +23,13 @@ const AppTopBar = ({ courseId, description }: AppTopBarProps) => {
           </h2>
         </div>
         
-        <span className={classnames("material-symbols-outlined", "md:inline", "hidden")}>error</span>
-        <span className={classnames("material-symbols-outlined", "md:inline ml-4 mr-3", "hidden")}>delete</span>
+        <Button>
+          <span className={classnames("material-symbols-outlined", "md:block", "hidden")}>error</span>
+        </Button>
+        <Button>
+          <span className={classnames("material-symbols-outlined", "md:block ml-4 mr-3", "hidden")}>delete</span>
+        </Button>
+        
       </div>
 
     </div>
