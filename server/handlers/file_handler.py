@@ -61,20 +61,6 @@ def read_tables(path):
         "horizontal_strategy": "lines",
     }
 
-    bboxes = [table.bbox for table in pdf.pages.find_tables(table_settings=ts)] # Will contain list of (x0, top, x1, bottom)
-
-    # Cropping the pdf such that the tables are only retained 
-    for coor in range(len(bboxes)):
-        for page_num in range(len(pdf.pages)):
-            table_text = pdf.pages[page_num].crop(bboxes[coor]).extract_text().split()
-            cropped_text += "\n" + str(table_text)
-    
-    # Replacing the final text with the tables taken out 
-    final_text = full_text.replace(cropped_text, " ")
-
-    print("The text without the tables", final_text)
-    return tables
-
 def subtract_tables(path):
     """Returns all plain text contained within pdf with the exception of the tables"""
     # Retreving all of the content of the pdf 
