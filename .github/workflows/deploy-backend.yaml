@@ -3,11 +3,10 @@ name: deploy-back
 on:
   push:
     branches:
-      # - main
-      - tim/server-cd
-    # paths:
-    #   - server/src/**
-    #   - server/Dockerfile
+      - main
+    paths:
+      - server/src/**
+      - server/Dockerfile
 
 jobs:
   deployment:
