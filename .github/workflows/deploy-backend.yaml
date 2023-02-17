@@ -14,6 +14,10 @@ jobs:
     environment: server
     runs-on: ubuntu-latest
     steps:
+      - name: test
+        run: |
+          echo $AWS_ACCOUNT_ID
+
       - name: git-clone
         uses: actions/checkout@v3
         with:
