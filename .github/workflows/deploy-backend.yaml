@@ -16,7 +16,7 @@ jobs:
     steps:
       - name: test
         run: |
-          echo $AWS_ACCOUNT_ID
+          echo ${{ secrets.AWS_ACCOUNT_ID }}
 
       - name: git-clone
         uses: actions/checkout@v3
