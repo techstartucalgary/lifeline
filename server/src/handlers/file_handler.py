@@ -105,9 +105,8 @@ def read_tables(pdf):
     for page in pdf.pages:
         print("Extracting tables from page", page.page_number)
         tables.extend(page.extract_tables())
-        print("Found", len(tables), "tables")
 
-    print("done extracting tables")
+    print("Found", len(tables), "tables")
     return tables
 
 
@@ -162,14 +161,11 @@ def get_course(tmp_path):
     """Compiles assessments into the correct format and returns
     the body of the response"""
 
-    print("Before pdfplumber.open", tmp_path)
     with pdfplumber.open(tmp_path) as pdf:
-        print("After pdfplumber.open", tmp_path)
         course = {}
 
         # Extract course code and number from the first page
         course_code, course_number = get_course_key(pdf)
-        print(f"course_code: {course_code}, course_number: {course_number}")
         course["code"] = course_code
         course["number"] = course_number
 
@@ -182,7 +178,6 @@ def get_course(tmp_path):
         # Extract assessments from all tables
         assessments = []
         tables = read_tables(pdf)
-        print(f"tables: {len(tables)}")
         for table in tables:
             print("Extracting assessments from table")
             assessments.extend(extract_assessments(table))
