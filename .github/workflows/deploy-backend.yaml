@@ -1,0 +1,17 @@
+name: deploy-back
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - server/src/**
+      - server/Dockerfile
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: TODO
+        run: |
+          echo 'Use docker and aws cli with github secrets to deploy the backend'

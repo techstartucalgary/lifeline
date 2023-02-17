@@ -52,7 +52,7 @@ export default function Landing() {
 
   return (
     <>
-      <div className="font-display max-w-7xl mx-auto px-5 sm:px-14 md:px-16 lg:px-20 relative">
+      <div className="max-w-7xl mx-auto px-5 sm:px-14 md:px-16 lg:px-20 relative">
         <NavigationBar />
 
         {/* Hero section */}
@@ -75,7 +75,7 @@ export default function Landing() {
             )}
           >
             <div className="flex flex-col">
-              <div className={classnames("font-bold tracking-[-0.075rem] sm:tracking-[-0.1rem]", "text-3xl sm:text-4xl md:text-5xl xl:text-6xl")}>
+              <div className={classnames("font-bold font-headline tracking-[-0.075rem] sm:tracking-[-0.1rem]", "text-3xl sm:text-4xl md:text-5xl xl:text-6xl")}>
                 <div className="sm:whitespace-nowrap text-on-surface">A better way to </div>
                 <div
                   className={classnames(
@@ -103,7 +103,7 @@ export default function Landing() {
                   "sm:justify-center lg:justify-start"
                 )}
               >
-                <Button to="/upload" variant="filled" className="py-5 px-7 hidden sm:block mr-2">Get Started</Button>
+                <Button to="/app" variant="filled" className="py-5 px-7 hidden sm:block mr-2">Get Started</Button>
                 <Button to="/workflow" variant="text" className="py-5 px-4 -ml-4 -mt-6 sm:ml-0 sm:mt-0">Learn more</Button>
               </div>
             </div>
@@ -217,7 +217,7 @@ export default function Landing() {
           <div className="sticky bottom-0 sm:relative">
             <div className="flex justify-center pt-8 pb-4">
               <Button
-                to="/upload"
+                to="/app"
                 variant="filled"
                 className={classnames(
                   "py-5 px-8",
@@ -253,14 +253,38 @@ export default function Landing() {
           <div className="col-span-5">
             <div className="grid grid-cols-2 gap-3">
               <div className="col-span-2 sm:col-span-1 space-y-2">
-                <div>Disclaimer</div>
-                <div>Feedback</div>
-                <div>Privacy Policy</div>
+                <div>
+                  <a href="/disclaimer.html">
+                    Disclaimer
+                  </a>
+                </div>
+                <div>
+                  <a href="mailto:lifeline@techstartucalgary.com">
+                    Feedback
+                  </a>
+                </div>
+                <div>
+                  <a href="/privacy.html">
+                    Privacy Policy
+                  </a>
+                </div>
               </div>
               <div className="col-span-2 sm:col-span-1 space-y-2">
-                <div>About</div>
-                <div>GitHub</div>
-                <div>University of Calgary</div>
+                <div>
+                  <a href="https://techstartucalgary.com/projects" target="_blank" rel="noreferrer">
+                    About
+                  </a>
+                </div>
+                <div>
+                  <a href="https://github.com/techstartucalgary/lifeline" target="_blank" rel="noreferrer">
+                    GitHub
+                  </a>
+                </div>
+                <div>
+                  <a href="https://techstartucalgary.com/" target="_blank" rel="noreferrer">
+                    Tech Start UCalgary
+                  </a>
+                </div>
               </div>
             </div>
           </div>

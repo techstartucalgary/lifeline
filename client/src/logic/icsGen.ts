@@ -1,38 +1,51 @@
 import { createEvents, EventAttributes } from "ics";
 
-interface Assessment {
+export interface Assessment {
   name: string;
   date: string;
   weight: string;
 }
 
 export interface Course {
-  course: string;
+  code: string;
+  number: number;
+  title: string;
+  key: string;
   topic: string;
   assessments: Assessment[];
 }
 
-function jsonToICS(semester: Course[]): string {
+export interface Courses extends Array<Course> {
+  [index: number]: Course;
+}
+
+function jsonToICS(courses: Courses): string {
   const events: EventAttributes[] = [];
-  for (const course of semester) {
+
+  for (const course of courses) {
     for (const assessment of course.assessments) {
+      if (!assessment.date) {
+        continue;
+      }
       const [date, time] = assessment.date.split("T");
       const [year, month, day] = date.split("-");
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      const [hours, minutes, milis] = time.split(":");
+      const [hours, minutes, ] = time.split(":");
 
       events.push({
-        title: `${course.course} ${assessment.name} (${assessment.weight}%)`,
-        start: [parseInt(year), parseInt(month), parseInt(day), parseInt(hours), parseInt(minutes)],
+        title: `${course.code} ${course.number} - ${assessment.name} (${assessment.weight}%)`,
+        start: [
+          parseInt(year),
+          parseInt(month),
+          parseInt(day),
+          parseInt(hours),
+          parseInt(minutes),
+        ],
         duration: { hours: 0, minutes: 0, seconds: 0 },
       });
     }
   }
 
-  const { error, value } = createEvents(events);
-  if (error) {
-    return "error";
-  }
+  const { value } = createEvents(events);
   if (value) {
     return value;
   }

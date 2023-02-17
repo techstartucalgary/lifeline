@@ -1,123 +1,271 @@
-import { useState } from "react";
-import { useParams, Link } from "react-router-dom";
-import Button from "../../components/Button";
+import { useState, useEffect, useMemo } from "react";
+import { useParams } from "react-router-dom";
+import NavigationDrawer from "../../components/NavigationDrawer";
+import AssessmentCard from "../../components/AssessmentCard";
 import { classnames } from "../../Utilities";
+import { Course, Courses } from "../../logic/icsGen";
+import Button from "../../components/Button";
 
+import styles from "./Review.module.css";
+import CourseInfo from "../../components/CourseInfo";
+
+const testState: Courses = [
+  {
+    code: "PSYC",
+    number: 203,
+    title: "Psychology",
+    key: "psyc-203",
+    topic: "Psychology of Everyday Life",
+    assessments: [
+      {
+        name: "Identity Assignment",
+        date: "2021-10-21T18:00:00.000",
+        weight: "6%",
+      },
+      {
+        name: "Coping Profile Assignment",
+        date: "2021-10-29T18:00:00.000",
+        weight: "2%",
+      },
+      {
+        name: "Self-Reflection/Goal Setting Assignment",
+        date: "2021-12-07T18:00:00.000",
+        weight: "7%",
+      },
+      {
+        name: "Experiential-Learning/Article-Evaluation Course Component",
+        date: "2021-12-08T23:59:59.999",
+        weight: "4%",
+      },
+      {
+        name: "Exam 1",
+        date: "2021-10-14T00:00:00.000",
+        weight: "25%",
+      },
+      {
+        name: "Exam 2",
+        date: "2021-11-18T00:00:00.000",
+        weight: "25%",
+      },
+      {
+        name: "Exam 3/Final Exam",
+        date: "",
+        weight: "31%",
+      },
+    ],
+  },
+];
+
+// Enum for the tabs
+enum Tab {
+  Assessments,
+  Document,
+}
 
 const Review = () => {
-  const courses = ["cpsc-413", "seng-513", "cpsc-481", "cpsc-449", "cpsc-457"];
-  const [selectedTab, setSelectedTab] = useState(0);
-  const { courseId } = useParams();
-  const format = (courseId: string | undefined) => courseId?.replace("-", " ").toUpperCase();
+  const { courseKey: courseKeyUrlParam } = useParams();
+
+  const [selectedTab, setSelectedTab] = useState<Tab>(Tab.Assessments);
+  const [courses, setCourses] = useState<Courses>(testState);
+  const [currentCourseKey, setCurrentCourseKey] = useState<string | null>(null);
+
+  // At first render of the page, check if the course key is valid
+  // and assign value to current course key
+  useEffect(() => {
+    if (
+      courseKeyUrlParam === undefined ||
+      courseKeyLookup[courseKeyUrlParam] === undefined
+    ) {
+      setCurrentCourseKey(null);
+    } else {
+      setCurrentCourseKey(courseKeyUrlParam);
+    }
+  }, []);
+
+  // Callback for when the courses are changed
+  const onCoursesChanged = (newCourses: Courses) => {
+    const existingCourseKeys = courses.map((course) => course.key);
+    for (const course of newCourses) {
+      // Numbering undetermined courses
+      if (!course.code || !course.number) {
+        course.code = "Course";
+        course.number = Object.values(courses).length + 1;
+        course.title = "Course";
+      }
+
+      // Generate course key
+      const key = `${course.code}-${course.number}`.toLowerCase();
+      if (existingCourseKeys.includes(key)) continue;
+
+      course.key = key;
+      courses.push(course);
+      existingCourseKeys.push(key);
+    }
+
+    setCourses([...courses]);
+  };
+
+  // Memoize the course key lookup in format of { [key]: course } for performance
+  const courseKeyLookup = useMemo(
+    () =>
+      Object.fromEntries(
+        courses.map((course) => [course.key, course])
+      ) as Record<string, Course>,
+    [courses]
+  );
+
+  // Memoize the course based on the course key
+  const currentCourse = useMemo(
+    () =>
+      currentCourseKey && currentCourseKey in courseKeyLookup
+        ? courseKeyLookup[currentCourseKey]
+        : null,
+    [currentCourseKey, courseKeyLookup[currentCourseKey || ""]]
+  );
+
+  const onCourseClick = (course: Course | null) => {
+    if (course === null) {
+      setCurrentCourseKey(null);
+      setTimeout(() => history.pushState(null, "", "/app"), 10);
+    } else {
+      setCurrentCourseKey(course.key);
+      setTimeout(() => history.pushState(null, "", `/app/${course.key}`), 100);
+    }
+  };
 
   return (
-    <div className="flex flex-row h-screen">
+    <div className="flex flex-row justify-between">
       <nav
         className={classnames(
-          "w-full", "md:w-64", "bg-gray-600", "h-full", "fixed", "flex", "flex-col", "p-4", "items-center", "z-0", !courseId && "z-20"
-        )}>
-        <div className="flex flex-col h-full">
-          {courses.map((course) => (
-            <Button variant={courseId === course ? "filled" : "tonal"} to={`/review/${course}`} key={course}>
-              {format(course)}
-            </Button>
-          ))}
-        </div>
-      </nav>
-      <main className="flex flex-col w-full ml-0 md:ml-64 z-10">
-        {courseId ? (
-          <>
-            <header className="bg-gray-300 w-full p-4 text-xl">
-              <Link to="/review">
-                <span
-                  className={classnames("material-icons", "md:hidden", "inline")}
-                  style={{ fontSize: "1.5rem", verticalAlign: "middle" }}
-                >
-                  arrow_back
-                </span>
-
-              </Link>
-              <h1 className="text-4xl">
-                {format(courseId)}
-              </h1>
-              <h2 className="text-2xl">
-                Explorations in Information Security and Privacy
-              </h2>
-            </header>
-            <div className="flex flex-col md:flex-row">
-              <div className="w-full md:hidden flex flex-row">
-                <button
-                  className={`w-full bg-gray-300 p-2 ${selectedTab === 0 && "bg-red-500"}`}
-                  onClick={() => setSelectedTab(0)}
-                >
-                  Assessments
-                </button>
-                <button
-                  className={`w-full bg-gray-300 p-2 ${selectedTab === 1 && "bg-red-500"}`}
-                  onClick={() => setSelectedTab(1)}
-                >
-                  Document
-                </button>
-              </div>
-              <section className={classnames(
-                "w-full", "md:w-1/2", "border", "border-gray-300", "bg-gray-200", "p-4", "h-screen", selectedTab === 0 ? "" : "hidden md:block"
-              )}>
-                <ul>
-                  <li>Assessment 1</li>
-                  <li>Assessment 2</li>
-                  <li>Assessment 3</li>
-                  <li>Assessment 4</li>
-                  <li>Assessment 5</li>
-                </ul>
-              </section>
-              <section
-                className={classnames(
-                  "w-full", "md:w-1/2", "border", "border-gray-300", "bg-gray-600", "p-4", "h-screen", selectedTab === 1 ? "" : "hidden md:block"
-                )}>
-                <img src="../pdf.png" alt="the pdf viewer" />
-              </section>
-            </div>
-          </>
-        ) : (
-          <p>upload</p>
+          "md:w-64",
+          "w-full",
+          "flex-shrink-0",
+          currentCourseKey && "hidden",
+          "md:block"
         )}
-      </main>
-    </div >
+      >
+        <NavigationDrawer
+          courses={courses}
+          currentCourse={currentCourse}
+          onCoursesChanged={onCoursesChanged}
+          onCourseClick={onCourseClick}
+        />
+      </nav>
+      {currentCourse && (
+        <main
+          className={classnames(
+            "flex-shrink-0 w-full text-left",
+            styles.main
+          )}
+        >
+          <header className="bg-gray-300 w-full p-4 text-xl">
+            <Button onClick={() => onCourseClick(null)}>
+              <span
+                className={classnames("material-symbols-outlined", "md:hidden", "inline")}
+                style={{ fontSize: "1.5rem", verticalAlign: "middle" }}
+              >
+                arrow_back
+              </span>
+            </Button>
+            <h1 className="text-4xl">
+              {currentCourse.title} {currentCourse.number}
+            </h1>
+            <h2 className="text-2xl">{currentCourse.topic}</h2>
+          </header>
+          <div className="flex flex-col md:flex-row">
+            <div className="w-full md:hidden flex flex-row">
+              <button
+                className={classnames(
+                  "w-full bg-gray-300 p-2",
+                  selectedTab === Tab.Assessments && "bg-red-500"
+                )}
+                onClick={() => setSelectedTab(0)}
+              >
+                Assessments
+              </button>
+              <button
+                className={classnames(
+                  "w-full bg-gray-300 p-2",
+                  selectedTab === Tab.Document && "bg-red-500"
+                )}
+                onClick={() => setSelectedTab(1)}
+              >
+                Document
+              </button>
+            </div>
+            <section
+              className={classnames(
+                "w-full",
+                "md:w-1/2",
+                "p-4",
+                "h-screen",
+                selectedTab === Tab.Document && "hidden md:block"
+              )}
+            >
+              <CourseInfo
+                hours="H(3-2T)"
+                department="Computer Science"
+                description="This course is an introduction to the design and analysis of algorithms. Topics include: algorithmic problem solving, algorithmic efficiency, sorting and searching, divide-and-conquer, greedy algorithms, dynamic programming, and graph algorithms. Prerequisite: CSE 143 or equivalent."
+              />
+              <div
+                className={classnames(
+                  "w-full",
+                  "flex flex-row",
+                  "justify-between",
+                  "items-center",
+                  "mb-3"
+                )}
+              >
+                <h1 className={classnames("text-sys-primary", "font-bold")}>
+                  ASSESSMENTS
+                </h1>
+                <Button variant="filled" className={classnames("px-5", "py-2")}>
+                  <span className={classnames("material-symbols-outlined", "text-4xl")}>
+                    add
+                  </span>
+                </Button>
+              </div>
+              <ul className="flex flex-col">
+                {currentCourse.assessments.map((assessment, t) => (
+                  <AssessmentCard
+                    key={t}
+                    assessment={assessment}
+                    onAssessmentClick={() => {
+                      console.log("clicked");
+                    }}
+                  />
+                ))}
+              </ul>
+            </section>
+            <section
+              className={classnames(
+                "w-full",
+                "md:w-1/2",
+                "p-4",
+                "h-screen",
+                selectedTab === Tab.Assessments && "hidden md:block"
+              )}
+            >
+              <img
+                src="../pdf.png"
+                alt="the pdf viewer"
+                className={classnames(
+                  "border-x",
+                  "border-y",
+                  "border-dashed",
+                  "border-gray-400",
+                  "rounded-3xl",
+                  "w-full",
+                  "mt-2"
+                )}
+              />
+            </section>
+          </div>
+        </main>
+      )}
+      <div className="w-64"></div>
+    </div>
   );
 };
 
 export default Review;
-
-
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const LayoutNoHeader = () => (
-  <div className="flex flex-row">
-    <div className="flex flex-row justify-between bg-gray-300 w-1/2">
-      <nav style={{ width: 260, minWidth: 260, backgroundColor: "red" }}>
-      </nav>
-      <section
-        className={classnames(
-          "bg-blue-300",
-          "h-screen",
-          "max-w-screen-sm",
-          "overflow-x-scroll",
-        )}>
-        <h1 className={classnames("text-4xl")}
-        >CPSC 413</h1>
-        <h2 className={classnames("text-2xl")}>
-          Explorations in Information Security and Privacy
-        </h2>
-        <p>
-          Left section content! Left section content! Left section content! Left section content! Left section content! Left section content! Left section content! Left section content! Left section content! Left section content! Left section content! Left section content!
-        </p>
-      </section>
-    </div>
-    <div className="flex flex-row justify-between bg-gray-300 w-1/2">
-      <section className="bg-red-200 h-screen max-w-screen-sm">
-        <p>
-          Right section content! Right section content! Right section content! Right section content! Right section content! Right section content! Right section content! Right section content! Right section content! Right section content! Right section content!
-        </p>
-      </section>
-    </div>
-  </div>
-);
