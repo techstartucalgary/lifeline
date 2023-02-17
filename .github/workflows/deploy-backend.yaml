@@ -18,6 +18,7 @@ jobs:
 
       - name: deploy
         run: |
-          sudo apt-get -y awscli
+          sudo apt-get -y update
+          sudo apt-get -y install awscli
           cd server
           ./deploy.sh
