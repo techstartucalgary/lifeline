@@ -13,8 +13,10 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: TODO
+      - name: dependencies
         uses: docker/setup-buildx-action@v2
+
+      - name: deploy
         run: |
           sudo apt-get -y awscli
           cd server
