@@ -10,7 +10,8 @@ on:
     #   - server/Dockerfile
 
 jobs:
-  build:
+  deployment:
+    environment: server
     runs-on: ubuntu-latest
     steps:
       - name: git-clone
