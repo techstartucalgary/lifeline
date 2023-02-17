@@ -3,15 +3,19 @@ name: deploy-back
 on:
   push:
     branches:
-      - main
-    paths:
-      - server/src/**
-      - server/Dockerfile
+      # - main
+      - tim/server-cd
+    # paths:
+    #   - server/src/**
+    #   - server/Dockerfile
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - name: TODO
+      - uses: docker/setup-buildx-action@v2
         run: |
-          echo 'Use docker and aws cli with github secrets to deploy the backend'
+          sudo apt-get -y awscli
+          cd server
+          ./deploy.sh
