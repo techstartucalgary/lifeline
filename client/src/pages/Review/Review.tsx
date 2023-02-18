@@ -181,7 +181,7 @@ const Review = () => {
     <>
       <nav
         className={classnames(
-          "fixed top-0 left-0 w-64",
+          "fixed bg-background z-20 top-0 left-0 w-64",
           currentCourseKey && "hidden",
           "md:block"
         )}
@@ -197,7 +197,7 @@ const Review = () => {
       {currentCourse && (
         <>
           {/* App top bar */}
-          <div className="fixed top-0 left-0 right-0 h-fit z-30" ref={topbarRef}>
+          <div className="fixed top-0 left-0 right-0 h-fit z-10" ref={topbarRef}>
             <div className="max-w-7xl mx-auto" style={{ paddingLeft: mainMarginLeft }}>
               <AppTopBar
                 title={`${currentCourse.title} ${currentCourse.number}`}
