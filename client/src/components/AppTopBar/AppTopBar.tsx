@@ -14,8 +14,8 @@ const AppTopBar = ({ title, subtitle, elevation = "flat" }: AppTopBarProps) => {
         "flex flex-row bg-surface",
         "px-4 md:px-8",
         "pt-48 md:pt-28", "pb-4 md:pb-2",
-        "before:bg-transparent before:absolute before:top-0 before:left-0 before:right-0 before:bottom-0",
-        (elevation === "on-scroll") && "before:bg-primary/8",
+        "before:opacity-0 before:bg-primary/8 before:absolute before:top-0 before:left-0 before:right-0 before:bottom-0",
+        (elevation === "on-scroll") && "before:opacity-100",
         "transition-all before:transition-all"
       )}
     >
