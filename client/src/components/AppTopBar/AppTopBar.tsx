@@ -32,11 +32,13 @@ const AppTopBar = ({ elevation = "flat", className, children, ...args }: AppTopB
     >
       <div className="flex flex-row px-1 pt-2 justify-between">
         {/* Leading Navigation */}
-        <div className="flex flex-row space-x-1">
-          <div className="p-1 text-on-surface">
+        <div className="flex flex-row items-center justify-center">
+          <div className="p-1 text-on-surface min-w-[0.8rem]">
             {leadingNavigation}
           </div>
-          <div>{title}</div>
+          <div className={"text-on-surface font-headline font-bold text-xl"}>
+            {title}
+          </div>
         </div>
 
         {/* Trailing Icon */}

@@ -177,6 +177,8 @@ const Review = () => {
   // For scrolling
   const scrollY = useScrollPosition(120);
 
+  const onClickReturn = () => setCurrentCourseKey(null);
+
   return (
     <>
       <nav
@@ -202,7 +204,7 @@ const Review = () => {
               <AppTopBar elevation={scrollY > 0 ? "on-scroll" : "flat"}>
                 {/* Icons */}
                 <LeadingNavigation className="block md:hidden">
-                  <IconButton className="text-on-surface" icon="arrow_back" />
+                  <IconButton className="text-on-surface" icon="arrow_back" onClick={onClickReturn} />
                 </LeadingNavigation>
                 <TrailingIcon>
                   <IconButton className="text-on-surface-variant hidden md:block" icon="error" />
