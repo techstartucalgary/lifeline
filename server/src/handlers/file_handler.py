@@ -147,7 +147,7 @@ def extract_assessments(table):
             assessments.append(
                 {
                     "name": name,
-                    "date": date.strftime("%Y-%m-%dT%H:%M:%S.%f"),
+                    "date": date.strftime("%Y-%m-%dT%H:%M:%S"),
                     "weight": weight,
                     "source": source,  # use this to highlight the date in the pdf
                 }
