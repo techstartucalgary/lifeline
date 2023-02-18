@@ -160,6 +160,20 @@ const Review = () => {
     return () => window.removeEventListener("resize", onMainMarginLeft);
   }, [navRef.current, mainRef.current]);
 
+  // For AppTopBar top height
+  const topbarRef = useRef<HTMLDivElement>(null);
+  const [topbarHeight, setTopbarHeight] = useState(0);
+  useLayoutEffect(() => {
+    const onTopbarHeight = () => {
+      if (topbarRef.current && mainRef.current) {
+        setTopbarHeight(topbarRef.current.offsetHeight);
+      }
+    };
+    onTopbarHeight();
+    window.addEventListener("resize", onTopbarHeight);
+    return () => window.removeEventListener("resize", onTopbarHeight);
+  }, [topbarRef.current, mainRef.current]);
+
   return (
     <>
       <nav
@@ -178,15 +192,15 @@ const Review = () => {
         />
       </nav>
       {currentCourse && (
-        <main className={classnames(styles.main, "max-w-7xl mx-auto")} ref={mainRef}>
+        <main className={classnames(styles.main, "max-w-7xl mx-auto relative")} ref={mainRef}>
           <div className={classnames((mainMarginLeft < 0) && "hidden")} style={{ marginLeft: mainMarginLeft }}>
             {/* App top bar */}
-            <div className="sticky top-0 z-30 w-full">
+            <div className="fixed top-0 z-30 w-full" ref={topbarRef}>
               <AppTopBar title={`${currentCourse.title} ${currentCourse.number}`} subtitle={currentCourse.topic}/>
             </div>
 
             {/* Course page */}
-            <div className="flex flex-col md:flex-row">
+            <div className="flex flex-col md:flex-row" style={{ marginTop: topbarHeight }}>
               {/* Tab */}
               <div className="md:hidden flex flex-row">
                 <button
