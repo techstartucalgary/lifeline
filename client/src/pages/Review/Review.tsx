@@ -181,7 +181,7 @@ const Review = () => {
               </button>
               <button
                 className={classnames(
-                  "w-full bg-gray-300 p-2",
+                  "bg-gray-300 p-2",
                   selectedTab === Tab.Document && "bg-red-500"
                 )}
                 onClick={() => setSelectedTab(1)}
