@@ -145,7 +145,7 @@ const Review = () => {
 
   const navRef = useRef<HTMLDivElement>(null);
   const mainRef = useRef<HTMLDivElement>(null);
-  const [mainMarginLeft, setMainMarginLeft] = useState(0);
+  const [mainMarginLeft, setMainMarginLeft] = useState(-1);
   useLayoutEffect(() => {
     const onMainMarginLeft = () => {
       if (mainRef.current && navRef.current) {
@@ -154,7 +154,7 @@ const Review = () => {
         setMainMarginLeft(Math.max(navWidth - marginLeft, 0));
       }
     };
-    onMainMarginLeft();
+    setTimeout(onMainMarginLeft, 0);
     window.addEventListener("resize", onMainMarginLeft);
     return () => window.removeEventListener("resize", onMainMarginLeft);
   }, []);
@@ -178,7 +178,7 @@ const Review = () => {
       </nav>
       {currentCourse && (
         <main className={classnames(styles.main, "max-w-7xl mx-auto")} ref={mainRef}>
-          <div style={{ marginLeft: mainMarginLeft }}>
+          <div className={classnames((mainMarginLeft < 0) && "hidden")} style={{ marginLeft: mainMarginLeft }}>
             {/* App top bar */}
             <header className="p-4 text-xl">
               <AppTopBar courseId={currentCourse.key} description={currentCourse.topic}/>
