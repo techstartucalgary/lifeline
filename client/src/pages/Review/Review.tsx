@@ -163,11 +163,11 @@ const Review = () => {
       </nav>
       {currentCourse && (
         <main
-          className={classnames("flex-shrink-0 w-full text-left", styles.main)}
+          className={classnames("flex-shrink-0 w-full text-left relative", styles.main)}
         >
-          <header className="w-full p-4 text-xl">
-            <AppTopBar courseId={currentCourse.key} description={currentCourse.topic}/>
-          </header>
+          <div className="sticky top-0 z-30 w-full">
+            <AppTopBar title={`${currentCourse.title} ${currentCourse.number}`} subtitle={currentCourse.topic}/>
+          </div>
           <div className="flex flex-col md:flex-row">
             <div className="w-full md:hidden flex flex-row">
               <button
@@ -193,7 +193,7 @@ const Review = () => {
               className={classnames(
                 "w-full",
                 "md:w-1/2",
-                "p-4",
+                "px-4",
                 "h-screen",
                 selectedTab === Tab.Document && "hidden md:block"
               )}
@@ -266,7 +266,7 @@ const Review = () => {
               className={classnames(
                 "w-full",
                 "md:w-1/2",
-                "p-4",
+                "px-4",
                 "h-screen",
                 selectedTab === Tab.Assessments && "hidden md:block"
               )}
