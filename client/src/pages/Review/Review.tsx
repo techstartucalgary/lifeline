@@ -144,12 +144,10 @@ const Review = () => {
   };
 
   return (
-    <div className="flex flex-row justify-between">
+    <div className="flex flex-row">
       <nav
         className={classnames(
-          "md:w-64",
-          "w-full",
-          "flex-shrink-0",
+          "w-64 sticky-0",
           currentCourseKey && "hidden",
           "md:block"
         )}
@@ -162,17 +160,19 @@ const Review = () => {
         />
       </nav>
       {currentCourse && (
-        <main
-          className={classnames("flex-shrink-0 w-full text-left", styles.main)}
-        >
-          <header className="w-full p-4 text-xl">
+        <main className={styles.main}>
+          {/* App top bar */}
+          <header className="p-4 text-xl">
             <AppTopBar courseId={currentCourse.key} description={currentCourse.topic}/>
           </header>
+
+          {/* Course page */}
           <div className="flex flex-col md:flex-row">
-            <div className="w-full md:hidden flex flex-row">
+            {/* Tab */}
+            <div className="md:hidden flex flex-row">
               <button
                 className={classnames(
-                  "w-full bg-gray-300 p-2",
+                  "bg-gray-300 p-2",
                   selectedTab === Tab.Assessments && "bg-red-500"
                 )}
                 onClick={() => setSelectedTab(0)}
@@ -189,12 +189,12 @@ const Review = () => {
                 Document
               </button>
             </div>
+
+            {/* Assessments */}
             <section
               className={classnames(
-                "w-full",
                 "md:w-1/2",
                 "p-4",
-                "h-screen",
                 selectedTab === Tab.Document && "hidden md:block"
               )}
             >
@@ -262,6 +262,8 @@ const Review = () => {
                 />
               )}
             </section>
+              
+            {/* Document */}
             <section
               className={classnames(
                 "w-full",
@@ -288,7 +290,6 @@ const Review = () => {
           </div>
         </main>
       )}
-      <div className="w-64"></div>
     </div>
   );
 };
