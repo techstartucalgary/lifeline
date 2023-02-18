@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect, useMemo, useRef, useLayoutEffect } from "react";
 import { useParams } from "react-router-dom";
 import NavigationDrawer from "../../components/NavigationDrawer";
 import AssessmentCard from "../../components/AssessmentCard";
@@ -143,14 +143,31 @@ const Review = () => {
     }
   };
 
+  const navRef = useRef<HTMLDivElement>(null);
+  const mainRef = useRef<HTMLDivElement>(null);
+  const [mainMarginLeft, setMainMarginLeft] = useState(0);
+  useLayoutEffect(() => {
+    const onMainMarginLeft = () => {
+      if (mainRef.current && navRef.current) {
+        const marginLeft = mainRef.current.offsetLeft || 0;
+        const navWidth = navRef.current?.offsetWidth || 0;
+        setMainMarginLeft(Math.max(navWidth - marginLeft, 0));
+      }
+    };
+    onMainMarginLeft();
+    window.addEventListener("resize", onMainMarginLeft);
+    return () => window.removeEventListener("resize", onMainMarginLeft);
+  }, []);
+
   return (
-    <div className="flex flex-row">
+    <>
       <nav
         className={classnames(
-          "w-64",
+          "fixed w-64",
           currentCourseKey && "hidden",
           "md:block"
         )}
+        ref={navRef}
       >
         <NavigationDrawer
           courses={courses}
@@ -160,136 +177,138 @@ const Review = () => {
         />
       </nav>
       {currentCourse && (
-        <main className={styles.main}>
-          {/* App top bar */}
-          <header className="p-4 text-xl">
-            <AppTopBar courseId={currentCourse.key} description={currentCourse.topic}/>
-          </header>
+        <main className={classnames(styles.main, "max-w-7xl mx-auto")} ref={mainRef}>
+          <div style={{ marginLeft: mainMarginLeft }}>
+            {/* App top bar */}
+            <header className="p-4 text-xl">
+              <AppTopBar courseId={currentCourse.key} description={currentCourse.topic}/>
+            </header>
 
-          {/* Course page */}
-          <div className="flex flex-col md:flex-row">
-            {/* Tab */}
-            <div className="md:hidden flex flex-row">
-              <button
-                className={classnames(
-                  "bg-gray-300 p-2",
-                  selectedTab === Tab.Assessments && "bg-red-500"
-                )}
-                onClick={() => setSelectedTab(0)}
-              >
-                Assessments
-              </button>
-              <button
-                className={classnames(
-                  "bg-gray-300 p-2",
-                  selectedTab === Tab.Document && "bg-red-500"
-                )}
-                onClick={() => setSelectedTab(1)}
-              >
-                Document
-              </button>
-            </div>
+            {/* Course page */}
+            <div className="flex flex-col md:flex-row">
+              {/* Tab */}
+              <div className="md:hidden flex flex-row">
+                <button
+                  className={classnames(
+                    "bg-gray-300 p-2",
+                    selectedTab === Tab.Assessments && "bg-red-500"
+                  )}
+                  onClick={() => setSelectedTab(0)}
+                >
+                  Assessments
+                </button>
+                <button
+                  className={classnames(
+                    "bg-gray-300 p-2",
+                    selectedTab === Tab.Document && "bg-red-500"
+                  )}
+                  onClick={() => setSelectedTab(1)}
+                >
+                  Document
+                </button>
+              </div>
 
-            {/* Assessments */}
-            <section
-              className={classnames(
-                "md:w-1/2",
-                "p-4",
-                selectedTab === Tab.Document && "hidden md:block"
-              )}
-            >
-              {editingAssessment === null ? (
-                <>
-                  <CourseInfo
-                    hours="H(3-2T)"
-                    department="Computer Science"
-                    description="This course is an introduction to the design and analysis of algorithms. Topics include: algorithmic problem solving, algorithmic efficiency, sorting and searching, divide-and-conquer, greedy algorithms, dynamic programming, and graph algorithms. Prerequisite: CSE 143 or equivalent."
-                  />
-                  <div
-                    className={classnames(
-                      "w-full",
-                      "flex flex-row",
-                      "justify-between",
-                      "items-center",
-                      "mb-3"
-                    )}
-                  >
-                    <h1 className={classnames("text-sys-primary", "font-bold")}>
-                      ASSESSMENTS
-                    </h1>
-                    <Button
-                      variant="filled"
-                      className={classnames("px-5", "py-2")}
+              {/* Assessments */}
+              <section
+                className={classnames(
+                  "md:w-1/2",
+                  "p-4",
+                  selectedTab === Tab.Document && "hidden md:block"
+                )}
+              >
+                {editingAssessment === null ? (
+                  <>
+                    <CourseInfo
+                      hours="H(3-2T)"
+                      department="Computer Science"
+                      description="This course is an introduction to the design and analysis of algorithms. Topics include: algorithmic problem solving, algorithmic efficiency, sorting and searching, divide-and-conquer, greedy algorithms, dynamic programming, and graph algorithms. Prerequisite: CSE 143 or equivalent."
+                    />
+                    <div
+                      className={classnames(
+                        "w-full",
+                        "flex flex-row",
+                        "justify-between",
+                        "items-center",
+                        "mb-3"
+                      )}
                     >
-                      <span
-                        className={classnames(
-                          "material-symbols-outlined",
-                          "text-4xl"
-                        )}
+                      <h1 className={classnames("text-sys-primary", "font-bold")}>
+                        ASSESSMENTS
+                      </h1>
+                      <Button
+                        variant="filled"
+                        className={classnames("px-5", "py-2")}
                       >
-                        add
-                      </span>
-                    </Button>
-                  </div>
-                  <ul className="flex flex-col">
-                    {currentCourse.assessments.map((assessment, index) => (
-                      <AssessmentCard
-                        key={index}
-                        assessment={assessment}
-                        onAssessmentClick={() => {
-                          setEditingAssessment({ assessment, index });
-                        }}
-                      />
-                    ))}
-                  </ul>
-                </>
-              ) : (
-                <EditAssessment
-                  assessment={editingAssessment.assessment}
-                  onClose={() => setEditingAssessment(null)}
-                  onSave={(newAssessment: Assessment) => {
-                    setCourses(
-                      courses.map((course) => {
-                        if (course.key === currentCourseKey) {
-                          course.assessments[editingAssessment.index] =
-                            newAssessment;
-                        }
-                        return course;
-                      })
-                    );
-                    setEditingAssessment(null);
-                  }}
-                />
-              )}
-            </section>
-              
-            {/* Document */}
-            <section
-              className={classnames(
-                "w-full",
-                "md:w-1/2",
-                "p-4",
-                selectedTab === Tab.Assessments && "hidden md:block"
-              )}
-            >
-              <img
-                src="../pdf.png"
-                alt="the pdf viewer"
-                className={classnames(
-                  "border-x",
-                  "border-y",
-                  "border-dashed",
-                  "border-gray-400",
-                  "rounded-3xl",
-                  "w-full",
-                  "mt-2"
+                        <span
+                          className={classnames(
+                            "material-symbols-outlined",
+                            "text-4xl"
+                          )}
+                        >
+                          add
+                        </span>
+                      </Button>
+                    </div>
+                    <ul className="flex flex-col">
+                      {currentCourse.assessments.map((assessment, index) => (
+                        <AssessmentCard
+                          key={index}
+                          assessment={assessment}
+                          onAssessmentClick={() => {
+                            setEditingAssessment({ assessment, index });
+                          }}
+                        />
+                      ))}
+                    </ul>
+                  </>
+                ) : (
+                  <EditAssessment
+                    assessment={editingAssessment.assessment}
+                    onClose={() => setEditingAssessment(null)}
+                    onSave={(newAssessment: Assessment) => {
+                      setCourses(
+                        courses.map((course) => {
+                          if (course.key === currentCourseKey) {
+                            course.assessments[editingAssessment.index] =
+                              newAssessment;
+                          }
+                          return course;
+                        })
+                      );
+                      setEditingAssessment(null);
+                    }}
+                  />
                 )}
-              />
-            </section>
+              </section>
+                
+              {/* Document */}
+              <section
+                className={classnames(
+                  "w-full",
+                  "md:w-1/2",
+                  "p-4",
+                  selectedTab === Tab.Assessments && "hidden md:block"
+                )}
+              >
+                <img
+                  src="../pdf.png"
+                  alt="the pdf viewer"
+                  className={classnames(
+                    "border-x",
+                    "border-y",
+                    "border-dashed",
+                    "border-gray-400",
+                    "rounded-3xl",
+                    "w-full",
+                    "mt-2"
+                  )}
+                />
+              </section>
+            </div>
           </div>
         </main>
       )}
-    </div>
+    </>
   );
 };
 
