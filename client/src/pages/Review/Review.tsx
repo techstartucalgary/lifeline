@@ -269,7 +269,6 @@ const Review = () => {
                 "w-full",
                 "md:w-1/2",
                 "p-4",
-                "h-screen",
                 selectedTab === Tab.Assessments && "hidden md:block"
               )}
             >
