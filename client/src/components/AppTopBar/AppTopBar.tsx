@@ -13,7 +13,7 @@ const AppTopBar = ({ title, subtitle, elevation = "flat", className, ...args }: 
   return (
     <div
       className={classnames(
-        "flex flex-row bg-surface",
+        "flex flex-row bg-surface items-center",
         "px-4 md:px-6",
         "pt-40 md:pt-24", "pb-4 md:pb-4",
         "before:opacity-0 before:bg-primary/8 before:absolute before:top-0 before:left-0 before:right-0 before:bottom-0",
