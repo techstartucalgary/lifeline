@@ -143,21 +143,22 @@ const Review = () => {
     }
   };
 
+  // For NavigationDrawer adapt in smaller desktop screens
   const navRef = useRef<HTMLDivElement>(null);
   const mainRef = useRef<HTMLDivElement>(null);
   const [mainMarginLeft, setMainMarginLeft] = useState(-1);
   useLayoutEffect(() => {
     const onMainMarginLeft = () => {
-      if (mainRef.current && navRef.current) {
+      if (navRef.current && mainRef.current) {
         const marginLeft = mainRef.current.offsetLeft || 0;
         const navWidth = navRef.current?.offsetWidth || 0;
         setMainMarginLeft(Math.max(navWidth - marginLeft, 0));
       }
     };
-    setTimeout(onMainMarginLeft, 0);
+    onMainMarginLeft();
     window.addEventListener("resize", onMainMarginLeft);
     return () => window.removeEventListener("resize", onMainMarginLeft);
-  }, []);
+  }, [navRef.current, mainRef.current]);
 
   return (
     <>
