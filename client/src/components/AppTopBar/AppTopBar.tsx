@@ -8,7 +8,7 @@ interface AppTopBarProps extends HTMLAttributes<HTMLDivElement> {
   children: ReactElement<AllAcceptingChildren> | ReactElement<AllAcceptingChildren>[];
 }
 
-type AllAcceptingChildren = typeof LeadingNavigation | typeof TrailingNavigation;
+type AllAcceptingChildren = typeof LeadingNavigation | typeof TrailingNavigation | typeof Title | typeof Subtitle;
 
 const AppTopBar = ({ elevation = "flat", className, children, ...args }: AppTopBarProps) => {
   // If children is not an array, make it an array of only itself
