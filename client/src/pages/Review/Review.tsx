@@ -9,7 +9,7 @@ import { Button, IconButton } from "../../components/Button";
 import EditAssessment from "../../components/EditAssessment/EditAssessment";
 
 import CourseInfo from "../../components/CourseInfo";
-import AppTopBar from "../../components/AppTopBar";
+import AppTopBar, { LeadingNavigation, TrailingNavigation, Title, Subtitle } from "../../components/AppTopBar";
 
 const testState: Courses = [
   {
@@ -199,17 +199,18 @@ const Review = () => {
           {/* App top bar */}
           <div className="fixed top-0 left-0 right-0 h-fit z-10" ref={topbarRef}>
             <div className="max-w-7xl mx-auto" style={{ paddingLeft: mainMarginLeft }}>
-              <AppTopBar
-                title={`${currentCourse.title} ${currentCourse.number}`}
-                subtitle={currentCourse.topic}
-                elevation={scrollY > 0 ? "on-scroll" : "flat"}
-              >
-                <AppTopBar.LeadingNavigation>
+              <AppTopBar elevation={scrollY > 0 ? "on-scroll" : "flat"}>
+                {/* Icons */}
+                <LeadingNavigation>
                   <IconButton className="text-on-surface" icon="arrow_back" />
-                </AppTopBar.LeadingNavigation>
-                <AppTopBar.TrailingNavigation>
+                </LeadingNavigation>
+                <TrailingNavigation>
                   <IconButton className="text-on-surface-variant" icon="more_vert" />
-                </AppTopBar.TrailingNavigation>
+                </TrailingNavigation>
+
+                {/* Titles */}
+                <Title>{currentCourse.title} {currentCourse.number}</Title>
+                <Subtitle>{currentCourse.topic}</Subtitle>
               </AppTopBar>
             </div>
           </div>

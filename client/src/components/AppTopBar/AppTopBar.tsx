@@ -4,21 +4,21 @@ import { classnames } from "../../Utilities";
 import { IconButton } from "../../components/Button";
 
 interface AppTopBarProps extends HTMLAttributes<HTMLDivElement> {
-  title: string;
-  subtitle?: string;
   elevation?: "flat" | "on-scroll";
   children: ReactElement<AllAcceptingChildren> | ReactElement<AllAcceptingChildren>[];
 }
 
 type AllAcceptingChildren = typeof LeadingNavigation | typeof TrailingNavigation;
 
-const AppTopBar = ({ title, subtitle, elevation = "flat", className, children, ...args }: AppTopBarProps) => {
+const AppTopBar = ({ elevation = "flat", className, children, ...args }: AppTopBarProps) => {
   // If children is not an array, make it an array of only itself
   children = Array.isArray(children) ? children : [children];
 
   // Find elements in children
   const leadingNavigation = children.find((child) => child != undefined && child.type === LeadingNavigation);
   const trailingNavigation = children.find((child) => child != undefined && child.type === TrailingNavigation);
+  const title = children.find((child) => child != undefined && child.type === Title);
+  const subtitle = children.find((child) => child != undefined && child.type === Subtitle);
 
   return (
     <div
@@ -49,7 +49,9 @@ const AppTopBar = ({ title, subtitle, elevation = "flat", className, children, .
           <h1 className={classnames("text-on-surface font-headline font-bold", "text-3xl md:text-3xl")}>
             {title}
           </h1>
-          <h2 className={classnames("text-outline font-medium", "text-xl md:text-lg")}>{subtitle}</h2>
+          <h2 className={classnames("text-outline font-medium", "text-xl md:text-lg")}>
+            {subtitle}
+          </h2>
         </div>
 
         <div>
@@ -63,8 +65,13 @@ const AppTopBar = ({ title, subtitle, elevation = "flat", className, children, .
 
 const LeadingNavigation = ({ children }: { children: ReactNode; }) => <>{children}</>;
 const TrailingNavigation = ({ children }: { children: ReactNode; }) => <>{children}</>;
+const Title = ({ children }: { children: ReactNode; }) => <>{children}</>;
+const Subtitle = ({ children }: { children: ReactNode; }) => <>{children}</>;
 
 AppTopBar.LeadingNavigation = LeadingNavigation;
 AppTopBar.TrailingNavigation = TrailingNavigation;
+AppTopBar.Title = Title;
+AppTopBar.Subtitle = Subtitle;
 
 export default AppTopBar;
+export { LeadingNavigation, TrailingNavigation, Title, Subtitle };
