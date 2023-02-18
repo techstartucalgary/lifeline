@@ -163,7 +163,7 @@ const Review = () => {
     <>
       <nav
         className={classnames(
-          "fixed w-64",
+          "fixed top-0 left-0 w-64",
           currentCourseKey && "hidden",
           "md:block"
         )}
