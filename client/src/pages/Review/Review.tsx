@@ -204,9 +204,9 @@ const Review = () => {
                 <LeadingNavigation className="block md:hidden">
                   <IconButton className="text-on-surface" icon="arrow_back" />
                 </LeadingNavigation>
-                <TrailingIcon >
-                  <IconButton className="text-on-surface-variant " icon="error" />
-                  <IconButton className="text-on-surface-variant" icon="delete" />
+                <TrailingIcon>
+                  <IconButton className="text-on-surface-variant hidden md:block" icon="error" />
+                  <IconButton className="text-on-surface-variant hidden md:block" icon="delete" />
                   <IconButton className="text-on-surface-variant block md:hidden" icon="more_vert" />
                 </TrailingIcon >
 

@@ -32,8 +32,11 @@ const AppTopBar = ({ elevation = "flat", className, children, ...args }: AppTopB
     >
       <div className="flex flex-row px-1 pt-2 justify-between">
         {/* Leading Navigation */}
-        <div className="p-1 text-on-surface">
-          {leadingNavigation}
+        <div className="flex flex-row space-x-1">
+          <div className="p-1 text-on-surface">
+            {leadingNavigation}
+          </div>
+          <div>{title}</div>
         </div>
 
         {/* Trailing Icon */}
@@ -45,12 +48,8 @@ const AppTopBar = ({ elevation = "flat", className, children, ...args }: AppTopB
       {/* Headline */}
       <div className={classnames("flex flex-row items-center pt-10 px-4", "pb-5 md:pb-5")}>
         <div className="grow space-y-1">
-          <h1 className={classnames("text-on-surface font-headline font-bold", "text-3xl md:text-3xl")}>
-            {title}
-          </h1>
-          <h2 className={classnames("text-outline font-medium", "text-xl md:text-lg")}>
-            {subtitle}
-          </h2>
+          {title}
+          {subtitle}
         </div>
 
         {/* <div>
@@ -70,8 +69,20 @@ const TrailingIcon = ({ children, className, ...args }: HTMLAttributes<HTMLDivEl
     </div>
   );
 };
-const Title = ({ children }: { children: ReactNode; }) => <>{children}</>;
-const Subtitle = ({ children }: { children: ReactNode; }) => <>{children}</>;
+const Title = ({ children }: { children: ReactNode; }) => {
+  return (
+    <h1 className={classnames("text-on-surface font-headline font-bold", "text-3xl md:text-3xl")}>
+      {children}
+    </h1>
+  );
+};
+const Subtitle = ({ children }: { children: ReactNode; }) => {
+  return (
+    <h2 className={classnames("text-outline font-medium", "text-xl md:text-lg")}>
+      {children}
+    </h2>
+  );
+};
 
 AppTopBar.LeadingNavigation = LeadingNavigation;
 AppTopBar.TrailingNavigation = TrailingIcon;
