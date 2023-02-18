@@ -1,7 +1,6 @@
 import { HTMLAttributes, ReactElement, ReactNode } from "react";
 
 import { classnames } from "../../Utilities";
-import { IconButton } from "../../components/Button";
 
 interface AppTopBarProps extends HTMLAttributes<HTMLDivElement> {
   elevation?: "flat" | "on-scroll";
@@ -38,7 +37,7 @@ const AppTopBar = ({ elevation = "flat", className, children, ...args }: AppTopB
         </div>
 
         {/* Trailing Icon */}
-        <div className="flex flex-row p-1 space-x-1 text-on-surface-variant">
+        <div className="p-1 text-on-surface-variant">
           {trailingNavigation}
         </div>
       </div>
@@ -54,17 +53,23 @@ const AppTopBar = ({ elevation = "flat", className, children, ...args }: AppTopB
           </h2>
         </div>
 
-        <div>
+        {/* <div>
           <IconButton className="hidden md:inline text-on-surface-variant" icon="error" />
           <IconButton className="hidden md:inline text-on-surface-variant" icon="delete" />
-        </div>
+        </div> */}
       </div>
     </div>
   );
 };
 
-const LeadingNavigation = ({ children }: { children: ReactNode; }) => <>{children}</>;
-const TrailingIcon = ({ children }: { children: ReactNode; }) => <>{children}</>;
+const LeadingNavigation = ({ children, ...args }: HTMLAttributes<HTMLDivElement>) => <div {...args}>{children}</div>;
+const TrailingIcon = ({ children, className, ...args }: HTMLAttributes<HTMLDivElement>) => {
+  return (
+    <div className={classnames("flex flex-row space-x-1", className)} {...args}>
+      {children}
+    </div>
+  );
+};
 const Title = ({ children }: { children: ReactNode; }) => <>{children}</>;
 const Subtitle = ({ children }: { children: ReactNode; }) => <>{children}</>;
 
