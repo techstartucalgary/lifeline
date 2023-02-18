@@ -1,8 +1,6 @@
 import { classnames } from "../../Utilities";
 import Button from "../../components/Button";
 
-import styles from "./AppTopBar.module.css";
-
 interface AppTopBarProps {
   title: string;
   subtitle?: string;
@@ -16,8 +14,9 @@ const AppTopBar = ({ title, subtitle, elevation = "flat" }: AppTopBarProps) => {
         "flex flex-row bg-surface",
         "px-4 md:px-8",
         "pt-48 md:pt-28", "pb-4 md:pb-2",
-        (elevation === "on-scroll") && styles["on-scroll"],
-        "transition-all before:transition-color"
+        "before:bg-transparent before:absolute before:top-0 before:left-0 before:right-0 before:bottom-0",
+        (elevation === "on-scroll") && "before:bg-primary/8",
+        "transition-all before:transition-all"
       )}
     >
       <div className="flex flex-row text-left grow items-center">
