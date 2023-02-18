@@ -21,18 +21,21 @@ const AppTopBar = ({ title, subtitle, elevation = "flat", className, ...args }: 
       )}
       {...args}
     >
-      <div className="flex flex-row px-1 pt-2">
+      <div className="flex flex-row px-1 pt-2 justify-between">
+        {/* Leading Navigation */}
         <div className="p-1">
-          <IconButton className="text-on-surface-variant" icon="arrow_back" />
+          <IconButton className="text-on-surface" icon="arrow_back" />
         </div>
+
+        {/* Trailing Icon */}
         <div className="flex flex-row">
           <div className="p-1">
-            
+            <IconButton className="text-on-surface-variant" icon="more_vert" />
           </div>
         </div>
       </div>
 
-      {/* Title section */}
+      {/* Headline */}
       <div className={classnames("flex flex-row items-center pt-10 px-4", "pb-5 md:pb-5")}>
         <div className="grow space-y-1">
           <h1 className={classnames("text-on-surface font-headline font-bold", "text-3xl md:text-3xl")}>
