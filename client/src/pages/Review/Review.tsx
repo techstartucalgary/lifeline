@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo, useRef, useLayoutEffect } from "react";
+import { useState, useEffect, useMemo, useRef, useLayoutEffect, HTMLAttributes } from "react";
 import { useParams } from "react-router-dom";
 import useScrollPosition from "@react-hook/window-scroll";
 import NavigationDrawer from "../../components/NavigationDrawer";
@@ -195,13 +195,26 @@ const Review = () => {
         />
       </nav>
       {currentCourse && (
-        <main className={classnames(styles.main, "max-w-7xl mx-auto relative")} ref={mainRef}>
-          <div className={classnames((mainMarginLeft < 0) && "hidden")} style={{ marginLeft: mainMarginLeft }}>
-            {/* App top bar */}
-            <div className="fixed top-0 z-30 w-full" ref={topbarRef}>
-              <AppTopBar title={`${currentCourse.title} ${currentCourse.number}`} subtitle={currentCourse.topic} elevation={scrollY > 0 ? "on-scroll": "flat" } />
+        <>
+          {/* App top bar */}
+          <div className="fixed top-0 left-0 right-0 h-fit z-30" ref={topbarRef}>
+            <div className="max-w-7xl mx-auto" style={{ paddingLeft: mainMarginLeft }}>
+              <AppTopBar
+                title={`${currentCourse.title} ${currentCourse.number}`}
+                subtitle={currentCourse.topic}
+                elevation={scrollY > 0 ? "on-scroll" : "flat"}
+              />
             </div>
-
+          </div>
+          
+          <main
+            className={classnames(
+              "max-w-7xl mx-auto relative",
+              (mainMarginLeft < 0) && "hidden"
+            )}
+            ref={mainRef}
+            style={{ paddingLeft: mainMarginLeft }}
+          >
             {/* Course page */}
             <div className="flex flex-col md:flex-row" style={{ marginTop: topbarHeight }}>
               {/* Tab */}
@@ -298,7 +311,7 @@ const Review = () => {
                   />
                 )}
               </section>
-                
+              
               {/* Document */}
               <section
                 className={classnames(
@@ -323,8 +336,8 @@ const Review = () => {
                 />
               </section>
             </div>
-          </div>
-        </main>
+          </main>
+        </>
       )}
     </>
   );

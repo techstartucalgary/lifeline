@@ -82,7 +82,7 @@ const AssessmentCard = ({ assessment, onAssessmentClick }: AssessmentCardProps) 
           <br />
           {"Hello, additional information can be added here. This is a placeholder. Additional information can be added here. This is a placeholder."
             .split(" ")
-            .slice(0, Math.floor(Math.random() * 22))
+            .slice(0, Math.floor((assessment.name.charCodeAt(5) + 1) % 2) * 22)
             .join(" ")}
         </p>
       </div>
