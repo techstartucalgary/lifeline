@@ -17,6 +17,7 @@ const AppTopBar = ({ title, subtitle, elevation = "flat" }: AppTopBarProps) => {
         "px-4 md:px-8",
         "pt-48 md:pt-28", "pb-4 md:pb-2",
         (elevation === "on-scroll") && styles["on-scroll"],
+        "transition-all before:transition-color"
       )}
     >
       <div className="flex flex-row text-left grow items-center">
