@@ -1,4 +1,4 @@
-import { HTMLAttributes, ReactElement } from "react";
+import { HTMLAttributes, ReactElement, ReactNode } from "react";
 
 import { classnames } from "../../Utilities";
 import { IconButton } from "../../components/Button";
@@ -61,8 +61,8 @@ const AppTopBar = ({ title, subtitle, elevation = "flat", className, children, .
   );
 };
 
-const LeadingNavigation = ({ children }: HTMLAttributes<HTMLDivElement>) => <>{children}</>;
-const TrailingNavigation = ({ children }: HTMLAttributes<HTMLDivElement>) => <>{children}</>;
+const LeadingNavigation = ({ children }: { children: ReactNode; }) => <>{children}</>;
+const TrailingNavigation = ({ children }: { children: ReactNode; }) => <>{children}</>;
 
 AppTopBar.LeadingNavigation = LeadingNavigation;
 AppTopBar.TrailingNavigation = TrailingNavigation;
