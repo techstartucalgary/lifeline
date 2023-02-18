@@ -5,7 +5,7 @@
 @tailwind components;
 @tailwind utilities;
 
-#root {
+html {
   @apply bg-sys-background;
   margin: 0;
   padding: 0;
