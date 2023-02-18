@@ -1,14 +1,24 @@
 import { classnames } from "../../Utilities";
 import Button from "../../components/Button";
 
+import styles from "./AppTopBar.module.css";
+
 interface AppTopBarProps {
-  title: string | undefined;
-  subtitle: string | undefined;
+  title: string;
+  subtitle?: string;
+  elevation?: "flat" | "on-scroll";
 }
 
-const AppTopBar = ({ title, subtitle }: AppTopBarProps) => {
+const AppTopBar = ({ title, subtitle, elevation = "flat" }: AppTopBarProps) => {
   return (
-    <div className={classnames("flex flex-row bg-sys-surface", "px-4 md:px-8", "pt-48 md:pt-28", "pb-4 md:pb-2")}>
+    <div
+      className={classnames(
+        "flex flex-row bg-surface",
+        "px-4 md:px-8",
+        "pt-48 md:pt-28", "pb-4 md:pb-2",
+        (elevation === "on-scroll") && styles["on-scroll"],
+      )}
+    >
       <div className="flex flex-row text-left grow items-center">
         <div className="space-y-1 grow">
           <h1 className="text-4xl mt-auto text-on-surface font-headline font-bold md:text-2xl">

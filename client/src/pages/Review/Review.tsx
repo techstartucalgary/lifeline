@@ -196,7 +196,7 @@ const Review = () => {
           <div className={classnames((mainMarginLeft < 0) && "hidden")} style={{ marginLeft: mainMarginLeft }}>
             {/* App top bar */}
             <div className="fixed top-0 z-30 w-full" ref={topbarRef}>
-              <AppTopBar title={`${currentCourse.title} ${currentCourse.number}`} subtitle={currentCourse.topic}/>
+              <AppTopBar title={`${currentCourse.title} ${currentCourse.number}`} subtitle={currentCourse.topic} />
             </div>
 
             {/* Course page */}

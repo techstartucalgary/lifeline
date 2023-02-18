@@ -1,0 +1,3 @@
+.on-scroll {
+  @apply before:bg-primary/8 before:absolute before:top-0 before:left-0 before:right-0 before:bottom-0;
+}
