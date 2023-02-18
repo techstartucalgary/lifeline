@@ -14,20 +14,20 @@ const AppTopBar = ({ title, subtitle, elevation = "flat", className, ...args }: 
     <div
       className={classnames(
         "flex flex-row bg-surface",
-        "px-4 md:px-5",
-        "pt-48 md:pt-28", "pb-4 md:pb-2",
+        "px-4 md:px-6",
+        "pt-40 md:pt-24", "pb-4 md:pb-4",
         "before:opacity-0 before:bg-primary/8 before:absolute before:top-0 before:left-0 before:right-0 before:bottom-0",
         (elevation === "on-scroll") && "before:opacity-100",
-        "transition-all before:transition-all before:pointer-events-none",
+        "transition-all before:transition-all before:ease-standard before:pointer-events-none",
         className
       )}
       {...args}
     >
       <div className="grow space-y-1">
-        <h1 className="text-4xl mt-auto text-on-surface font-headline font-bold md:text-2xl">
+        <h1 className={classnames("text-on-surface font-headline font-bold", "text-3xl md:text-3xl")}>
           {title}
         </h1>
-        <h2 className="text-base font-normal text-outline">{subtitle}</h2>
+        <h2 className={classnames("text-outline font-medium", "text-xl md:text-lg")}>{subtitle}</h2>
       </div>
 
       <div>

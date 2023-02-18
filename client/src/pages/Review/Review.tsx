@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo, useRef, useLayoutEffect, HTMLAttributes } from "react";
+import { useState, useEffect, useMemo, useRef, useLayoutEffect } from "react";
 import { useParams } from "react-router-dom";
 import useScrollPosition from "@react-hook/window-scroll";
 import NavigationDrawer from "../../components/NavigationDrawer";
@@ -8,7 +8,6 @@ import { Course, Courses, Assessment } from "../../logic/icsGen";
 import Button from "../../components/Button";
 import EditAssessment from "../../components/EditAssessment/EditAssessment";
 
-import styles from "./Review.module.css";
 import CourseInfo from "../../components/CourseInfo";
 import AppTopBar from "../../components/AppTopBar";
 
@@ -175,7 +174,8 @@ const Review = () => {
     return () => window.removeEventListener("resize", onTopbarHeight);
   }, [topbarRef.current, mainRef.current]);
 
-  const scrollY = useScrollPosition(99999);
+  // For scrolling
+  const scrollY = useScrollPosition(120);
 
   return (
     <>
