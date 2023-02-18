@@ -147,7 +147,7 @@ const Review = () => {
     <div className="flex flex-row">
       <nav
         className={classnames(
-          "w-64 sticky-0",
+          "w-64",
           currentCourseKey && "hidden",
           "md:block"
         )}
