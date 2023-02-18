@@ -1,5 +1,5 @@
 import { Assessment } from "../../logic/icsGen";
-import Button from "../Button";
+import { Button } from "../Button";
 import { classnames } from "../../Utilities";
 import blob from "./blob.svg";
 

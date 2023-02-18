@@ -1,6 +1,6 @@
 import axios from "axios";
 import { classnames } from "../../Utilities";
-import Button from "../Button";
+import { Button } from "../Button";
 import jsonToICS, { Course, Courses } from "../../logic/icsGen";
 import { useState, useRef } from "react";
 
