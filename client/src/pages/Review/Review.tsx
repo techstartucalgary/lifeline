@@ -144,12 +144,10 @@ const Review = () => {
   };
 
   return (
-    <div className="flex flex-row justify-between">
+    <div className="flex flex-row">
       <nav
         className={classnames(
-          "md:w-64",
-          "w-full",
-          "flex-shrink-0",
+          "w-64 sticky-0",
           currentCourseKey && "hidden",
           "md:block"
         )}
@@ -163,16 +161,20 @@ const Review = () => {
       </nav>
       {currentCourse && (
         <main
-          className={classnames("flex-shrink-0 w-full text-left relative", styles.main)}
+          className={styles.main}
         >
+          {/* App top bar */}
           <div className="sticky top-0 z-30 w-full">
             <AppTopBar title={`${currentCourse.title} ${currentCourse.number}`} subtitle={currentCourse.topic}/>
           </div>
+
+          {/* Course */}
           <div className="flex flex-col md:flex-row">
-            <div className="w-full md:hidden flex flex-row">
+            {/* Tab */}
+            <div className="md:hidden flex flex-row">
               <button
                 className={classnames(
-                  "w-full bg-gray-300 p-2",
+                  "bg-gray-300 p-2",
                   selectedTab === Tab.Assessments && "bg-red-500"
                 )}
                 onClick={() => setSelectedTab(0)}
@@ -181,7 +183,7 @@ const Review = () => {
               </button>
               <button
                 className={classnames(
-                  "w-full bg-gray-300 p-2",
+                  "bg-gray-300 p-2",
                   selectedTab === Tab.Document && "bg-red-500"
                 )}
                 onClick={() => setSelectedTab(1)}
@@ -189,12 +191,12 @@ const Review = () => {
                 Document
               </button>
             </div>
+
+            {/* Assessments */}
             <section
               className={classnames(
-                "w-full",
                 "md:w-1/2",
                 "px-4",
-                "h-screen",
                 selectedTab === Tab.Document && "hidden md:block"
               )}
             >
@@ -262,6 +264,8 @@ const Review = () => {
                 />
               )}
             </section>
+              
+            {/* Document */}
             <section
               className={classnames(
                 "w-full",
@@ -288,7 +292,6 @@ const Review = () => {
           </div>
         </main>
       )}
-      <div className="w-64"></div>
     </div>
   );
 };
