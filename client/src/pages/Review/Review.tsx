@@ -5,7 +5,7 @@ import NavigationDrawer from "../../components/NavigationDrawer";
 import AssessmentCard from "../../components/AssessmentCard";
 import { classnames } from "../../Utilities";
 import { Course, Courses, Assessment } from "../../logic/icsGen";
-import { Button } from "../../components/Button";
+import { Button, IconButton } from "../../components/Button";
 import EditAssessment from "../../components/EditAssessment/EditAssessment";
 
 import CourseInfo from "../../components/CourseInfo";
@@ -203,7 +203,14 @@ const Review = () => {
                 title={`${currentCourse.title} ${currentCourse.number}`}
                 subtitle={currentCourse.topic}
                 elevation={scrollY > 0 ? "on-scroll" : "flat"}
-              />
+              >
+                <AppTopBar.LeadingNavigation>
+                  <IconButton className="text-on-surface" icon="arrow_back" />
+                </AppTopBar.LeadingNavigation>
+                <AppTopBar.TrailingNavigation>
+                  <IconButton className="text-on-surface-variant" icon="more_vert" />
+                </AppTopBar.TrailingNavigation>
+              </AppTopBar>
             </div>
           </div>
           

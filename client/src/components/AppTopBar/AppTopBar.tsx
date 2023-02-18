@@ -1,15 +1,25 @@
-import { HTMLAttributes } from "react";
+import { HTMLAttributes, ReactElement } from "react";
 
 import { classnames } from "../../Utilities";
 import { IconButton } from "../../components/Button";
 
-interface AppTopBarProps  extends HTMLAttributes<HTMLDivElement> {
+interface AppTopBarProps extends HTMLAttributes<HTMLDivElement> {
   title: string;
   subtitle?: string;
   elevation?: "flat" | "on-scroll";
+  children: ReactElement<AllAcceptingChildren> | ReactElement<AllAcceptingChildren>[];
 }
 
-const AppTopBar = ({ title, subtitle, elevation = "flat", className, ...args }: AppTopBarProps) => {
+type AllAcceptingChildren = typeof LeadingNavigation | typeof TrailingNavigation;
+
+const AppTopBar = ({ title, subtitle, elevation = "flat", className, children, ...args }: AppTopBarProps) => {
+  // If children is not an array, make it an array of only itself
+  children = Array.isArray(children) ? children : [children];
+
+  // Find elements in children
+  const leadingNavigation = children.find((child) => child != undefined && child.type === LeadingNavigation);
+  const trailingNavigation = children.find((child) => child != undefined && child.type === TrailingNavigation);
+
   return (
     <div
       className={classnames(
@@ -23,15 +33,13 @@ const AppTopBar = ({ title, subtitle, elevation = "flat", className, ...args }: 
     >
       <div className="flex flex-row px-1 pt-2 justify-between">
         {/* Leading Navigation */}
-        <div className="p-1">
-          <IconButton className="text-on-surface" icon="arrow_back" />
+        <div className="p-1 text-on-surface">
+          {leadingNavigation}
         </div>
 
         {/* Trailing Icon */}
-        <div className="flex flex-row">
-          <div className="p-1">
-            <IconButton className="text-on-surface-variant" icon="more_vert" />
-          </div>
+        <div className="flex flex-row p-1 space-x-1 text-on-surface-variant">
+          {trailingNavigation}
         </div>
       </div>
 
@@ -52,5 +60,11 @@ const AppTopBar = ({ title, subtitle, elevation = "flat", className, ...args }: 
     </div>
   );
 };
+
+const LeadingNavigation = ({ children }: HTMLAttributes<HTMLDivElement>) => <>{children}</>;
+const TrailingNavigation = ({ children }: HTMLAttributes<HTMLDivElement>) => <>{children}</>;
+
+AppTopBar.LeadingNavigation = LeadingNavigation;
+AppTopBar.TrailingNavigation = TrailingNavigation;
 
 export default AppTopBar;
