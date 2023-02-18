@@ -8,7 +8,7 @@ interface AppTopBarProps extends HTMLAttributes<HTMLDivElement> {
   children: ReactElement<AllAcceptingChildren> | ReactElement<AllAcceptingChildren>[];
 }
 
-type AllAcceptingChildren = typeof LeadingNavigation | typeof TrailingNavigation | typeof Title | typeof Subtitle;
+type AllAcceptingChildren = typeof LeadingNavigation | typeof TrailingIcon | typeof Title | typeof Subtitle;
 
 const AppTopBar = ({ elevation = "flat", className, children, ...args }: AppTopBarProps) => {
   // If children is not an array, make it an array of only itself
@@ -16,7 +16,7 @@ const AppTopBar = ({ elevation = "flat", className, children, ...args }: AppTopB
 
   // Find elements in children
   const leadingNavigation = children.find((child) => child != undefined && child.type === LeadingNavigation);
-  const trailingNavigation = children.find((child) => child != undefined && child.type === TrailingNavigation);
+  const trailingNavigation = children.find((child) => child != undefined && child.type === TrailingIcon);
   const title = children.find((child) => child != undefined && child.type === Title);
   const subtitle = children.find((child) => child != undefined && child.type === Subtitle);
 
@@ -64,14 +64,14 @@ const AppTopBar = ({ elevation = "flat", className, children, ...args }: AppTopB
 };
 
 const LeadingNavigation = ({ children }: { children: ReactNode; }) => <>{children}</>;
-const TrailingNavigation = ({ children }: { children: ReactNode; }) => <>{children}</>;
+const TrailingIcon = ({ children }: { children: ReactNode; }) => <>{children}</>;
 const Title = ({ children }: { children: ReactNode; }) => <>{children}</>;
 const Subtitle = ({ children }: { children: ReactNode; }) => <>{children}</>;
 
 AppTopBar.LeadingNavigation = LeadingNavigation;
-AppTopBar.TrailingNavigation = TrailingNavigation;
+AppTopBar.TrailingNavigation = TrailingIcon;
 AppTopBar.Title = Title;
 AppTopBar.Subtitle = Subtitle;
 
 export default AppTopBar;
-export { LeadingNavigation, TrailingNavigation, Title, Subtitle };
+export { LeadingNavigation, TrailingIcon, Title, Subtitle };

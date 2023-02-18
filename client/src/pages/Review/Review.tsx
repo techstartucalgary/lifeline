@@ -9,7 +9,7 @@ import { Button, IconButton } from "../../components/Button";
 import EditAssessment from "../../components/EditAssessment/EditAssessment";
 
 import CourseInfo from "../../components/CourseInfo";
-import AppTopBar, { LeadingNavigation, TrailingNavigation, Title, Subtitle } from "../../components/AppTopBar";
+import AppTopBar, { LeadingNavigation, TrailingIcon , Title, Subtitle } from "../../components/AppTopBar";
 
 const testState: Courses = [
   {
@@ -204,9 +204,9 @@ const Review = () => {
                 <LeadingNavigation>
                   <IconButton className="text-on-surface" icon="arrow_back" />
                 </LeadingNavigation>
-                <TrailingNavigation>
+                <TrailingIcon >
                   <IconButton className="text-on-surface-variant" icon="more_vert" />
-                </TrailingNavigation>
+                </TrailingIcon >
 
                 {/* Titles */}
                 <Title>{currentCourse.title} {currentCourse.number}</Title>
