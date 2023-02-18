@@ -9,6 +9,7 @@ import EditAssessment from "../../components/EditAssessment/EditAssessment";
 
 import styles from "./Review.module.css";
 import CourseInfo from "../../components/CourseInfo";
+import AppTopBar from "../../components/AppTopBar";
 
 const testState: Courses = [
   {
@@ -164,23 +165,8 @@ const Review = () => {
         <main
           className={classnames("flex-shrink-0 w-full text-left", styles.main)}
         >
-          <header className="bg-gray-300 w-full p-4 text-xl">
-            <Button onClick={() => onCourseClick(null)}>
-              <span
-                className={classnames(
-                  "material-symbols-outlined",
-                  "md:hidden",
-                  "inline"
-                )}
-                style={{ fontSize: "1.5rem", verticalAlign: "middle" }}
-              >
-                arrow_back
-              </span>
-            </Button>
-            <h1 className="text-4xl">
-              {currentCourse.title} {currentCourse.number}
-            </h1>
-            <h2 className="text-2xl">{currentCourse.topic}</h2>
+          <header className="w-full p-4 text-xl">
+            <AppTopBar courseId={currentCourse.key} description={currentCourse.topic}/>
           </header>
           <div className="flex flex-col md:flex-row">
             <div className="w-full md:hidden flex flex-row">
