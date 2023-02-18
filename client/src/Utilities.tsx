@@ -6,6 +6,8 @@ import {
   mergeConfigs,
 } from "tailwind-merge";
 import { ClassNameValue } from "tailwind-merge/dist/lib/tw-join";
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore-next-line
 import projectConfig from "@tailwind.config";
 
 

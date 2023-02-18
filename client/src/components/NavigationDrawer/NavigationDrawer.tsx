@@ -75,7 +75,9 @@ const NavigationDrawer = ({
               {
                 ["circle", "square", "pentagon"][
                   Math.abs(
-                    course.key.split("").reduce((a, b) => a + b.charCodeAt(0), 0)
+                    course.key
+                      .split("")
+                      .reduce((a, b) => a + b.charCodeAt(0), 0)
                   ) % 3
                 ]
               }
@@ -91,7 +93,7 @@ const NavigationDrawer = ({
             <p className="ml-auto flex items-center justify-center">
               {course.assessments.length}
             </p>
-            <span className="material-symbols-outlined text-gray-600 flex items-center justify-center block md:hidden">
+            <span className="material-symbols-outlined text-gray-600 items-center justify-center md:hidden">
               arrow_right
             </span>
           </Button>
@@ -105,9 +107,11 @@ const NavigationDrawer = ({
               disabled
               className={classnames("mt-2", "flex-row", "p-4")}
             >
-              <span className="material-symbols-outlined text-gray-600 text-base flex items-center justify-center animate-spin">
-                autorenew
-              </span>
+              <div>
+                <span className="material-symbols-outlined text-gray-600 text-base animate-spin">
+                  autorenew
+                </span>
+              </div>
               <div className="flex flex-col ml-2 min-w-0">
                 <p className={classnames("truncate")}>{file}</p>
               </div>
@@ -162,7 +166,7 @@ const NavigationDrawer = ({
           "md:rounded-3xl"
         )}
         onClick={handleExport}
-        disabled={courses.length === 0}
+        disabled={courses.length === 0 || loading.length > 0}
       >
         <span
           className="material-symbols-outlined flex items-center justify-center"

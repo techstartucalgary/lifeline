@@ -3,8 +3,9 @@ import { useParams } from "react-router-dom";
 import NavigationDrawer from "../../components/NavigationDrawer";
 import AssessmentCard from "../../components/AssessmentCard";
 import { classnames } from "../../Utilities";
-import { Course, Courses } from "../../logic/icsGen";
+import { Course, Courses, Assessment } from "../../logic/icsGen";
 import Button from "../../components/Button";
+import EditAssessment from "../../components/EditAssessment/EditAssessment";
 
 import styles from "./Review.module.css";
 import CourseInfo from "../../components/CourseInfo";
@@ -68,6 +69,10 @@ const Review = () => {
   const [selectedTab, setSelectedTab] = useState<Tab>(Tab.Assessments);
   const [courses, setCourses] = useState<Courses>(testState);
   const [currentCourseKey, setCurrentCourseKey] = useState<string | null>(null);
+  const [editingAssessment, setEditingAssessment] = useState<{
+    assessment: Assessment;
+    index: number;
+  } | null>(null);
 
   // At first render of the page, check if the course key is valid
   // and assign value to current course key
@@ -81,6 +86,10 @@ const Review = () => {
       setCurrentCourseKey(courseKeyUrlParam);
     }
   }, []);
+
+  useEffect(() => {
+    setEditingAssessment(null);
+  }, [currentCourseKey]);
 
   // Callback for when the courses are changed
   const onCoursesChanged = (newCourses: Courses) => {
@@ -153,15 +162,16 @@ const Review = () => {
       </nav>
       {currentCourse && (
         <main
-          className={classnames(
-            "flex-shrink-0 w-full text-left",
-            styles.main
-          )}
+          className={classnames("flex-shrink-0 w-full text-left", styles.main)}
         >
           <header className="bg-gray-300 w-full p-4 text-xl">
             <Button onClick={() => onCourseClick(null)}>
               <span
-                className={classnames("material-symbols-outlined", "md:hidden", "inline")}
+                className={classnames(
+                  "material-symbols-outlined",
+                  "md:hidden",
+                  "inline"
+                )}
                 style={{ fontSize: "1.5rem", verticalAlign: "middle" }}
               >
                 arrow_back
@@ -202,40 +212,69 @@ const Review = () => {
                 selectedTab === Tab.Document && "hidden md:block"
               )}
             >
-              <CourseInfo
-                hours="H(3-2T)"
-                department="Computer Science"
-                description="This course is an introduction to the design and analysis of algorithms. Topics include: algorithmic problem solving, algorithmic efficiency, sorting and searching, divide-and-conquer, greedy algorithms, dynamic programming, and graph algorithms. Prerequisite: CSE 143 or equivalent."
-              />
-              <div
-                className={classnames(
-                  "w-full",
-                  "flex flex-row",
-                  "justify-between",
-                  "items-center",
-                  "mb-3"
-                )}
-              >
-                <h1 className={classnames("text-sys-primary", "font-bold")}>
-                  ASSESSMENTS
-                </h1>
-                <Button variant="filled" className={classnames("px-5", "py-2")}>
-                  <span className={classnames("material-symbols-outlined", "text-4xl")}>
-                    add
-                  </span>
-                </Button>
-              </div>
-              <ul className="flex flex-col">
-                {currentCourse.assessments.map((assessment, t) => (
-                  <AssessmentCard
-                    key={t}
-                    assessment={assessment}
-                    onAssessmentClick={() => {
-                      console.log("clicked");
-                    }}
+              {editingAssessment === null ? (
+                <>
+                  <CourseInfo
+                    hours="H(3-2T)"
+                    department="Computer Science"
+                    description="This course is an introduction to the design and analysis of algorithms. Topics include: algorithmic problem solving, algorithmic efficiency, sorting and searching, divide-and-conquer, greedy algorithms, dynamic programming, and graph algorithms. Prerequisite: CSE 143 or equivalent."
                   />
-                ))}
-              </ul>
+                  <div
+                    className={classnames(
+                      "w-full",
+                      "flex flex-row",
+                      "justify-between",
+                      "items-center",
+                      "mb-3"
+                    )}
+                  >
+                    <h1 className={classnames("text-sys-primary", "font-bold")}>
+                      ASSESSMENTS
+                    </h1>
+                    <Button
+                      variant="filled"
+                      className={classnames("px-5", "py-2")}
+                    >
+                      <span
+                        className={classnames(
+                          "material-symbols-outlined",
+                          "text-4xl"
+                        )}
+                      >
+                        add
+                      </span>
+                    </Button>
+                  </div>
+                  <ul className="flex flex-col">
+                    {currentCourse.assessments.map((assessment, index) => (
+                      <AssessmentCard
+                        key={index}
+                        assessment={assessment}
+                        onAssessmentClick={() => {
+                          setEditingAssessment({ assessment, index });
+                        }}
+                      />
+                    ))}
+                  </ul>
+                </>
+              ) : (
+                <EditAssessment
+                  assessment={editingAssessment.assessment}
+                  onClose={() => setEditingAssessment(null)}
+                  onSave={(newAssessment: Assessment) => {
+                    setCourses(
+                      courses.map((course) => {
+                        if (course.key === currentCourseKey) {
+                          course.assessments[editingAssessment.index] =
+                            newAssessment;
+                        }
+                        return course;
+                      })
+                    );
+                    setEditingAssessment(null);
+                  }}
+                />
+              )}
             </section>
             <section
               className={classnames(
