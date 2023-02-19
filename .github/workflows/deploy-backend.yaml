@@ -3,7 +3,12 @@ name: deploy-server
 on:
   push:
     branches:
-      - tim/151-test-server-production-site-as-part-of-ci
+      - main
+    paths:
+      - server/src/**
+      - server/deploy.sh
+      - server/test-prod.sh
+      - server/Dockerfile
 
 jobs:
   deployment:
