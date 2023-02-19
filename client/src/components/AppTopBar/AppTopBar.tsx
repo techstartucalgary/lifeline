@@ -1,4 +1,4 @@
-import { HTMLAttributes, ReactElement, ReactNode, useState } from "react";
+import { HTMLAttributes, ReactElement, ReactNode, useState, useRef } from "react";
 import useScrollPosition from "@react-hook/window-scroll";
 
 
@@ -11,7 +11,7 @@ interface AppTopBarProps extends HTMLAttributes<HTMLDivElement> {
 
 type AllAcceptingChildren = typeof LeadingNavigation | typeof TrailingIcon | typeof Title | typeof Subtitle;
 
-const normalize = (val: number, max: number, min: number) => (val - min) / (max - min);
+const normalize = (val: number, min: number, max: number) => (val - min) / (max - min);
 
 const AppTopBar = ({ elevation = true, className, children, ...args }: AppTopBarProps) => {
   // If children is not an array, make it an array of only itself
@@ -28,9 +28,10 @@ const AppTopBar = ({ elevation = true, className, children, ...args }: AppTopBar
 
   // Shrink state
   const [shrinked, setShrinked] = useState(false);
+  const titleRef = useRef(null);
 
   return (
-    <div className={classnames("bg-surface", className )} {...args}>
+    <div className={classnames("bg-surface", className)} {...args}>
       {elevation &&
         <div
           className={classnames(
@@ -39,9 +40,10 @@ const AppTopBar = ({ elevation = true, className, children, ...args }: AppTopBar
             "md:ease-emphasized ease-emphasized-decelerate",
             "duration-1000 md:duration-200"
           )}
-          style={{ opacity: (scrollY * 2) / 100 }}
+          style={{ opacity: normalize(scrollY, 80, (titleRef.current?.clientHeight || 0)) }}
         />}
-      <div className="flex flex-row px-1 pt-2 justify-between">
+      
+      <div className="flex flex-row px-1 pt-2 pb-1 justify-between">
         {/* Leading Navigation */}
         <div className="flex flex-row items-center justify-center">
           <div className="p-1 text-on-surface min-w-[0.8rem]">
@@ -59,16 +61,17 @@ const AppTopBar = ({ elevation = true, className, children, ...args }: AppTopBar
       </div>
 
       {/* Headline */}
-      <div className="overflow-hidden pb-1">
+      <div className="overflow-hidden" style={{height: ((titleRef.current?.clientHeight || 0) - scrollY)}}>
         <div
           className={classnames(
-            "flex flex-row items-center pb-2",
+            "flex flex-row items-center pb-3",
             "pt-6 md:pt-6",
             "px-6 md:px-4"
           )}
           style={{
-            marginTop: -scrollY
+            transform: `translate3d(0, -${scrollY}px, 0)`,
           }}
+          ref={titleRef}
         >
           <div className="grow space-y-1">
             <h1 className={classnames("text-on-surface font-headline font-bold", "text-2xl md:text-3xl")}>
