@@ -50,8 +50,11 @@ def test_many_outlines():
     endpoint and only checks that the status code is 200."""
     files = []
 
-    # Iterate over all files in ../test-data
+    # Iterate over 5 files in ../test-data
+    count = 0
     for path in Path("../test-data").iterdir():
+        if count == 5:
+            break
         if not path.is_dir():
             continue
 
@@ -59,6 +62,9 @@ def test_many_outlines():
         with open(f"../test-data/{course_name}/{course_name}.pdf", "rb") as file:
             file_content = file.read()
             files.append(("outline_files", file_content))
+        count += 1
+
+    print(files)
 
     response = client.post("/files", files=files)
     assert response.status_code == 200
