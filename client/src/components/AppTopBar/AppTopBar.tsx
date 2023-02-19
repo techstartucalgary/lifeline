@@ -1,4 +1,4 @@
-import { HTMLAttributes, ReactElement, ReactNode } from "react";
+import { HTMLAttributes, ReactElement, ReactNode, useState } from "react";
 import useScrollPosition from "@react-hook/window-scroll";
 
 
@@ -24,6 +24,9 @@ const AppTopBar = ({ elevation = true, shrinkOnScroll = true, className, childre
 
   // For scrolling
   const scrollY = useScrollPosition(240);
+
+  // Shrink state
+  const [shrinked, setShrinked] = useState(false);
 
   return (
     <div className={classnames("bg-surface", className )} {...args}>
@@ -55,20 +58,28 @@ const AppTopBar = ({ elevation = true, shrinkOnScroll = true, className, childre
       </div>
 
       {/* Headline */}
-      <div className={classnames("flex flex-row items-center pt-10 px-4", "pb-5 md:pb-5")}>
-        <div className="grow space-y-1">
-          <h1 className={classnames("text-on-surface font-headline font-bold", "text-3xl md:text-3xl")}>
-            {title}
-          </h1>
-          <h2 className={classnames("text-outline font-medium", "text-xl md:text-lg")}>
-            {subtitle}
-          </h2>
-        </div>
+      <div className="overflow-hidden pb-1">
+        <div
+          className={classnames(
+            "flex flex-row items-center pb-4 transition-all ease-emphasized-decelerate duration-100",
+            "pt-6 md:pt-6",
+            "px-6 md:px-4"
+          )}
+        >
+          <div className="grow space-y-1">
+            <h1 className={classnames("text-on-surface font-headline font-bold", "text-2xl md:text-3xl")}>
+              {title}
+            </h1>
+            <h2 className={classnames("text-outline font-medium", "text-md md:text-lg")}>
+              {subtitle}
+            </h2>
+          </div>
 
-        {/* <div>
+          {/* <div>
           <IconButton className="hidden md:inline text-on-surface-variant" icon="error" />
           <IconButton className="hidden md:inline text-on-surface-variant" icon="delete" />
         </div> */}
+        </div>
       </div>
     </div>
   );
