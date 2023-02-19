@@ -3,9 +3,7 @@ name: deploy-server
 on:
   push:
     branches:
-      - '*'
-    paths:
-      - server/**
+      - tim/151-test-server-production-site-as-part-of-ci
 
 jobs:
   deployment:
