@@ -1,4 +1,4 @@
-import { HTMLAttributes, ReactElement, ReactNode, useState, useRef, useEffect } from "react";
+import { HTMLAttributes, ReactElement, ReactNode, useState, useRef, useEffect, useLayoutEffect } from "react";
 import useScrollPosition from "@react-hook/window-scroll";
 
 
@@ -37,43 +37,54 @@ const AppTopBar = ({ elevation = true, className, children, ...args }: AppTopBar
       Math.min(Math.max(scrollY, min), max),
       min, max
     );
-
-    console.log(scrollY, min, max);
-
     setOnScrollOpacity(onScrollOpacity);
   }, [scrollY]);
   
+  // For compact title height
+  const [compactTitleHeight, setCompactTitleHeight] = useState(0);
+  useLayoutEffect(() => {
+    const onTopbarHeight = () => {
+      if (compactTitleRef.current) {
+        setCompactTitleHeight(compactTitleRef.current.offsetHeight);
+      }
+    };
+    onTopbarHeight();
+    window.addEventListener("resize", onTopbarHeight);
+    return () => window.removeEventListener("resize", onTopbarHeight);
+  }, [compactTitleRef.current]);
+
 
   return (
     <>
-      <div className="relative">
-        <div className={classnames("bg-surface", className)} {...args}>
-          <div className="flex flex-row px-1 pt-2 pb-1 justify-between" ref={compactTitleRef}>
-            {/* Leading Navigation */}
-            <div className="flex flex-row items-center justify-center">
-              <div className="p-1 text-on-surface min-w-[0.8rem]">
-                {leadingNavigation}
+      <div className="fixed top-0 left-0 right-0 h-fit z-10">
+        <div className="relative">
+          <div className={classnames("bg-surface", className)} {...args}>
+            <div className="flex flex-row px-1 pt-2 pb-1 justify-between" ref={compactTitleRef}>
+              {/* Leading Navigation */}
+              <div className="flex flex-row items-center justify-center">
+                <div className="p-1 text-on-surface min-w-[0.8rem]">
+                  {leadingNavigation}
+                </div>
+                <div
+                  className={classnames(
+                    "text-on-surface text-lg opacity-0 will-change-auto font-bold",
+                    "transition-opacity duration-300 ease-emphasized-decelerate",
+                    onScrollOpacity >= 0.2 && "opacity-1",
+                  )}
+                >
+                  {title}
+                </div>
               </div>
-              <div
-                className={classnames(
-                  "text-on-surface text-lg opacity-0 will-change-auto",
-                  "transition-opacity duration-200 ease-emphasized-decelerate",
-                  onScrollOpacity >= 0.2 && "opacity-1",
-                )}
-              >
-                {title}
+
+              {/* Trailing Icon */}
+              <div className="p-1 text-on-surface-variant">
+                {trailingNavigation}
               </div>
             </div>
 
-            {/* Trailing Icon */}
-            <div className="p-1 text-on-surface-variant">
-              {trailingNavigation}
-            </div>
           </div>
-
-        </div>
         
-        {elevation &&
+          {elevation &&
         <div
           className={classnames(
             "opacity-0 bg-primary/8 absolute -top-full left-0 right-0 bottom-0", 
@@ -84,6 +95,7 @@ const AppTopBar = ({ elevation = true, className, children, ...args }: AppTopBar
           )}
           style={{ opacity: onScrollOpacity }}
         />}
+        </div>
       </div>
       
 
@@ -91,14 +103,12 @@ const AppTopBar = ({ elevation = true, className, children, ...args }: AppTopBar
       <div className={classnames("overflow-hidden", className)} {...args}>
         <div
           className={classnames(
-            "flex flex-row items-center pb-1",
+            "flex flex-row items-center pb-2 bg-surface",
             "pt-6 md:pt-6",
             "px-6 md:px-4",
-            "will-change-auto",
-            // "transition-all ease-standard duration-200"
           )}
           style={{
-            marginTop: Math.min(0, -scrollY),
+            marginTop: compactTitleHeight,
           }}
           ref={titleRef}
         >

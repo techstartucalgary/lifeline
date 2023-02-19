@@ -159,20 +159,6 @@ const Review = () => {
     return () => window.removeEventListener("resize", onMainMarginLeft);
   }, [navRef.current, mainRef.current]);
 
-  // For AppTopBar top height
-  const topbarRef = useRef<HTMLDivElement>(null);
-  const [topbarHeight, setTopbarHeight] = useState(0);
-  useLayoutEffect(() => {
-    const onTopbarHeight = () => {
-      if (topbarRef.current && mainRef.current) {
-        setTopbarHeight(topbarRef.current.offsetHeight);
-      }
-    };
-    onTopbarHeight();
-    window.addEventListener("resize", onTopbarHeight);
-    return () => window.removeEventListener("resize", onTopbarHeight);
-  }, [topbarRef.current, mainRef.current]);
-
   const onClickReturn = () => setCurrentCourseKey(null);
 
   return (
@@ -195,7 +181,7 @@ const Review = () => {
       {currentCourse && (
         <>
           {/* App top bar */}
-          <div className="fixed top-0 left-0 right-0 h-fit z-10" ref={topbarRef}>
+          <div className="--fixed top-0 left-0 right-0 h-fit z-10">
             <AppTopBar className="max-w-7xl mx-auto" style={{ paddingLeft: mainMarginLeft }}>
               {/* Icons */}
               <LeadingNavigation className="block md:hidden">
@@ -222,9 +208,9 @@ const Review = () => {
             style={{ paddingLeft: mainMarginLeft }}
           >
             {/* Course page */}
-            <div className="flex flex-col md:flex-row" style={{ marginTop: topbarHeight }}>
+            <div className="flex flex-col md:flex-row">
               {/* Tab */}
-              <div className="md:hidden flex flex-row">
+              {/* <div className="md:hidden flex flex-row">
                 <button
                   className={classnames(
                     "bg-gray-300 p-2",
@@ -243,7 +229,7 @@ const Review = () => {
                 >
                   Document
                 </button>
-              </div>
+              </div> */}
 
               <div className="flex flex-row space-x-4 p-2">
                 {/* Assessments */}
