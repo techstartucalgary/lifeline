@@ -6,13 +6,14 @@ import { classnames } from "../../Utilities";
 
 interface AppTopBarProps extends HTMLAttributes<HTMLDivElement> {
   elevation?: boolean;
-  shrinkOnScroll?: boolean;
   children: ReactElement<AllAcceptingChildren> | ReactElement<AllAcceptingChildren>[];
 }
 
 type AllAcceptingChildren = typeof LeadingNavigation | typeof TrailingIcon | typeof Title | typeof Subtitle;
 
-const AppTopBar = ({ elevation = true, shrinkOnScroll = true, className, children, ...args }: AppTopBarProps) => {
+const normalize = (val: number, max: number, min: number) => (val - min) / (max - min);
+
+const AppTopBar = ({ elevation = true, className, children, ...args }: AppTopBarProps) => {
   // If children is not an array, make it an array of only itself
   children = Array.isArray(children) ? children : [children];
 
@@ -46,7 +47,7 @@ const AppTopBar = ({ elevation = true, shrinkOnScroll = true, className, childre
           <div className="p-1 text-on-surface min-w-[0.8rem]">
             {leadingNavigation}
           </div>
-          <div className={"text-on-surface text-lg"}>
+          <div className={classnames("text-on-surface text-lg opacity-0", shrinked && "opacity-1")}>
             {title}
           </div>
         </div>
@@ -61,10 +62,13 @@ const AppTopBar = ({ elevation = true, shrinkOnScroll = true, className, childre
       <div className="overflow-hidden pb-1">
         <div
           className={classnames(
-            "flex flex-row items-center pb-4 transition-all ease-emphasized-decelerate duration-100",
+            "flex flex-row items-center pb-2",
             "pt-6 md:pt-6",
             "px-6 md:px-4"
           )}
+          style={{
+            marginTop: -scrollY
+          }}
         >
           <div className="grow space-y-1">
             <h1 className={classnames("text-on-surface font-headline font-bold", "text-2xl md:text-3xl")}>
