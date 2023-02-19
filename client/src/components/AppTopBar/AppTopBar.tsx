@@ -28,7 +28,7 @@ const AppTopBar = ({ elevation = true, className, children, ...args }: AppTopBar
 
   // Shrink state
   const [shrinked, setShrinked] = useState(false);
-  const titleRef = useRef(null);
+  const titleRef = useRef<HTMLDivElement>(null);
 
   return (
     <div className={classnames("bg-surface", className)} {...args}>
@@ -50,7 +50,13 @@ const AppTopBar = ({ elevation = true, className, children, ...args }: AppTopBar
           <div className="p-1 text-on-surface min-w-[0.8rem]">
             {leadingNavigation}
           </div>
-          <div className={classnames("text-on-surface text-lg opacity-0", shrinked && "opacity-1")}>
+          <div
+            className={classnames(
+              "text-on-surface text-lg opacity-0 will-change-auto",
+              "transition-opacity duration-200 ease-emphasized-decelerate",
+              normalize(scrollY, 80, (titleRef.current?.clientHeight || 0)) > 0.9 && "opacity-1",
+            )}
+          >
             {title}
           </div>
         </div>
