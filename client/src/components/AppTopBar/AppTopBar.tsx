@@ -1,4 +1,4 @@
-import { HTMLAttributes, ReactElement, ReactNode, useState, useRef } from "react";
+import { HTMLAttributes, ReactElement, ReactNode, useState, useRef, useEffect } from "react";
 import useScrollPosition from "@react-hook/window-scroll";
 
 
@@ -27,8 +27,22 @@ const AppTopBar = ({ elevation = true, className, children, ...args }: AppTopBar
   const scrollY = useScrollPosition(240);
 
   // Shrink state
-  const [shrinked, setShrinked] = useState(false);
+  const [onScrollOpacity, setOnScrollOpacity] = useState(0);
   const titleRef = useRef<HTMLDivElement>(null);
+  const compactTitleRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    const min = (compactTitleRef.current?.clientHeight || 0);
+    const max = (titleRef.current?.clientHeight || 0);
+    const onScrollOpacity = normalize(
+      Math.min(Math.max(scrollY, min), max),
+      min, max
+    );
+
+    console.log(scrollY, min, max);
+
+    setOnScrollOpacity(onScrollOpacity);
+  }, [scrollY]);
+  
 
   return (
     <div className={classnames("bg-surface", className)} {...args}>
@@ -41,10 +55,10 @@ const AppTopBar = ({ elevation = true, className, children, ...args }: AppTopBar
             "duration-1000 md:duration-200",
             "will-change-opacity"
           )}
-          style={{ opacity: normalize(scrollY, 80, (titleRef.current?.clientHeight || 0)) }}
+          style={{ opacity: onScrollOpacity }}
         />}
       
-      <div className="flex flex-row px-1 pt-2 pb-1 justify-between">
+      <div className="flex flex-row px-1 pt-2 pb-1 justify-between" ref={compactTitleRef}>
         {/* Leading Navigation */}
         <div className="flex flex-row items-center justify-center">
           <div className="p-1 text-on-surface min-w-[0.8rem]">
@@ -54,7 +68,7 @@ const AppTopBar = ({ elevation = true, className, children, ...args }: AppTopBar
             className={classnames(
               "text-on-surface text-lg opacity-0 will-change-auto",
               "transition-opacity duration-200 ease-emphasized-decelerate",
-              normalize(scrollY, 80, (titleRef.current?.clientHeight || 0)) > 0.9 && "opacity-1",
+              onScrollOpacity >= 0.7 && "opacity-1",
             )}
           >
             {title}
