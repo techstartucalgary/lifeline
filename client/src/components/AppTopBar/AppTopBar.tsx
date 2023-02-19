@@ -23,14 +23,18 @@ const AppTopBar = ({ elevation = true, shrinkOnScroll = true, className, childre
   const subtitle = children.find((child) => child != undefined && child.type === Subtitle);
 
   // For scrolling
-  const scrollY = useScrollPosition(60);
+  const scrollY = useScrollPosition(240);
 
   return (
     <div className={classnames("bg-surface", className )} {...args}>
       {elevation &&
         <div
-          className="opacity-0 bg-primary/8 absolute -top-full left-0 right-0 bottom-0 
-            transition-all duration-75 pointer-events-none z-0 ease-emphasized"
+          className={classnames(
+            "opacity-0 bg-primary/8 absolute -top-full left-0 right-0 bottom-0", 
+            "transition-all pointer-events-none z-0",
+            "md:ease-emphasized ease-emphasized-decelerate",
+            "duration-1000 md:duration-200"
+          )}
           style={{ opacity: (scrollY * 2) / 100 }}
         />}
       <div className="flex flex-row px-1 pt-2 justify-between">
