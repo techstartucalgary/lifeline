@@ -38,7 +38,8 @@ const AppTopBar = ({ elevation = true, className, children, ...args }: AppTopBar
             "opacity-0 bg-primary/8 absolute -top-full left-0 right-0 bottom-0", 
             "transition-all pointer-events-none z-0",
             "md:ease-emphasized ease-emphasized-decelerate",
-            "duration-1000 md:duration-200"
+            "duration-1000 md:duration-200",
+            "will-change-opacity"
           )}
           style={{ opacity: normalize(scrollY, 80, (titleRef.current?.clientHeight || 0)) }}
         />}
@@ -61,15 +62,16 @@ const AppTopBar = ({ elevation = true, className, children, ...args }: AppTopBar
       </div>
 
       {/* Headline */}
-      <div className="overflow-hidden" style={{height: ((titleRef.current?.clientHeight || 0) - scrollY)}}>
+      <div className="overflow-hidden">
         <div
           className={classnames(
             "flex flex-row items-center pb-3",
             "pt-6 md:pt-6",
-            "px-6 md:px-4"
+            "px-6 md:px-4",
+            "will-change-auto"
           )}
           style={{
-            transform: `translate3d(0, -${scrollY}px, 0)`,
+            marginTop: Math.min(0, -scrollY),
           }}
           ref={titleRef}
         >
