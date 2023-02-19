@@ -1,6 +1,5 @@
 import { useState, useEffect, useMemo, useRef, useLayoutEffect } from "react";
 import { useParams } from "react-router-dom";
-import useScrollPosition from "@react-hook/window-scroll";
 import NavigationDrawer from "../../components/NavigationDrawer";
 import AssessmentCard from "../../components/AssessmentCard";
 import { classnames } from "../../Utilities";
@@ -174,9 +173,6 @@ const Review = () => {
     return () => window.removeEventListener("resize", onTopbarHeight);
   }, [topbarRef.current, mainRef.current]);
 
-  // For scrolling
-  const scrollY = useScrollPosition(120);
-
   const onClickReturn = () => setCurrentCourseKey(null);
 
   return (
@@ -201,7 +197,7 @@ const Review = () => {
           {/* App top bar */}
           <div className="fixed top-0 left-0 right-0 h-fit z-10" ref={topbarRef}>
             <div className="max-w-7xl mx-auto" style={{ paddingLeft: mainMarginLeft }}>
-              <AppTopBar elevation={scrollY > 0 ? "on-scroll" : "flat"}>
+              <AppTopBar>
                 {/* Icons */}
                 <LeadingNavigation className="block md:hidden">
                   <IconButton className="text-on-surface" icon="arrow_back" onClick={onClickReturn} />

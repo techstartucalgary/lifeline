@@ -1,15 +1,18 @@
 import { HTMLAttributes, ReactElement, ReactNode } from "react";
+import useScrollPosition from "@react-hook/window-scroll";
+
 
 import { classnames } from "../../Utilities";
 
 interface AppTopBarProps extends HTMLAttributes<HTMLDivElement> {
-  elevation?: "flat" | "on-scroll";
+  elevation?: boolean;
+  shrinkOnScroll?: boolean;
   children: ReactElement<AllAcceptingChildren> | ReactElement<AllAcceptingChildren>[];
 }
 
 type AllAcceptingChildren = typeof LeadingNavigation | typeof TrailingIcon | typeof Title | typeof Subtitle;
 
-const AppTopBar = ({ elevation = "flat", className, children, ...args }: AppTopBarProps) => {
+const AppTopBar = ({ elevation = true, shrinkOnScroll = true, className, children, ...args }: AppTopBarProps) => {
   // If children is not an array, make it an array of only itself
   children = Array.isArray(children) ? children : [children];
 
@@ -19,17 +22,17 @@ const AppTopBar = ({ elevation = "flat", className, children, ...args }: AppTopB
   const title = children.find((child) => child != undefined && child.type === Title);
   const subtitle = children.find((child) => child != undefined && child.type === Subtitle);
 
+  // For scrolling
+  const scrollY = useScrollPosition(60);
+
   return (
-    <div
-      className={classnames(
-        "bg-surface",
-        "before:opacity-0 before:bg-primary/8 before:absolute before:top-0 before:left-0 before:right-0 before:bottom-0",
-        "transition-all before:transition-all before:ease-standard before:pointer-events-none",
-        (elevation === "on-scroll") && "before:opacity-100",
-        className
-      )}
-      {...args}
-    >
+    <div className={classnames("bg-surface", className )} {...args}>
+      {elevation &&
+        <div
+          className="opacity-0 bg-primary/8 absolute -top-full left-0 right-0 bottom-0 
+            transition-all duration-75 pointer-events-none z-0"
+          style={{ opacity: (scrollY * 2) / 100 }}
+        />}
       <div className="flex flex-row px-1 pt-2 justify-between">
         {/* Leading Navigation */}
         <div className="flex flex-row items-center justify-center">
