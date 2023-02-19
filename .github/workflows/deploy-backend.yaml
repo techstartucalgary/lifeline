@@ -1,12 +1,11 @@
-name: deploy-back
+name: deploy-server
 
 on:
   push:
     branches:
-      - main
+      - '*'
     paths:
-      - server/src/**
-      - server/Dockerfile
+      - server/**
 
 jobs:
   deployment:
@@ -30,3 +29,25 @@ jobs:
           sudo apt-get -y install awscli
           cd server
           ./deploy.sh
+
+  # Run this job 5 minutes after the previous job
+  test-deployment:
+    needs: deployment
+    runs-on: ubuntu-latest
+    steps:
+      - name: git-clone
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: dependencies
+        run: |
+          sudo apt-get -y update
+          sudo apt-get -y install curl jq
+
+      - name: test
+        # Give the lambda function time to deploy
+        run: |
+          sleep 120
+          cd server
+          ./test-prod.sh
