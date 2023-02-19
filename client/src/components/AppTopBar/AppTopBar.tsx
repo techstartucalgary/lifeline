@@ -45,8 +45,35 @@ const AppTopBar = ({ elevation = true, className, children, ...args }: AppTopBar
   
 
   return (
-    <div className={classnames("bg-surface", className)} {...args}>
-      {elevation &&
+    <>
+      <div className="relative">
+        <div className={classnames("bg-surface", className)} {...args}>
+          <div className="flex flex-row px-1 pt-2 pb-1 justify-between" ref={compactTitleRef}>
+            {/* Leading Navigation */}
+            <div className="flex flex-row items-center justify-center">
+              <div className="p-1 text-on-surface min-w-[0.8rem]">
+                {leadingNavigation}
+              </div>
+              <div
+                className={classnames(
+                  "text-on-surface text-lg opacity-0 will-change-auto",
+                  "transition-opacity duration-200 ease-emphasized-decelerate",
+                  onScrollOpacity >= 0.2 && "opacity-1",
+                )}
+              >
+                {title}
+              </div>
+            </div>
+
+            {/* Trailing Icon */}
+            <div className="p-1 text-on-surface-variant">
+              {trailingNavigation}
+            </div>
+          </div>
+
+        </div>
+        
+        {elevation &&
         <div
           className={classnames(
             "opacity-0 bg-primary/8 absolute -top-full left-0 right-0 bottom-0", 
@@ -57,38 +84,18 @@ const AppTopBar = ({ elevation = true, className, children, ...args }: AppTopBar
           )}
           style={{ opacity: onScrollOpacity }}
         />}
-      
-      <div className="flex flex-row px-1 pt-2 pb-1 justify-between" ref={compactTitleRef}>
-        {/* Leading Navigation */}
-        <div className="flex flex-row items-center justify-center">
-          <div className="p-1 text-on-surface min-w-[0.8rem]">
-            {leadingNavigation}
-          </div>
-          <div
-            className={classnames(
-              "text-on-surface text-lg opacity-0 will-change-auto",
-              "transition-opacity duration-200 ease-emphasized-decelerate",
-              onScrollOpacity >= 0.7 && "opacity-1",
-            )}
-          >
-            {title}
-          </div>
-        </div>
-
-        {/* Trailing Icon */}
-        <div className="p-1 text-on-surface-variant">
-          {trailingNavigation}
-        </div>
       </div>
+      
 
       {/* Headline */}
-      <div className="overflow-hidden">
+      <div className={classnames("overflow-hidden", className)} {...args}>
         <div
           className={classnames(
-            "flex flex-row items-center pb-3",
+            "flex flex-row items-center pb-1",
             "pt-6 md:pt-6",
             "px-6 md:px-4",
-            "will-change-auto"
+            "will-change-auto",
+            // "transition-all ease-standard duration-200"
           )}
           style={{
             marginTop: Math.min(0, -scrollY),
@@ -110,7 +117,7 @@ const AppTopBar = ({ elevation = true, className, children, ...args }: AppTopBar
         </div> */}
         </div>
       </div>
-    </div>
+    </>
   );
 };
 
