@@ -46,7 +46,7 @@ const AppTopBar = ({ elevation = true, shrinkOnScroll = true, className, childre
           <div className="p-1 text-on-surface min-w-[0.8rem]">
             {leadingNavigation}
           </div>
-          <div className={"text-on-surface font-headline font-bold text-xl"}>
+          <div className={"text-on-surface text-lg"}>
             {title}
           </div>
         </div>
