@@ -101,30 +101,33 @@ const AppTopBar = ({ elevation = true, className, children, ...args }: AppTopBar
 
       {/* Headline */}
       <div className={classnames("overflow-hidden", className)} {...args}>
-        <div
-          className={classnames(
-            "flex flex-row items-center pb-2 bg-surface",
-            "pt-6 md:pt-6",
-            "px-6 md:px-4",
-          )}
-          style={{
-            marginTop: compactTitleHeight,
-          }}
-          ref={titleRef}
-        >
-          <div className="grow space-y-1">
-            <h1 className={classnames("text-on-surface font-headline font-bold", "text-2xl md:text-3xl")}>
-              {title}
-            </h1>
-            <h2 className={classnames("text-outline font-medium", "text-md md:text-lg")}>
-              {subtitle}
-            </h2>
-          </div>
+        <div style={{height: titleRef.current?.clientHeight}}>
+          <div
+            className={classnames(
+              "flex flex-row items-center pb-2 bg-surface",
+              "pt-6 md:pt-6",
+              "px-6 md:px-4",
+              scrollY <= 0 && "fixed",
+            )}
+            style={{
+              paddingTop: compactTitleHeight,
+            }}
+            ref={titleRef}
+          >
+            <div className="grow space-y-1">
+              <h1 className={classnames("text-on-surface font-headline font-bold", "text-2xl md:text-3xl")}>
+                {title}
+              </h1>
+              <h2 className={classnames("text-outline font-medium", "text-md md:text-lg")}>
+                {subtitle}
+              </h2>
+            </div>
 
-          {/* <div>
+            {/* <div>
           <IconButton className="hidden md:inline text-on-surface-variant" icon="error" />
           <IconButton className="hidden md:inline text-on-surface-variant" icon="delete" />
         </div> */}
+          </div>
         </div>
       </div>
     </>
