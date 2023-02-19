@@ -30,7 +30,7 @@ const AppTopBar = ({ elevation = true, shrinkOnScroll = true, className, childre
       {elevation &&
         <div
           className="opacity-0 bg-primary/8 absolute -top-full left-0 right-0 bottom-0 
-            transition-all duration-75 pointer-events-none z-0"
+            transition-all duration-75 pointer-events-none z-0 ease-emphasized"
           style={{ opacity: (scrollY * 2) / 100 }}
         />}
       <div className="flex flex-row px-1 pt-2 justify-between">
