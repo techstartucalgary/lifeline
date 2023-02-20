@@ -278,7 +278,7 @@ const Review = () => {
           </div>
         </main>
       )}
-      <div className="w-64"></div>
+      <div className="w-64"/>
     </div>
   );
 };
