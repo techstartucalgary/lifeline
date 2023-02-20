@@ -9,7 +9,7 @@ export interface TabsProps {
 
 function Tabs({ selectedTab, setSelectedTab }: TabsProps) {
   return (
-    <div className="md:hidden">
+    <div className="md:hidden border-b-2">
       <div className="w-full flex flex-row">
         <Button
           className={classnames(

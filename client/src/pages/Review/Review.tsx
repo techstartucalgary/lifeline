@@ -197,8 +197,10 @@ const Review = () => {
                 >
                   <div
                     className={classnames(
+                      "hidden",
+                      "md:flex",
+                      "md:flex-row",
                       "w-full",
-                      "flex flex-row",
                       "justify-between",
                       "items-center",
                       "mb-3"
@@ -278,7 +280,7 @@ const Review = () => {
           </div>
         </main>
       )}
-      <div className="w-64"/>
+      <div className="w-64" />
     </div>
   );
 };
