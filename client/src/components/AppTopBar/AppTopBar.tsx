@@ -13,13 +13,13 @@ type AllAcceptingChildren = typeof LeadingNavigation | typeof TrailingIcon | typ
 
 const normalize = (val: number, min: number, max: number) => (val - min) / (max - min);
 
-const AppTopBar = ({ elevation = true, className, children, ...args }: AppTopBarProps) => {
+const AppTopBar = ({ elevation, className, children, ...args }: AppTopBarProps) => {
   // If children is not an array, make it an array of only itself
   children = Array.isArray(children) ? children : [children];
 
   // Find elements in children
   const leadingNavigation = children.find((child) => child != undefined && child.type === LeadingNavigation);
-  const trailingNavigation = children.find((child) => child != undefined && child.type === TrailingIcon);
+  const trailingIcon = children.find((child) => child != undefined && child.type === TrailingIcon);
   const title = children.find((child) => child != undefined && child.type === Title);
   const subtitle = children.find((child) => child != undefined && child.type === Subtitle);
 
@@ -57,48 +57,16 @@ const AppTopBar = ({ elevation = true, className, children, ...args }: AppTopBar
 
   return (
     <>
-      <div className="fixed top-0 left-0 right-0 h-fit z-10">
-        <div className="relative">
-          <div className={classnames("bg-surface", className)} {...args}>
-            <div className="flex flex-row px-1 pt-2 pb-1 justify-between" ref={compactTitleRef}>
-              {/* Leading Navigation */}
-              <div className="flex flex-row items-center justify-center">
-                <div className="p-1 text-on-surface min-w-[0.8rem]">
-                  {leadingNavigation}
-                </div>
-                <div
-                  className={classnames(
-                    "text-on-surface text-lg opacity-0 will-change-auto font-bold",
-                    "transition-opacity duration-200 ease-emphasized-decelerate",
-                    onScrollOpacity >= 0.2 && "opacity-1",
-                  )}
-                >
-                  {title}
-                </div>
-              </div>
-
-              {/* Trailing Icon */}
-              <div className="p-1 text-on-surface-variant">
-                {trailingNavigation}
-              </div>
-            </div>
-
-          </div>
-        
-          {elevation &&
-        <div
-          className={classnames(
-            "opacity-0 bg-primary/8 absolute -top-full left-0 right-0 bottom-0", 
-            "transition-all pointer-events-none z-0",
-            "md:ease-emphasized ease-emphasized-decelerate",
-            "duration-1000 md:duration-200",
-            "will-change-opacity"
-          )}
-          style={{ opacity: onScrollOpacity }}
-        />}
-        </div>
-      </div>
-      
+      <CompactHeadline
+        className={className}
+        {...args}
+        title={title}
+        titleClassName={onScrollOpacity >= 0.2 ? "opacity-1" : null}
+        leadingNavigation={leadingNavigation}
+        trailingIcon={trailingIcon}
+        elevation={elevation}
+        ref={compactTitleRef}
+      />
 
       {/* Headline */}
       <div className={classnames("overflow-hidden", className)} {...args}>
@@ -109,6 +77,65 @@ const AppTopBar = ({ elevation = true, className, children, ...args }: AppTopBar
     </>
   );
 };
+
+interface CompactHeadlineProp extends Omit<HTMLAttributes<HTMLDivElement>, "title"> {
+  title?: ReactElement<typeof Title>;
+  titleClassName?: string | null;
+  leadingNavigation?: ReactNode;
+  trailingIcon?: ReactNode;
+  elevation?: boolean;
+}
+
+const CompactHeadline = forwardRef<HTMLDivElement, CompactHeadlineProp>(
+  (
+    { title, titleClassName, leadingNavigation, trailingIcon, elevation = true, className, ...args }: CompactHeadlineProp,
+    ref: ForwardedRef<HTMLDivElement>
+  ) => { 
+    return (
+      <div className="fixed top-0 left-0 right-0 h-fit z-10">
+        <div className="relative">
+          <div className={classnames("bg-surface", className)} {...args}>
+            <div className="flex flex-row px-1 pt-2 pb-1 justify-between" ref={ref}>
+              {/* Leading Navigation */}
+              <div className="flex flex-row items-center justify-center">
+                <div className="p-1 text-on-surface min-w-[0.8rem]">
+                  {leadingNavigation}
+                </div>
+                <div
+                  className={classnames(
+                    "text-on-surface text-lg opacity-0 will-change-auto font-bold",
+                    "transition-opacity duration-200 ease-emphasized-decelerate",
+                    titleClassName,
+                  )}
+                >
+                  {title}
+                </div>
+              </div>
+
+              {/* Trailing Icon */}
+              <div className="p-1 text-on-surface-variant">
+                {trailingIcon}
+              </div>
+            </div>
+          </div>
+        
+          {elevation &&
+            <div
+              className={classnames(
+                "opacity-0 bg-primary/8 absolute -top-full left-0 right-0 bottom-0", 
+                "transition-all pointer-events-none z-0",
+                "md:ease-emphasized ease-emphasized-decelerate",
+                "duration-1000 md:duration-200",
+                "will-change-opacity"
+              )}
+              style={{ opacity: 0.5 }}
+            />
+          }
+        </div>
+      </div>
+    );
+  });
+CompactHeadline.displayName = "CompactHeadline";
 
 interface HeadlineProp extends Omit<HTMLAttributes<HTMLDivElement>, "title"> {
   title?: ReactElement<typeof Title>;
@@ -141,10 +168,13 @@ const Headline = forwardRef<HTMLDivElement, HeadlineProp>(
       </div>
     );
   });
-Headline.displayName = "HeadlineTitle";
+Headline.displayName = "Headline";
 
-const LeadingNavigation = ({ children, ...args }: HTMLAttributes<HTMLDivElement>) => <div {...args}>{children}</div>;
-const TrailingIcon = ({ children, className, ...args }: HTMLAttributes<HTMLDivElement>) => {
+type LeadingNavigationProp = HTMLAttributes<HTMLDivElement>;
+const LeadingNavigation = ({ children, ...args }: LeadingNavigationProp) => <div {...args}>{children}</div>;
+
+type TrailingIconProp = HTMLAttributes<HTMLDivElement>;
+const TrailingIcon = ({ children, className, ...args }: TrailingIconProp) => {
   return (
     <div className={classnames("flex flex-row space-x-1", className)} {...args}>
       {children}
