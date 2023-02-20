@@ -2,10 +2,11 @@
 
 from typing import List
 import uvicorn
-from fastapi import FastAPI, File, UploadFile
+from fastapi import FastAPI, File, UploadFile, Request
 from fastapi.middleware.cors import CORSMiddleware
 from mangum import Mangum
 from handlers import calendar_handler, file_handler
+from handlers import xlsx_handler
 
 app = FastAPI()
 handler = Mangum(app)
@@ -37,6 +38,13 @@ async def get_deadlines(outline_files: List[UploadFile] = File(...)):
     """Returns the extracted dates from the uploaded file(s)"""
     return file_handler.handle_files(outline_files)
 
+@app.get("/xlsx")
+async def get_xlsx(info: Request):
+    """ Returns the generated XLSX file """
+    semester = await info.json()
+    return xlsx_handler.get_xlsx_file(semester)
+
+    
 
 if __name__ == "__main__":
     uvicorn.run("app:app", host="127.0.0.1", port=8000)

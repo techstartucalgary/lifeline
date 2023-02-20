@@ -51,3 +51,4 @@ urllib3==1.26.12
 uvicorn==0.19.0
 Wand==0.6.11
 wrapt==1.14.1
+openpyxl==3.1.1
