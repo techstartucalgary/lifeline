@@ -52,9 +52,7 @@ export default function Landing() {
 
   return (
     <>
-      <div className="max-w-7xl mx-auto px-5 sm:px-14 md:px-16 lg:px-20 relative">
-        <NavigationBar />
-
+      <div className="max-w-8xl mx-auto px-5 sm:px-14 md:px-16 lg:px-20 relative">
         {/* Hero section */}
         <div
           className={classnames(
@@ -63,8 +61,7 @@ export default function Landing() {
             "grid-cols-4 sm:grid-cols-8 md:grid-cols-8 lg:grid-cols-12"
           )}
         >
-          <img src={blob1} alt="" className={classnames(styles.blob, "absolute w-[35rem] right-0 top-0 translate-x-[50%] translate-y-[-50%]")} aria-hidden={true} />
-          <img src={blob2} alt="" className={classnames(styles.blob, "absolute w-[26rem] left-0 top-[28rem] translate-x-[-50%] sm:translate-x-[-50%] lg:translate-x-[-90%] translate-y-[0%]")} aria-hidden={true} />
+          <img src={blob2} alt="" className={classnames(styles.blob, "absolute w-[11rem] left-0 top-[28rem] translate-x-[-50%] sm:translate-x-[-50%] lg:translate-x-[-10%] translate-y-[0%]")} aria-hidden={true} />
 
           {/* Left section */}
           <div
@@ -75,25 +72,26 @@ export default function Landing() {
             )}
           >
             <div className="flex flex-col">
-              <div className={classnames("font-bold font-headline tracking-[-0.075rem] sm:tracking-[-0.1rem]", "text-3xl sm:text-4xl md:text-5xl xl:text-6xl")}>
-                <div className="sm:whitespace-nowrap text-on-surface">A better way to </div>
+              <div className={classnames("font-semibold font-headline tracking-[-0.075rem] sm:tracking-[-0.1rem]")}>
+                <div className="font-headline whitespace-nowrap text-primary bg-surface-variant text-2xl py-4 px-6 rounded-full w-fit -rotate-6">A better way to</div>
                 <div
                   className={classnames(
-                    styles["title-highlight"],
-                    "text-primary-60 sm:whitespace-nowrap",
+                    "font-display uppercase mt-6",
+                    "text-on-background",
                     "text-5xl sm:text-6xl md:text-7xl xl:text-7xl",
-                    "pb-2"
+                    "pb-2",
+                    styles.shadow
                   )}
                 >
                   organize deadlines
                 </div>
               </div>
 
-              <div className={classnames("text-on-surface-variant mt-8", "mr-8 sm:mr-0 lg:mr-20", landingText)}>
-                Lifeline takes the stress out of managing important dates for your
-                courses. Start saving more time and always keep track of your
-                deadlines in just a few clicks.
-                Start for free today to make your scheduling a breeze.
+              <div className={classnames("text-on-surface-variant mt-4", "mr-8 sm:mr-0 lg:mr-20", landingText)}>
+                Lifeline takes the stress out of managing important dates and tasks for your courses.
+                In just a few clicks, compile your deadlines from your course outlines,
+                as well as other related tasks into calendar reminders and productivity trackers.
+                Throw yourself a free lifeline today, to save yourself from drowning in deadlines.
               </div>
 
               <div
