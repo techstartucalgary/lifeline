@@ -1,7 +1,18 @@
-import { HTMLAttributes, ReactElement, ReactNode, useState, useRef, useEffect, useLayoutEffect, ForwardedRef, forwardRef } from "react";
+import { HTMLAttributes, ReactElement, useState, useRef, useEffect, useLayoutEffect } from "react";
 import useScrollPosition from "@react-hook/window-scroll";
 
-import { classnames } from "../../Utilities";
+import CompactHeadline from "./CompactHeadline";
+import Headline from "./Headline";
+import {
+  LeadingNavigation,
+  LeadingNavigationProp,
+  TrailingIcon,
+  TrailingIconProp,
+  Title,
+  TitleProp,
+  Subtitle,
+  SubtitleProp
+} from "./Subcomponents";
 
 interface AppTopBarProps extends HTMLAttributes<HTMLDivElement> {
   elevation?: boolean;
@@ -76,120 +87,6 @@ const AppTopBar = ({ elevation, children, ...args }: AppTopBarProps) => {
   );
 };
 
-interface CompactHeadlineProp extends Omit<HTMLAttributes<HTMLDivElement>, "title"> {
-  title?: ReactElement<TitleProp>;
-  titleClassName?: string | null;
-  leadingNavigation?: ReactElement<LeadingNavigationProp>;
-  trailingIcon?: ReactElement<TrailingIconProp>;
-  elevation?: boolean;
-  elevationOpacity?: number;
-}
-
-const CompactHeadline = forwardRef<HTMLDivElement, CompactHeadlineProp>(
-  (
-    { title, titleClassName, leadingNavigation, trailingIcon, elevation = true, elevationOpacity, ...args }: CompactHeadlineProp,
-    ref: ForwardedRef<HTMLDivElement>
-  ) => { 
-    return (
-      <div className="fixed top-0 left-0 right-0 h-fit z-10" ref={ref}>
-        <div className="relative">
-          <div {...args} className={classnames("bg-surface", args.className)}>
-            <div className="flex flex-row px-1 pt-2 pb-1 justify-between">
-              {/* Leading Navigation */}
-              <div className="flex flex-row items-center justify-center">
-                <div className="p-1 text-on-surface min-w-[0.8rem]">
-                  {leadingNavigation}
-                </div>
-                <div
-                  className={classnames(
-                    "text-on-surface text-lg opacity-0 will-change-auto font-bold",
-                    "transition-opacity duration-200 ease-emphasized-decelerate",
-                    titleClassName,
-                  )}
-                >
-                  {title}
-                </div>
-              </div>
-
-              {/* Trailing Icon */}
-              <div className="p-1 text-on-surface-variant">
-                {trailingIcon}
-              </div>
-            </div>
-          </div>
-        
-          {elevation &&
-            <div
-              className={classnames(
-                "opacity-0 bg-primary/8 absolute -top-full left-0 right-0 bottom-0", 
-                "transition-all pointer-events-none z-0",
-                "md:ease-emphasized ease-emphasized-decelerate",
-                "duration-1000 md:duration-200",
-                "will-change-opacity"
-              )}
-              style={{ opacity: elevationOpacity }}
-            />
-          }
-        </div>
-      </div>
-    );
-  });
-CompactHeadline.displayName = "CompactHeadline";
-
-interface HeadlineProp extends Omit<HTMLAttributes<HTMLDivElement>, "title"> {
-  title?: ReactElement<TitleProp>;
-  subtitle?: ReactElement<SubtitleProp>;
-}
-
-const Headline = forwardRef<HTMLDivElement, HeadlineProp>(
-  (
-    { title, subtitle, ...args }: HeadlineProp,
-    ref: ForwardedRef<HTMLDivElement>
-  ) => {
-    return (
-      <div {...args} className={classnames("overflow-hidden", args.className)} ref={ref}>
-        <div
-          className={classnames(
-            "flex flex-row items-center pb-2 bg-surface",
-            "pt-6 md:pt-6",
-            "px-6 md:px-4",
-          )}
-        >
-          <div className="grow space-y-1">
-            <h1 className={classnames("text-on-surface font-headline font-bold", "text-2xl md:text-3xl")}>
-              {title}
-            </h1>
-            <h2 className={classnames("text-outline font-medium", "text-md md:text-lg")}>
-              {subtitle}
-            </h2>
-          </div>
-        </div>
-      </div>
-    );
-  });
-Headline.displayName = "Headline";
-
-type LeadingNavigationProp = HTMLAttributes<HTMLDivElement>;
-const LeadingNavigation = ({ children, ...args }: LeadingNavigationProp) => <div {...args}>{children}</div>;
-
-type TrailingIconProp = HTMLAttributes<HTMLDivElement>;
-const TrailingIcon = ({ children, className, ...args }: TrailingIconProp) => {
-  return (
-    <div className={classnames("flex flex-row space-x-1", className)} {...args}>
-      {children}
-    </div>
-  );
-};
-
-interface TitleProp {
-  children?: ReactNode;
-} 
-const Title = ({ children }: TitleProp) => <>{children}</>;
-
-interface SubtitleProp {
-  children?: ReactNode;
-}
-const Subtitle = ({ children }: SubtitleProp) => <>{children}</>;
 
 AppTopBar.LeadingNavigation = LeadingNavigation;
 AppTopBar.TrailingNavigation = TrailingIcon;
@@ -197,4 +94,6 @@ AppTopBar.Title = Title;
 AppTopBar.Subtitle = Subtitle;
 
 export default AppTopBar;
+export type { AppTopBarProps };
 export { LeadingNavigation, TrailingIcon, Title, Subtitle };
+export type { LeadingNavigationProp, TrailingIconProp, TitleProp, SubtitleProp };
