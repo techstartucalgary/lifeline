@@ -1,4 +1,4 @@
-import { HTMLAttributes, ReactElement, useState, useRef, useEffect, useLayoutEffect } from "react";
+import { HTMLAttributes, ReactElement, useState, useRef, useLayoutEffect } from "react";
 import useScrollPosition from "@react-hook/window-scroll";
 
 import CompactHeadline from "./CompactHeadline";
@@ -21,8 +21,6 @@ interface AppTopBarProps extends HTMLAttributes<HTMLDivElement> {
 }
 
 type AllAcceptingChildren = LeadingNavigationProp | TrailingIconProp | TitleProp | SubtitleProp;
-
-const normalize = (val: number, min: number, max: number) => (val - min) / (max - min);
 
 const AppTopBar = ({ elevation, children, ...args }: AppTopBarProps) => {
   // If children is not an array, make it an array of only itself
@@ -63,7 +61,7 @@ const AppTopBar = ({ elevation, children, ...args }: AppTopBarProps) => {
       <CompactHeadline
         {...args}
         title={title}
-        titleClassName={classnames("opacity-0", (scrollY > compactHeadlineHeight * 0.8) && "opacity-1")}
+        titleClassName={classnames("opacity-0", (scrollY > compactHeadlineHeight * 0.75) && "opacity-1")}
         leadingNavigation={leadingNavigation}
         trailingIcon={trailingIcon}
         elevation={elevation}
@@ -75,6 +73,8 @@ const AppTopBar = ({ elevation, children, ...args }: AppTopBarProps) => {
         style={{ marginTop: compactHeadlineHeight, ...args.style }}
         title={title}
         subtitle={subtitle}
+        titleClassName={classnames("opacity-1", (scrollY > compactHeadlineHeight * 0.75) && "opacity-0")}
+        subtitleClassName={classnames("opacity-1", (scrollY > compactHeadlineHeight * 0.75) && "opacity-0")}
         ref={headlineRef}
       />
     </>
