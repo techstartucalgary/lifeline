@@ -1,15 +1,17 @@
 import { useState, useEffect, useMemo } from "react";
 import { useParams } from "react-router-dom";
-import NavigationDrawer from "../../components/NavigationDrawer";
-import AssessmentCard from "../../components/AssessmentCard";
 import { classnames } from "../../Utilities";
 import { Course, Courses, Assessment } from "../../logic/icsGen";
+
+import NavigationDrawer from "../../components/NavigationDrawer";
+import AssessmentCard from "../../components/AssessmentCard";
 import Button from "../../components/Button";
 import EditAssessment from "../../components/EditAssessment/EditAssessment";
-
-import styles from "./Review.module.css";
 import CourseInfo from "../../components/CourseInfo";
 import AppTopBar from "../../components/AppTopBar";
+import Tabs from "../../components/Tabs/Tabs";
+
+import styles from "./Review.module.css";
 
 const testState: Courses = [
   {
@@ -59,7 +61,7 @@ const testState: Courses = [
 ];
 
 // Enum for the tabs
-enum Tab {
+export enum Tab {
   Assessments,
   Document,
 }
@@ -166,49 +168,40 @@ const Review = () => {
           className={classnames("flex-shrink-0 w-full text-left", styles.main)}
         >
           <header className="w-full p-4 text-xl">
-            <AppTopBar courseId={currentCourse.key} description={currentCourse.topic}/>
+            <AppTopBar
+              courseName={`${currentCourse.title} ${currentCourse.number}`}
+              description={currentCourse.topic}
+              handleBackClick={() => onCourseClick(null)}
+            />
           </header>
           <div className="flex flex-col md:flex-row">
-            <div className="w-full md:hidden flex flex-row">
-              <button
-                className={classnames(
-                  "w-full bg-gray-300 p-2",
-                  selectedTab === Tab.Assessments && "bg-red-500"
-                )}
-                onClick={() => setSelectedTab(0)}
-              >
-                Assessments
-              </button>
-              <button
-                className={classnames(
-                  "w-full bg-gray-300 p-2",
-                  selectedTab === Tab.Document && "bg-red-500"
-                )}
-                onClick={() => setSelectedTab(1)}
-              >
-                Document
-              </button>
-            </div>
             <section
               className={classnames(
                 "w-full",
                 "md:w-1/2",
                 "p-4",
-                "h-screen",
-                selectedTab === Tab.Document && "hidden md:block"
+                selectedTab === Tab.Assessments && "h-screen"
               )}
             >
+              <CourseInfo
+                hours="H(3-2T)"
+                department="Computer Science"
+                description="This course is an introduction to the design and analysis of algorithms. Topics include: algorithmic problem solving, algorithmic efficiency, sorting and searching, divide-and-conquer, greedy algorithms, dynamic programming, and graph algorithms. Prerequisite: CSE 143 or equivalent."
+              />
+              <Tabs selectedTab={selectedTab} setSelectedTab={setSelectedTab} />
               {editingAssessment === null ? (
-                <>
-                  <CourseInfo
-                    hours="H(3-2T)"
-                    department="Computer Science"
-                    description="This course is an introduction to the design and analysis of algorithms. Topics include: algorithmic problem solving, algorithmic efficiency, sorting and searching, divide-and-conquer, greedy algorithms, dynamic programming, and graph algorithms. Prerequisite: CSE 143 or equivalent."
-                  />
+                <div
+                  className={classnames(
+                    selectedTab === Tab.Document && "hidden md:block",
+                    "w-full"
+                  )}
+                >
                   <div
                     className={classnames(
+                      "hidden",
+                      "md:flex",
+                      "md:flex-row",
                       "w-full",
-                      "flex flex-row",
                       "justify-between",
                       "items-center",
                       "mb-3"
@@ -242,7 +235,7 @@ const Review = () => {
                       />
                     ))}
                   </ul>
-                </>
+                </div>
               ) : (
                 <EditAssessment
                   assessment={editingAssessment.assessment}
@@ -288,7 +281,7 @@ const Review = () => {
           </div>
         </main>
       )}
-      <div className="w-64"></div>
+      <div className="w-64" />
     </div>
   );
 };
