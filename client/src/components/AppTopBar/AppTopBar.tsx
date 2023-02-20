@@ -62,6 +62,7 @@ const AppTopBar = ({ elevation, children, ...args }: AppTopBarProps) => {
         leadingNavigation={leadingNavigation}
         trailingIcon={trailingIcon}
         elevation={elevation}
+        elevationOpacity={onScrollOpacity}
         ref={compactTitleRef}
       />
       <Headline
@@ -81,17 +82,18 @@ interface CompactHeadlineProp extends Omit<HTMLAttributes<HTMLDivElement>, "titl
   leadingNavigation?: ReactElement<LeadingNavigationProp>;
   trailingIcon?: ReactElement<TrailingIconProp>;
   elevation?: boolean;
+  elevationOpacity?: number;
 }
 
 const CompactHeadline = forwardRef<HTMLDivElement, CompactHeadlineProp>(
   (
-    { title, titleClassName, leadingNavigation, trailingIcon, elevation = true, className, ...args }: CompactHeadlineProp,
+    { title, titleClassName, leadingNavigation, trailingIcon, elevation = true, elevationOpacity, ...args }: CompactHeadlineProp,
     ref: ForwardedRef<HTMLDivElement>
   ) => { 
     return (
       <div className="fixed top-0 left-0 right-0 h-fit z-10" ref={ref}>
         <div className="relative">
-          <div className={classnames("bg-surface", className)} {...args}>
+          <div {...args} className={classnames("bg-surface", args.className)}>
             <div className="flex flex-row px-1 pt-2 pb-1 justify-between">
               {/* Leading Navigation */}
               <div className="flex flex-row items-center justify-center">
@@ -125,7 +127,7 @@ const CompactHeadline = forwardRef<HTMLDivElement, CompactHeadlineProp>(
                 "duration-1000 md:duration-200",
                 "will-change-opacity"
               )}
-              style={{ opacity: 0.5 }}
+              style={{ opacity: elevationOpacity }}
             />
           }
         </div>
@@ -141,11 +143,11 @@ interface HeadlineProp extends Omit<HTMLAttributes<HTMLDivElement>, "title"> {
 
 const Headline = forwardRef<HTMLDivElement, HeadlineProp>(
   (
-    { title, subtitle, className, ...args }: HeadlineProp,
+    { title, subtitle, ...args }: HeadlineProp,
     ref: ForwardedRef<HTMLDivElement>
   ) => {
     return (
-      <div className={classnames("overflow-hidden", className)} {...args} ref={ref}>
+      <div {...args} className={classnames("overflow-hidden", args.className)} ref={ref}>
         <div
           className={classnames(
             "flex flex-row items-center pb-2 bg-surface",
