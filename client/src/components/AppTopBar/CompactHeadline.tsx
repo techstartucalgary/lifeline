@@ -10,12 +10,12 @@ interface CompactHeadlineProp extends Omit<HTMLAttributes<HTMLDivElement>, "titl
   leadingNavigation?: ReactElement<LeadingNavigationProp>;
   trailingIcon?: ReactElement<TrailingIconProp>;
   elevation?: boolean;
-  elevationOpacity?: number;
+  elevationClassName?: string | null;
 }
 
 const CompactHeadline = forwardRef<HTMLDivElement, CompactHeadlineProp>(
   (
-    { title, titleClassName, leadingNavigation, trailingIcon, elevation = true, elevationOpacity, ...args }: CompactHeadlineProp,
+    { title, titleClassName, leadingNavigation, trailingIcon, elevation = true, elevationClassName, ...args }: CompactHeadlineProp,
     ref: ForwardedRef<HTMLDivElement>
   ) => { 
     return (
@@ -31,7 +31,7 @@ const CompactHeadline = forwardRef<HTMLDivElement, CompactHeadlineProp>(
                 <div
                   className={classnames(
                     "text-on-surface text-lg opacity-0 will-change-auto font-bold",
-                    "transition-opacity duration-200 ease-emphasized-decelerate",
+                    "transition-opacity duration-300 ease-emphasized-decelerate opacity-0",
                     titleClassName,
                   )}
                 >
@@ -53,9 +53,9 @@ const CompactHeadline = forwardRef<HTMLDivElement, CompactHeadlineProp>(
                 "transition-all pointer-events-none z-0",
                 "md:ease-emphasized ease-emphasized-decelerate",
                 "duration-1000 md:duration-200",
-                "will-change-opacity"
+                "will-change-opacity",
+                elevationClassName,
               )}
-              style={{ opacity: elevationOpacity }}
             />
           }
         </div>

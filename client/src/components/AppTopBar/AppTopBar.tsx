@@ -13,6 +13,7 @@ import {
   Subtitle,
   SubtitleProp
 } from "./Subcomponents";
+import { classnames } from "../../Utilities";
 
 interface AppTopBarProps extends HTMLAttributes<HTMLDivElement> {
   elevation?: boolean;
@@ -36,52 +37,45 @@ const AppTopBar = ({ elevation, children, ...args }: AppTopBarProps) => {
   // For scrolling
   const scrollY = useScrollPosition(240);
 
-  // Shrink state
-  const [onScrollOpacity, setOnScrollOpacity] = useState(0);
-  const titleRef = useRef<HTMLDivElement>(null);
-  const compactTitleRef = useRef<HTMLDivElement>(null);
-  useEffect(() => {
-    const min = (compactTitleRef.current?.clientHeight || 0);
-    const max = (titleRef.current?.clientHeight || 0);
-    const onScrollOpacity = normalize(
-      Math.min(Math.max(scrollY, min), max),
-      min, max
-    );
-    console.log(scrollY, min, max);
-    setOnScrollOpacity(onScrollOpacity);
-  }, [scrollY]);
-  
   // For compact title height
-  const [compactTitleHeight, setCompactTitleHeight] = useState(0);
+  const compactHeadlineRef = useRef<HTMLDivElement>(null);
+  const headlineRef = useRef<HTMLDivElement>(null);
+  const [compactHeadlineHeight, setCompactHeadlineHeight] = useState(0);
+  const [headlineHeight, setHeadlineHeight] = useState(0);
   useLayoutEffect(() => {
+    const chh = compactHeadlineRef.current?.offsetHeight || 0;
+    const hh = headlineRef.current?.offsetHeight || 0;
+
     const onTopbarHeight = () => {
-      if (compactTitleRef.current) {
-        setCompactTitleHeight(compactTitleRef.current.offsetHeight);
+      if (compactHeadlineRef.current) {
+        setCompactHeadlineHeight(chh);
+        setHeadlineHeight(hh);
       }
     };
+
     onTopbarHeight();
     window.addEventListener("resize", onTopbarHeight);
     return () => window.removeEventListener("resize", onTopbarHeight);
-  }, [compactTitleRef.current]);
+  }, [compactHeadlineRef.current]);
 
   return (
     <>
       <CompactHeadline
         {...args}
         title={title}
-        titleClassName={onScrollOpacity >= 0.2 ? "opacity-1" : null}
+        titleClassName={classnames("opacity-0", (scrollY > compactHeadlineHeight * 0.8) && "opacity-1")}
         leadingNavigation={leadingNavigation}
         trailingIcon={trailingIcon}
         elevation={elevation}
-        elevationOpacity={onScrollOpacity}
-        ref={compactTitleRef}
+        elevationClassName={classnames("opacity-0", (scrollY > headlineHeight) && "opacity-1")}
+        ref={compactHeadlineRef}
       />
       <Headline
         {...args}
-        style={{ paddingTop: compactTitleHeight, ...args.style }}
+        style={{ marginTop: compactHeadlineHeight, ...args.style }}
         title={title}
         subtitle={subtitle}
-        ref={titleRef}
+        ref={headlineRef}
       />
     </>
   );
