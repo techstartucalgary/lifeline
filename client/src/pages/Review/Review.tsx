@@ -210,7 +210,7 @@ const Review = () => {
             {/* Course page */}
             <div className="flex flex-col md:flex-row">
               {/* Tab */}
-              {/* <div className="md:hidden flex flex-row">
+              <div className="md:hidden flex flex-row">
                 <button
                   className={classnames(
                     "bg-gray-300 p-2",
@@ -229,7 +229,7 @@ const Review = () => {
                 >
                   Document
                 </button>
-              </div> */}
+              </div>
 
               <div className="flex flex-row space-x-4 p-2">
                 {/* Assessments */}
