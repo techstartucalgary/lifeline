@@ -7,10 +7,11 @@ from pathlib import Path
 import pickle
 from tempfile import NamedTemporaryFile
 from typing import List
-from fastapi import UploadFile
+from fastapi import Response, UploadFile, status
 import pdfplumber
 from datefinder import find_dates
 from dateparser.search import search_dates
+from pdfminer.pdfparser import PDFSyntaxError
 
 
 # supported course codes taken from
@@ -100,8 +101,12 @@ def get_course_info(course_key):
 def read_tables(pdf):
     """Returns all tables in a pdf as a list of 2d lists"""
     tables = []
+    print("pdf.pages", pdf.pages)
     for page in pdf.pages:
+        print("Extracting tables from page", page.page_number)
         tables.extend(page.extract_tables())
+
+    print("Found", len(tables), "tables")
     return tables
 
 
@@ -115,7 +120,7 @@ def extract_assessments(table):
                 continue
             # first try dateparser
             dates = search_dates(
-                cell, languages=["en"], settings={"REQUIRE_PARTS": ["day", "month"]}
+                cell, settings={"REQUIRE_PARTS": ["day", "month"]}
             )
             if dates:
                 source, date = dates[0]
@@ -142,7 +147,7 @@ def extract_assessments(table):
             assessments.append(
                 {
                     "name": name,
-                    "date": date.strftime("%Y-%m-%dT%H:%M:%S.%f"),
+                    "date": date.strftime("%Y-%m-%dT%H:%M:%S"),
                     "weight": weight,
                     "source": source,  # use this to highlight the date in the pdf
                 }
@@ -168,14 +173,15 @@ def get_course(tmp_path):
             course_key = f"{course_code} {course_number}"
             course_info = get_course_info(course_key)
             course = {**course, **course_info}
+        print(f'course: {course}')
 
         # Extract assessments from all tables
         assessments = []
         tables = read_tables(pdf)
         for table in tables:
+            print("Extracting assessments from table")
             assessments.extend(extract_assessments(table))
         course["assessments"] = assessments
-
     return course
 
 
@@ -191,15 +197,21 @@ def save_upload_file_tmp(upload_file: UploadFile):
     return tmp_path
 
 
-def handle_files(files: List[UploadFile]):
+def handle_files(files: List[UploadFile], response: Response):
     """Handles multiple files"""
     courses = []
     tmp_path = None
     for file in files:
         try:
             tmp_path = save_upload_file_tmp(file)
+            print(f"Processing file: {tmp_path}")
             course = get_course(tmp_path)
+            print(f"Finished processing file: {tmp_path}")
             courses.append(course)
+        except PDFSyntaxError as ex:
+            print(f"Error processing file: {ex}")
+            response.status_code = status.HTTP_422_UNPROCESSABLE_ENTITY
+            return {"Error processing file": ex.args}
         finally:
             tmp_path.unlink()
 

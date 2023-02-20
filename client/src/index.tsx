@@ -16,7 +16,8 @@ if (hostname === "localhost" || hostname === "127.0.0.1" || port === "3000") {
   axios.defaults.baseURL = `//${hostname}:8000`;
   console.log("Running on Localhost", axios.defaults.baseURL);
 } else {
-  axios.defaults.baseURL = "https://rj6crp3mqwnq6vskrxd5umir4a0tgcqv.lambda-url.us-west-2.on.aws";
+  axios.defaults.baseURL =
+    "https://rj6crp3mqwnq6vskrxd5umir4a0tgcqv.lambda-url.us-west-2.on.aws";
   console.log("Running on Production", axios.defaults.baseURL);
 }
 
