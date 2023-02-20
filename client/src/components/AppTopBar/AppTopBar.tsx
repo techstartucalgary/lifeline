@@ -9,7 +9,7 @@ interface AppTopBarProps extends HTMLAttributes<HTMLDivElement> {
   children: ReactElement<AllAcceptingChildren> | ReactElement<AllAcceptingChildren>[];
 }
 
-type AllAcceptingChildren = typeof LeadingNavigation | typeof TrailingIcon | typeof Title | typeof Subtitle;
+type AllAcceptingChildren = LeadingNavigationProp | TrailingIconProp | TitleProp | SubtitleProp;
 
 const normalize = (val: number, min: number, max: number) => (val - min) / (max - min);
 
@@ -79,10 +79,10 @@ const AppTopBar = ({ elevation, className, children, ...args }: AppTopBarProps) 
 };
 
 interface CompactHeadlineProp extends Omit<HTMLAttributes<HTMLDivElement>, "title"> {
-  title?: ReactElement<typeof Title>;
+  title?: ReactElement<TitleProp>;
   titleClassName?: string | null;
-  leadingNavigation?: ReactNode;
-  trailingIcon?: ReactNode;
+  leadingNavigation?: ReactElement<LeadingNavigationProp>;
+  trailingIcon?: ReactElement<TrailingIconProp>;
   elevation?: boolean;
 }
 
@@ -138,8 +138,8 @@ const CompactHeadline = forwardRef<HTMLDivElement, CompactHeadlineProp>(
 CompactHeadline.displayName = "CompactHeadline";
 
 interface HeadlineProp extends Omit<HTMLAttributes<HTMLDivElement>, "title"> {
-  title?: ReactElement<typeof Title>;
-  subtitle?: ReactElement<typeof Subtitle>;
+  title?: ReactElement<TitleProp>;
+  subtitle?: ReactElement<SubtitleProp>;
 }
 
 const Headline = forwardRef<HTMLDivElement, HeadlineProp>(
@@ -181,8 +181,16 @@ const TrailingIcon = ({ children, className, ...args }: TrailingIconProp) => {
     </div>
   );
 };
-const Title = ({ children }: { children: ReactNode; }) => <>{children}</>;
-const Subtitle = ({ children }: { children: ReactNode; }) => <>{children}</>;
+
+interface TitleProp {
+  children?: ReactNode;
+} 
+const Title = ({ children }: TitleProp) => <>{children}</>;
+
+interface SubtitleProp {
+  children?: ReactNode;
+}
+const Subtitle = ({ children }: SubtitleProp) => <>{children}</>;
 
 AppTopBar.LeadingNavigation = LeadingNavigation;
 AppTopBar.TrailingNavigation = TrailingIcon;
