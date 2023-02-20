@@ -1,7 +1,6 @@
 import { HTMLAttributes, ReactElement, ReactNode, useState, useRef, useEffect, useLayoutEffect, ForwardedRef, forwardRef } from "react";
 import useScrollPosition from "@react-hook/window-scroll";
 
-
 import { classnames } from "../../Utilities";
 
 interface AppTopBarProps extends HTMLAttributes<HTMLDivElement> {
@@ -13,7 +12,7 @@ type AllAcceptingChildren = LeadingNavigationProp | TrailingIconProp | TitleProp
 
 const normalize = (val: number, min: number, max: number) => (val - min) / (max - min);
 
-const AppTopBar = ({ elevation, className, children, ...args }: AppTopBarProps) => {
+const AppTopBar = ({ elevation, children, ...args }: AppTopBarProps) => {
   // If children is not an array, make it an array of only itself
   children = Array.isArray(children) ? children : [children];
 
@@ -54,11 +53,9 @@ const AppTopBar = ({ elevation, className, children, ...args }: AppTopBarProps) 
     return () => window.removeEventListener("resize", onTopbarHeight);
   }, [compactTitleRef.current]);
 
-
   return (
     <>
       <CompactHeadline
-        className={className}
         {...args}
         title={title}
         titleClassName={onScrollOpacity >= 0.2 ? "opacity-1" : null}
@@ -67,13 +64,13 @@ const AppTopBar = ({ elevation, className, children, ...args }: AppTopBarProps) 
         elevation={elevation}
         ref={compactTitleRef}
       />
-
-      {/* Headline */}
-      <div className={classnames("overflow-hidden", className)} {...args}>
-        <div style={{paddingTop: compactTitleHeight}}>
-          <Headline title={title} subtitle={subtitle} ref={titleRef} />
-        </div>
-      </div>
+      <Headline
+        {...args}
+        style={{ paddingTop: compactTitleHeight, ...args.style }}
+        title={title}
+        subtitle={subtitle}
+        ref={titleRef}
+      />
     </>
   );
 };
@@ -92,10 +89,10 @@ const CompactHeadline = forwardRef<HTMLDivElement, CompactHeadlineProp>(
     ref: ForwardedRef<HTMLDivElement>
   ) => { 
     return (
-      <div className="fixed top-0 left-0 right-0 h-fit z-10">
+      <div className="fixed top-0 left-0 right-0 h-fit z-10" ref={ref}>
         <div className="relative">
           <div className={classnames("bg-surface", className)} {...args}>
-            <div className="flex flex-row px-1 pt-2 pb-1 justify-between" ref={ref}>
+            <div className="flex flex-row px-1 pt-2 pb-1 justify-between">
               {/* Leading Navigation */}
               <div className="flex flex-row items-center justify-center">
                 <div className="p-1 text-on-surface min-w-[0.8rem]">
@@ -144,26 +141,26 @@ interface HeadlineProp extends Omit<HTMLAttributes<HTMLDivElement>, "title"> {
 
 const Headline = forwardRef<HTMLDivElement, HeadlineProp>(
   (
-    { title, subtitle, ...args }: HeadlineProp,
+    { title, subtitle, className, ...args }: HeadlineProp,
     ref: ForwardedRef<HTMLDivElement>
   ) => {
     return (
-      <div
-        className={classnames(
-          "flex flex-row items-center pb-2 bg-surface",
-          "pt-6 md:pt-6",
-          "px-6 md:px-4",
-        )}
-        ref={ref}
-        {...args}
-      >
-        <div className="grow space-y-1">
-          <h1 className={classnames("text-on-surface font-headline font-bold", "text-2xl md:text-3xl")}>
-            {title}
-          </h1>
-          <h2 className={classnames("text-outline font-medium", "text-md md:text-lg")}>
-            {subtitle}
-          </h2>
+      <div className={classnames("overflow-hidden", className)} {...args} ref={ref}>
+        <div
+          className={classnames(
+            "flex flex-row items-center pb-2 bg-surface",
+            "pt-6 md:pt-6",
+            "px-6 md:px-4",
+          )}
+        >
+          <div className="grow space-y-1">
+            <h1 className={classnames("text-on-surface font-headline font-bold", "text-2xl md:text-3xl")}>
+              {title}
+            </h1>
+            <h2 className={classnames("text-outline font-medium", "text-md md:text-lg")}>
+              {subtitle}
+            </h2>
+          </div>
         </div>
       </div>
     );
