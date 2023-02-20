@@ -166,16 +166,24 @@ const Review = () => {
           className={classnames("flex-shrink-0 w-full text-left", styles.main)}
         >
           <header className="w-full p-4 text-xl">
-            <AppTopBar courseId={currentCourse.key} description={currentCourse.topic}/>
+            <AppTopBar
+              courseId={`${currentCourse.title} ${currentCourse.number}`}
+              description={currentCourse.topic}
+            />
           </header>
           <div className="flex flex-col md:flex-row">
+            <CourseInfo
+              hours="H(3-2T)"
+              department="Computer Science"
+              description="This course is an introduction to the design and analysis of algorithms. Topics include: algorithmic problem solving, algorithmic efficiency, sorting and searching, divide-and-conquer, greedy algorithms, dynamic programming, and graph algorithms. Prerequisite: CSE 143 or equivalent."
+            />
             <div className="w-full md:hidden flex flex-row">
               <button
                 className={classnames(
                   "w-full bg-gray-300 p-2",
                   selectedTab === Tab.Assessments && "bg-red-500"
                 )}
-                onClick={() => setSelectedTab(0)}
+                onClick={() => setSelectedTab(Tab.Assessments)}
               >
                 Assessments
               </button>
@@ -184,7 +192,7 @@ const Review = () => {
                   "w-full bg-gray-300 p-2",
                   selectedTab === Tab.Document && "bg-red-500"
                 )}
-                onClick={() => setSelectedTab(1)}
+                onClick={() => setSelectedTab(Tab.Document)}
               >
                 Document
               </button>
@@ -195,16 +203,12 @@ const Review = () => {
                 "md:w-1/2",
                 "p-4",
                 "h-screen",
-                selectedTab === Tab.Document && "hidden md:block"
+                selectedTab === Tab.Document && "hidden",
+                "md:block"
               )}
             >
               {editingAssessment === null ? (
                 <>
-                  <CourseInfo
-                    hours="H(3-2T)"
-                    department="Computer Science"
-                    description="This course is an introduction to the design and analysis of algorithms. Topics include: algorithmic problem solving, algorithmic efficiency, sorting and searching, divide-and-conquer, greedy algorithms, dynamic programming, and graph algorithms. Prerequisite: CSE 143 or equivalent."
-                  />
                   <div
                     className={classnames(
                       "w-full",
