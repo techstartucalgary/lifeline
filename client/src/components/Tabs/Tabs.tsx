@@ -8,7 +8,7 @@ export interface TabsProps {
 
 function Tabs({ selectedTab, setSelectedTab }: TabsProps) {
   return (
-    <>
+    <div className="w-full md:hidden flex flex-row">
       <button
         className={classnames(
           "w-full bg-gray-300 p-2",
@@ -27,7 +27,7 @@ function Tabs({ selectedTab, setSelectedTab }: TabsProps) {
       >
         Document
       </button>
-    </>
+    </div>
   );
 }
 
