@@ -169,8 +169,9 @@ const Review = () => {
         >
           <header className="w-full p-4 text-xl">
             <AppTopBar
-              courseId={`${currentCourse.title} ${currentCourse.number}`}
+              courseName={`${currentCourse.title} ${currentCourse.number}`}
               description={currentCourse.topic}
+              handleBackClick={() => onCourseClick(null)}
             />
           </header>
           <div className="flex flex-col md:flex-row">
