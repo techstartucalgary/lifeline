@@ -38,3 +38,4 @@ const Headline = forwardRef<HTMLDivElement, HeadlineProp>(
 Headline.displayName = "Headline";
 
 export default Headline;
+export type { HeadlineProp };

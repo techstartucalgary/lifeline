@@ -65,3 +65,4 @@ const CompactHeadline = forwardRef<HTMLDivElement, CompactHeadlineProp>(
 CompactHeadline.displayName = "CompactHeadline";
 
 export default CompactHeadline;
+export type { CompactHeadlineProp };
