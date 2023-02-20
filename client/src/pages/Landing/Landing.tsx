@@ -72,7 +72,7 @@ export default function Landing() {
             )}
           >
             <div className="flex flex-col">
-              <div className={classnames("font-semibold font-headline tracking-[-0.075rem] sm:tracking-[-0.1rem]")}>
+              <div className={classnames("font-semibold tracking-[-0.075rem] sm:tracking-[-0.1rem]")}>
                 <div className="font-headline whitespace-nowrap text-primary bg-surface-variant text-2xl py-4 px-6 rounded-full w-fit -rotate-6">A better way to</div>
                 <div
                   className={classnames(
@@ -171,9 +171,12 @@ export default function Landing() {
           <img src={blob3} alt="" className={classnames(styles.blob, "absolute w-[32rem] left-0 top-[50%] translate-x-[-50%] sm:translate-x-[-40%] lg:translate-x-[-90%] translate-y-[-10%]")} aria-hidden={true} />
 
           <div className="space-y-2">
-            <p className={classnames("text-on-surface font-semibold", "text-1.5xl sm:text-3xl md:text-3xl lg:text-3xl")}>
-              Easily integrates into your favourite calendar
-            </p>
+            <div className="flex flex-col justify-center items-center">
+              <p className="font-headline font-bold whitespace-nowrap text-primary bg-surface-variant text-2xl py-4 px-6 rounded-full w-fit -rotate-6">Easily integrated into</p>
+              <p className={classnames("text-on-surface font-display uppercase mt-6", "text-1.5xl sm:text-3xl md:text-3xl lg:text-3xl")}>
+              your favourite calendar
+              </p>
+            </div>
             <div className="text-on-surface-variant flex justify-center">
               <p className="lg:w-8/12">
                 Lifeline generates your schedule in a convenient format, allowing you
