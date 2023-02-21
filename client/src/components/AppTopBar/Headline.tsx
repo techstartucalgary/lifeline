@@ -27,14 +27,14 @@ const Headline = forwardRef<HTMLDivElement, HeadlineProp>(
         >
           <div className="grow space-y-1">
             <h1 className={classnames(
-              "text-on-surface font-headline font-bold", "text-2xl md:text-3xl",
+              "text-on-surface font-headline font-bold", "text-3xl md:text-4xl",
               "transition-opacity duration-100 ease-emphasized-accelerate opacity-0",
               titleClassName
             )}>
               {title}
             </h1>
             <h2 className={classnames(
-              "text-outline font-medium", "text-md md:text-lg",
+              "text-outline font-medium", "text-lg md:text-xl",
               "transition-opacity duration-100 ease-emphasized-accelerate opacity-0",
               subtitleClassName
             )}>
