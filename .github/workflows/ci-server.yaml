@@ -57,4 +57,5 @@ jobs:
         run: |
           cd server/src
           pip install -r ../requirements.txt
+          pip install -r ../requirements-dev.txt
           pytest test_app.py
