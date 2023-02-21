@@ -78,12 +78,12 @@ export default function Landing() {
                   className={classnames(
                     "font-display uppercase mt-6",
                     "text-on-background",
-                    "text-5xl sm:text-6xl md:text-7xl xl:text-7xl",
+                    "text-5xl sm:text-6xl md:text-7xl xl:text-6xl",
                     "pb-2",
                     styles.shadow
                   )}
                 >
-                  organize deadlines
+                  organize<br />deadlines
                 </div>
               </div>
 
@@ -115,7 +115,7 @@ export default function Landing() {
               "flex justify-center lg:justify-start",
             )}
           >
-            <img src={wfh1} className="w-10/12 max-w-sm md:w-8/12 md:max-w-lg lg:scale-125 lg:w-full lg:max-w-full" alt="a girl using laptop and concentrating in work on her desk" />
+            <img src={wfh1} className="w-10/12 max-w-sm md:w-8/12 md:max-w-lg lg:scale-110 lg:w-full lg:max-w-full" alt="a girl using laptop and concentrating in work on her desk" />
           </div>
         </div>
 
