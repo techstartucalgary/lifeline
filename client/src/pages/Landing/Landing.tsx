@@ -72,13 +72,20 @@ export default function Landing() {
             )}
           >
             <div className="flex flex-col">
-              <div className={classnames("font-semibold tracking-[-0.075rem] sm:tracking-[-0.1rem]")}>
-                <div className="font-headline whitespace-nowrap text-primary bg-surface-variant text-2xl py-4 px-6 rounded-full w-fit -rotate-6">A better way to</div>
+              <div className={classnames("font-semibold tracking-[-0.075rem] sm:tracking-[-0.1rem]", "flex flex-col sm:items-center lg:items-start")}>
+                <div
+                  className={classnames(
+                    "font-headline whitespace-nowrap text-primary bg-surface-variant text-xl md:text-2xl",
+                    "py-4 px-6 rounded-full w-fit -rotate-6 text-center",
+                  )}
+                >
+                  A better way to
+                </div>
                 <div
                   className={classnames(
                     "font-display uppercase mt-6",
                     "text-on-background",
-                    "text-5xl sm:text-6xl md:text-7xl xl:text-6xl",
+                    "text-5xl sm:text-6xl md:text-7xl xl:text-7xl",
                     "pb-2",
                     styles.shadow
                   )}
