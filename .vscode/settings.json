@@ -21,5 +21,6 @@
   "python.formatting.blackArgs": ["--line-length", "100"],
   "python.linting.enabled": true,
   "python.linting.pylintEnabled": true,
+  "python.analysis.typeCheckingMode": "basic",
   "git.alwaysSignOff": true
 }

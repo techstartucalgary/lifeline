@@ -8,21 +8,21 @@ from fastapi.middleware.cors import CORSMiddleware
 from mangum import Mangum
 from handlers import calendar_handler, file_handler
 
-prod = "LAMBDA_TASK_ROOT" in environ
+IS_IN_PROD = "LAMBDA_TASK_ROOT" in dict(environ)
 
 app = FastAPI(
     title="Lifeline Server",
     description="Server for the Lifeline project",
     version="0.1.0",
-    docs_url="/docs" if not prod else None,
-    redoc_url="/redoc" if not prod else None,
+    docs_url="/docs" if not IS_IN_PROD else None,
+    redoc_url="/redoc" if not IS_IN_PROD else None,
 )
 handler = Mangum(app)
 
 
 origins = (
     ["https://lifeline.techstartucalgary.com"]
-    if prod
+    if IS_IN_PROD
     else ["http://localhost:3000", "http://127.0.0.1:3000"]
 )
 
