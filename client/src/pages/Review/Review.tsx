@@ -11,53 +11,9 @@ import EditAssessment from "../../components/EditAssessment/EditAssessment";
 import CourseInfo from "../../components/CourseInfo";
 import AppTopBar, { LeadingNavigation, TrailingIcon , Title, Subtitle } from "../../components/AppTopBar";
 import Tabs from "../../components/Tabs/Tabs";
+import { default as CoursePanel } from "./Course";
 
-const testState: Courses = [
-  {
-    code: "PSYC",
-    number: 203,
-    title: "Psychology",
-    key: "psyc-203",
-    topic: "Psychology of Everyday Life",
-    assessments: [
-      {
-        name: "Identity Assignment",
-        date: "2021-10-21T18:00:00.000",
-        weight: "6%",
-      },
-      {
-        name: "Coping Profile Assignment",
-        date: "2021-10-29T18:00:00.000",
-        weight: "2%",
-      },
-      {
-        name: "Self-Reflection/Goal Setting Assignment",
-        date: "2021-12-07T18:00:00.000",
-        weight: "7%",
-      },
-      {
-        name: "Experiential-Learning/Article-Evaluation Course Component",
-        date: "2021-12-08T23:59:59.999",
-        weight: "4%",
-      },
-      {
-        name: "Exam 1",
-        date: "2021-10-14T00:00:00.000",
-        weight: "25%",
-      },
-      {
-        name: "Exam 2",
-        date: "2021-11-18T00:00:00.000",
-        weight: "25%",
-      },
-      {
-        name: "Exam 3/Final Exam",
-        date: "",
-        weight: "31%",
-      },
-    ],
-  },
-];
+import testState from "./data";
 
 // Enum for the tabs
 export enum Tab {
@@ -68,7 +24,6 @@ export enum Tab {
 const Review = () => {
   const { courseKey: courseKeyUrlParam } = useParams();
 
-  const [selectedTab, setSelectedTab] = useState<Tab>(Tab.Assessments);
   const [courses, setCourses] = useState<Courses>(testState);
   const [currentCourseKey, setCurrentCourseKey] = useState<string | null>(null);
   const [editingAssessment, setEditingAssessment] = useState<{
@@ -210,118 +165,19 @@ const Review = () => {
             style={{ paddingLeft: mainMarginLeft }}
           >
             {/* Course page */}
-            <div className="flex flex-col md:flex-row">
-              <section
-                className={classnames(
-                  "w-full",
-                  "md:w-1/2",
-                  "p-4"
-                )}
-              >
-                <CourseInfo
-                  hours="H(3-2T)"
-                  department="Computer Science"
-                  description="This course is an introduction to the design and analysis of algorithms. Topics include: algorithmic problem solving, algorithmic efficiency, sorting and searching, divide-and-conquer, greedy algorithms, dynamic programming, and graph algorithms. Prerequisite: CSE 143 or equivalent."
-                />
-                <Tabs
-                  selectedTab={selectedTab}
-                  setSelectedTab={setSelectedTab}
-                />
-                {editingAssessment === null ? (
-                  <div
-                    className={classnames(
-                      selectedTab === Tab.Document && "hidden md:block",
-                      "w-full"
-                    )}
-                  >
-                    <div
-                      className={classnames(
-                        "hidden",
-                        "md:flex",
-                        "md:flex-row",
-                        "w-full",
-                        "justify-between",
-                        "items-center",
-                        "mb-3"
-                      )}
-                    >
-                      <h1
-                        className={classnames("text-sys-primary", "font-bold")}
-                      >
-                        ASSESSMENTS
-                      </h1>
-                      <Button
-                        variant="filled"
-                        className={classnames("px-5", "py-2")}
-                      >
-                        <span
-                          className={classnames(
-                            "material-symbols-outlined",
-                            "text-4xl"
-                          )}
-                        >
-                          add
-                        </span>
-                      </Button>
-                    </div>
-                    <ul className="flex flex-col">
-                      {currentCourse.assessments.map((assessment, index) => (
-                        <AssessmentCard
-                          key={index}
-                          assessment={assessment}
-                          onAssessmentClick={() => {
-                            setEditingAssessment({ assessment, index });
-                          }}
-                        />
-                      ))}
-                    </ul>
-                  </div>
-                ) : (
-                  <div className={classnames(selectedTab === Tab.Document && "hidden md:block")}>
-                    <EditAssessment
-                      assessment={editingAssessment.assessment}
-                      onClose={() => setEditingAssessment(null)}
-                      onSave={(newAssessment: Assessment) => {
-                        setCourses(
-                          courses.map((course) => {
-                            if (course.key === currentCourseKey) {
-                              course.assessments[editingAssessment.index] =
-                                newAssessment;
-                            }
-                            return course;
-                          })
-                        );
-                        setEditingAssessment(null);
-                      }}
-                    />
-                  </div>
-                )}
-              </section>
-
-              {/* Document */}
-              <section
-                className={classnames(
-                  "w-full",
-                  "md:w-1/2",
-                  "p-4",
-                  selectedTab === Tab.Assessments && "hidden md:block"
-                )}
-              >
-                <img
-                  src="../pdf.png"
-                  alt="the pdf viewer"
-                  className={classnames(
-                    "border-x",
-                    "border-y",
-                    "border-dashed",
-                    "border-gray-400",
-                    "rounded-3xl",
-                    "w-full",
-                    "mt-2"
-                  )}
-                />
-              </section>
-            </div>
+            <CoursePanel
+              course={currentCourse}    
+              onChangeAssessment={(assessment, index) => {
+                setCourses(
+                  courses.map((course) => {
+                    if (course.key === currentCourseKey) {
+                      course.assessments[index] = assessment;
+                    }
+                    return course;
+                  })
+                );
+              }}
+            />
           </main>
         </>
       )}
