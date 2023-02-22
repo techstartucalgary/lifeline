@@ -3,12 +3,12 @@ import AssessmentCard from "../../components/AssessmentCard";
 import { Button } from "../../components/Button";
 import { Assessment } from "../../logic/icsGen";
 
-interface AssessmentProp {
+interface AssessmentPanelProp {
   assessments: Assessment[];
   onAssessmentClick(assessment: Assessment, index: number): void;
 }
 
-const Assessment = ({ assessments, onAssessmentClick }: AssessmentProp) => {
+const AssessmentPanel = ({ assessments, onAssessmentClick }: AssessmentPanelProp) => {
   return (
     <>
       <div
@@ -37,5 +37,5 @@ const Assessment = ({ assessments, onAssessmentClick }: AssessmentProp) => {
   );
 };
 
-export default Assessment;
-export type { AssessmentProp };
+export default AssessmentPanel;
+export type { AssessmentPanelProp as AssessmentProp };

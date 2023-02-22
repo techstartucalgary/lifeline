@@ -6,16 +6,16 @@ import Tabs, { Tab } from "../../components/Tabs";
 import { Assessment, Course } from "../../logic/icsGen";
 import EditAssessment from "../../components/EditAssessment";
 
-import { default as AssessmentPanel } from "./Assessment";
-import Document from "./Document";
+import AssessmentPanel from "./AssessmentPanel";
+import DocumentPanel from "./DocumentPanel";
 
 
-interface CourseProp {
+interface CoursePanelProp {
   course: Course;
   onChangeAssessment(assessment: Assessment, index: number): void;
 }
 
-const Course = ({ course, onChangeAssessment }: CourseProp) => {
+const CoursePanel = ({ course, onChangeAssessment }: CoursePanelProp) => {
 
   const [selectedTab, setSelectedTab] = useState<Tab>(Tab.Assessments);
   const [editingAssessment, setEditingAssessment] = useState<{
@@ -71,12 +71,12 @@ const Course = ({ course, onChangeAssessment }: CourseProp) => {
             selectedTab === Tab.Assessments && "hidden md:block"
           )}
         >
-          <Document />
+          <DocumentPanel />
         </section>
       </div>
     </>
   );
 };
 
-export default Course;
-export type { CourseProp };
+export default CoursePanel;
+export type { CoursePanelProp };

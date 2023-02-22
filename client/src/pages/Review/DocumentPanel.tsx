@@ -1,5 +1,5 @@
 
-const Document = () => {
+const DocumentPanel = () => {
   return (
     <>
       <img
@@ -11,4 +11,4 @@ const Document = () => {
   );
 };
 
-export default Document;
+export default DocumentPanel;

@@ -7,7 +7,7 @@ import NavigationDrawer from "../../components/NavigationDrawer";
 import { IconButton } from "../../components/Button";
 
 import AppTopBar, { LeadingNavigation, TrailingIcon , Title, Subtitle } from "../../components/AppTopBar";
-import { default as CoursePanel } from "./Course";
+import CoursePanel from "./CoursePanel";
 
 import testState from "./data";
 
