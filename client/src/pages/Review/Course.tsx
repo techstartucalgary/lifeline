@@ -6,7 +6,7 @@ import Tabs, { Tab } from "../../components/Tabs";
 import { Assessment, Course } from "../../logic/icsGen";
 import EditAssessment from "../../components/EditAssessment";
 
-import {default as AssessmentPanel} from "./Assessment";
+import { default as AssessmentPanel } from "./Assessment";
 import Document from "./Document";
 
 
@@ -64,7 +64,6 @@ const Course = ({ course, onChangeAssessment }: CourseProp) => {
           )}
         </section>
 
-        {/* Document */}
         <section
           className={classnames(
             "p-4",
