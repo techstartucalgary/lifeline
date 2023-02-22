@@ -26,7 +26,7 @@ axios.defaults.timeout = 30000;
 
 function App() {
   return (
-    <div className="app bg-sys-background">
+    <>
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Landing />} />
@@ -37,7 +37,7 @@ function App() {
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
-    </div>
+    </>
   );
 }
 
