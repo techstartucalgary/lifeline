@@ -1,15 +1,16 @@
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect, useMemo, useRef, useLayoutEffect } from "react";
 import { useParams } from "react-router-dom";
-import NavigationDrawer from "../../components/NavigationDrawer";
-import AssessmentCard from "../../components/AssessmentCard";
 import { classnames } from "../../Utilities";
 import { Course, Courses, Assessment } from "../../logic/icsGen";
-import Button from "../../components/Button";
+
+import NavigationDrawer from "../../components/NavigationDrawer";
+import AssessmentCard from "../../components/AssessmentCard";
+import { Button, IconButton } from "../../components/Button";
 import EditAssessment from "../../components/EditAssessment/EditAssessment";
 
-import styles from "./Review.module.css";
 import CourseInfo from "../../components/CourseInfo";
-import AppTopBar from "../../components/AppTopBar";
+import AppTopBar, { LeadingNavigation, TrailingIcon , Title, Subtitle } from "../../components/AppTopBar";
+import Tabs from "../../components/Tabs/Tabs";
 
 const testState: Courses = [
   {
@@ -59,7 +60,7 @@ const testState: Courses = [
 ];
 
 // Enum for the tabs
-enum Tab {
+export enum Tab {
   Assessments,
   Document,
 }
@@ -115,7 +116,7 @@ const Review = () => {
     setCourses([...courses]);
   };
 
-  // Memoize the course key lookup in format of { [key]: course } for performance
+  // Memorize the course key lookup in format of { [key]: course } for performance
   const courseKeyLookup = useMemo(
     () =>
       Object.fromEntries(
@@ -124,7 +125,7 @@ const Review = () => {
     [courses]
   );
 
-  // Memoize the course based on the course key
+  // Memorize the course based on the course key
   const currentCourse = useMemo(
     () =>
       currentCourseKey && currentCourseKey in courseKeyLookup
@@ -143,16 +144,34 @@ const Review = () => {
     }
   };
 
+  // For NavigationDrawer adapt in smaller desktop screens
+  const navRef = useRef<HTMLDivElement>(null);
+  const mainRef = useRef<HTMLDivElement>(null);
+  const [mainMarginLeft, setMainMarginLeft] = useState(-1);
+  useLayoutEffect(() => {
+    const onMainMarginLeft = () => {
+      if (navRef.current && mainRef.current) {
+        const marginLeft = mainRef.current.offsetLeft || 0;
+        const navWidth = navRef.current?.offsetWidth || 0;
+        setMainMarginLeft(Math.max(navWidth - marginLeft, 0));
+      }
+    };
+    onMainMarginLeft();
+    window.addEventListener("resize", onMainMarginLeft);
+    return () => window.removeEventListener("resize", onMainMarginLeft);
+  }, [navRef.current, mainRef.current, currentCourseKey]);
+
+  const onClickReturn = () => setCurrentCourseKey(null);
+
   return (
-    <div className="flex flex-row justify-between">
+    <>
       <nav
         className={classnames(
-          "md:w-64",
-          "w-full",
-          "flex-shrink-0",
+          "fixed top-0 left-0 w-full bg-slate-500 md:w-64",
           currentCourseKey && "hidden",
-          "md:block"
+          "md:block z-20"
         )}
+        ref={navRef}
       >
         <NavigationDrawer
           courses={courses}
@@ -162,134 +181,151 @@ const Review = () => {
         />
       </nav>
       {currentCourse && (
-        <main
-          className={classnames("flex-shrink-0 w-full text-left", styles.main)}
-        >
-          <header className="w-full p-4 text-xl">
-            <AppTopBar courseId={currentCourse.key} description={currentCourse.topic}/>
-          </header>
-          <div className="flex flex-col md:flex-row">
-            <div className="w-full md:hidden flex flex-row">
-              <button
+        <>
+          {/* App top bar */}
+          <div className="--fixed top-0 left-0 right-0 h-fit z-10">
+            <AppTopBar className="max-w-7xl mx-auto" style={{ paddingLeft: mainMarginLeft }}>
+              {/* Icons */}
+              <LeadingNavigation className="block md:hidden">
+                <IconButton className="text-on-surface" icon="arrow_back" onClick={onClickReturn} />
+              </LeadingNavigation>
+              <TrailingIcon>
+                <IconButton className="text-on-surface-variant hidden md:block" icon="error" />
+                <IconButton className="text-on-surface-variant hidden md:block" icon="delete" />
+                <IconButton className="text-on-surface-variant block md:hidden" icon="more_vert" />
+              </TrailingIcon >
+
+              {/* Titles */}
+              <Title>{currentCourse.title} {currentCourse.number}</Title>
+              <Subtitle>{currentCourse.topic}</Subtitle>
+            </AppTopBar>
+          </div>
+          
+          <main
+            className={classnames(
+              "max-w-7xl mx-auto relative",
+              (mainMarginLeft < 0) && "hidden"
+            )}
+            ref={mainRef}
+            style={{ paddingLeft: mainMarginLeft }}
+          >
+            {/* Course page */}
+            <div className="flex flex-col md:flex-row">
+              <section
                 className={classnames(
-                  "w-full bg-gray-300 p-2",
-                  selectedTab === Tab.Assessments && "bg-red-500"
+                  "w-full",
+                  "md:w-1/2",
+                  "p-4"
                 )}
-                onClick={() => setSelectedTab(0)}
               >
-                Assessments
-              </button>
-              <button
-                className={classnames(
-                  "w-full bg-gray-300 p-2",
-                  selectedTab === Tab.Document && "bg-red-500"
-                )}
-                onClick={() => setSelectedTab(1)}
-              >
-                Document
-              </button>
-            </div>
-            <section
-              className={classnames(
-                "w-full",
-                "md:w-1/2",
-                "p-4",
-                "h-screen",
-                selectedTab === Tab.Document && "hidden md:block"
-              )}
-            >
-              {editingAssessment === null ? (
-                <>
-                  <CourseInfo
-                    hours="H(3-2T)"
-                    department="Computer Science"
-                    description="This course is an introduction to the design and analysis of algorithms. Topics include: algorithmic problem solving, algorithmic efficiency, sorting and searching, divide-and-conquer, greedy algorithms, dynamic programming, and graph algorithms. Prerequisite: CSE 143 or equivalent."
-                  />
+                <CourseInfo
+                  hours="H(3-2T)"
+                  department="Computer Science"
+                  description="This course is an introduction to the design and analysis of algorithms. Topics include: algorithmic problem solving, algorithmic efficiency, sorting and searching, divide-and-conquer, greedy algorithms, dynamic programming, and graph algorithms. Prerequisite: CSE 143 or equivalent."
+                />
+                <Tabs
+                  selectedTab={selectedTab}
+                  setSelectedTab={setSelectedTab}
+                />
+                {editingAssessment === null ? (
                   <div
                     className={classnames(
-                      "w-full",
-                      "flex flex-row",
-                      "justify-between",
-                      "items-center",
-                      "mb-3"
+                      selectedTab === Tab.Document && "hidden md:block",
+                      "w-full"
                     )}
                   >
-                    <h1 className={classnames("text-sys-primary", "font-bold")}>
-                      ASSESSMENTS
-                    </h1>
-                    <Button
-                      variant="filled"
-                      className={classnames("px-5", "py-2")}
+                    <div
+                      className={classnames(
+                        "hidden",
+                        "md:flex",
+                        "md:flex-row",
+                        "w-full",
+                        "justify-between",
+                        "items-center",
+                        "mb-3"
+                      )}
                     >
-                      <span
-                        className={classnames(
-                          "material-symbols-outlined",
-                          "text-4xl"
-                        )}
+                      <h1
+                        className={classnames("text-sys-primary", "font-bold")}
                       >
-                        add
-                      </span>
-                    </Button>
+                        ASSESSMENTS
+                      </h1>
+                      <Button
+                        variant="filled"
+                        className={classnames("px-5", "py-2")}
+                      >
+                        <span
+                          className={classnames(
+                            "material-symbols-outlined",
+                            "text-4xl"
+                          )}
+                        >
+                          add
+                        </span>
+                      </Button>
+                    </div>
+                    <ul className="flex flex-col">
+                      {currentCourse.assessments.map((assessment, index) => (
+                        <AssessmentCard
+                          key={index}
+                          assessment={assessment}
+                          onAssessmentClick={() => {
+                            setEditingAssessment({ assessment, index });
+                          }}
+                        />
+                      ))}
+                    </ul>
                   </div>
-                  <ul className="flex flex-col">
-                    {currentCourse.assessments.map((assessment, index) => (
-                      <AssessmentCard
-                        key={index}
-                        assessment={assessment}
-                        onAssessmentClick={() => {
-                          setEditingAssessment({ assessment, index });
-                        }}
-                      />
-                    ))}
-                  </ul>
-                </>
-              ) : (
-                <EditAssessment
-                  assessment={editingAssessment.assessment}
-                  onClose={() => setEditingAssessment(null)}
-                  onSave={(newAssessment: Assessment) => {
-                    setCourses(
-                      courses.map((course) => {
-                        if (course.key === currentCourseKey) {
-                          course.assessments[editingAssessment.index] =
-                            newAssessment;
-                        }
-                        return course;
-                      })
-                    );
-                    setEditingAssessment(null);
-                  }}
-                />
-              )}
-            </section>
-            <section
-              className={classnames(
-                "w-full",
-                "md:w-1/2",
-                "p-4",
-                "h-screen",
-                selectedTab === Tab.Assessments && "hidden md:block"
-              )}
-            >
-              <img
-                src="../pdf.png"
-                alt="the pdf viewer"
-                className={classnames(
-                  "border-x",
-                  "border-y",
-                  "border-dashed",
-                  "border-gray-400",
-                  "rounded-3xl",
-                  "w-full",
-                  "mt-2"
+                ) : (
+                  <div className={classnames(selectedTab === Tab.Document && "hidden md:block")}>
+                    <EditAssessment
+                      assessment={editingAssessment.assessment}
+                      onClose={() => setEditingAssessment(null)}
+                      onSave={(newAssessment: Assessment) => {
+                        setCourses(
+                          courses.map((course) => {
+                            if (course.key === currentCourseKey) {
+                              course.assessments[editingAssessment.index] =
+                                newAssessment;
+                            }
+                            return course;
+                          })
+                        );
+                        setEditingAssessment(null);
+                      }}
+                    />
+                  </div>
                 )}
-              />
-            </section>
-          </div>
-        </main>
+              </section>
+
+              {/* Document */}
+              <section
+                className={classnames(
+                  "w-full",
+                  "md:w-1/2",
+                  "p-4",
+                  selectedTab === Tab.Assessments && "hidden md:block"
+                )}
+              >
+                <img
+                  src="../pdf.png"
+                  alt="the pdf viewer"
+                  className={classnames(
+                    "border-x",
+                    "border-y",
+                    "border-dashed",
+                    "border-gray-400",
+                    "rounded-3xl",
+                    "w-full",
+                    "mt-2"
+                  )}
+                />
+              </section>
+            </div>
+          </main>
+        </>
       )}
-      <div className="w-64"></div>
-    </div>
+    </>
   );
 };
 

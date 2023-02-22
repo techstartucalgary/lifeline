@@ -1,62 +1,93 @@
-import { HTMLAttributes } from "react";
+import { HTMLAttributes, ReactElement, useState, useRef, useLayoutEffect } from "react";
+import useScrollPosition from "@react-hook/window-scroll";
+
+import CompactHeadline from "./CompactHeadline";
+import Headline from "./Headline";
+import {
+  LeadingNavigation,
+  LeadingNavigationProp,
+  TrailingIcon,
+  TrailingIconProp,
+  Title,
+  TitleProp,
+  Subtitle,
+  SubtitleProp
+} from "./Subcomponents";
 import { classnames } from "../../Utilities";
-import Button from "../../components/Button";
 
 interface AppTopBarProps extends HTMLAttributes<HTMLDivElement> {
-  courseId: string | undefined;
-  description: string | undefined;
+  elevation?: boolean;
+  children: ReactElement<AllAcceptingChildren> | ReactElement<AllAcceptingChildren>[];
 }
 
-const AppTopBar = ({ courseId, description }: AppTopBarProps) => {
-  const format = (courseId: string | undefined) => courseId?.replace("-", " ").toUpperCase();
+type AllAcceptingChildren = LeadingNavigationProp | TrailingIconProp | TitleProp | SubtitleProp;
 
-  // return (
-  //   <div className="flex flex-row flex-1 bg-sys-surface w-full mb-0 pt-8 pb-0">
-  //     <div className="flex flex-row text-left flex-1 items-center ml-4">
-  //       <div className="flex-1">
-  //         <h1 className="text-4xl mt-auto text-on-surface font-headline font-bold md:text-2xl">
-  //           {format(courseId)}
-  //         </h1>
-  //         <h2 className="text-base font-normal text-outline">
-  //           {description}
-  //         </h2>
-  //       </div>
-        
-  //       <Button>
-  //         <span className={classnames("material-symbols-outlined", "hidden md:inline")}>error</span>
-  //       </Button>
-  //       <Button>
-  //         <span className={classnames("material-symbols-outlined", "hidden md:inline ml-4 mr-3")}>delete</span>
-  //       </Button>
-  //       <span className="hidden sm:block">This is displayed in web view and hidden in mobile view.</span>
-        
-  //     </div>
+const AppTopBar = ({ elevation, children, ...args }: AppTopBarProps) => {
+  // If children is not an array, make it an array of only itself
+  children = Array.isArray(children) ? children : [children];
 
-  //   </div>
-  // );
+  // Find elements in children
+  const leadingNavigation = children.find((child) => child != undefined && child.type === LeadingNavigation);
+  const trailingIcon = children.find((child) => child != undefined && child.type === TrailingIcon);
+  const title = children.find((child) => child != undefined && child.type === Title);
+  const subtitle = children.find((child) => child != undefined && child.type === Subtitle);
+
+  // For scrolling
+  const scrollY = useScrollPosition(240);
+
+  // For compact title height
+  const compactHeadlineRef = useRef<HTMLDivElement>(null);
+  const headlineRef = useRef<HTMLDivElement>(null);
+  const [compactHeadlineHeight, setCompactHeadlineHeight] = useState(0);
+  const [headlineHeight, setHeadlineHeight] = useState(0);
+  useLayoutEffect(() => {
+    const chh = compactHeadlineRef.current?.offsetHeight || 0;
+    const hh = headlineRef.current?.offsetHeight || 0;
+
+    const onTopbarHeight = () => {
+      if (compactHeadlineRef.current) {
+        setCompactHeadlineHeight(chh);
+        setHeadlineHeight(hh);
+      }
+    };
+
+    onTopbarHeight();
+    window.addEventListener("resize", onTopbarHeight);
+    return () => window.removeEventListener("resize", onTopbarHeight);
+  }, [compactHeadlineRef.current]);
+
   return (
-    <div className="flex flex-row flex-1 bg-sys-surface w-full mb-0 pt-8 pb-0">
-      <div className="flex flex-row text-left flex-1 items-center ml-4">
-        <div className="flex-1">
-          <h1 className="text-4xl mt-auto text-on-surface font-headline font-bold md:text-2xl">
-            {format(courseId)}
-          </h1>
-          <h2 className="text-base font-normal text-outline">{description}</h2>
-        </div>
-
-        <Button className="hidden md:inline">
-          <span className={classnames("material-symbols-outlined")}>error</span>
-        </Button>
-        <Button className="hidden md:inline">
-          <span
-            className={classnames("material-symbols-outlined", "ml-4", "mr-3")}
-          >
-            delete
-          </span>
-        </Button>
-      </div>
-    </div>
+    <>
+      <CompactHeadline
+        {...args}
+        title={title}
+        titleClassName={classnames("opacity-0", (scrollY > compactHeadlineHeight * 0.75) && "opacity-1")}
+        leadingNavigation={leadingNavigation}
+        trailingIcon={trailingIcon}
+        elevation={elevation}
+        elevationClassName={classnames("opacity-0", (scrollY > headlineHeight) && "opacity-1")}
+        ref={compactHeadlineRef}
+      />
+      <Headline
+        {...args}
+        style={{ marginTop: compactHeadlineHeight, ...args.style }}
+        title={title}
+        subtitle={subtitle}
+        titleClassName={classnames("opacity-1", (scrollY > compactHeadlineHeight * 0.75) && "opacity-0")}
+        subtitleClassName={classnames("opacity-1", (scrollY > compactHeadlineHeight * 0.75) && "opacity-0")}
+        ref={headlineRef}
+      />
+    </>
   );
 };
 
+
+AppTopBar.LeadingNavigation = LeadingNavigation;
+AppTopBar.TrailingNavigation = TrailingIcon;
+AppTopBar.Title = Title;
+AppTopBar.Subtitle = Subtitle;
+
 export default AppTopBar;
+export type { AppTopBarProps };
+export { LeadingNavigation, TrailingIcon, Title, Subtitle };
+export type { LeadingNavigationProp, TrailingIconProp, TitleProp, SubtitleProp };

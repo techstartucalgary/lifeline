@@ -1,6 +1,6 @@
 import axios from "axios";
 import { classnames } from "../../Utilities";
-import Button from "../Button";
+import { Button } from "../Button";
 import jsonToICS, { Course, Courses } from "../../logic/icsGen";
 import { useState, useRef } from "react";
 
@@ -71,17 +71,19 @@ const NavigationDrawer = ({
               currentCourse?.key === course.key && "bg-primary-90"
             )}
           >
-            <span className="material-symbols-outlined text-gray-600 text-base flex items-center justify-center">
-              {
-                ["circle", "square", "pentagon"][
-                  Math.abs(
-                    course.key
-                      .split("")
-                      .reduce((a, b) => a + b.charCodeAt(0), 0)
-                  ) % 3
-                ]
-              }
-            </span>
+            <div className="flex items-center justify-center">
+              <span className="material-symbols-outlined text-gray-600 text-base">
+                {
+                  ["circle", "square", "pentagon"][
+                    Math.abs(
+                      course.key
+                        .split("")
+                        .reduce((a, b) => a + b.charCodeAt(0), 0)
+                    ) % 3
+                  ]
+                }
+              </span>
+            </div>
             <div className="flex flex-col ml-2 min-w-0">
               <p className="flex items-center font-bold">
                 {course.code} {course.number}
@@ -93,9 +95,11 @@ const NavigationDrawer = ({
             <p className="ml-auto flex items-center justify-center">
               {course.assessments.length}
             </p>
-            <span className="material-symbols-outlined text-gray-600 items-center justify-center md:hidden">
-              arrow_right
-            </span>
+            <div className="flex items-center justify-center md:hidden">
+              <span className="material-symbols-outlined text-gray-600">
+                arrow_right
+              </span>
+            </div>
           </Button>
         ))}
       {loading.length > 0 && (
