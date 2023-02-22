@@ -137,10 +137,10 @@ const Review = () => {
   const onCourseClick = (course: Course | null) => {
     if (course === null) {
       setCurrentCourseKey(null);
-      setTimeout(() => history.pushState(null, "", "/app"), 10);
+      setTimeout(() => history.pushState(null, "", "/#/app"), 10);
     } else {
       setCurrentCourseKey(course.key);
-      setTimeout(() => history.pushState(null, "", `/app/${course.key}`), 100);
+      setTimeout(() => history.pushState(null, "", `/#/app/${course.key}`), 100);
     }
   };
 
