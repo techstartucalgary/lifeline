@@ -11,7 +11,6 @@ import CourseInfo from "../../components/CourseInfo";
 import AppTopBar from "../../components/AppTopBar";
 import Tabs from "../../components/Tabs/Tabs";
 
-import styles from "./Review.module.css";
 
 const testState: Courses = [
   {
@@ -181,7 +180,7 @@ const Review = () => {
       </nav>
       {currentCourse && (
         <main
-          className={classnames(styles.main, "max-w-7xl mx-auto")}
+          className={classnames("max-w-7xl mx-auto")}
           ref={mainRef}
         >
           <div
