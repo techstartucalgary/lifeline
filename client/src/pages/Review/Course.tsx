@@ -1,12 +1,13 @@
 import { useState } from "react";
+
 import { classnames } from "../../Utilities";
 import CourseInfo from "../../components/CourseInfo";
 import Tabs, { Tab } from "../../components/Tabs";
 import { Assessment, Course } from "../../logic/icsGen";
 import EditAssessment from "../../components/EditAssessment";
+
 import {default as AssessmentPanel} from "./Assessment";
 import Document from "./Document";
-
 
 
 interface CourseProp {
@@ -25,13 +26,7 @@ const Course = ({ course, onChangeAssessment }: CourseProp) => {
   return (
     <>
       <div className="flex flex-col md:flex-row">
-        <section
-          className={classnames(
-            "w-full",
-            "md:w-1/2",
-            "p-4"
-          )}
-        >
+        <section className={classnames("w-full md:w-1/2", "p-4")}>
           <CourseInfo
             hours="H(3-2T)"
             department="Computer Science"
@@ -42,16 +37,19 @@ const Course = ({ course, onChangeAssessment }: CourseProp) => {
             setSelectedTab={setSelectedTab}
           />
           {editingAssessment === null ? (
-            <AssessmentPanel
+            <div
               className={classnames(
+                "w-full",
                 selectedTab === Tab.Document && "hidden md:block",
-                "w-full"
               )}
-              assessments={course.assessments}
-              onAssessmentClick={(assessment: Assessment, index: number) => {
-                setEditingAssessment({ assessment, index });
-              }}
-            />
+            >
+              <AssessmentPanel
+                assessments={course.assessments}
+                onAssessmentClick={(assessment: Assessment, index: number) => {
+                  setEditingAssessment({ assessment, index });
+                }}
+              />
+            </div>
           ) : (
             <div className={classnames(selectedTab === Tab.Document && "hidden md:block")}>
               <EditAssessment
@@ -69,9 +67,8 @@ const Course = ({ course, onChangeAssessment }: CourseProp) => {
         {/* Document */}
         <section
           className={classnames(
-            "w-full",
-            "md:w-1/2",
             "p-4",
+            "w-full md:w-1/2",
             selectedTab === Tab.Assessments && "hidden md:block"
           )}
         >

@@ -66,6 +66,7 @@ const Review = () => {
     [currentCourseKey, courseKeyLookup[currentCourseKey || ""]]
   );
 
+  // Callback for select course in navigation drawer
   const onCourseClick = (course: Course | null) => {
     if (course === null) {
       setCurrentCourseKey(null);
@@ -75,7 +76,6 @@ const Review = () => {
       setTimeout(() => history.pushState(null, "", `/app/${course.key}`), 100);
     }
   };
-
 
   // Callback for when the courses are changed
   const onCoursesChanged = (newCourses: Courses) => {
@@ -99,7 +99,9 @@ const Review = () => {
 
     setCourses([...courses]);
   };
+
   const onClickBack = () => setCurrentCourseKey(null);
+  
   const onChangeAssessment = (assessment: Assessment, index: number) => {
     setCourses(
       courses.map((course) => {
@@ -130,7 +132,7 @@ const Review = () => {
       </nav>
       {currentCourse && (
         <>
-          <div className="top-0 left-0 right-0 h-fit z-10">
+          <div className="z-10">
             <AppTopBar className="max-w-7xl mx-auto" style={{ paddingLeft: mainMarginLeft }}>
               {/* Icons */}
               <LeadingNavigation className="block md:hidden">
