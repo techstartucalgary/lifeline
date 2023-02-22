@@ -6,7 +6,7 @@ import Tabs, { Tab } from "../../components/Tabs";
 import { Assessment, Course } from "../../logic/icsGen";
 import EditAssessment from "../../components/EditAssessment";
 
-import AssessmentPanel from "./AssessmentPanel";
+import AssessmentsPanel from "./AssessmentsPanel";
 import DocumentPanel from "./DocumentPanel";
 
 
@@ -43,7 +43,7 @@ const CoursePanel = ({ course, onChangeAssessment }: CoursePanelProp) => {
                 selectedTab === Tab.Document && "hidden md:block",
               )}
             >
-              <AssessmentPanel
+              <AssessmentsPanel
                 assessments={course.assessments}
                 onAssessmentClick={(assessment: Assessment, index: number) => {
                   setEditingAssessment({ assessment, index });

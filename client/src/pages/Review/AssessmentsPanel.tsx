@@ -8,7 +8,7 @@ interface AssessmentPanelProp {
   onAssessmentClick(assessment: Assessment, index: number): void;
 }
 
-const AssessmentPanel = ({ assessments, onAssessmentClick }: AssessmentPanelProp) => {
+const AssessmentsPanel = ({ assessments, onAssessmentClick }: AssessmentPanelProp) => {
   return (
     <>
       <div
@@ -37,5 +37,5 @@ const AssessmentPanel = ({ assessments, onAssessmentClick }: AssessmentPanelProp
   );
 };
 
-export default AssessmentPanel;
-export type { AssessmentPanelProp as AssessmentProp };
+export default AssessmentsPanel;
+export type { AssessmentPanelProp };
