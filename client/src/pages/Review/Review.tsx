@@ -115,7 +115,7 @@ const Review = () => {
     setCourses([...courses]);
   };
 
-  // Memoize the course key lookup in format of { [key]: course } for performance
+  // Memorize the course key lookup in format of { [key]: course } for performance
   const courseKeyLookup = useMemo(
     () =>
       Object.fromEntries(
@@ -124,7 +124,7 @@ const Review = () => {
     [courses]
   );
 
-  // Memoize the course based on the course key
+  // Memorize the course based on the course key
   const currentCourse = useMemo(
     () =>
       currentCourseKey && currentCourseKey in courseKeyLookup
@@ -158,7 +158,7 @@ const Review = () => {
     onMainMarginLeft();
     window.addEventListener("resize", onMainMarginLeft);
     return () => window.removeEventListener("resize", onMainMarginLeft);
-  }, [navRef.current, mainRef.current]);
+  }, [navRef.current, mainRef.current, currentCourseKey]);
 
   return (
     <>
