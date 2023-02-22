@@ -166,7 +166,7 @@ const Review = () => {
     <>
       <nav
         className={classnames(
-          "fixed top-0 left-0 w-64",
+          "fixed top-0 left-0 w-full bg-slate-500 md:w-64",
           currentCourseKey && "hidden",
           "md:block"
         )}
@@ -180,11 +180,21 @@ const Review = () => {
         />
       </nav>
       {currentCourse && (
-        <main className={classnames(styles.main, "max-w-7xl mx-auto")} ref={mainRef}>
-          <div className={classnames((mainMarginLeft < 0) && "hidden")} style={{ marginLeft: mainMarginLeft }}>
+        <main
+          className={classnames(styles.main, "max-w-7xl mx-auto")}
+          ref={mainRef}
+        >
+          <div
+            className={classnames(mainMarginLeft < 0 && "hidden")}
+            style={{ marginLeft: mainMarginLeft }}
+          >
             {/* App top bar */}
             <header className="p-4 text-xl">
-              <AppTopBar courseId={currentCourse.key} description={currentCourse.topic}/>
+              <AppTopBar
+                courseName={`${currentCourse.title} ${currentCourse.number}`}
+                description={currentCourse.topic}
+                handleBackClick={() => onCourseClick(null)}
+              />
             </header>
 
             {/* Course page */}
@@ -235,7 +245,9 @@ const Review = () => {
                         "mb-3"
                       )}
                     >
-                      <h1 className={classnames("text-sys-primary", "font-bold")}>
+                      <h1
+                        className={classnames("text-sys-primary", "font-bold")}
+                      >
                         ASSESSMENTS
                       </h1>
                       <Button
@@ -283,7 +295,7 @@ const Review = () => {
                   />
                 )}
               </section>
-                
+
               {/* Document */}
               <section
                 className={classnames(
