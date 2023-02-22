@@ -5,10 +5,11 @@ import { Course, Courses, Assessment } from "../../logic/icsGen";
 
 import NavigationDrawer from "../../components/NavigationDrawer";
 import AssessmentCard from "../../components/AssessmentCard";
-import Button from "../../components/Button";
+import { Button, IconButton } from "../../components/Button";
 import EditAssessment from "../../components/EditAssessment/EditAssessment";
+
 import CourseInfo from "../../components/CourseInfo";
-import AppTopBar from "../../components/AppTopBar";
+import AppTopBar, { LeadingNavigation, TrailingIcon , Title, Subtitle } from "../../components/AppTopBar";
 import Tabs from "../../components/Tabs/Tabs";
 
 const testState: Courses = [
@@ -160,13 +161,15 @@ const Review = () => {
     return () => window.removeEventListener("resize", onMainMarginLeft);
   }, [navRef.current, mainRef.current, currentCourseKey]);
 
+  const onClickReturn = () => setCurrentCourseKey(null);
+
   return (
     <>
       <nav
         className={classnames(
           "fixed top-0 left-0 w-full bg-slate-500 md:w-64",
           currentCourseKey && "hidden",
-          "md:block"
+          "md:block z-20"
         )}
         ref={navRef}
       >
@@ -178,20 +181,34 @@ const Review = () => {
         />
       </nav>
       {currentCourse && (
-        <main className={classnames("max-w-7xl mx-auto")} ref={mainRef}>
-          <div
-            className={classnames(mainMarginLeft < 0 && "hidden")}
-            style={{ marginLeft: mainMarginLeft }}
-          >
-            {/* App top bar */}
-            <header className="p-4 text-xl">
-              <AppTopBar
-                courseName={`${currentCourse.title} ${currentCourse.number}`}
-                description={currentCourse.topic}
-                handleBackClick={() => onCourseClick(null)}
-              />
-            </header>
+        <>
+          {/* App top bar */}
+          <div className="--fixed top-0 left-0 right-0 h-fit z-10">
+            <AppTopBar className="max-w-7xl mx-auto" style={{ paddingLeft: mainMarginLeft }}>
+              {/* Icons */}
+              <LeadingNavigation className="block md:hidden">
+                <IconButton className="text-on-surface" icon="arrow_back" onClick={onClickReturn} />
+              </LeadingNavigation>
+              <TrailingIcon>
+                <IconButton className="text-on-surface-variant hidden md:block" icon="error" />
+                <IconButton className="text-on-surface-variant hidden md:block" icon="delete" />
+                <IconButton className="text-on-surface-variant block md:hidden" icon="more_vert" />
+              </TrailingIcon >
 
+              {/* Titles */}
+              <Title>{currentCourse.title} {currentCourse.number}</Title>
+              <Subtitle>{currentCourse.topic}</Subtitle>
+            </AppTopBar>
+          </div>
+          
+          <main
+            className={classnames(
+              "max-w-7xl mx-auto relative",
+              (mainMarginLeft < 0) && "hidden"
+            )}
+            ref={mainRef}
+            style={{ paddingLeft: mainMarginLeft }}
+          >
             {/* Course page */}
             <div className="flex flex-col md:flex-row">
               <section
@@ -305,8 +322,8 @@ const Review = () => {
                 />
               </section>
             </div>
-          </div>
-        </main>
+          </main>
+        </>
       )}
     </>
   );

@@ -1,6 +1,6 @@
 import { classnames } from "../../Utilities";
 import { Tab } from "../../pages/Review";
-import Button from "../Button";
+import { Button } from "../Button";
 
 export interface TabsProps {
   selectedTab: Tab;
