@@ -1,15 +1,17 @@
 import { useState, useEffect, useMemo, useRef, useLayoutEffect } from "react";
 import { useParams } from "react-router-dom";
-import NavigationDrawer from "../../components/NavigationDrawer";
-import AssessmentCard from "../../components/AssessmentCard";
 import { classnames } from "../../Utilities";
 import { Course, Courses, Assessment } from "../../logic/icsGen";
+
+import NavigationDrawer from "../../components/NavigationDrawer";
+import AssessmentCard from "../../components/AssessmentCard";
 import Button from "../../components/Button";
 import EditAssessment from "../../components/EditAssessment/EditAssessment";
-
-import styles from "./Review.module.css";
 import CourseInfo from "../../components/CourseInfo";
 import AppTopBar from "../../components/AppTopBar";
+import Tabs from "../../components/Tabs/Tabs";
+
+import styles from "./Review.module.css";
 
 const testState: Courses = [
   {
@@ -59,7 +61,7 @@ const testState: Courses = [
 ];
 
 // Enum for the tabs
-enum Tab {
+export enum Tab {
   Assessments,
   Document,
 }
