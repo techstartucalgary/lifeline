@@ -1,7 +1,7 @@
 import { useState, useEffect, useMemo, useRef, useLayoutEffect } from "react";
 import { useParams } from "react-router-dom";
 import { classnames } from "../../Utilities";
-import { Course, Courses } from "../../logic/icsGen";
+import { Assessment, Course, Courses } from "../../logic/icsGen";
 
 import NavigationDrawer from "../../components/NavigationDrawer";
 import { IconButton } from "../../components/Button";
@@ -13,9 +13,27 @@ import testState from "./data";
 
 const Review = () => {
   const { courseKey: courseKeyUrlParam } = useParams();
-
   const [courses, setCourses] = useState<Courses>(testState);
   const [currentCourseKey, setCurrentCourseKey] = useState<string | null>(null);
+
+
+  // For NavigationDrawer adapting in smaller desktop screens
+  const navRef = useRef<HTMLDivElement>(null);
+  const mainRef = useRef<HTMLDivElement>(null);
+  const [mainMarginLeft, setMainMarginLeft] = useState(-1);
+  useLayoutEffect(() => {
+    const onMainMarginLeft = () => {
+      if (navRef.current && mainRef.current) {
+        const marginLeft = mainRef.current.offsetLeft || 0;
+        const navWidth = navRef.current?.offsetWidth || 0;
+        setMainMarginLeft(Math.max(navWidth - marginLeft, 0));
+      }
+    };
+    onMainMarginLeft();
+    window.addEventListener("resize", onMainMarginLeft);
+    return () => window.removeEventListener("resize", onMainMarginLeft);
+  }, [navRef.current, mainRef.current, currentCourseKey]);
+
 
   // At first render of the page, check if the course key is valid
   // and assign value to current course key
@@ -29,29 +47,6 @@ const Review = () => {
       setCurrentCourseKey(courseKeyUrlParam);
     }
   }, []);
-
-  // Callback for when the courses are changed
-  const onCoursesChanged = (newCourses: Courses) => {
-    const existingCourseKeys = courses.map((course) => course.key);
-    for (const course of newCourses) {
-      // Numbering undetermined courses
-      if (!course.code || !course.number) {
-        course.code = "Course";
-        course.number = Object.values(courses).length + 1;
-        course.title = "Course";
-      }
-
-      // Generate course key
-      const key = `${course.code}-${course.number}`.toLowerCase();
-      if (existingCourseKeys.includes(key)) continue;
-
-      course.key = key;
-      courses.push(course);
-      existingCourseKeys.push(key);
-    }
-
-    setCourses([...courses]);
-  };
 
   // Memorize the course key lookup in format of { [key]: course } for performance
   const courseKeyLookup = useMemo(
@@ -81,24 +76,40 @@ const Review = () => {
     }
   };
 
-  // For NavigationDrawer adapt in smaller desktop screens
-  const navRef = useRef<HTMLDivElement>(null);
-  const mainRef = useRef<HTMLDivElement>(null);
-  const [mainMarginLeft, setMainMarginLeft] = useState(-1);
-  useLayoutEffect(() => {
-    const onMainMarginLeft = () => {
-      if (navRef.current && mainRef.current) {
-        const marginLeft = mainRef.current.offsetLeft || 0;
-        const navWidth = navRef.current?.offsetWidth || 0;
-        setMainMarginLeft(Math.max(navWidth - marginLeft, 0));
-      }
-    };
-    onMainMarginLeft();
-    window.addEventListener("resize", onMainMarginLeft);
-    return () => window.removeEventListener("resize", onMainMarginLeft);
-  }, [navRef.current, mainRef.current, currentCourseKey]);
 
-  const onClickReturn = () => setCurrentCourseKey(null);
+  // Callback for when the courses are changed
+  const onCoursesChanged = (newCourses: Courses) => {
+    const existingCourseKeys = courses.map((course) => course.key);
+    for (const course of newCourses) {
+      // Numbering undetermined courses
+      if (!course.code || !course.number) {
+        course.code = "Course";
+        course.number = Object.values(courses).length + 1;
+        course.title = "Course";
+      }
+
+      // Generate course key
+      const key = `${course.code}-${course.number}`.toLowerCase();
+      if (existingCourseKeys.includes(key)) continue;
+
+      course.key = key;
+      courses.push(course);
+      existingCourseKeys.push(key);
+    }
+
+    setCourses([...courses]);
+  };
+  const onClickBack = () => setCurrentCourseKey(null);
+  const onChangeAssessment = (assessment: Assessment, index: number) => {
+    setCourses(
+      courses.map((course) => {
+        if (course.key === currentCourseKey) {
+          course.assessments[index] = assessment;
+        }
+        return course;
+      })
+    );
+  };
 
   return (
     <>
@@ -119,12 +130,11 @@ const Review = () => {
       </nav>
       {currentCourse && (
         <>
-          {/* App top bar */}
-          <div className="--fixed top-0 left-0 right-0 h-fit z-10">
+          <div className="top-0 left-0 right-0 h-fit z-10">
             <AppTopBar className="max-w-7xl mx-auto" style={{ paddingLeft: mainMarginLeft }}>
               {/* Icons */}
               <LeadingNavigation className="block md:hidden">
-                <IconButton className="text-on-surface" icon="arrow_back" onClick={onClickReturn} />
+                <IconButton className="text-on-surface" icon="arrow_back" onClick={onClickBack} />
               </LeadingNavigation>
               <TrailingIcon>
                 <IconButton className="text-on-surface-variant hidden md:block" icon="error" />
@@ -146,19 +156,9 @@ const Review = () => {
             ref={mainRef}
             style={{ paddingLeft: mainMarginLeft }}
           >
-            {/* Course page */}
             <CoursePanel
               course={currentCourse}    
-              onChangeAssessment={(assessment, index) => {
-                setCourses(
-                  courses.map((course) => {
-                    if (course.key === currentCourseKey) {
-                      course.assessments[index] = assessment;
-                    }
-                    return course;
-                  })
-                );
-              }}
+              onChangeAssessment={onChangeAssessment}
             />
           </main>
         </>
