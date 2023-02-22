@@ -1,35 +1,21 @@
 import { useState, useEffect, useMemo, useRef, useLayoutEffect } from "react";
 import { useParams } from "react-router-dom";
 import { classnames } from "../../Utilities";
-import { Course, Courses, Assessment } from "../../logic/icsGen";
+import { Course, Courses } from "../../logic/icsGen";
 
 import NavigationDrawer from "../../components/NavigationDrawer";
-import AssessmentCard from "../../components/AssessmentCard";
-import { Button, IconButton } from "../../components/Button";
-import EditAssessment from "../../components/EditAssessment/EditAssessment";
+import { IconButton } from "../../components/Button";
 
-import CourseInfo from "../../components/CourseInfo";
 import AppTopBar, { LeadingNavigation, TrailingIcon , Title, Subtitle } from "../../components/AppTopBar";
-import Tabs from "../../components/Tabs/Tabs";
 import { default as CoursePanel } from "./Course";
 
 import testState from "./data";
-
-// Enum for the tabs
-export enum Tab {
-  Assessments,
-  Document,
-}
 
 const Review = () => {
   const { courseKey: courseKeyUrlParam } = useParams();
 
   const [courses, setCourses] = useState<Courses>(testState);
   const [currentCourseKey, setCurrentCourseKey] = useState<string | null>(null);
-  const [editingAssessment, setEditingAssessment] = useState<{
-    assessment: Assessment;
-    index: number;
-  } | null>(null);
 
   // At first render of the page, check if the course key is valid
   // and assign value to current course key
@@ -43,10 +29,6 @@ const Review = () => {
       setCurrentCourseKey(courseKeyUrlParam);
     }
   }, []);
-
-  useEffect(() => {
-    setEditingAssessment(null);
-  }, [currentCourseKey]);
 
   // Callback for when the courses are changed
   const onCoursesChanged = (newCourses: Courses) => {

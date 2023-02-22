@@ -1,17 +1,13 @@
 import { useState } from "react";
 import { classnames } from "../../Utilities";
 import CourseInfo from "../../components/CourseInfo";
-import Tabs from "../../components/Tabs";
+import Tabs, { Tab } from "../../components/Tabs";
 import { Assessment, Course } from "../../logic/icsGen";
 import EditAssessment from "../../components/EditAssessment";
 import {default as AssessmentPanel} from "./Assessment";
 import Document from "./Document";
 
-// Enum for the tabs
-export enum Tab {
-  Assessments,
-  Document,
-}
+
 
 interface CourseProp {
   course: Course;
