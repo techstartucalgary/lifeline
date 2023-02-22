@@ -1,14 +1,16 @@
 import { useState, useEffect, useMemo, useRef, useLayoutEffect } from "react";
 import { useParams } from "react-router-dom";
-import NavigationDrawer from "../../components/NavigationDrawer";
-import AssessmentCard from "../../components/AssessmentCard";
 import { classnames } from "../../Utilities";
 import { Course, Courses, Assessment } from "../../logic/icsGen";
+
+import NavigationDrawer from "../../components/NavigationDrawer";
+import AssessmentCard from "../../components/AssessmentCard";
 import { Button, IconButton } from "../../components/Button";
 import EditAssessment from "../../components/EditAssessment/EditAssessment";
 
 import CourseInfo from "../../components/CourseInfo";
 import AppTopBar, { LeadingNavigation, TrailingIcon , Title, Subtitle } from "../../components/AppTopBar";
+import Tabs from "../../components/Tabs/Tabs";
 
 const testState: Courses = [
   {
@@ -58,7 +60,7 @@ const testState: Courses = [
 ];
 
 // Enum for the tabs
-enum Tab {
+export enum Tab {
   Assessments,
   Document,
 }
@@ -114,7 +116,7 @@ const Review = () => {
     setCourses([...courses]);
   };
 
-  // Memoize the course key lookup in format of { [key]: course } for performance
+  // Memorize the course key lookup in format of { [key]: course } for performance
   const courseKeyLookup = useMemo(
     () =>
       Object.fromEntries(
@@ -123,7 +125,7 @@ const Review = () => {
     [courses]
   );
 
-  // Memoize the course based on the course key
+  // Memorize the course based on the course key
   const currentCourse = useMemo(
     () =>
       currentCourseKey && currentCourseKey in courseKeyLookup
@@ -157,7 +159,7 @@ const Review = () => {
     onMainMarginLeft();
     window.addEventListener("resize", onMainMarginLeft);
     return () => window.removeEventListener("resize", onMainMarginLeft);
-  }, [navRef.current, mainRef.current]);
+  }, [navRef.current, mainRef.current, currentCourseKey]);
 
   const onClickReturn = () => setCurrentCourseKey(null);
 
@@ -165,9 +167,9 @@ const Review = () => {
     <>
       <nav
         className={classnames(
-          "fixed bg-background z-20 top-0 left-0 w-64",
+          "fixed top-0 left-0 w-full bg-slate-500 md:w-64",
           currentCourseKey && "hidden",
-          "md:block"
+          "md:block z-20"
         )}
         ref={navRef}
       >
@@ -209,82 +211,73 @@ const Review = () => {
           >
             {/* Course page */}
             <div className="flex flex-col md:flex-row">
-              {/* Tab */}
-              <div className="md:hidden flex flex-row">
-                <button
-                  className={classnames(
-                    "bg-gray-300 p-2",
-                    selectedTab === Tab.Assessments && "bg-red-500"
-                  )}
-                  onClick={() => setSelectedTab(0)}
-                >
-                  Assessments
-                </button>
-                <button
-                  className={classnames(
-                    "bg-gray-300 p-2",
-                    selectedTab === Tab.Document && "bg-red-500"
-                  )}
-                  onClick={() => setSelectedTab(1)}
-                >
-                  Document
-                </button>
-              </div>
-
-              <div className="flex flex-row space-x-4 p-2">
-                {/* Assessments */}
-                <section
-                  className={classnames(
-                    "md:w-1/2",
-                    selectedTab === Tab.Document && "hidden md:block"
-                  )}
-                >
-                  {editingAssessment === null ? (
-                    <>
-                      <CourseInfo
-                        hours="H(3-2T)"
-                        department="Computer Science"
-                        description="This course is an introduction to the design and analysis of algorithms. Topics include: algorithmic problem solving, algorithmic efficiency, sorting and searching, divide-and-conquer, greedy algorithms, dynamic programming, and graph algorithms. Prerequisite: CSE 143 or equivalent."
-                      />
-                      <div
-                        className={classnames(
-                          "w-full",
-                          "flex flex-row",
-                          "justify-between",
-                          "items-center",
-                          "mb-3"
-                        )}
+              <section
+                className={classnames(
+                  "w-full",
+                  "md:w-1/2",
+                  "p-4"
+                )}
+              >
+                <CourseInfo
+                  hours="H(3-2T)"
+                  department="Computer Science"
+                  description="This course is an introduction to the design and analysis of algorithms. Topics include: algorithmic problem solving, algorithmic efficiency, sorting and searching, divide-and-conquer, greedy algorithms, dynamic programming, and graph algorithms. Prerequisite: CSE 143 or equivalent."
+                />
+                <Tabs
+                  selectedTab={selectedTab}
+                  setSelectedTab={setSelectedTab}
+                />
+                {editingAssessment === null ? (
+                  <div
+                    className={classnames(
+                      selectedTab === Tab.Document && "hidden md:block",
+                      "w-full"
+                    )}
+                  >
+                    <div
+                      className={classnames(
+                        "hidden",
+                        "md:flex",
+                        "md:flex-row",
+                        "w-full",
+                        "justify-between",
+                        "items-center",
+                        "mb-3"
+                      )}
+                    >
+                      <h1
+                        className={classnames("text-sys-primary", "font-bold")}
                       >
-                        <h1 className={classnames("text-sys-primary", "font-bold")}>
                         ASSESSMENTS
-                        </h1>
-                        <Button
-                          variant="filled"
-                          className={classnames("px-5", "py-2")}
+                      </h1>
+                      <Button
+                        variant="filled"
+                        className={classnames("px-5", "py-2")}
+                      >
+                        <span
+                          className={classnames(
+                            "material-symbols-outlined",
+                            "text-4xl"
+                          )}
                         >
-                          <span
-                            className={classnames(
-                              "material-symbols-outlined",
-                              "text-4xl"
-                            )}
-                          >
                           add
-                          </span>
-                        </Button>
-                      </div>
-                      <ul className="flex flex-col">
-                        {currentCourse.assessments.map((assessment, index) => (
-                          <AssessmentCard
-                            key={index}
-                            assessment={assessment}
-                            onAssessmentClick={() => {
-                              setEditingAssessment({ assessment, index });
-                            }}
-                          />
-                        ))}
-                      </ul>
-                    </>
-                  ) : (
+                        </span>
+                      </Button>
+                    </div>
+                    <ul className="flex flex-col">
+                      {currentCourse.assessments.map((assessment, index) => (
+                        <AssessmentCard
+                          key={index}
+                          assessment={assessment}
+                          onAssessmentClick={() => {
+                            setEditingAssessment({ assessment, index });
+                          }}
+                        />
+                      ))}
+                    </ul>
+                  </div>
+                ) : (
+                  <div className={classnames(selectedTab === Tab.Document && "hidden md:block")}>
                     <EditAssessment
                       assessment={editingAssessment.assessment}
                       onClose={() => setEditingAssessment(null)}
@@ -293,7 +286,7 @@ const Review = () => {
                           courses.map((course) => {
                             if (course.key === currentCourseKey) {
                               course.assessments[editingAssessment.index] =
-                              newAssessment;
+                                newAssessment;
                             }
                             return course;
                           })
@@ -301,32 +294,33 @@ const Review = () => {
                         setEditingAssessment(null);
                       }}
                     />
-                  )}
-                </section>
-              
-                {/* Document */}
-                <section
+                  </div>
+                )}
+              </section>
+
+              {/* Document */}
+              <section
+                className={classnames(
+                  "w-full",
+                  "md:w-1/2",
+                  "p-4",
+                  selectedTab === Tab.Assessments && "hidden md:block"
+                )}
+              >
+                <img
+                  src="../pdf.png"
+                  alt="the pdf viewer"
                   className={classnames(
+                    "border-x",
+                    "border-y",
+                    "border-dashed",
+                    "border-gray-400",
+                    "rounded-3xl",
                     "w-full",
-                    "md:w-1/2",
-                    selectedTab === Tab.Assessments && "hidden md:block"
+                    "mt-2"
                   )}
-                >
-                  <img
-                    src="../pdf.png"
-                    alt="the pdf viewer"
-                    className={classnames(
-                      "border-x",
-                      "border-y",
-                      "border-dashed",
-                      "border-gray-400",
-                      "rounded-3xl",
-                      "w-full",
-                      "mt-2"
-                    )}
-                  />
-                </section>
-              </div>
+                />
+              </section>
             </div>
           </main>
         </>
