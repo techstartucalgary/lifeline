@@ -1,5 +1,6 @@
 ![version](https://img.shields.io/badge/version-1.0.0-red)
-![Deployment](https://github.com/techstartucalgary/lifeline/actions/workflows/deploy-frontend.yaml/badge.svg)
+![deploy-front](https://github.com/techstartucalgary/lifeline/actions/workflows/deploy-frontend.yaml/badge.svg)
+![deploy-back](https://github.com/techstartucalgary/lifeline/actions/workflows/deploy-backend.yaml/badge.svg)
 ![Frontend](https://github.com/techstartucalgary/lifeline/actions/workflows/ci-client.yaml/badge.svg)
 ![Backend](https://github.com/techstartucalgary/lifeline/actions/workflows/ci-server.yaml/badge.svg)
 [![License](https://img.shields.io/badge/license-MIT-brown.svg)](https://opensource.org/licenses/MIT)
