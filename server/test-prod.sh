@@ -10,6 +10,7 @@ EXPECTED_RESPONSE_FILE="./test-data/CPSC331/expected.json"
 
 # Send a request to the API
 cp ./test-data/CPSC331/CPSC331.pdf ./CPSC331.pdf
+ls -l ./CPSC331.pdf # Size should be 86914 bytes
 API_RESPONSE=$(curl --silent --show-error --location --request POST "${API_URL}/files" \
   -H 'accept: application/json' \
   -H 'Content-Type: multipart/form-data' \
