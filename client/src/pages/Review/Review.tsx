@@ -117,7 +117,7 @@ const Review = () => {
     <>
       <nav
         className={classnames(
-          "fixed top-0 left-0 w-full bg-slate-500 md:w-64",
+          "fixed top-0 left-0 w-full md:w-72 h-full p-3",
           currentCourseKey && "hidden",
           "md:block z-20"
         )}

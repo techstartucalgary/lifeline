@@ -212,7 +212,11 @@ const config = {
       scale: {
         "105": "1.05",
         "110": "1.1",
-      }
+      },
+      spacing: {
+        "4.5": "1.125rem",
+        "5.5": "1.375rem"
+      },
     },
   },
   plugins: [AspectRatio, Forms, LineClamp, Typography],

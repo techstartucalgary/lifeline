@@ -16,6 +16,7 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   to?: To;
   icon?: ReactNode | string;
   color?: "primary" | "secondary" | "tertiary";
+  ripple?: boolean;
 }
 
 const base = `
@@ -108,6 +109,7 @@ const Button = ({
   className,
   to,
   icon,
+  ripple = true,
   ...props
 }: ButtonProps) => {
   const navigate = useNavigate();
@@ -123,14 +125,16 @@ const Button = ({
 
   const onMouseDown = useCallback(
     (event: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>) => {
-      const rect = event.currentTarget.getBoundingClientRect();
-      rippleQueue.push({
-        x: event.clientX - rect.left,
-        y: event.clientY - rect.top,
-        persist: true,
-        className: cls3[variant][color],
-      });
-      setRippleQueue([...rippleQueue]);
+      if (ripple) {
+        const rect = event.currentTarget.getBoundingClientRect();
+        rippleQueue.push({
+          x: event.clientX - rect.left,
+          y: event.clientY - rect.top,
+          persist: true,
+          className: cls3[variant][color],
+        });
+        setRippleQueue([...rippleQueue]);
+      }
 
       if (props.onMouseDown) props.onMouseDown(event);
     },
