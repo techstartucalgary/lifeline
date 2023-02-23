@@ -9,6 +9,7 @@ on:
       - server/deploy.sh
       - server/test-prod.sh
       - server/Dockerfile
+      - server/requirements.txt
 
 jobs:
   deployment:
