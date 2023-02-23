@@ -1,73 +1,39 @@
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect, useMemo, useRef, useLayoutEffect } from "react";
 import { useParams } from "react-router-dom";
-import NavigationDrawer from "../../components/NavigationDrawer";
-import AssessmentCard from "../../components/AssessmentCard";
 import { classnames } from "../../Utilities";
-import { Course, Courses } from "../../logic/icsGen";
-import Button from "../../components/Button";
+import { Assessment, Course, Courses } from "../../logic/icsGen";
 
-import styles from "./Review.module.css";
-import CourseInfo from "../../components/CourseInfo";
+import NavigationDrawer from "../../components/NavigationDrawer";
+import { IconButton } from "../../components/Button";
 
-const testState: Courses = [
-  {
-    code: "PSYC",
-    number: 203,
-    title: "Psychology",
-    key: "psyc-203",
-    topic: "Psychology of Everyday Life",
-    assessments: [
-      {
-        name: "Identity Assignment",
-        date: "2021-10-21T18:00:00.000",
-        weight: "6%",
-      },
-      {
-        name: "Coping Profile Assignment",
-        date: "2021-10-29T18:00:00.000",
-        weight: "2%",
-      },
-      {
-        name: "Self-Reflection/Goal Setting Assignment",
-        date: "2021-12-07T18:00:00.000",
-        weight: "7%",
-      },
-      {
-        name: "Experiential-Learning/Article-Evaluation Course Component",
-        date: "2021-12-08T23:59:59.999",
-        weight: "4%",
-      },
-      {
-        name: "Exam 1",
-        date: "2021-10-14T00:00:00.000",
-        weight: "25%",
-      },
-      {
-        name: "Exam 2",
-        date: "2021-11-18T00:00:00.000",
-        weight: "25%",
-      },
-      {
-        name: "Exam 3/Final Exam",
-        date: "",
-        weight: "31%",
-      },
-    ],
-  },
-];
+import AppTopBar, { LeadingNavigation, TrailingIcon , Title, Subtitle } from "../../components/AppTopBar";
+import CoursePanel from "./CoursePanel";
 
-// Enum for the tabs
-enum Tab {
-  Assessments,
-  Document,
-}
+import testState from "./data";
 
 const Review = () => {
   const { courseKey: courseKeyUrlParam } = useParams();
-
-  const [selectedTab, setSelectedTab] = useState<Tab>(Tab.Assessments);
   const [courses, setCourses] = useState<Courses>(testState);
   const [currentCourseKey, setCurrentCourseKey] = useState<string | null>(null);
+
+
+  // For NavigationDrawer adapting in smaller desktop screens
+  const navRef = useRef<HTMLDivElement>(null);
+  const mainRef = useRef<HTMLDivElement>(null);
+  const [mainMarginLeft, setMainMarginLeft] = useState(-1);
+  useLayoutEffect(() => {
+    const onMainMarginLeft = () => {
+      if (navRef.current && mainRef.current) {
+        const marginLeft = mainRef.current.offsetLeft || 0;
+        const navWidth = navRef.current?.offsetWidth || 0;
+        setMainMarginLeft(Math.max(navWidth - marginLeft, 0));
+      }
+    };
+    onMainMarginLeft();
+    window.addEventListener("resize", onMainMarginLeft);
+    return () => window.removeEventListener("resize", onMainMarginLeft);
+  }, [navRef.current, mainRef.current, currentCourseKey]);
+
 
   // At first render of the page, check if the course key is valid
   // and assign value to current course key
@@ -81,6 +47,35 @@ const Review = () => {
       setCurrentCourseKey(courseKeyUrlParam);
     }
   }, []);
+
+  // Memorize the course key lookup in format of { [key]: course } for performance
+  const courseKeyLookup = useMemo(
+    () =>
+      Object.fromEntries(
+        courses.map((course) => [course.key, course])
+      ) as Record<string, Course>,
+    [courses]
+  );
+
+  // Memorize the course based on the course key
+  const currentCourse = useMemo(
+    () =>
+      currentCourseKey && currentCourseKey in courseKeyLookup
+        ? courseKeyLookup[currentCourseKey]
+        : null,
+    [currentCourseKey, courseKeyLookup[currentCourseKey || ""]]
+  );
+
+  // Callback for select course in navigation drawer
+  const onCourseClick = (course: Course | null) => {
+    if (course === null) {
+      setCurrentCourseKey(null);
+      setTimeout(() => history.pushState(null, "", "/app"), 10);
+    } else {
+      setCurrentCourseKey(course.key);
+      setTimeout(() => history.pushState(null, "", `/app/${course.key}`), 100);
+    }
+  };
 
   // Callback for when the courses are changed
   const onCoursesChanged = (newCourses: Courses) => {
@@ -105,44 +100,28 @@ const Review = () => {
     setCourses([...courses]);
   };
 
-  // Memoize the course key lookup in format of { [key]: course } for performance
-  const courseKeyLookup = useMemo(
-    () =>
-      Object.fromEntries(
-        courses.map((course) => [course.key, course])
-      ) as Record<string, Course>,
-    [courses]
-  );
-
-  // Memoize the course based on the course key
-  const currentCourse = useMemo(
-    () =>
-      currentCourseKey && currentCourseKey in courseKeyLookup
-        ? courseKeyLookup[currentCourseKey]
-        : null,
-    [currentCourseKey, courseKeyLookup[currentCourseKey || ""]]
-  );
-
-  const onCourseClick = (course: Course | null) => {
-    if (course === null) {
-      setCurrentCourseKey(null);
-      setTimeout(() => history.pushState(null, "", "/app"), 10);
-    } else {
-      setCurrentCourseKey(course.key);
-      setTimeout(() => history.pushState(null, "", `/app/${course.key}`), 100);
-    }
+  const onClickBack = () => setCurrentCourseKey(null);
+  
+  const onChangeAssessment = (assessment: Assessment, index: number) => {
+    setCourses(
+      courses.map((course) => {
+        if (course.key === currentCourseKey) {
+          course.assessments[index] = assessment;
+        }
+        return course;
+      })
+    );
   };
 
   return (
-    <div className="flex flex-row justify-between">
+    <>
       <nav
         className={classnames(
-          "md:w-64",
-          "w-full",
-          "flex-shrink-0",
+          "fixed top-0 left-0 w-full bg-slate-500 md:w-64",
           currentCourseKey && "hidden",
-          "md:block"
+          "md:block z-20"
         )}
+        ref={navRef}
       >
         <NavigationDrawer
           courses={courses}
@@ -152,119 +131,41 @@ const Review = () => {
         />
       </nav>
       {currentCourse && (
-        <main
-          className={classnames(
-            "flex-shrink-0 w-full text-left",
-            styles.main
-          )}
-        >
-          <header className="bg-gray-300 w-full p-4 text-xl">
-            <Button onClick={() => onCourseClick(null)}>
-              <span
-                className={classnames("material-symbols-outlined", "md:hidden", "inline")}
-                style={{ fontSize: "1.5rem", verticalAlign: "middle" }}
-              >
-                arrow_back
-              </span>
-            </Button>
-            <h1 className="text-4xl">
-              {currentCourse.title} {currentCourse.number}
-            </h1>
-            <h2 className="text-2xl">{currentCourse.topic}</h2>
-          </header>
-          <div className="flex flex-col md:flex-row">
-            <div className="w-full md:hidden flex flex-row">
-              <button
-                className={classnames(
-                  "w-full bg-gray-300 p-2",
-                  selectedTab === Tab.Assessments && "bg-red-500"
-                )}
-                onClick={() => setSelectedTab(0)}
-              >
-                Assessments
-              </button>
-              <button
-                className={classnames(
-                  "w-full bg-gray-300 p-2",
-                  selectedTab === Tab.Document && "bg-red-500"
-                )}
-                onClick={() => setSelectedTab(1)}
-              >
-                Document
-              </button>
-            </div>
-            <section
-              className={classnames(
-                "w-full",
-                "md:w-1/2",
-                "p-4",
-                "h-screen",
-                selectedTab === Tab.Document && "hidden md:block"
-              )}
-            >
-              <CourseInfo
-                hours="H(3-2T)"
-                department="Computer Science"
-                description="This course is an introduction to the design and analysis of algorithms. Topics include: algorithmic problem solving, algorithmic efficiency, sorting and searching, divide-and-conquer, greedy algorithms, dynamic programming, and graph algorithms. Prerequisite: CSE 143 or equivalent."
-              />
-              <div
-                className={classnames(
-                  "w-full",
-                  "flex flex-row",
-                  "justify-between",
-                  "items-center",
-                  "mb-3"
-                )}
-              >
-                <h1 className={classnames("text-sys-primary", "font-bold")}>
-                  ASSESSMENTS
-                </h1>
-                <Button variant="filled" className={classnames("px-5", "py-2")}>
-                  <span className={classnames("material-symbols-outlined", "text-4xl")}>
-                    add
-                  </span>
-                </Button>
-              </div>
-              <ul className="flex flex-col">
-                {currentCourse.assessments.map((assessment, t) => (
-                  <AssessmentCard
-                    key={t}
-                    assessment={assessment}
-                    onAssessmentClick={() => {
-                      console.log("clicked");
-                    }}
-                  />
-                ))}
-              </ul>
-            </section>
-            <section
-              className={classnames(
-                "w-full",
-                "md:w-1/2",
-                "p-4",
-                "h-screen",
-                selectedTab === Tab.Assessments && "hidden md:block"
-              )}
-            >
-              <img
-                src="../pdf.png"
-                alt="the pdf viewer"
-                className={classnames(
-                  "border-x",
-                  "border-y",
-                  "border-dashed",
-                  "border-gray-400",
-                  "rounded-3xl",
-                  "w-full",
-                  "mt-2"
-                )}
-              />
-            </section>
+        <>
+          <div className="z-10">
+            <AppTopBar className="max-w-7xl mx-auto" style={{ paddingLeft: mainMarginLeft }}>
+              {/* Icons */}
+              <LeadingNavigation className="block md:hidden">
+                <IconButton className="text-on-surface" icon="arrow_back" onClick={onClickBack} />
+              </LeadingNavigation>
+              <TrailingIcon>
+                <IconButton className="text-on-surface-variant hidden md:block" icon="error" />
+                <IconButton className="text-on-surface-variant hidden md:block" icon="delete" />
+                <IconButton className="text-on-surface-variant block md:hidden" icon="more_vert" />
+              </TrailingIcon >
+
+              {/* Titles */}
+              <Title>{currentCourse.title} {currentCourse.number}</Title>
+              <Subtitle>{currentCourse.topic}</Subtitle>
+            </AppTopBar>
           </div>
-        </main>
+          
+          <main
+            className={classnames(
+              "max-w-7xl mx-auto relative",
+              (mainMarginLeft < 0) && "hidden"
+            )}
+            ref={mainRef}
+            style={{ paddingLeft: mainMarginLeft }}
+          >
+            <CoursePanel
+              course={currentCourse}    
+              onChangeAssessment={onChangeAssessment}
+            />
+          </main>
+        </>
       )}
-      <div className="w-64"></div>
-    </div>
+    </>
   );
 };
 

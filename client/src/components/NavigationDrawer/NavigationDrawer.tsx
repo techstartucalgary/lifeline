@@ -1,6 +1,6 @@
 import axios from "axios";
 import { classnames } from "../../Utilities";
-import Button from "../Button";
+import { Button } from "../Button";
 import jsonToICS, { Course, Courses } from "../../logic/icsGen";
 import { useState, useRef } from "react";
 
@@ -71,15 +71,19 @@ const NavigationDrawer = ({
               currentCourse?.key === course.key && "bg-primary-90"
             )}
           >
-            <span className="material-symbols-outlined text-gray-600 text-base flex items-center justify-center">
-              {
-                ["circle", "square", "pentagon"][
-                  Math.abs(
-                    course.key.split("").reduce((a, b) => a + b.charCodeAt(0), 0)
-                  ) % 3
-                ]
-              }
-            </span>
+            <div className="flex items-center justify-center">
+              <span className="material-symbols-outlined text-gray-600 text-base">
+                {
+                  ["circle", "square", "pentagon"][
+                    Math.abs(
+                      course.key
+                        .split("")
+                        .reduce((a, b) => a + b.charCodeAt(0), 0)
+                    ) % 3
+                  ]
+                }
+              </span>
+            </div>
             <div className="flex flex-col ml-2 min-w-0">
               <p className="flex items-center font-bold">
                 {course.code} {course.number}
@@ -91,9 +95,11 @@ const NavigationDrawer = ({
             <p className="ml-auto flex items-center justify-center">
               {course.assessments.length}
             </p>
-            <span className="material-symbols-outlined text-gray-600 flex items-center justify-center block md:hidden">
-              arrow_right
-            </span>
+            <div className="flex items-center justify-center md:hidden">
+              <span className="material-symbols-outlined text-gray-600">
+                arrow_right
+              </span>
+            </div>
           </Button>
         ))}
       {loading.length > 0 && (
@@ -105,9 +111,11 @@ const NavigationDrawer = ({
               disabled
               className={classnames("mt-2", "flex-row", "p-4")}
             >
-              <span className="material-symbols-outlined text-gray-600 text-base flex items-center justify-center animate-spin">
-                autorenew
-              </span>
+              <div>
+                <span className="material-symbols-outlined text-gray-600 text-base animate-spin">
+                  autorenew
+                </span>
+              </div>
               <div className="flex flex-col ml-2 min-w-0">
                 <p className={classnames("truncate")}>{file}</p>
               </div>
@@ -162,7 +170,7 @@ const NavigationDrawer = ({
           "md:rounded-3xl"
         )}
         onClick={handleExport}
-        disabled={courses.length === 0}
+        disabled={courses.length === 0 || loading.length > 0}
       >
         <span
           className="material-symbols-outlined flex items-center justify-center"

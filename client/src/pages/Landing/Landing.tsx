@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 
 import { classnames } from "../../Utilities";
-import Button from "../../components/Button";
+import { Button } from "../../components/Button";
 import NavigationBar from "../../components/NavigationBar";
 
 import wfh1 from "./wfh_1.svg";
@@ -186,7 +186,7 @@ export default function Landing() {
             </div>
           </div>
 
-          <div className="mt-8 flex justify-center mt-12">
+          <div className="flex justify-center mt-12">
             <img src={wfh8} className="w-10/12 max-w-sm md:w-8/12 md:max-w-lg lg:w-6/12 lg:max-w-full" alt="a girl sitting on a stool and working in her laptop by the window" />
           </div>
         </div>
