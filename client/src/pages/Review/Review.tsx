@@ -10,6 +10,8 @@ import AppTopBar, { LeadingNavigation, TrailingIcon , Title, Subtitle } from "..
 import CoursePanel from "./CoursePanel";
 
 import testState from "./data";
+import List from "../../components/List";
+import NavigationPanel from "./NavigationPanel";
 
 const Review = () => {
   const { courseKey: courseKeyUrlParam } = useParams();
@@ -117,17 +119,17 @@ const Review = () => {
     <>
       <nav
         className={classnames(
-          "fixed top-0 left-0 w-full md:w-72 h-full p-3",
+          "fixed top-0 left-0 w-full md:w-72 h-full p-3 bg-surface",
           currentCourseKey && "hidden",
           "md:block z-20"
         )}
         ref={navRef}
       >
-        <NavigationDrawer
+        <NavigationPanel
           courses={courses}
           currentCourse={currentCourse}
-          onCoursesChanged={onCoursesChanged}
           onCourseClick={onCourseClick}
+          onCoursesChanged={onCoursesChanged}
         />
       </nav>
       {currentCourse && (
