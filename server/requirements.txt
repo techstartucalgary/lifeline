@@ -2,6 +2,7 @@ anyio==3.6.2
 astroid==2.13.5
 attrs==22.1.0
 backports.zoneinfo==0.2.1
+black==23.1.0
 certifi==2022.12.7
 cffi==1.15.1
 charset-normalizer==2.1.1
@@ -19,7 +20,7 @@ lazy-object-proxy==1.9.0
 mangum==0.17.0
 mccabe==0.7.0
 mypy-extensions==0.4.3
-packaging==21.3
+packaging==23.0
 pathspec==0.10.2
 pdfminer.six==20221105
 pdfplumber==0.7.6
@@ -48,5 +49,5 @@ tzlocal==4.2
 urllib3==1.26.12
 uvicorn==0.19.0
 Wand==0.6.11
+websockets==10.4
 wrapt==1.14.1
-black==22.10.0
