@@ -11,6 +11,12 @@ html {
   padding: 0;
 }
 
+button, input[type=text], input[type=button] {
+  -webkit-appearance: none;
+  -webkit-tap-highlight-color: rgba(0,0,0,0);
+  appearance: none;
+}
+
 .material-symbols-outlined {
   font-variation-settings:
     'FILL' 0,
