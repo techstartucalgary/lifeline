@@ -65,11 +65,26 @@ const AssessmentCard = ({
             "text-3xl"
           )}
         >
-          {
-            ["event", "star"][
-              Math.floor((assessment.name.charCodeAt(0) + 1) % 2)
-            ] // TODO: replace with a better way to determine icon
-          }
+          {/* If assessment name contains any of the keywords, use the star icon, otherwise use the event icon */}
+          {assessment.name
+            .toLowerCase()
+            .split(" ")
+            .some((word) =>
+              [
+                // Star icon keywords
+                "test",
+                "quiz",
+                "final",
+                "midterm",
+                "exam",
+                "examination",
+                "evaluation",
+                "presentation",
+                "project",
+              ].includes(word)
+            )
+            ? "star"
+            : "event"}
         </span>
       </div>
       <div
