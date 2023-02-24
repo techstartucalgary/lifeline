@@ -65,7 +65,7 @@ const NavigationPanel = ({ courses, currentCourse, onCourseClick, onCoursesChang
 
   return (
     <>
-      <div className="hidden lg:block p-3">
+      <div className="hidden md:hidden xl:block p-3">
         <input ref={inputRef}
           type="file"
           accept=".pdf"
@@ -131,7 +131,7 @@ const NavigationPanel = ({ courses, currentCourse, onCourseClick, onCoursesChang
           />
         </NavigationDrawer>
       </div>
-      <div className="hidden md:block lg:hidden">
+      <div className="hidden md:block xl:hidden">
         <NavigationRail>
           <IconButton
             icon="save_alt"
@@ -139,6 +139,7 @@ const NavigationPanel = ({ courses, currentCourse, onCourseClick, onCoursesChang
             color="tertiary"
             className="rounded-2xl mx-2.5 px-4 mt-8 mb-6 text-center"
             iconClassName="text-on-surface text-3xl md:text-3xl"
+            onClick={handleExport}
           />
 
           {courses && courses.map((course, t) => (
@@ -182,7 +183,7 @@ const NavigationPanel = ({ courses, currentCourse, onCourseClick, onCoursesChang
           />
         </NavigationRail>
       </div>
-      <div className="block md:hidden">
+      <div className="block md:hidden xl:hidden">
         <AppTopBar variant="medium">
           <AppTopBar.Title>
             Courses
