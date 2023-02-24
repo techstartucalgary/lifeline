@@ -35,7 +35,7 @@ def test_one_expected_outline():
 
     with open(f"{base_path}/CPSC331.pdf", "rb") as file:
         request_data = {"outline_file": ("CPSC331.pdf", file, "application/pdf")}
-        response = client.post("/file", files=request_data)
+        response = client.post("/files", files=request_data)
 
     with open(f"{base_path}/expected.json", "r", encoding="utf8") as file:
         expected_response = json.load(file)

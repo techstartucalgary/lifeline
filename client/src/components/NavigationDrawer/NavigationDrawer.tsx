@@ -35,7 +35,7 @@ const NavigationDrawer = ({
       formData.append("outline_file", file as File);
 
       await axios
-        .post("/file", formData, {
+        .post("/files", formData, {
           headers: { "Content-Type": "multipart/form-data" },
         })
         .then((res) => {
