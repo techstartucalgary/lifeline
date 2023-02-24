@@ -84,7 +84,7 @@ const NavigationPanel = ({ courses, currentCourse, onCourseClick, onCoursesChang
               title={`${course.code} ${course.number}`}
               metadata={course.assessments.length}
               onClick={() => onCourseClick(course)}
-              className={classnames(currentCourse === course && "bg-primary-container")}
+              selected={course === currentCourse}
               ripple={currentCourse !== course}
               icon={generateIcon(course.code)}
             />
@@ -109,26 +109,30 @@ const NavigationPanel = ({ courses, currentCourse, onCourseClick, onCoursesChang
             </div>
           )}
 
-          <NavigationDrawer.Item
+          <Button
             variant="text"
+            color="tertiary"
+            className="rounded-[20px] py-4.5 px-5.5 text-secondary font-normal"
             onClick={() => {
               inputRef.current?.click();
             }}
             icon="add"
-            title="Add course"
-            className="text-outline"
-          />
+          >
+            Add course
+          </Button>
 
           <hr className="border-gray-300 p-2 mx-6 hidden md:block" />
 
-          <NavigationDrawer.Item
-            variant="filled"
-            className="rounded-[20px]"
+          <Button
+            variant="tonal"
+            color="tertiary"
+            className="rounded-[20px] py-5 px-5.5"
             onClick={handleExport}
-            icon="save_alt"
-            title="Export"
             disabled={courses.length === 0 || loading.length > 0}
-          />
+            icon="save_alt"
+          >
+            Export
+          </Button>
         </NavigationDrawer>
       </div>
       <div className="hidden md:block xl:hidden">
@@ -179,7 +183,7 @@ const NavigationPanel = ({ courses, currentCourse, onCourseClick, onCoursesChang
             variant="text"
             color="tertiary"
             className="rounded-2xl mx-2.5 px-4 py-1 text-center"
-            iconClassName="text-on-surface text-3xl md:text-3xl"
+            iconClassName="text-on-tertiary-container text-3xl md:text-3xl"
           />
         </NavigationRail>
       </div>
