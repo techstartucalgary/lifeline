@@ -26,7 +26,7 @@ const ListItem = ({ title, supportingText, metadata, leadingIcon, trailingIcon, 
         )}>{leadingIcon}</span>
       }
     >
-      <div className="flex flex-col items-start ml-2 min-w-0">
+      <div className="flex flex-col items-start justify-center ml-2 min-w-0">
         <p className="font-medium text-lg align-middle leading-6 text-on-surface">
           {title}
         </p>
@@ -37,8 +37,8 @@ const ListItem = ({ title, supportingText, metadata, leadingIcon, trailingIcon, 
       <div className="ml-auto flex items-center justify-center text-base proportional-nums">
         <div className="font-normal">{metadata}</div>
         <span className={classnames(
-          "material-symbols-outlined ",
-          "flex justify-center items-center ml-3",
+          "material-symbols-outlined",
+          "flex justify-center items-center ml-1",
         )}>{trailingIcon}</span>
       </div>
     </Button>

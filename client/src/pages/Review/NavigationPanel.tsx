@@ -151,7 +151,7 @@ const NavigationPanel = ({ courses, currentCourse, onCourseClick, onCoursesChang
               key={t}
               title={`${course.code} ${course.number}`}
               supportingText={course.topic}
-              metadata={course.assessments.length}
+              metadata={<p className="rounded-full bg-secondary-95 py-2 w-8">{ course.assessments.length }</p>}
               onClick={() => onCourseClick(course)}
               className={classnames(currentCourse === course && "bg-primary-container")}
               ripple={currentCourse !== course}

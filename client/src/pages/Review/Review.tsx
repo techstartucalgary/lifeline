@@ -161,7 +161,7 @@ const Review = () => {
             style={{ paddingLeft: mainMarginLeft }}
           >
             <CoursePanel
-              course={currentCourse}    
+              course={currentCourse}
               onChangeAssessment={onChangeAssessment}
             />
           </main>
