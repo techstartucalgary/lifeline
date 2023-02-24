@@ -51,6 +51,14 @@ const Review = () => {
     }
   }, []);
 
+  useEffect(() => {
+    if (currentCourseKey === null) {
+      setTimeout(() => history.pushState(null, "", "/app"), 10);
+    } else {
+      setTimeout(() => history.pushState(null, "", `/app/${currentCourseKey}`), 10);
+    }
+  }, [currentCourseKey]);
+
   // Memorize the course key lookup in format of { [key]: course } for performance
   const courseKeyLookup = useMemo(
     () =>
@@ -73,10 +81,8 @@ const Review = () => {
   const onCourseClick = (course: Course | null) => {
     if (course === null) {
       setCurrentCourseKey(null);
-      setTimeout(() => history.pushState(null, "", "/app"), 10);
     } else {
       setCurrentCourseKey(course.key);
-      setTimeout(() => history.pushState(null, "", `/app/${course.key}`), 100);
     }
   };
 
@@ -101,10 +107,7 @@ const Review = () => {
     setCourses([...courses]);
   };
 
-  const onClickBack = () => {
-    setCurrentCourseKey(null);
-    setTimeout(() => history.pushState(null, "", "/app"), 10);
-  };
+  const onClickBack = () => setCurrentCourseKey(null);
 
   const onChangeAssessment = (assessment: Assessment, index: number) => {
     setCourses(
