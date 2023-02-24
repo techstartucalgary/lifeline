@@ -6,7 +6,12 @@ import { Assessment, Course, Courses } from "../../logic/icsGen";
 import NavigationDrawer from "../../components/NavigationDrawer";
 import { IconButton } from "../../components/Button";
 
-import AppTopBar, { LeadingNavigation, TrailingIcon , Title, Subtitle } from "../../components/AppTopBar";
+import AppTopBar, {
+  LeadingNavigation,
+  TrailingIcon,
+  Title,
+  Subtitle,
+} from "../../components/AppTopBar";
 import CoursePanel from "./CoursePanel";
 
 import testState from "./data";
@@ -17,7 +22,6 @@ const Review = () => {
   const { courseKey: courseKeyUrlParam } = useParams();
   const [courses, setCourses] = useState<Courses>(testState);
   const [currentCourseKey, setCurrentCourseKey] = useState<string | null>(null);
-
 
   // For NavigationDrawer adapting in smaller desktop screens
   const navRef = useRef<HTMLDivElement>(null);
@@ -35,7 +39,6 @@ const Review = () => {
     window.addEventListener("resize", onMainMarginLeft);
     return () => window.removeEventListener("resize", onMainMarginLeft);
   }, [navRef.current, mainRef.current, currentCourseKey]);
-
 
   // At first render of the page, check if the course key is valid
   // and assign value to current course key
@@ -80,30 +83,28 @@ const Review = () => {
   };
 
   // Callback for when the courses are changed
-  const onCoursesChanged = (newCourses: Courses) => {
+  const onCoursesChanged = (course: Course) => {
     const existingCourseKeys = courses.map((course) => course.key);
-    for (const course of newCourses) {
-      // Numbering undetermined courses
-      if (!course.code || !course.number) {
-        course.code = "Course";
-        course.number = Object.values(courses).length + 1;
-        course.title = "Course";
-      }
-
-      // Generate course key
-      const key = `${course.code}-${course.number}`.toLowerCase();
-      if (existingCourseKeys.includes(key)) continue;
-
-      course.key = key;
-      courses.push(course);
-      existingCourseKeys.push(key);
+    // Numbering undetermined courses
+    if (!course.code || !course.number) {
+      course.code = "Course";
+      course.number = Object.values(courses).length + 1;
+      course.title = "Course";
     }
+
+    // Generate course key
+    const key = `${course.code}-${course.number}`.toLowerCase();
+    if (existingCourseKeys.includes(key)) return;
+
+    course.key = key;
+    courses.push(course);
+    existingCourseKeys.push(key);
 
     setCourses([...courses]);
   };
 
   const onClickBack = () => setCurrentCourseKey(null);
-  
+
   const onChangeAssessment = (assessment: Assessment, index: number) => {
     setCourses(
       courses.map((course) => {
@@ -135,7 +136,10 @@ const Review = () => {
       {currentCourse && (
         <>
           <div className="z-10">
-            <AppTopBar className="max-w-7xl mx-auto" style={{ paddingLeft: mainMarginLeft }}>
+            <AppTopBar
+              className="max-w-7xl mx-auto"
+              style={{ paddingLeft: mainMarginLeft }}
+            >
               {/* Icons */}
               <LeadingNavigation className="block md:hidden">
                 <IconButton className="text-on-surface px-1.5" icon="arrow_back" onClick={onClickBack} />
@@ -147,15 +151,17 @@ const Review = () => {
               </TrailingIcon >
 
               {/* Titles */}
-              <Title>{currentCourse.title} {currentCourse.number}</Title>
+              <Title>
+                {currentCourse.title} {currentCourse.number}
+              </Title>
               <Subtitle>{currentCourse.topic}</Subtitle>
             </AppTopBar>
           </div>
-          
+
           <main
             className={classnames(
               "max-w-7xl mx-auto relative",
-              (mainMarginLeft < 0) && "hidden"
+              mainMarginLeft < 0 && "hidden"
             )}
             ref={mainRef}
             style={{ paddingLeft: mainMarginLeft }}
