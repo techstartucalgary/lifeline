@@ -23,35 +23,41 @@ interface NavigationPanelProps {
   courses: Courses;
   currentCourse: Course | null;
   onCourseClick(course: Course | null): void;
-  onCoursesChanged(courses: Courses): void;
+  onCoursesChanged(course: Course): void;
 }
 
 const NavigationPanel = ({ courses, currentCourse, onCourseClick, onCoursesChanged }: NavigationPanelProps) => {
   const [loading, setLoading] = useState<string[]>([]);
   const inputRef = useRef<HTMLInputElement>(null);
 
-  const handleOutlineUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const files = e.target.files;
-    if (!files) return;
+  const handleOutlineUpload = async (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    if (!e.target.files) return;
+
+    const files = Array.from(e.target.files);
     setLoading(Array.from(files).map((f: File) => f.name));
 
-    const formData = new FormData();
-    for (let i = 0; i < files.length; i++)
-      formData.append("outline_files", files[i]);
+    while (files.length > 0) {
+      const file = files.pop();
 
-    axios
-      .post("/files", formData, {
-        headers: { "Content-Type": "multipart/form-data" },
-      })
-      .then((res) => {
-        onCoursesChanged(res.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      })
-      .finally(() => {
-        setLoading([]);
-      });
+      const formData = new FormData();
+      formData.append("outline_file", file as File);
+
+      await axios
+        .post("/files", formData, {
+          headers: { "Content-Type": "multipart/form-data" },
+        })
+        .then((res) => {
+          onCoursesChanged(res.data);
+        })
+        .catch((error) => {
+          console.log(error);
+        })
+        .finally(() => {
+          setLoading((prev) => prev.filter((f) => f !== file?.name));
+        });
+    }
   };
 
   const handleExport = () => {
