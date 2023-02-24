@@ -5,7 +5,7 @@ import jsonToICS, { Course, Courses } from "../../logic/icsGen";
 import axios from "axios";
 import { classnames } from "../../Utilities";
 import ProgressIndicator from "../../components/ProgressIndicator";
-import { IconButton } from "../../components/Button";
+import { Button, IconButton } from "../../components/Button";
 import AppTopBar from "../../components/AppTopBar/AppTopBar";
 
 
@@ -65,6 +65,15 @@ const NavigationPanel = ({ courses, currentCourse, onCourseClick, onCoursesChang
   return (
     <>
       <div className="hidden md:block p-3">
+        <input ref={inputRef}
+          type="file"
+          accept=".pdf"
+          multiple
+          onChange={handleOutlineUpload}
+          className="hidden" 
+          aria-hidden
+        />
+
         <NavigationDrawer
           title="Courses"
         >
@@ -87,7 +96,6 @@ const NavigationPanel = ({ courses, currentCourse, onCourseClick, onCoursesChang
                   <NavigationDrawer.Item
                     key={t}
                     title={file}
-                    variant="text"
                     disabled={true}
                     icon={
                       <div className="h-5 w-5 overflow-hidden flex justify-center items-center">
@@ -108,16 +116,6 @@ const NavigationPanel = ({ courses, currentCourse, onCourseClick, onCoursesChang
             icon="add"
             title="Add course"
             className="text-outline"
-            metadata={
-              <input ref={inputRef}
-                type="file"
-                accept=".pdf"
-                multiple
-                onChange={handleOutlineUpload}
-                className="hidden" 
-                aria-hidden
-              />
-            }
           />
 
           <hr className="border-gray-300 p-2 mx-6 hidden md:block" />
@@ -128,16 +126,23 @@ const NavigationPanel = ({ courses, currentCourse, onCourseClick, onCoursesChang
             onClick={handleExport}
             icon="save_alt"
             title="Export"
+            disabled={courses.length === 0 || loading.length > 0}
           />
         </NavigationDrawer>
       </div>
-      <div className="block md:hidden pt-4">
+      <div className="block md:hidden">
         <AppTopBar variant="medium">
           <AppTopBar.Title>
             Courses
           </AppTopBar.Title>
           <AppTopBar.TrailingIcon>
-            <IconButton icon="add" className="text-on-surface" />
+            <IconButton
+              icon="add"
+              className="text-on-surface"
+              onClick={() => {
+                inputRef.current?.click();
+              }}
+            />
           </AppTopBar.TrailingIcon>
         </AppTopBar>
         <List>
@@ -154,7 +159,31 @@ const NavigationPanel = ({ courses, currentCourse, onCourseClick, onCoursesChang
               trailingIcon="chevron_right"
             />
           ))}
+
+          {loading.length > 0 && loading.map((file, t) => (
+            <List.Item
+              key={t}
+              title={file}
+              disabled={true}
+              leadingIcon={
+                <div className="h-5 w-5 overflow-hidden flex justify-center items-center">
+                  <ProgressIndicator determinate={false} className="h-5 w-5" />
+                </div>
+              }
+            />
+          ))}
         </List>
+
+        <Button
+          variant="filled"
+          color="primary"
+          className="fixed right-0 bottom-0 shadow-lg py-4.5 pl-4.5 pr-5.5 rounded-2xl m-5 text-lg"
+          onClick={handleExport}
+          disabled={courses.length === 0 || loading.length > 0}
+          icon="save_alt"
+        >
+          Export
+        </Button>
       </div>
     </>
   );

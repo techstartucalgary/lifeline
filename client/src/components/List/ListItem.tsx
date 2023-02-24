@@ -34,7 +34,7 @@ const ListItem = ({ title, supportingText, metadata, leadingIcon, trailingIcon, 
           {supportingText}
         </p>
       </div>
-      <div className="ml-auto flex items-center justify-center text-sm proportional-nums">
+      <div className="ml-auto flex items-center justify-center text-base proportional-nums">
         <div className="font-normal">{metadata}</div>
         <span className={classnames(
           "material-symbols-outlined variant-navigation-drawer text-xl",
