@@ -101,7 +101,10 @@ const Review = () => {
     setCourses([...courses]);
   };
 
-  const onClickBack = () => setCurrentCourseKey(null);
+  const onClickBack = () => {
+    setCurrentCourseKey(null);
+    setTimeout(() => history.pushState(null, "", "/app"), 10);
+  };
 
   const onChangeAssessment = (assessment: Assessment, index: number) => {
     setCourses(
