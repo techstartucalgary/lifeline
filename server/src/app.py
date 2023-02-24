@@ -41,9 +41,9 @@ async def show_calendar():
     return calendar_handler.get_calendar_json()
 
 
-@app.post("/file", status_code=200)
+@app.post("/files", status_code=200)
 async def get_deadlines(response: Response, outline_file: UploadFile = File(...)):
-    """Returns the extracted dates from the uploaded file(s)"""
+    """Returns the extracted dates and info from the uploaded file"""
     return file_handler.handle_file(outline_file, response)
 
 
