@@ -1,7 +1,6 @@
 """Entry point for the server"""
 
 from os import environ
-from typing import List
 import uvicorn
 from fastapi import FastAPI, File, UploadFile, Response
 from fastapi.middleware.cors import CORSMiddleware

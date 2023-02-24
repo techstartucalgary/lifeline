@@ -1,7 +1,6 @@
 """Tests for the server. Run with `pytest test_app.py -s` to see print statements`"""
 
 import json
-from pathlib import Path
 from fastapi.testclient import TestClient
 from handlers import calendar_handler
 
