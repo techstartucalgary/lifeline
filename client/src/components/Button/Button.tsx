@@ -30,7 +30,7 @@ const base = `
   disabled:bg-state-layers-on-surface/12 disabled:text-sys-on-surface/[.38] disabled:cursor-not-allowed
   disabled:before:bg-transparent
 
-  flex flex-row items-center
+  flex flex-row items-center gap-2.5
 `;
 
 const cls2 = {

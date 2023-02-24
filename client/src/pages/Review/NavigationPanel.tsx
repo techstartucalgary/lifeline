@@ -7,6 +7,7 @@ import { classnames } from "../../Utilities";
 import ProgressIndicator from "../../components/ProgressIndicator";
 import { Button, IconButton } from "../../components/Button";
 import AppTopBar from "../../components/AppTopBar/AppTopBar";
+import NavigationRail from "../../components/NavigationRail";
 
 
 const generateIcon = (course_key: string) => ["circle", "square", "pentagon", "hexagon", "rectangle"][
@@ -64,7 +65,7 @@ const NavigationPanel = ({ courses, currentCourse, onCourseClick, onCoursesChang
 
   return (
     <>
-      <div className="hidden md:block p-3">
+      <div className="hidden lg:block p-3">
         <input ref={inputRef}
           type="file"
           accept=".pdf"
@@ -129,6 +130,57 @@ const NavigationPanel = ({ courses, currentCourse, onCourseClick, onCoursesChang
             disabled={courses.length === 0 || loading.length > 0}
           />
         </NavigationDrawer>
+      </div>
+      <div className="hidden md:block lg:hidden">
+        <NavigationRail>
+          <IconButton
+            icon="save_alt"
+            variant="tonal"
+            color="tertiary"
+            className="rounded-2xl mx-2.5 px-4 mt-8 mb-6 text-center"
+            iconClassName="text-on-surface text-3xl md:text-3xl"
+          />
+
+          {courses && courses.map((course, t) => (
+            <NavigationRail.Item
+              key={t}
+              title={`${course.code} ${course.number}`}
+              onClick={() => onCourseClick(course)}
+              icon={generateIcon(course.code)}
+              selected={course === currentCourse}
+            />
+          ))}
+
+          {loading.length > 0 && (
+            <div className="flex flex-col w-full">
+              {
+                loading.map((file, t) => (
+                  <NavigationRail.Item
+                    key={t}
+                    title={file}
+                    disabled={true}
+                    icon={
+                      <div className="h-5 w-5 overflow-hidden flex justify-center items-center">
+                        <ProgressIndicator determinate={false} className="h-5 w-5" />
+                      </div>
+                    }
+                  />
+                ))
+              }
+            </div>
+          )}
+
+          <IconButton
+            onClick={() => {
+              inputRef.current?.click();
+            }}
+            icon="add"
+            variant="text"
+            color="tertiary"
+            className="rounded-2xl mx-2.5 px-4 py-1 text-center"
+            iconClassName="text-on-surface text-3xl md:text-3xl"
+          />
+        </NavigationRail>
       </div>
       <div className="block md:hidden">
         <AppTopBar variant="medium">
