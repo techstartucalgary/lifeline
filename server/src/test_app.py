@@ -1,4 +1,4 @@
-"""Tests for the server. Run with `pytest test_app.py -s` to see print statements`"""
+"""Tests for the server. Run with `pytest test_app.py -s` to see print statements"""
 
 import json
 from fastapi.testclient import TestClient
@@ -42,3 +42,21 @@ def test_one_expected_outline():
 
     assert response.status_code == 200
     assert response.json() == expected_response
+
+
+def test_bad_file():
+    """Sends a bad file to the endpoint and checks that the response is correct"""
+    with open("./app.py", "rb") as file:  # not a pdf
+        request_data = {"outline_file": ("app.pdf", file, "application/pdf")}
+        response = client.post("/files", files=request_data)
+
+    assert response.status_code == 422
+
+
+def future_test_too_large_file():
+    """Sends a file that is too large to the endpoint and checks that the response is correct"""
+    with open("../test-data/too-large.pdf", "rb") as file:
+        request_data = {"outline_file": ("CPSC331.pdf", file, "application/pdf")}
+        response = client.post("/files", files=request_data)
+
+    assert response.status_code == 413
