@@ -1,15 +1,15 @@
 """Handles the file upload and extraction of assessments from the file"""
 
 from collections import defaultdict
+from datetime import datetime
 import json
 import shutil
 from pathlib import Path
 import pickle
 from tempfile import NamedTemporaryFile
-from typing import List
+from typing import List, Optional, Set, Dict
 from fastapi import Response, UploadFile, status
 import pdfplumber
-from datefinder import find_dates
 from dateparser.search import search_dates
 from pdfminer.pdfparser import PDFSyntaxError
 
@@ -18,9 +18,9 @@ from pdfminer.pdfparser import PDFSyntaxError
 # https://www.ucalgary.ca/pubs/calendar/current/course-desc-main.html
 
 
-def cache_course_codes():
+def cache_course_codes() -> Set[str]:
     """
-    Returns a list of all course codes
+    Returns a set of all course codes
     """
     with open("./data/course_codes.pkl", "rb") as file:
         course_codes = pickle.load(file)
@@ -30,13 +30,13 @@ def cache_course_codes():
 COURSE_CODES = cache_course_codes()
 
 
-def cache_course_info():
+def cache_course_info() -> defaultdict:
     """
     Returns a dictionary of course info for all courses
     """
-    faculties = defaultdict(lambda: None)
-    course_codes = defaultdict(lambda: None)
-    course_infos = defaultdict(lambda: None)
+    faculties: defaultdict = defaultdict(lambda: None)
+    course_codes: defaultdict = defaultdict(lambda: None)
+    course_infos: defaultdict = defaultdict(lambda: None)
 
     with open("./data/faculty.jsonlines", "rb") as file:
         faculties_raw = [json.loads(line) for line in file]
@@ -62,6 +62,8 @@ def cache_course_info():
             key = f"{code} {number}"
             code = course_codes[code]
 
+            if not code:
+                continue
             info["title"] = code["title"]
             info["faculty"] = code["faculty"]
 
@@ -72,7 +74,7 @@ def cache_course_info():
 COURSE_INFOS = cache_course_info()
 
 
-def get_course_key(pdf):
+def get_course_key(pdf: pdfplumber.pdf.PDF):
     """Attempts to get the course name from the first page of the pdf
     by matching words against the list of course codes"""
     first_page_words = pdf.pages[0].extract_text().split()
@@ -93,12 +95,12 @@ def get_course_key(pdf):
     return course_code, course_number
 
 
-def get_course_info(course_key):
+def get_course_info(course_key: str) -> Optional[Dict]:
     """Returns the course info for a given course key"""
     return COURSE_INFOS[course_key]
 
 
-def read_tables(pdf):
+def read_tables(pdf: pdfplumber.pdf.PDF) -> List[List[List[Optional[str]]]]:
     """Returns all tables in a pdf as a list of 2d lists"""
     tables = []
     print("pdf.pages", pdf.pages)
@@ -110,7 +112,7 @@ def read_tables(pdf):
     return tables
 
 
-def extract_assessments(table):
+def extract_assessments(table: List[List[Optional[str]]]) -> List[Dict]:
     """Returns the assessments in a table by identifying a date
     in a cell and using the text in the first cell as the name"""
     assessments = []
@@ -118,18 +120,14 @@ def extract_assessments(table):
         for cell in row:
             if not cell:  # skip empty cells
                 continue
+
+            date: Optional[datetime] = None
+            source: Optional[str] = None
             # first try dateparser
-            dates = search_dates(
-                cell, settings={"REQUIRE_PARTS": ["day", "month"]}
-            )
-            if dates:
-                source, date = dates[0]
-            else:  # try datefinder if dateparser fails
-                dates = list(find_dates(cell, source=True))
-                if dates:
-                    date, source = dates[0]
+            dates = search_dates(cell, settings={"REQUIRE_PARTS": ["day", "month"]})
             if not dates:
                 continue
+            source, date = dates[0]
 
             if len(source) < 5:
                 # Ignore dates that are too short to avoid false positives.
@@ -157,7 +155,7 @@ def extract_assessments(table):
     return assessments
 
 
-def get_course(tmp_path):
+def get_course(tmp_path: Path) -> Dict:
     """Compiles assessments into the correct format and returns
     the body of the response"""
 
@@ -172,8 +170,8 @@ def get_course(tmp_path):
         if course_code and course_number:
             course_key = f"{course_code} {course_number}"
             course_info = get_course_info(course_key)
-            course = {**course, **course_info}
-        print(f'course: {course}')
+            if course_info is not None:
+                course = {**course, **course_info}
 
         # Extract assessments from all tables
         assessments = []
@@ -197,22 +195,20 @@ def save_upload_file_tmp(upload_file: UploadFile):
     return tmp_path
 
 
-def handle_files(files: List[UploadFile], response: Response):
-    """Handles multiple files"""
-    courses = []
+def handle_file(file: UploadFile, response: Response):
+    """Handles one file"""
     tmp_path = None
-    for file in files:
-        try:
-            tmp_path = save_upload_file_tmp(file)
-            print(f"Processing file: {tmp_path}")
-            course = get_course(tmp_path)
-            print(f"Finished processing file: {tmp_path}")
-            courses.append(course)
-        except PDFSyntaxError as ex:
-            print(f"Error processing file: {ex}")
-            response.status_code = status.HTTP_422_UNPROCESSABLE_ENTITY
-            return {"Error processing file": ex.args}
-        finally:
+    try:
+        tmp_path = save_upload_file_tmp(file)
+        print(f"Processing file: {tmp_path}")
+        course = get_course(tmp_path)
+        print(f"Finished processing file: {tmp_path}")
+    except PDFSyntaxError as ex:
+        print(f"Error processing file: {ex}")
+        response.status_code = status.HTTP_422_UNPROCESSABLE_ENTITY
+        return {"Error processing file": ex.args}
+    finally:
+        if tmp_path:
             tmp_path.unlink()
 
-    return courses
+    return course

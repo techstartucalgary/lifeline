@@ -9,6 +9,7 @@ on:
       - server/deploy.sh
       - server/test-prod.sh
       - server/Dockerfile
+      - server/requirements.txt
 
 jobs:
   deployment:
@@ -46,7 +47,9 @@ jobs:
       - name: dependencies
         run: |
           sudo apt-get -y update
-          sudo apt-get -y install curl jq
+          sudo apt-get -y install curl jq git-lfs
+          git lfs install
+          git lfs pull --include="server/test-data/CPSC331/CPSC331.pdf"
 
       - name: test
         # Give the lambda function time to deploy
