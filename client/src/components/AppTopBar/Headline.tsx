@@ -21,7 +21,7 @@ const Headline = forwardRef<HTMLDivElement, HeadlineProp>(
         <div
           className={classnames(
             "flex flex-row items-center pb-2 bg-surface",
-            "px-6 md:px-4",
+            "px-4.5 md:px-4",
           )}
         >
           <div className="grow space-y-1">
