@@ -1,7 +1,8 @@
-import { ButtonHTMLAttributes, ReactNode } from "react";
+import { ReactNode } from "react";
 import { classnames } from "../../Utilities";
+import { ButtonProps } from "../Button";
 
-interface NavItemProps extends Omit<ButtonHTMLAttributes<HTMLButtonElement>, "title"> {
+interface NavItemProps extends Omit<ButtonProps, "variant" | "color" | "title"> {
   title?: ReactNode | string;
   icon?: ReactNode | string;
   selected?: boolean;

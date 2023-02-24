@@ -2,7 +2,7 @@ import { ReactNode } from "react";
 import { classnames } from "../../Utilities";
 import { Button, ButtonProps } from "../Button";
 
-interface NavItemProps extends ButtonProps {
+interface NavItemProps extends Omit<ButtonProps, "variant" | "color"> {
   metadata?: ReactNode | string;
   selected?: boolean;
 }
