@@ -1,4 +1,4 @@
-
+""" Returns XLSX file from json"""
 import operator
 import itertools
 from dateutil import parser
@@ -44,4 +44,3 @@ def get_xlsx_file(semester):
     print("Returning file now")
     return FileResponse("dates.xlsx",media_type='application/octet-stream',filename="dates.xlsx")
     
-
