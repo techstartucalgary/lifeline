@@ -85,7 +85,7 @@ const NavigationPanel = ({ courses, currentCourse, onCourseClick, onCoursesChang
               onClick={() => onCourseClick(course)}
               className={classnames(currentCourse === course && "bg-primary-container")}
               ripple={currentCourse !== course}
-              icon={generateIcon(course.key)}
+              icon={generateIcon(course.code)}
             />
           ))}
 
