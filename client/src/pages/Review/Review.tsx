@@ -3,7 +3,6 @@ import { useParams } from "react-router-dom";
 import { classnames } from "../../Utilities";
 import { Assessment, Course, Courses } from "../../logic/icsGen";
 
-import NavigationDrawer from "../../components/NavigationDrawer";
 import { IconButton } from "../../components/Button";
 
 import AppTopBar, {
@@ -15,7 +14,6 @@ import AppTopBar, {
 import CoursePanel from "./CoursePanel";
 
 import testState from "./data";
-import List from "../../components/List";
 import NavigationPanel from "./NavigationPanel";
 
 const Review = () => {
