@@ -195,23 +195,20 @@ def save_upload_file_tmp(upload_file: UploadFile):
     return tmp_path
 
 
-def handle_files(files: List[UploadFile], response: Response):
-    """Handles multiple files"""
-    courses = []
+def handle_file(file: UploadFile, response: Response):
+    """Handles one file"""
     tmp_path = None
-    for file in files:
-        try:
-            tmp_path = save_upload_file_tmp(file)
-            print(f"Processing file: {tmp_path}")
-            course = get_course(tmp_path)
-            print(f"Finished processing file: {tmp_path}")
-            courses.append(course)
-        except PDFSyntaxError as ex:
-            print(f"Error processing file: {ex}")
-            response.status_code = status.HTTP_422_UNPROCESSABLE_ENTITY
-            return {"Error processing file": ex.args}
-        finally:
-            if tmp_path:
-                tmp_path.unlink()
+    try:
+        tmp_path = save_upload_file_tmp(file)
+        print(f"Processing file: {tmp_path}")
+        course = get_course(tmp_path)
+        print(f"Finished processing file: {tmp_path}")
+    except PDFSyntaxError as ex:
+        print(f"Error processing file: {ex}")
+        response.status_code = status.HTTP_422_UNPROCESSABLE_ENTITY
+        return {"Error processing file": ex.args}
+    finally:
+        if tmp_path:
+            tmp_path.unlink()
 
-    return courses
+    return course

@@ -42,10 +42,10 @@ async def show_calendar():
     return calendar_handler.get_calendar_json()
 
 
-@app.post("/files", status_code=200)
-async def get_deadlines(response: Response, outline_files: List[UploadFile] = File(...)):
+@app.post("/file", status_code=200)
+async def get_deadlines(response: Response, outline_file: UploadFile = File(...)):
     """Returns the extracted dates from the uploaded file(s)"""
-    return file_handler.handle_files(outline_files, response)
+    return file_handler.handle_file(outline_file, response)
 
 
 if __name__ == "__main__":

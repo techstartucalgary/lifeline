@@ -35,30 +35,11 @@ def test_one_expected_outline():
     base_path = "../test-data/CPSC331"
 
     with open(f"{base_path}/CPSC331.pdf", "rb") as file:
-        request_data = {"outline_files": ("CPSC331.pdf", file, "application/pdf")}
-        response = client.post("/files", files=request_data)
+        request_data = {"outline_file": ("CPSC331.pdf", file, "application/pdf")}
+        response = client.post("/file", files=request_data)
 
     with open(f"{base_path}/expected.json", "r", encoding="utf8") as file:
         expected_response = json.load(file)
 
     assert response.status_code == 200
     assert response.json() == expected_response
-
-
-def test_many_outlines():
-    """Similar to test_one_expected_outline, but sends many outlines to the
-    endpoint and only checks that the status code is 200."""
-    files = []
-
-    # Iterate over all files in ../test-data
-    for path in Path("../test-data").iterdir():
-        if not path.is_dir():
-            continue
-
-        course_name = path.name
-        with open(f"../test-data/{course_name}/{course_name}.pdf", "rb") as file:
-            file_content = file.read()
-            files.append(("outline_files", file_content))
-
-    response = client.post("/files", files=files)
-    assert response.status_code == 200
