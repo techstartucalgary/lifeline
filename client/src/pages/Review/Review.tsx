@@ -119,7 +119,7 @@ const Review = () => {
     <>
       <nav
         className={classnames(
-          "fixed top-0 left-0 w-full md:w-72 h-full p-3 bg-surface",
+          "fixed top-0 left-0 w-full md:w-72 h-full bg-surface",
           currentCourseKey && "hidden",
           "md:block z-20"
         )}

@@ -5,6 +5,8 @@ import jsonToICS, { Course, Courses } from "../../logic/icsGen";
 import axios from "axios";
 import { classnames } from "../../Utilities";
 import ProgressIndicator from "../../components/ProgressIndicator";
+import { IconButton } from "../../components/Button";
+import AppTopBar from "../../components/AppTopBar/AppTopBar";
 
 
 const generateIcon = (course_key: string) => ["circle", "square", "pentagon"][
@@ -62,7 +64,7 @@ const NavigationPanel = ({ courses, currentCourse, onCourseClick, onCoursesChang
 
   return (
     <>
-      <div className="hidden md:block">
+      <div className="hidden md:block p-3">
         <NavigationDrawer
           title="Courses"
         >
@@ -129,13 +131,31 @@ const NavigationPanel = ({ courses, currentCourse, onCourseClick, onCoursesChang
           />
         </NavigationDrawer>
       </div>
-      <div className="block md:hidden">
-        <List
-          courses={courses}
-          currentCourse={currentCourse}
-          onCoursesChanged={onCoursesChanged}
-          onCourseClick={onCourseClick}
-        />
+      <div className="block md:hidden pt-4">
+        {/* <div className="flex flex-row justify-between items-center">
+          <p>Courses</p>
+          <IconButton icon="add" className="py-1 px-1 -mr-1 text-on-surface" />
+        </div> */}
+        <AppTopBar>
+          <AppTopBar.Title>
+            Courses
+          </AppTopBar.Title>
+        </AppTopBar>
+        <List>
+          {courses && courses.map((course, t) => (
+            <List.Item
+              key={t}
+              title={`${course.code} ${course.number}`}
+              supportingText={course.topic}
+              metadata={course.assessments.length}
+              onClick={() => onCourseClick(course)}
+              className={classnames(currentCourse === course && "bg-primary-container")}
+              ripple={currentCourse !== course}
+              leadingIcon={generateIcon(course.key)}
+              trailingIcon="chevron_right"
+            />
+          ))}
+        </List>
       </div>
     </>
   );
