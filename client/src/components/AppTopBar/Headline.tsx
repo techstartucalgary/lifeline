@@ -20,8 +20,7 @@ const Headline = forwardRef<HTMLDivElement, HeadlineProp>(
       <div {...args} className={classnames("overflow-hidden", args.className)} ref={ref}>
         <div
           className={classnames(
-            "flex flex-row items-center pb-0 bg-surface",
-            "pt-6 md:pt-6",
+            "flex flex-row items-center pb-2 bg-surface",
             "px-6 md:px-4",
           )}
         >

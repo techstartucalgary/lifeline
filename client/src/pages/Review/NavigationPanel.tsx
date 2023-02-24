@@ -132,14 +132,13 @@ const NavigationPanel = ({ courses, currentCourse, onCourseClick, onCoursesChang
         </NavigationDrawer>
       </div>
       <div className="block md:hidden pt-4">
-        {/* <div className="flex flex-row justify-between items-center">
-          <p>Courses</p>
-          <IconButton icon="add" className="py-1 px-1 -mr-1 text-on-surface" />
-        </div> */}
-        <AppTopBar>
+        <AppTopBar variant="medium">
           <AppTopBar.Title>
             Courses
           </AppTopBar.Title>
+          <AppTopBar.TrailingIcon>
+            <IconButton icon="add" className="text-on-surface" />
+          </AppTopBar.TrailingIcon>
         </AppTopBar>
         <List>
           {courses && courses.map((course, t) => (
