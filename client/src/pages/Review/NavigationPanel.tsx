@@ -9,7 +9,7 @@ import { Button, IconButton } from "../../components/Button";
 import AppTopBar from "../../components/AppTopBar/AppTopBar";
 
 
-const generateIcon = (course_key: string) => ["circle", "square", "pentagon"][
+const generateIcon = (course_key: string) => ["circle", "square", "pentagon", "hexagon", "rectangle"][
   Math.abs(
     course_key
       .split("")
