@@ -39,7 +39,16 @@ const NavigationDrawer = ({
           headers: { "Content-Type": "multipart/form-data" },
         })
         .then((res) => {
-          onCoursesChanged(res.data);
+          // convert to Course. Everything is the same but the assessments.date need to be converted to Date and the assessments.weight need to be converted to number
+          const course: Course = {
+            ...res.data,
+            assessments: res.data.assessments.map((a: any) => ({
+              ...a,
+              date: new Date(a.date),
+              weight: Number(a.weight),
+            })),
+          };
+          onCoursesChanged(course);
         })
         .catch((error) => {
           console.log(error);
