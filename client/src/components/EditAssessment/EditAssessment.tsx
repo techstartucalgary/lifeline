@@ -15,16 +15,16 @@ const EditAssessment = ({
   onSave,
   assessment,
 }: EditAssessmentProps) => {
-  const [name, setName] = useState(assessment?.name || "no name");
-  const [date, setDate] = useState(assessment?.date || "no date");
-  const [weight, setWeight] = useState(assessment?.weight || "no weight");
+  const [name, setName] = useState(assessment.name);
+  const [date, setDate] = useState(assessment.date);
+  const [weight, setWeight] = useState(assessment.weight);
   const [location, setLocation] = useState("");
   const [modality, setModality] = useState("");
   const [notes, setNotes] = useState("Late submission policy applied.");
 
   const handleWeightChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (isNaN(Number(e.target.value.trim()))) return;
-    setWeight(e.target.value.trim());
+    setWeight(parseInt(e.target.value.trim()));
   };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {

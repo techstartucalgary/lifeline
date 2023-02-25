@@ -28,9 +28,8 @@ const AssessmentsPanel = ({
             onAssessmentClick(
               {
                 name: "New Assessment",
-                // The format is "yyyy-MM-ddThh:mm" followed by optional ":ss" or ":ss.SSS".
                 date: new Date().toISOString().slice(0, 16),
-                weight: "0",
+                weight: 0,
               },
               assessments.length
             )

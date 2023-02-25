@@ -3,7 +3,7 @@ import { createEvents, EventAttributes } from "ics";
 export interface Assessment {
   name: string;
   date: string;
-  weight: string;
+  weight: number;
 }
 
 export interface Course {
