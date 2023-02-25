@@ -30,7 +30,7 @@ const EditAssessment = ({
       setWeight(0);
       return;
     }
-    setWeight(parseInt(e.target.value.trim()));
+    setWeight(Number(e.target.value.trim()));
   };
 
   const jsxInputFormat = (date: Date): string => {
