@@ -40,7 +40,7 @@ const testState: Courses = [
       },
       {
         name: "Exam 3/Final Exam",
-        date: "",
+        date: "2021-12-06T00:00:00.000",
         weight: "31%",
       },
     ],
