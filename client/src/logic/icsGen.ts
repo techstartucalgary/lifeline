@@ -2,7 +2,7 @@ import { createEvents, EventAttributes } from "ics";
 
 export interface Assessment {
   name: string;
-  date: string;
+  date: Date;
   weight: number;
 }
 
@@ -27,19 +27,15 @@ function jsonToICS(courses: Courses): string {
       if (!assessment.date) {
         continue;
       }
-      const [date, time] = assessment.date.split("T");
-      const [year, month, day] = date.split("-");
-      const [hours, minutes, ] = time.split(":");
+      const year = assessment.date.getFullYear();
+      const month = assessment.date.getMonth();
+      const day = assessment.date.getDate();
+      const hours = assessment.date.getHours();
+      const minutes = assessment.date.getMinutes();
 
       events.push({
         title: `${course.code} ${course.number} - ${assessment.name} (${assessment.weight}%)`,
-        start: [
-          parseInt(year),
-          parseInt(month),
-          parseInt(day),
-          parseInt(hours),
-          parseInt(minutes),
-        ],
+        start: [year, month, day, hours, minutes],
         duration: { hours: 0, minutes: 0, seconds: 0 },
       });
     }

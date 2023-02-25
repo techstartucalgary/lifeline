@@ -15,9 +15,9 @@ const EditAssessment = ({
   onSave,
   assessment,
 }: EditAssessmentProps) => {
-  const [name, setName] = useState(assessment.name);
-  const [date, setDate] = useState(assessment.date);
-  const [weight, setWeight] = useState(assessment.weight);
+  const [name, setName] = useState<string>(assessment.name);
+  const [date, setDate] = useState<Date>(assessment.date);
+  const [weight, setWeight] = useState<number>(assessment.weight);
   const [location, setLocation] = useState("");
   const [modality, setModality] = useState("");
   const [notes, setNotes] = useState("Late submission policy applied.");
@@ -80,12 +80,12 @@ const EditAssessment = ({
         </div>
       </div>
       <div className="flex flex-row w-full h-14">
-        <div className="w-14"></div>
+        <div className="w-14" />
         <input
           type="datetime-local"
           className="rounded-xl w-full ml-2"
-          value={date}
-          onChange={(e) => setDate(e.target.value)}
+          value={date.toISOString().slice(0, 16)}
+          onChange={(e) => setDate(new Date(e.target.value))}
         />
       </div>
       <div className="flex flex-row w-full h-14">

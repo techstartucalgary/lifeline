@@ -28,7 +28,7 @@ const AssessmentsPanel = ({
             onAssessmentClick(
               {
                 name: "New Assessment",
-                date: new Date().toISOString().slice(0, 16),
+                date: new Date(),
                 weight: 0,
               },
               assessments.length
