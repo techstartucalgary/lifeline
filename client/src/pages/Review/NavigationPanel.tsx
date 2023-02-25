@@ -201,7 +201,7 @@ const NavigationPanel = ({ courses, currentCourse, onCourseClick, onCoursesChang
           <AppTopBar.TrailingIcon>
             <IconButton
               icon="add"
-              className="text-on-surface px-1.5"
+              className="text-on-surface"
               onClick={() => {
                 inputRef.current?.click();
               }}
