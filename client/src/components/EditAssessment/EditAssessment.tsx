@@ -7,7 +7,7 @@ import { Assessment } from "../../logic/icsGen";
 interface EditAssessmentProps {
   onClose: () => void;
   onSave: (assessment: Assessment) => void;
-  assessment: Assessment;
+  assessment?: Assessment;
 }
 
 const EditAssessment = ({
@@ -15,9 +15,9 @@ const EditAssessment = ({
   onSave,
   assessment,
 }: EditAssessmentProps) => {
-  const [name, setName] = useState(assessment.name);
-  const [date, setDate] = useState(assessment.date);
-  const [weight, setWeight] = useState(assessment.weight);
+  const [name, setName] = useState(assessment?.name || "no name");
+  const [date, setDate] = useState(assessment?.date || "no date");
+  const [weight, setWeight] = useState(assessment?.weight || "no weight");
   const [location, setLocation] = useState("");
   const [modality, setModality] = useState("");
   const [notes, setNotes] = useState("Late submission policy applied.");
