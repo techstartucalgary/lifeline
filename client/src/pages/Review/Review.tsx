@@ -146,12 +146,12 @@ const Review = () => {
             >
               {/* Icons */}
               <LeadingNavigation className="block md:hidden">
-                <IconButton className="text-on-surface px-1.5" icon="arrow_back" onClick={onClickBack} />
+                <IconButton className="text-on-surface" icon="arrow_back" onClick={onClickBack} />
               </LeadingNavigation>
               <TrailingIcon>
-                <IconButton className="text-on-surface-variant hidden md:block px-1.5" icon="error" />
-                <IconButton className="text-on-surface-variant hidden md:block px-1.5" icon="delete" />
-                <IconButton className="text-on-surface-variant block md:hidden px-1.5" icon="more_vert" />
+                <IconButton className="text-on-surface-variant hidden md:block" icon="error" />
+                <IconButton className="text-on-surface-variant hidden md:block" icon="delete" />
+                <IconButton className="text-on-surface-variant block md:hidden" icon="more_vert" />
               </TrailingIcon >
 
               {/* Titles */}
