@@ -33,6 +33,15 @@ const EditAssessment = ({
     setWeight(parseInt(e.target.value.trim()));
   };
 
+  const jsxInputFormat = (date: Date): string => {
+    const year = date.getFullYear();
+    const month = `${date.getMonth() + 1}`.padStart(2, "0");
+    const day = `${date.getDate()}`.padStart(2, "0");
+    const hours = `${date.getHours()}`.padStart(2, "0");
+    const minutes = `${date.getMinutes()}`.padStart(2, "0");
+    return `${year}-${month}-${day}T${hours}:${minutes}`;
+  };
+
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     onSave({
@@ -84,7 +93,7 @@ const EditAssessment = ({
         <input
           type="datetime-local"
           className="rounded-xl w-full ml-2"
-          value={date.toISOString().slice(0, 16)}
+          value={jsxInputFormat(date)}
           onChange={(e) => setDate(new Date(e.target.value))}
         />
       </div>
