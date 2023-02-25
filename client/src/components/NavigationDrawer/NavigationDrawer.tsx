@@ -39,7 +39,18 @@ const NavigationDrawer = ({
           headers: { "Content-Type": "multipart/form-data" },
         })
         .then((res) => {
-          onCoursesChanged(res.data);
+          // convert to Course
+          const course: Course = {
+            ...res.data,
+            assessments: res.data.assessments.map(
+              (a: { name: string; date: string; weight: string }) => ({
+                ...a,
+                date: new Date(a.date),
+                weight: Number(a.weight),
+              })
+            ),
+          };
+          onCoursesChanged(course);
         })
         .catch((error) => {
           console.log(error);

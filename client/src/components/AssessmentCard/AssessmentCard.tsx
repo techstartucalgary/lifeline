@@ -8,21 +8,15 @@ interface AssessmentCardProps {
   onAssessmentClick: (assessment: Assessment) => void;
 }
 
-const formatDate = (dateString: string): string | null => {
-  try {
-    const date = new Date(dateString);
-    return date.toLocaleString("en-US", {
-      month: "long",
-      day: "numeric",
-      year: "numeric",
-      hour: "numeric",
-      minute: "numeric",
-      hour12: false,
-    });
-  } catch (e) {
-    return null;
-  }
-};
+const formatDate = (date: Date): string =>
+  date.toLocaleString("en-US", {
+    month: "long",
+    day: "numeric",
+    year: "numeric",
+    hour: "numeric",
+    minute: "numeric",
+    hour12: false,
+  });
 
 const AssessmentCard = ({
   assessment,
