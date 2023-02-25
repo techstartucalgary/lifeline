@@ -7,7 +7,7 @@ import { Assessment } from "../../logic/icsGen";
 interface EditAssessmentProps {
   onClose: () => void;
   onSave: (assessment: Assessment) => void;
-  assessment?: Assessment;
+  assessment: Assessment;
 }
 
 const EditAssessment = ({

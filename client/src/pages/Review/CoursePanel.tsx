@@ -53,7 +53,7 @@ const CoursePanel = ({ course, onChangeAssessment }: CoursePanelProp) => {
           ) : (
             <div className={classnames(selectedTab === Tab.Document && "hidden md:block")}>
               <EditAssessment
-                assessment={editingAssessment?.assessment}
+                assessment={editingAssessment.assessment}
                 onClose={() => setEditingAssessment(null)}
                 onSave={(assessment: Assessment) => {
                   onChangeAssessment(assessment, editingAssessment.index ?? -1);
