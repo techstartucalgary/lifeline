@@ -20,8 +20,21 @@ const AssessmentsPanel = ({
           "w-full justify-between items-center mb-3"
         )}
       >
-        <h1 className="text-sys-primary font-bold uppercase">Assessment</h1>
-        <Button variant="filled" className="px-5 py-2">
+        <h1 className="text-sys-primary font-bold uppercase">Assessments</h1>
+        <Button
+          variant="filled"
+          className="px-5 py-2"
+          onClick={() =>
+            onAssessmentClick(
+              {
+                name: "New Assessment",
+                date: new Date(),
+                weight: 0,
+              },
+              assessments.length
+            )
+          }
+        >
           <span className="material-symbols-outlined text-4xl">add</span>
         </Button>
       </div>

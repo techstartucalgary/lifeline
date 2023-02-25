@@ -137,10 +137,13 @@ def extract_assessments(table: List[List[Optional[str]]]) -> List[Dict]:
             # use the text in the first cell as the name if it exists
             name = row[0].replace("\n", " ") if row[0] else "Unknown"
 
-            weight = "unknown"
+            weight = 0
             for cell in row:
                 if cell and "%" in cell:
-                    weight = cell
+                    try:
+                        weight = int(cell.strip("%"))
+                    except ValueError:
+                        pass
 
             assessments.append(
                 {

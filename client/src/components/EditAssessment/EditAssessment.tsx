@@ -15,16 +15,31 @@ const EditAssessment = ({
   onSave,
   assessment,
 }: EditAssessmentProps) => {
-  const [name, setName] = useState(assessment.name);
-  const [date, setDate] = useState(assessment.date);
-  const [weight, setWeight] = useState(assessment.weight);
+  const [name, setName] = useState<string>(assessment.name);
+  const [date, setDate] = useState<Date>(assessment.date);
+  const [weight, setWeight] = useState<number>(assessment.weight);
   const [location, setLocation] = useState("");
   const [modality, setModality] = useState("");
   const [notes, setNotes] = useState("Late submission policy applied.");
 
   const handleWeightChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (isNaN(Number(e.target.value.trim()))) return;
-    setWeight(e.target.value.trim());
+    if (isNaN(Number(e.target.value.trim()))) {
+      return;
+    }
+    if (e.target.value.trim() === "") {
+      setWeight(0);
+      return;
+    }
+    setWeight(Number(e.target.value.trim()));
+  };
+
+  const jsxInputFormat = (date: Date): string => {
+    const year = date.getFullYear();
+    const month = `${date.getMonth() + 1}`.padStart(2, "0");
+    const day = `${date.getDate()}`.padStart(2, "0");
+    const hours = `${date.getHours()}`.padStart(2, "0");
+    const minutes = `${date.getMinutes()}`.padStart(2, "0");
+    return `${year}-${month}-${day}T${hours}:${minutes}`;
   };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -78,8 +93,8 @@ const EditAssessment = ({
         <input
           type="datetime-local"
           className="rounded-xl w-full ml-2"
-          value={date}
-          onChange={(e) => setDate(e.target.value)}
+          value={jsxInputFormat(date)}
+          onChange={(e) => setDate(new Date(e.target.value))}
         />
       </div>
       <div className="flex flex-row w-full h-14">
