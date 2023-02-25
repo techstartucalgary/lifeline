@@ -31,6 +31,7 @@ const AssessmentCard = ({
   return (
     <Button
       className={classnames(
+        "w-full",
         "p-4",
         "my-1",
         "rounded-3xl",
