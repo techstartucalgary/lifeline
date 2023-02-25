@@ -22,5 +22,10 @@
   "python.linting.enabled": true,
   "python.linting.pylintEnabled": true,
   "python.analysis.typeCheckingMode": "basic",
-  "git.alwaysSignOff": true
+  "git.alwaysSignOff": true,
+  "search.exclude": {
+    "**/node_modules": true,
+    "**/build": true,
+    "**/.venv*": true,
+  }
 }
