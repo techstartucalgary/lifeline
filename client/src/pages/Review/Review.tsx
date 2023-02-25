@@ -114,6 +114,11 @@ const Review = () => {
     );
   };
 
+  const deleteCurrentCourse = () => {
+    setCourses(courses.filter((course) => course.key !== currentCourseKey));
+    setCurrentCourseKey(null);
+  };
+
   return (
     <>
       <nav
@@ -154,6 +159,7 @@ const Review = () => {
                 <IconButton
                   className="text-on-surface-variant hidden md:block"
                   icon="delete"
+                  onClick={deleteCurrentCourse}
                 />
                 <IconButton
                   className="text-on-surface-variant block md:hidden"
