@@ -10,7 +10,7 @@ interface IconButtonProps extends ButtonProps {
 const IconButton = ({ icon, iconClassName, ...args }: IconButtonProps) => {
   return (
     <Button {...args}>
-      <span className={classnames("material-symbols-outlined text-3xl md:text-2xl", iconClassName)}>{icon}</span>
+      <span className={classnames("material-symbols-outlined text-3xl md:text-2.5xl m-auto", iconClassName)}>{icon}</span>
     </Button>
   );
 };

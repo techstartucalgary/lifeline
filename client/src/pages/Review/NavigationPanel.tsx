@@ -147,8 +147,8 @@ const NavigationPanel = ({ courses, currentCourse, onCourseClick, onCoursesChang
             icon="save_alt"
             variant="tonal"
             color="tertiary"
-            className="rounded-2xl mx-2.5 px-4 mt-8 mb-6 text-center"
-            iconClassName="text-on-surface text-3xl md:text-3xl"
+            className="rounded-2xl text-center px-0 mt-4 mb-6 w-16 h-16 mx-auto"
+            iconClassName="text-on-surface"
             onClick={handleExport}
           />
 

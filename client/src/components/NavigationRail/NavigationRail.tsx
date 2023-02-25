@@ -10,7 +10,7 @@ const NavigationRail = ({
   ...args
 }: NavigationDrawerProps) => {
   return (
-    <div {...args} className={classnames("flex flex-col w-full space-y-4 px-1.5 py-6", args.className)}>
+    <div {...args} className={classnames("flex flex-col w-full space-y-4 pt-4", args.className)}>
       {children}
     </div>
   );
