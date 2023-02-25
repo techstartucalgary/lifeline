@@ -23,7 +23,13 @@ const EditAssessment = ({
   const [notes, setNotes] = useState("Late submission policy applied.");
 
   const handleWeightChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (isNaN(Number(e.target.value.trim()))) return;
+    if (isNaN(Number(e.target.value.trim()))) {
+      return;
+    }
+    if (e.target.value.trim() === "") {
+      setWeight(0);
+      return;
+    }
     setWeight(parseInt(e.target.value.trim()));
   };
 
