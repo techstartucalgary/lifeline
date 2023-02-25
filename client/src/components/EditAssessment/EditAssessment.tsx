@@ -89,7 +89,7 @@ const EditAssessment = ({
         </div>
       </div>
       <div className="flex flex-row w-full h-14">
-        <div className="w-14" />
+        <div className="w-14"></div>
         <input
           type="datetime-local"
           className="rounded-xl w-full ml-2"

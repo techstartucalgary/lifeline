@@ -56,7 +56,7 @@ const CoursePanel = ({ course, onChangeAssessment }: CoursePanelProp) => {
                 assessment={editingAssessment.assessment}
                 onClose={() => setEditingAssessment(null)}
                 onSave={(assessment: Assessment) => {
-                  onChangeAssessment(assessment, editingAssessment.index ?? -1);
+                  onChangeAssessment(assessment, editingAssessment.index);
                   setEditingAssessment(null);
                 }}
               />
