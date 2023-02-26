@@ -49,6 +49,13 @@ const Review = () => {
     } else {
       setCurrentCourseKey(courseKeyUrlParam);
     }
+    // Gives a warning that they will lose their progress if the user tries to leave/refresh the page
+    const beforeUnload = (e: BeforeUnloadEvent) => {
+      e.preventDefault();
+      e.returnValue = "";
+    };
+    window.addEventListener("beforeunload", beforeUnload);
+    return () => window.removeEventListener("beforeunload", beforeUnload);
   }, []);
 
   useEffect(() => {
@@ -120,6 +127,11 @@ const Review = () => {
     );
   };
 
+  const deleteCurrentCourse = () => {
+    setCourses(courses.filter((course) => course.key !== currentCourseKey));
+    setCurrentCourseKey(null);
+  };
+
   return (
     <>
       <nav
@@ -149,10 +161,20 @@ const Review = () => {
                 <IconButton className="text-on-surface" icon="arrow_back" onClick={onClickBack} />
               </LeadingNavigation>
               <TrailingIcon>
-                <IconButton className="text-on-surface-variant hidden md:block" icon="error" />
-                <IconButton className="text-on-surface-variant hidden md:block" icon="delete" />
-                <IconButton className="text-on-surface-variant block md:hidden" icon="more_vert" />
-              </TrailingIcon >
+                <IconButton
+                  className="text-on-surface-variant hidden md:block"
+                  icon="error"
+                />
+                <IconButton
+                  className="text-on-surface-variant hidden md:block"
+                  icon="delete"
+                  onClick={deleteCurrentCourse}
+                />
+                <IconButton
+                  className="text-on-surface-variant block md:hidden"
+                  icon="more_vert"
+                />
+              </TrailingIcon>
 
               {/* Titles */}
               <Title>

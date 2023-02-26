@@ -8,7 +8,10 @@ interface AssessmentPanelProp {
   onAssessmentClick(assessment: Assessment, index: number): void;
 }
 
-const AssessmentsPanel = ({ assessments, onAssessmentClick }: AssessmentPanelProp) => {
+const AssessmentsPanel = ({
+  assessments,
+  onAssessmentClick,
+}: AssessmentPanelProp) => {
   return (
     <>
       <div
@@ -17,21 +20,35 @@ const AssessmentsPanel = ({ assessments, onAssessmentClick }: AssessmentPanelPro
           "w-full justify-between items-center mb-3"
         )}
       >
-        <h1 className="text-sys-primary font-bold uppercase">
-          Assessment
-        </h1>
-        <Button variant="filled" className="px-5 py-2">
+        <h1 className="text-sys-primary font-bold uppercase">Assessments</h1>
+        <Button
+          variant="filled"
+          className="px-5 py-2"
+          onClick={() =>
+            onAssessmentClick(
+              {
+                name: "New Assessment",
+                date: new Date(),
+                weight: 0,
+              },
+              assessments.length
+            )
+          }
+        >
           <span className="material-symbols-outlined text-4xl">add</span>
         </Button>
       </div>
       <ul className="flex flex-col">
-        {assessments.map((assessment, index) => (
-          <AssessmentCard
-            key={index}
-            assessment={assessment}
-            onAssessmentClick={() => onAssessmentClick(assessment, index)}
-          />
-        ))}
+        {assessments
+          .sort((a: Assessment, b: Assessment) => (a.date > b.date ? 1 : -1))
+          .map((assessment, index) => (
+            <li key={index}>
+              <AssessmentCard
+                assessment={assessment}
+                onAssessmentClick={() => onAssessmentClick(assessment, index)}
+              />
+            </li>
+          ))}
       </ul>
     </>
   );
