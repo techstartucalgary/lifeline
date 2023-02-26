@@ -20,7 +20,7 @@ const EditAssessment = ({
   const [weight, setWeight] = useState<number>(assessment.weight);
   const [location, setLocation] = useState("");
   const [modality, setModality] = useState("");
-  const [notes, setNotes] = useState("Late submission policy applied.");
+  const [notes, setNotes] = useState<string>(assessment.notes || "");
 
   const handleWeightChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (isNaN(Number(e.target.value.trim()))) {
@@ -48,6 +48,7 @@ const EditAssessment = ({
       name,
       date,
       weight,
+      notes,
     });
   };
 
