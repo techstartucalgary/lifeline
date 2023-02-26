@@ -118,7 +118,7 @@ const NavigationPanel = ({ courses, currentCourse, onCourseClick, onCoursesChang
           <Button
             variant="text"
             color="tertiary"
-            className="rounded-[20px] py-4.5 px-5.5 text-secondary font-normal"
+            className="rounded-[20px] py-4.5 px-5.5 text-tertiary font-normal"
             onClick={() => {
               inputRef.current?.click();
             }}
