@@ -9,15 +9,10 @@ import { Button, IconButton } from "../../components/Button";
 import AppTopBar from "../../components/AppTopBar/AppTopBar";
 import NavigationRail from "../../components/NavigationRail";
 
-
-const generateIcon = (course_key: string) => ["circle", "square", "pentagon", "hexagon", "rectangle"][
-  Math.abs(
-    course_key
-      .split("")
-      .reduce((a, b) => a + b.charCodeAt(0), 0)
-  ) % 3
-];
-
+const generateIcon = (course_key: string) =>
+  ["circle", "square", "pentagon", "hexagon", "rectangle"][
+    Math.abs(course_key.split("").reduce((a, b) => a + b.charCodeAt(0), 0)) % 3
+  ];
 
 interface NavigationPanelProps {
   courses: Courses;
@@ -26,7 +21,12 @@ interface NavigationPanelProps {
   onCoursesChanged(course: Course): void;
 }
 
-const NavigationPanel = ({ courses, currentCourse, onCourseClick, onCoursesChanged }: NavigationPanelProps) => {
+const NavigationPanel = ({
+  courses,
+  currentCourse,
+  onCourseClick,
+  onCoursesChanged,
+}: NavigationPanelProps) => {
   const [loading, setLoading] = useState<string[]>([]);
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -49,7 +49,18 @@ const NavigationPanel = ({ courses, currentCourse, onCourseClick, onCoursesChang
           headers: { "Content-Type": "multipart/form-data" },
         })
         .then((res) => {
-          onCoursesChanged(res.data);
+          // convert to Course
+          const course: Course = {
+            ...res.data,
+            assessments: res.data.assessments.map(
+              (a: { name: string; date: string; weight: string }) => ({
+                ...a,
+                date: new Date(a.date),
+                weight: Number(a.weight),
+              })
+            ),
+          };
+          onCoursesChanged(course);
         })
         .catch((error) => {
           console.log(error);
@@ -72,46 +83,47 @@ const NavigationPanel = ({ courses, currentCourse, onCourseClick, onCoursesChang
   return (
     <>
       <div className="hidden md:hidden xl:block p-3">
-        <input ref={inputRef}
+        <input
+          ref={inputRef}
           type="file"
           accept=".pdf"
           multiple
           onChange={handleOutlineUpload}
-          className="hidden" 
+          className="hidden"
           aria-hidden
         />
 
-        <NavigationDrawer
-          title="Courses"
-        >
-          {courses && courses.map((course, t) => (
-            <NavigationDrawer.Item
-              key={t}
-              title={`${course.code} ${course.number}`}
-              metadata={course.assessments.length}
-              onClick={() => onCourseClick(course)}
-              selected={course === currentCourse}
-              ripple={currentCourse !== course}
-              icon={generateIcon(course.code)}
-            />
-          ))}
+        <NavigationDrawer title="Courses">
+          {courses &&
+            courses.map((course, t) => (
+              <NavigationDrawer.Item
+                key={t}
+                title={`${course.code} ${course.number}`}
+                metadata={course.assessments.length}
+                onClick={() => onCourseClick(course)}
+                selected={course === currentCourse}
+                ripple={currentCourse !== course}
+                icon={generateIcon(course.code)}
+              />
+            ))}
 
           {loading.length > 0 && (
             <div className="flex flex-col w-full">
-              {
-                loading.map((file, t) => (
-                  <NavigationDrawer.Item
-                    key={t}
-                    title={file}
-                    disabled={true}
-                    icon={
-                      <div className="h-5 w-5 overflow-hidden flex justify-center items-center">
-                        <ProgressIndicator determinate={false} className="h-5 w-5" />
-                      </div>
-                    }
-                  />
-                ))
-              }
+              {loading.map((file, t) => (
+                <NavigationDrawer.Item
+                  key={t}
+                  title={file}
+                  disabled={true}
+                  icon={
+                    <div className="h-5 w-5 overflow-hidden flex justify-center items-center">
+                      <ProgressIndicator
+                        determinate={false}
+                        className="h-5 w-5"
+                      />
+                    </div>
+                  }
+                />
+              ))}
             </div>
           )}
 
@@ -152,32 +164,34 @@ const NavigationPanel = ({ courses, currentCourse, onCourseClick, onCoursesChang
             onClick={handleExport}
           />
 
-          {courses && courses.map((course, t) => (
-            <NavigationRail.Item
-              key={t}
-              title={`${course.code} ${course.number}`}
-              onClick={() => onCourseClick(course)}
-              icon={generateIcon(course.code)}
-              selected={course === currentCourse}
-            />
-          ))}
+          {courses &&
+            courses.map((course, t) => (
+              <NavigationRail.Item
+                key={t}
+                title={`${course.code} ${course.number}`}
+                onClick={() => onCourseClick(course)}
+                icon={generateIcon(course.code)}
+                selected={course === currentCourse}
+              />
+            ))}
 
           {loading.length > 0 && (
             <div className="flex flex-col w-full">
-              {
-                loading.map((file, t) => (
-                  <NavigationRail.Item
-                    key={t}
-                    title={file}
-                    disabled={true}
-                    icon={
-                      <div className="h-5 w-5 overflow-hidden flex justify-center items-center">
-                        <ProgressIndicator determinate={false} className="h-5 w-5" />
-                      </div>
-                    }
-                  />
-                ))
-              }
+              {loading.map((file, t) => (
+                <NavigationRail.Item
+                  key={t}
+                  title={file}
+                  disabled={true}
+                  icon={
+                    <div className="h-5 w-5 overflow-hidden flex justify-center items-center">
+                      <ProgressIndicator
+                        determinate={false}
+                        className="h-5 w-5"
+                      />
+                    </div>
+                  }
+                />
+              ))}
             </div>
           )}
 
@@ -195,9 +209,7 @@ const NavigationPanel = ({ courses, currentCourse, onCourseClick, onCoursesChang
       </div>
       <div className="block md:hidden xl:hidden">
         <AppTopBar variant="medium">
-          <AppTopBar.Title>
-            Courses
-          </AppTopBar.Title>
+          <AppTopBar.Title>Courses</AppTopBar.Title>
           <AppTopBar.TrailingIcon>
             <IconButton
               icon="add"
@@ -209,32 +221,43 @@ const NavigationPanel = ({ courses, currentCourse, onCourseClick, onCoursesChang
           </AppTopBar.TrailingIcon>
         </AppTopBar>
         <List>
-          {courses && courses.map((course, t) => (
-            <List.Item
-              key={t}
-              title={`${course.code} ${course.number}`}
-              supportingText={course.topic}
-              metadata={<p className="rounded-full bg-secondary-95 py-2 w-8">{ course.assessments.length }</p>}
-              onClick={() => onCourseClick(course)}
-              className={classnames(currentCourse === course && "bg-primary-container")}
-              ripple={currentCourse !== course}
-              leadingIcon={generateIcon(course.code)}
-              trailingIcon="arrow_right"
-            />
-          ))}
+          {courses &&
+            courses.map((course, t) => (
+              <List.Item
+                key={t}
+                title={`${course.code} ${course.number}`}
+                supportingText={course.topic}
+                metadata={
+                  <p className="rounded-full bg-secondary-95 py-2 w-8">
+                    {course.assessments.length}
+                  </p>
+                }
+                onClick={() => onCourseClick(course)}
+                className={classnames(
+                  currentCourse === course && "bg-primary-container"
+                )}
+                ripple={currentCourse !== course}
+                leadingIcon={generateIcon(course.code)}
+                trailingIcon="arrow_right"
+              />
+            ))}
 
-          {loading.length > 0 && loading.map((file, t) => (
-            <List.Item
-              key={t}
-              title={file}
-              disabled={true}
-              leadingIcon={
-                <div className="h-5 w-5 overflow-hidden flex justify-center items-center">
-                  <ProgressIndicator determinate={false} className="h-5 w-5" />
-                </div>
-              }
-            />
-          ))}
+          {loading.length > 0 &&
+            loading.map((file, t) => (
+              <List.Item
+                key={t}
+                title={file}
+                disabled={true}
+                leadingIcon={
+                  <div className="h-5 w-5 overflow-hidden flex justify-center items-center">
+                    <ProgressIndicator
+                      determinate={false}
+                      className="h-5 w-5"
+                    />
+                  </div>
+                }
+              />
+            ))}
         </List>
 
         <Button
