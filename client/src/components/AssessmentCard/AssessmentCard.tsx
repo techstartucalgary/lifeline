@@ -25,6 +25,7 @@ const AssessmentCard = ({
   return (
     <Button
       className={classnames(
+        "w-full",
         "p-4",
         "my-1",
         "rounded-3xl",
@@ -91,10 +92,7 @@ const AssessmentCard = ({
         <p className="text-sys-outline mt-2 text-sm font-normal">
           Weight: {assessment.weight}
           <br />
-          {"Hello, additional information can be added here. This is a placeholder. Additional information can be added here. This is a placeholder."
-            .split(" ")
-            .slice(0, Math.floor((assessment.name.charCodeAt(5) + 1) % 2) * 22)
-            .join(" ")}
+          {assessment.notes}
         </p>
       </div>
     </Button>

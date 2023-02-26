@@ -4,6 +4,7 @@ export interface Assessment {
   name: string;
   date: Date;
   weight: number;
+  notes?: string;
 }
 
 export interface Course {

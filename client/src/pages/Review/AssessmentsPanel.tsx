@@ -39,13 +39,16 @@ const AssessmentsPanel = ({
         </Button>
       </div>
       <ul className="flex flex-col">
-        {assessments.map((assessment, index) => (
-          <AssessmentCard
-            key={index}
-            assessment={assessment}
-            onAssessmentClick={() => onAssessmentClick(assessment, index)}
-          />
-        ))}
+        {assessments
+          .sort((a: Assessment, b: Assessment) => (a.date > b.date ? 1 : -1))
+          .map((assessment, index) => (
+            <li key={index}>
+              <AssessmentCard
+                assessment={assessment}
+                onAssessmentClick={() => onAssessmentClick(assessment, index)}
+              />
+            </li>
+          ))}
       </ul>
     </>
   );

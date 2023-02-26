@@ -49,6 +49,13 @@ const Review = () => {
     } else {
       setCurrentCourseKey(courseKeyUrlParam);
     }
+    // Gives a warning that they will lose their progress if the user tries to leave/refresh the page
+    const beforeUnload = (e: BeforeUnloadEvent) => {
+      e.preventDefault();
+      e.returnValue = "";
+    };
+    window.addEventListener("beforeunload", beforeUnload);
+    return () => window.removeEventListener("beforeunload", beforeUnload);
   }, []);
 
   // Memorize the course key lookup in format of { [key]: course } for performance
