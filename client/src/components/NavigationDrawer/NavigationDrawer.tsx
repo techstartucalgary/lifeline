@@ -1,13 +1,13 @@
 import axios from "axios";
 import { classnames } from "../../Utilities";
-import Button from "../Button";
+import { Button } from "../Button";
 import jsonToICS, { Course, Courses } from "../../logic/icsGen";
 import { useState, useRef } from "react";
 
 interface NavigationDrawerProps {
   courses: Courses;
   currentCourse: Course | null;
-  onCoursesChanged: (courses: Courses) => void;
+  onCoursesChanged: (course: Course) => void;
   onCourseClick: (course: Course) => void;
 }
 
@@ -20,28 +20,45 @@ const NavigationDrawer = ({
   const [loading, setLoading] = useState<string[]>([]);
   const inputRef = useRef<HTMLInputElement>(null);
 
-  const handleOutlineUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const files = e.target.files;
-    if (!files) return;
+  const handleOutlineUpload = async (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    if (!e.target.files) return;
+
+    const files = Array.from(e.target.files);
     setLoading(Array.from(files).map((f: File) => f.name));
 
-    const formData = new FormData();
-    for (let i = 0; i < files.length; i++)
-      formData.append("outline_files", files[i]);
+    while (files.length > 0) {
+      const file = files.pop();
 
-    axios
-      .post("/files", formData, {
-        headers: { "Content-Type": "multipart/form-data" },
-      })
-      .then((res) => {
-        onCoursesChanged(res.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      })
-      .finally(() => {
-        setLoading([]);
-      });
+      const formData = new FormData();
+      formData.append("outline_file", file as File);
+
+      await axios
+        .post("/files", formData, {
+          headers: { "Content-Type": "multipart/form-data" },
+        })
+        .then((res) => {
+          // convert to Course
+          const course: Course = {
+            ...res.data,
+            assessments: res.data.assessments.map(
+              (a: { name: string; date: string; weight: string }) => ({
+                ...a,
+                date: new Date(a.date),
+                weight: Number(a.weight),
+              })
+            ),
+          };
+          onCoursesChanged(course);
+        })
+        .catch((error) => {
+          console.log(error);
+        })
+        .finally(() => {
+          setLoading((prev) => prev.filter((f) => f !== file?.name));
+        });
+    }
   };
 
   const handleExport = () => {
@@ -154,7 +171,6 @@ const NavigationDrawer = ({
       <hr className="border-gray-300 p-2 hidden md:block" />
       <Button
         variant="filled"
-        // on mobile it sits in the absolute bottom right and is only as wide as the text. Has a shadow on mobile
         className={classnames(
           "fixed",
           "bottom-0",

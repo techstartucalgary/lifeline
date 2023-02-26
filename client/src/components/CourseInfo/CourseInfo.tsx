@@ -60,7 +60,7 @@ const Description = ({ text }: { text: string }) => {
     paragraphRef.current.classList.add("line-clamp-3");
     const clampedHeight = paragraphRef.current.clientHeight;
     setClampable(originalHeight !== clampedHeight);
-  }, [text]);
+  }, [text, paragraphRef.current]);
 
   return (
     <button

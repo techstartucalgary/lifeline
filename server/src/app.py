@@ -1,24 +1,30 @@
 """Entry point for the server"""
 
 from os import environ
-from typing import List
 import uvicorn
 from fastapi import FastAPI, File, UploadFile, Response
 from fastapi.middleware.cors import CORSMiddleware
 from mangum import Mangum
 from handlers import calendar_handler, file_handler
 
-app = FastAPI()
+IS_IN_PROD = "LAMBDA_TASK_ROOT" in dict(environ)
+
+app = FastAPI(
+    title="Lifeline Server",
+    description="Server for the Lifeline project",
+    version="0.1.0",
+    docs_url="/docs" if not IS_IN_PROD else None,
+    redoc_url="/redoc" if not IS_IN_PROD else None,
+)
 handler = Mangum(app)
 
 
 origins = (
     ["https://lifeline.techstartucalgary.com"]
-    if "LAMBDA_TASK_ROOT" in environ
+    if IS_IN_PROD
     else ["http://localhost:3000", "http://127.0.0.1:3000"]
 )
 
-print(origins)
 
 app.add_middleware(
     CORSMiddleware,
@@ -36,9 +42,9 @@ async def show_calendar():
 
 
 @app.post("/files", status_code=200)
-async def get_deadlines(response: Response, outline_files: List[UploadFile] = File(...)):
-    """Returns the extracted dates from the uploaded file(s)"""
-    return file_handler.handle_files(outline_files, response)
+async def get_deadlines(response: Response, outline_file: UploadFile = File(...)):
+    """Returns the extracted dates and info from the uploaded file"""
+    return file_handler.handle_file(outline_file, response)
 
 
 if __name__ == "__main__":

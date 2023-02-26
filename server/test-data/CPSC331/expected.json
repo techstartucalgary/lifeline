@@ -1,101 +1,81 @@
-[
-  {
-    "code": "CPSC",
-    "number": 331,
-    "cid": 3628,
-    "topic": "Data Structures, Algorithms, and Their Analysis",
-    "description": "Fundamental data structures, including arrays, lists, stacks, queues, trees, hash tables, and graphs. Algorithms for searching and sorting. Introduction to the correctness and analysis of algorithms. For computer science majors and those interested in algorithm design and analysis, information security, and other mathematically-intensive areas.",
-    "sub_topics": null,
-    "units": 3,
-    "credits": null,
-    "hours": [
-      "3-2T"
+{
+  "code": "CPSC",
+  "number": 331,
+  "cid": 3628,
+  "topic": "Data Structures, Algorithms, and Their Analysis",
+  "description": "Fundamental data structures, including arrays, lists, stacks, queues, trees, hash tables, and graphs. Algorithms for searching and sorting. Introduction to the correctness and analysis of algorithms. For computer science majors and those interested in algorithm design and analysis, information security, and other mathematically-intensive areas.",
+  "sub_topics": null,
+  "units": 3,
+  "credits": null,
+  "hours": ["3-2T"],
+  "time_length": null,
+  "prereq": "3 units from <course cid=\"44642\">Computer Science 251</course>, <course cid=\"6947\">Mathematics 271</course> or <course cid=\"6948\">273</course>; and 3 units from <course cid=\"3620\">Computer Science 219</course>, <course cid=\"3622\">233</course>, <course cid=\"3623\">235</course>, <course cid=\"43065\">Computer Engineering 335</course>, 339 or <course cid=\"43066\">Software Engineering for Engineers 337</course>.",
+  "coreq": null,
+  "antireq": "Credit for <course cid=\"3628\">Computer Science 331</course> and <course cid=\"30258\">319</course> will not be allowed.",
+  "notes": null,
+  "aka": null,
+  "repeat": false,
+  "nogpa": false,
+  "title": "Computer Science",
+  "faculty": {
+    "fid": 7144,
+    "title": "Science",
+    "code": "science",
+    "phones": [
+      "+1 (403) 220-5516",
+      "+1 (403) 282-9154 (Fax)",
+      "+1 (403) 220-8600 (Undergraduate Science Centre)"
     ],
-    "time_length": null,
-    "prereq": "3 units from <course cid=\"44642\">Computer Science 251</course>, <course cid=\"6947\">Mathematics 271</course> or <course cid=\"6948\">273</course>; and 3 units from <course cid=\"3620\">Computer Science 219</course>, <course cid=\"3622\">233</course>, <course cid=\"3623\">235</course>, <course cid=\"43065\">Computer Engineering 335</course>, 339 or <course cid=\"43066\">Software Engineering for Engineers 337</course>.",
-    "coreq": null,
-    "antireq": "Credit for <course cid=\"3628\">Computer Science 331</course> and <course cid=\"30258\">319</course> will not be allowed.",
-    "notes": null,
-    "aka": null,
-    "repeat": false,
-    "nogpa": false,
-    "title": "Computer Science",
-    "faculty": {
-      "fid": 7144,
-      "title": "Science",
-      "code": "science",
-      "phones": [
-        "+1 (403) 220-5516",
-        "+1 (403) 282-9154 (Fax)",
-        "+1 (403) 220-8600 (Undergraduate Science Centre)"
-      ],
-      "rooms": [
-        "Biological Sciences 540"
-      ],
-      "email": [
-        "scidean@ucalgary.ca"
-      ],
-      "website": [
-        "http://science.ucalgary.ca/",
-        "http://science.ucalgary.ca/usc"
-      ],
-      "aka": null
+    "rooms": ["Biological Sciences 540"],
+    "email": ["scidean@ucalgary.ca"],
+    "website": [
+      "http://science.ucalgary.ca/",
+      "http://science.ucalgary.ca/usc"
+    ],
+    "aka": null
+  },
+  "assessments": [
+    {
+      "name": "Assignment 11",
+      "date": "2022-09-26T00:00:00",
+      "weight": 10,
+      "source": "Sep 26 2022"
     },
-    "assessments": [
-      {
-        "name": "Assignment 11",
-        "date": "2022-09-26T00:00:00",
-        "weight": "10%",
-        "source": "Sep 26 2022"
-      },
-      {
-        "name": "Assignment 2",
-        "date": "2022-10-07T00:00:00",
-        "weight": "10%",
-        "source": "Oct 07 2022"
-      },
-      {
-        "name": "Term Test 1",
-        "date": "2022-10-17T18:00:00",
-        "weight": "15%",
-        "source": "Oct 17 2022 at 06:00 pm"
-      },
-      {
-        "name": "Assignment 3",
-        "date": "2022-10-31T00:00:00",
-        "weight": "10%",
-        "source": "Oct 31 2022"
-      },
-      {
-        "name": "Term Test 2",
-        "date": "2022-11-02T18:00:00",
-        "weight": "15%",
-        "source": "Nov 02 2022 at 06:00 pm"
-      },
-      {
-        "name": "Assignment 4",
-        "date": "2022-11-18T00:00:00",
-        "weight": "10%",
-        "source": "Nov 18 2022"
-      },
-      {
-        "name": "Assignment 5",
-        "date": "2022-12-05T00:00:00",
-        "weight": "10%",
-        "source": "Dec 05 2022"
-      },
-      {
-        "name": "Midterm #1",
-        "date": "2022-10-17T18:00:00",
-        "weight": "unknown",
-        "source": "Monday, October 17, 2022 at 6:00 pm"
-      },
-      {
-        "name": "Midterm #2",
-        "date": "2022-11-02T18:00:00",
-        "weight": "unknown",
-        "source": "Wednesday, November 2, 2022 at 6:00 pm"
-      }
-    ]
-  }
-]
+    {
+      "name": "Assignment 2",
+      "date": "2022-10-07T00:00:00",
+      "weight": 10,
+      "source": "Oct 07 2022"
+    },
+    {
+      "name": "Assignment 3",
+      "date": "2022-10-31T00:00:00",
+      "weight": 10,
+      "source": "Oct 31 2022"
+    },
+    {
+      "name": "Assignment 4",
+      "date": "2022-11-18T00:00:00",
+      "weight": 10,
+      "source": "Nov 18 2022"
+    },
+    {
+      "name": "Assignment 5",
+      "date": "2022-12-05T00:00:00",
+      "weight": 10,
+      "source": "Dec 05 2022"
+    },
+    {
+      "name": "Midterm #1",
+      "date": "2022-10-17T18:00:00",
+      "weight": 0,
+      "source": "Monday, October 17, 2022 at 6:00 pm"
+    },
+    {
+      "name": "Midterm #2",
+      "date": "2022-11-02T18:00:00",
+      "weight": 0,
+      "source": "Wednesday, November 2, 2022 at 6:00 pm"
+    }
+  ]
+}

@@ -1,5 +1,5 @@
 import { Assessment } from "../../logic/icsGen";
-import Button from "../Button";
+import { Button } from "../Button";
 import { classnames } from "../../Utilities";
 import blob from "./blob.svg";
 
@@ -8,23 +8,20 @@ interface AssessmentCardProps {
   onAssessmentClick: (assessment: Assessment) => void;
 }
 
-const formatDate = (dateString: string): string | null => {
-  try {
-    const date = new Date(dateString);
-    return date.toLocaleString("en-US", {
-      month: "long",
-      day: "numeric",
-      year: "numeric",
-      hour: "numeric",
-      minute: "numeric",
-      hour12: false,
-    });
-  } catch (e) {
-    return null;
-  }
-};
+const formatDate = (date: Date): string =>
+  date.toLocaleString("en-US", {
+    month: "long",
+    day: "numeric",
+    year: "numeric",
+    hour: "numeric",
+    minute: "numeric",
+    hour12: false,
+  });
 
-const AssessmentCard = ({ assessment, onAssessmentClick }: AssessmentCardProps) => {
+const AssessmentCard = ({
+  assessment,
+  onAssessmentClick,
+}: AssessmentCardProps) => {
   return (
     <Button
       className={classnames(
@@ -33,8 +30,7 @@ const AssessmentCard = ({ assessment, onAssessmentClick }: AssessmentCardProps) 
         "rounded-3xl",
         "bg-primary-95",
         "hover:bg-primary-90",
-        "transition-all",
-        "hover:before:bg-transparent" // partially dealing with bug in Button.tsx
+        "transition-all"
       )}
       onClick={() => onAssessmentClick(assessment)}
     >
@@ -63,11 +59,26 @@ const AssessmentCard = ({ assessment, onAssessmentClick }: AssessmentCardProps) 
             "text-3xl"
           )}
         >
-          {
-            ["event", "star"][
-              Math.floor((assessment.name.charCodeAt(0) + 1) % 2)
-            ] // TODO: replace with a better way to determine icon
-          }
+          {/* If assessment name contains any of the keywords, use the star icon, otherwise use the event icon */}
+          {assessment.name
+            .toLowerCase()
+            .split(" ")
+            .some((word) =>
+              [
+                // Star icon keywords
+                "test",
+                "quiz",
+                "final",
+                "midterm",
+                "exam",
+                "examination",
+                "evaluation",
+                "presentation",
+                "project",
+              ].includes(word)
+            )
+            ? "star"
+            : "event"}
         </span>
       </div>
       <div
@@ -76,13 +87,13 @@ const AssessmentCard = ({ assessment, onAssessmentClick }: AssessmentCardProps) 
         <h1 className="font-bold text-sys-on-primary-container">
           {assessment.name}
         </h1>
-        <h2>{formatDate(assessment.date)}</h2>
-        <p className="text-sys-outline mt-2">
+        <h2 className="text-sm">{formatDate(assessment.date)}</h2>
+        <p className="text-sys-outline mt-2 text-sm font-normal">
           Weight: {assessment.weight}
           <br />
           {"Hello, additional information can be added here. This is a placeholder. Additional information can be added here. This is a placeholder."
             .split(" ")
-            .slice(0, Math.floor(Math.random() * 22))
+            .slice(0, Math.floor((assessment.name.charCodeAt(5) + 1) % 2) * 22)
             .join(" ")}
         </p>
       </div>

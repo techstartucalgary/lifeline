@@ -21,5 +21,11 @@
   "python.formatting.blackArgs": ["--line-length", "100"],
   "python.linting.enabled": true,
   "python.linting.pylintEnabled": true,
-  "git.alwaysSignOff": true
+  "python.analysis.typeCheckingMode": "basic",
+  "git.alwaysSignOff": true,
+  "search.exclude": {
+    "**/node_modules": true,
+    "**/build": true,
+    "**/.venv*": true,
+  }
 }

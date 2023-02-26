@@ -1,10 +1,15 @@
 import { classnames } from "../../Utilities";
-import { Tab } from "../../pages/Review";
-import Button from "../Button";
+import { Button } from "../Button";
 
 export interface TabsProps {
   selectedTab: Tab;
   setSelectedTab: (tab: Tab) => void;
+}
+
+// Enum for the tabs
+export enum Tab {
+  Assessments,
+  Document,
 }
 
 function Tabs({ selectedTab, setSelectedTab }: TabsProps) {
