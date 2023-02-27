@@ -11,11 +11,11 @@ const NavItem = ({ title, metadata, className, icon, selected, ...args }: NavIte
   return (
     <Button
       {...args}
-      color="secondary"
+      color="primary"
       variant="text"
       className={classnames(
-        "flex flex-row px-5.5 py-4.5 text-on-secondary-container",
-        selected && "bg-secondary-container",
+        "flex flex-row px-5.5 py-4.5 text-on-primary-container",
+        selected && "bg-primary-container hover:before:bg-transparent",
         className
       )}
       icon={

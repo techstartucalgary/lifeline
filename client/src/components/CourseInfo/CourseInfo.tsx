@@ -13,8 +13,8 @@ const BentoBase = [
   "p-4",
   "my-2",
   "rounded-3xl",
-  "bg-secondary-95",
-  "hover:bg-secondary-90",
+  "bg-tertiary-95",
+  "hover:bg-tertiary-90",
   "transition-all",
   "text-left",
 ];
@@ -27,7 +27,7 @@ const CourseInfo = ({ hours, department, description }: CourseInfoProps) => {
           "flex",
           "flex-row",
           "gap-4",
-          "text-sys-on-secondary-container"
+          "text-sys-on-tertiary-container"
         )}
       >
         <div className={classnames(...BentoBase, "md:w-1/2")}>
@@ -68,7 +68,7 @@ const Description = ({ text }: { text: string }) => {
         ...BentoBase,
         "w-full",
         "mb-4",
-        "text-sys-on-secondary-container"
+        "text-sys-on-tertiary-container"
       )}
       onClick={() => setShowMore(!showMore)}
     >
