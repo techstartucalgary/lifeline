@@ -1,3 +1,4 @@
+// Maps course titles to symbols names that will work with material symbols
 const symbols: {
   [key: string]: string;
 } = {

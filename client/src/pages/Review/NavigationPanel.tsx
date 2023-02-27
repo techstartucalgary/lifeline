@@ -8,7 +8,7 @@ import ProgressIndicator from "../../components/ProgressIndicator";
 import { Button, IconButton } from "../../components/Button";
 import AppTopBar from "../../components/AppTopBar/AppTopBar";
 import NavigationRail from "../../components/NavigationRail";
-import symbols from "../../symbols";
+import symbols from "./symbols";
 
 const generateIcon = (course_key: string) =>
   symbols[course_key] || symbols["default"];
