@@ -28,7 +28,8 @@ const AssessmentsPanel = ({
           className={classnames(
             "px-3.5 py-0.5 absolute top-1/2 -translate-y-1/2",
             "transition-all ease-emphasized-decelerate",
-            "invisible opacity-0 group-hover:visible group-hover:opacity-100"
+            "invisible opacity-0 group-hover:visible group-hover:opacity-100",
+            "[@media(hover:none)]:visible [@media(hover:none)]:opacity-100"
           )}
           onClick={() =>
             onAssessmentClick(

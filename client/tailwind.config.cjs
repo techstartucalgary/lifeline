@@ -236,6 +236,9 @@ const config = {
       },
     },
   },
+  future: {
+    hoverOnlyWhenSupported: true,
+  },
   plugins: [AspectRatio, Forms, LineClamp, Typography],
 };
 
