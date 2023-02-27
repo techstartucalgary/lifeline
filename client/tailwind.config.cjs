@@ -196,6 +196,7 @@ const config = {
       },
       fontSize: {
         "1.5xl": "1.36rem",
+        "2.5xl": "1.6875rem",
       },
       transitionTimingFunction: {
         "standard": "cubic-bezier(0.2, 0.0, 0, 1.0)",
@@ -212,7 +213,11 @@ const config = {
       scale: {
         "105": "1.05",
         "110": "1.1",
-      }
+      },
+      spacing: {
+        "4.5": "1.125rem",
+        "5.5": "1.375rem"
+      },
     },
   },
   plugins: [AspectRatio, Forms, LineClamp, Typography],

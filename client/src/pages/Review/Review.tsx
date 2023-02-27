@@ -3,7 +3,6 @@ import { useParams } from "react-router-dom";
 import { classnames } from "../../Utilities";
 import { Assessment, Course, Courses } from "../../logic/icsGen";
 
-import NavigationDrawer from "../../components/NavigationDrawer";
 import { IconButton } from "../../components/Button";
 
 import AppTopBar, {
@@ -15,6 +14,7 @@ import AppTopBar, {
 import CoursePanel from "./CoursePanel";
 
 import testState from "./data";
+import NavigationPanel from "./NavigationPanel";
 
 const Review = () => {
   const { courseKey: courseKeyUrlParam } = useParams();
@@ -58,6 +58,14 @@ const Review = () => {
     return () => window.removeEventListener("beforeunload", beforeUnload);
   }, []);
 
+  useEffect(() => {
+    if (currentCourseKey === null) {
+      setTimeout(() => history.pushState(null, "", "/app"), 10);
+    } else {
+      setTimeout(() => history.pushState(null, "", `/app/${currentCourseKey}`), 10);
+    }
+  }, [currentCourseKey]);
+
   // Memorize the course key lookup in format of { [key]: course } for performance
   const courseKeyLookup = useMemo(
     () =>
@@ -80,10 +88,8 @@ const Review = () => {
   const onCourseClick = (course: Course | null) => {
     if (course === null) {
       setCurrentCourseKey(null);
-      setTimeout(() => history.pushState(null, "", "/app"), 10);
     } else {
       setCurrentCourseKey(course.key);
-      setTimeout(() => history.pushState(null, "", `/app/${course.key}`), 100);
     }
   };
 
@@ -130,17 +136,17 @@ const Review = () => {
     <>
       <nav
         className={classnames(
-          "fixed top-0 left-0 w-full bg-slate-500 md:w-64",
+          "fixed top-0 left-0 w-full md:w-24 xl:w-[17rem] h-full bg-surface",
           currentCourseKey && "hidden",
           "md:block z-20"
         )}
         ref={navRef}
       >
-        <NavigationDrawer
+        <NavigationPanel
           courses={courses}
           currentCourse={currentCourse}
-          onCoursesChanged={onCoursesChanged}
           onCourseClick={onCourseClick}
+          onCoursesChanged={onCoursesChanged}
         />
       </nav>
       {currentCourse && (
@@ -152,11 +158,7 @@ const Review = () => {
             >
               {/* Icons */}
               <LeadingNavigation className="block md:hidden">
-                <IconButton
-                  className="text-on-surface"
-                  icon="arrow_back"
-                  onClick={onClickBack}
-                />
+                <IconButton className="text-on-surface" icon="arrow_back" onClick={onClickBack} />
               </LeadingNavigation>
               <TrailingIcon>
                 <IconButton

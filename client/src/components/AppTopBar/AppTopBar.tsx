@@ -18,11 +18,12 @@ import { classnames } from "../../Utilities";
 interface AppTopBarProps extends HTMLAttributes<HTMLDivElement> {
   elevation?: boolean;
   children: ReactElement<AllAcceptingChildren> | ReactElement<AllAcceptingChildren>[];
+  variant?: "small" | "medium" | "large";
 }
 
 type AllAcceptingChildren = LeadingNavigationProp | TrailingIconProp | TitleProp | SubtitleProp;
 
-const AppTopBar = ({ elevation, children, ...args }: AppTopBarProps) => {
+const AppTopBar = ({ variant = "large", elevation, children, ...args }: AppTopBarProps) => {
   // If children is not an array, make it an array of only itself
   children = Array.isArray(children) ? children : [children];
 
@@ -61,7 +62,7 @@ const AppTopBar = ({ elevation, children, ...args }: AppTopBarProps) => {
       <CompactHeadline
         {...args}
         title={title}
-        titleClassName={classnames("opacity-0", (scrollY > compactHeadlineHeight * 0.75) && "opacity-1")}
+        titleClassName={classnames("opacity-0", (scrollY > compactHeadlineHeight * 0.75 || variant === "small") && "opacity-1")}
         leadingNavigation={leadingNavigation}
         trailingIcon={trailingIcon}
         elevation={elevation}
@@ -71,6 +72,7 @@ const AppTopBar = ({ elevation, children, ...args }: AppTopBarProps) => {
       <Headline
         {...args}
         style={{ marginTop: compactHeadlineHeight, ...args.style }}
+        className={classnames(variant === "small" && "h-0", variant === "large" && "pt-6", args.className)}
         title={title}
         subtitle={subtitle}
         titleClassName={classnames("opacity-1", (scrollY > compactHeadlineHeight * 0.75) && "opacity-0")}
@@ -83,7 +85,7 @@ const AppTopBar = ({ elevation, children, ...args }: AppTopBarProps) => {
 
 
 AppTopBar.LeadingNavigation = LeadingNavigation;
-AppTopBar.TrailingNavigation = TrailingIcon;
+AppTopBar.TrailingIcon = TrailingIcon;
 AppTopBar.Title = Title;
 AppTopBar.Subtitle = Subtitle;
 
