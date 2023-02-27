@@ -200,9 +200,9 @@ const NavigationPanel = ({
             }}
             icon="add"
             variant="text"
-            color="tertiary"
+            color="primary"
             className="rounded-2xl mx-2.5 px-4 py-1 text-center"
-            iconClassName="text-on-tertiary-container text-3xl md:text-3xl"
+            iconClassName="text-on-primary-container text-3xl md:text-3xl"
           />
         </NavigationRail>
       </div>
@@ -227,7 +227,7 @@ const NavigationPanel = ({
                 title={`${course.code} ${course.number}`}
                 supportingText={course.topic}
                 metadata={
-                  <p className="rounded-full bg-secondary-95 py-2 w-8">
+                  <p className="rounded-full bg-tertiary-95 py-2 w-8">
                     {course.assessments.length}
                   </p>
                 }
