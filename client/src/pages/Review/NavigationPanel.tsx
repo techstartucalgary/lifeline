@@ -129,8 +129,8 @@ const NavigationPanel = ({
 
           <Button
             variant="text"
-            color="tertiary"
-            className="rounded-[20px] py-4.5 px-5.5 text-tertiary font-normal"
+            color="primary"
+            className="rounded-[20px] py-4.5 px-5.5 text-primary font-normal"
             onClick={() => {
               inputRef.current?.click();
             }}
@@ -142,8 +142,8 @@ const NavigationPanel = ({
           <hr className="border-gray-300 p-2 mx-6 hidden md:block" />
 
           <Button
-            variant="tonal"
-            color="tertiary"
+            variant="filled"
+            color="primary"
             className="rounded-[20px] py-5 px-5.5"
             onClick={handleExport}
             disabled={courses.length === 0 || loading.length > 0}
@@ -157,10 +157,9 @@ const NavigationPanel = ({
         <NavigationRail>
           <IconButton
             icon="save_alt"
-            variant="tonal"
-            color="tertiary"
+            variant="filled"
+            color="primary"
             className="rounded-2xl text-center px-0 mt-4 mb-6 w-16 h-16 mx-auto"
-            iconClassName="text-on-surface"
             onClick={handleExport}
           />
 

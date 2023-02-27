@@ -22,8 +22,8 @@ const AssessmentsPanel = ({
       >
         <h1 className="text-sys-primary font-bold uppercase">Assessments</h1>
         <Button
-          variant="filled"
-          className="px-5 py-2"
+          variant="tonal"
+          className="px-3.5 py-0.5"
           onClick={() =>
             onAssessmentClick(
               {
@@ -35,7 +35,7 @@ const AssessmentsPanel = ({
             )
           }
         >
-          <span className="material-symbols-outlined text-4xl">add</span>
+          <span className="material-symbols-outlined text-2xl text-primary">add</span>
         </Button>
       </div>
       <ul className="flex flex-col">
