@@ -22,7 +22,7 @@ const NavItem = ({ title, icon, selected = false, onClick, ...args }: NavItemPro
       <div
         className={classnames(
           "text-on-secondary-container flex flex-col px-5.5 py-1 h-9 font-norma relative overflow-hidden",
-          "material-symbols-outlined variant-navigation-drawer text-xl rounded-full mb-1",
+          "material-symbols-outlined text-xl rounded-full mb-1",
 
           "before:absolute before:top-0 before:bottom-0 before:left-0 before:right-0",
           "before:group-hover:bg-state-layers-on-surface/8 before:transition-all",

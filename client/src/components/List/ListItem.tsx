@@ -21,7 +21,7 @@ const ListItem = ({ title, supportingText, metadata, leadingIcon, trailingIcon, 
       )}
       icon={
         <span className={classnames(
-          "material-symbols-outlined variant-navigation-drawer text-xl",
+          "material-symbols-outlined text-xl",
           "flex justify-center items-center",
         )}>{leadingIcon}</span>
       }
