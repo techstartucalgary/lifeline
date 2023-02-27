@@ -134,6 +134,7 @@ const NavigationPanel = ({
               inputRef.current?.click();
             }}
             icon="add"
+            disabled={loading.length > 0}
           >
             Add course
           </Button>
