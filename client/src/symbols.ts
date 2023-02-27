@@ -185,6 +185,7 @@ const symbols: {
   "Continuing Education": "school",
   "Botany": "eco",
   "English For Academic Purposes Program": "menu_book",
+  "default": "public",
 };
 
 export default symbols;

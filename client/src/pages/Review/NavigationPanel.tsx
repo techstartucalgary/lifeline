@@ -8,11 +8,10 @@ import ProgressIndicator from "../../components/ProgressIndicator";
 import { Button, IconButton } from "../../components/Button";
 import AppTopBar from "../../components/AppTopBar/AppTopBar";
 import NavigationRail from "../../components/NavigationRail";
+import symbols from "../../symbols";
 
 const generateIcon = (course_key: string) =>
-  ["circle", "square", "pentagon", "hexagon", "rectangle"][
-    Math.abs(course_key.split("").reduce((a, b) => a + b.charCodeAt(0), 0)) % 3
-  ];
+  symbols[course_key] || symbols["default"];
 
 interface NavigationPanelProps {
   courses: Courses;
@@ -103,7 +102,7 @@ const NavigationPanel = ({
                 onClick={() => onCourseClick(course)}
                 selected={course === currentCourse}
                 ripple={currentCourse !== course}
-                icon={generateIcon(course.code)}
+                icon={generateIcon(course.title)}
               />
             ))}
 
@@ -170,7 +169,7 @@ const NavigationPanel = ({
                 key={t}
                 title={`${course.code} ${course.number}`}
                 onClick={() => onCourseClick(course)}
-                icon={generateIcon(course.code)}
+                icon={generateIcon(course.title)}
                 selected={course === currentCourse}
               />
             ))}
@@ -237,7 +236,7 @@ const NavigationPanel = ({
                   currentCourse === course && "bg-primary-container"
                 )}
                 ripple={currentCourse !== course}
-                leadingIcon={generateIcon(course.code)}
+                leadingIcon={generateIcon(course.title)}
                 trailingIcon="arrow_right"
               />
             ))}
