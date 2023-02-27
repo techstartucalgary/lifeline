@@ -20,7 +20,7 @@ const NavItem = ({ title, metadata, className, icon, selected, ...args }: NavIte
       )}
       icon={
         <span className={classnames(
-          "material-symbols-outlined variant-navigation-drawer scale-75",
+          "material-symbols-outlined scale-75",
           "flex justify-center items-center",
         )}>{icon}</span>
       }
