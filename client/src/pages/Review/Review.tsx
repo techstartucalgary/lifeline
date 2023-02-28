@@ -20,6 +20,7 @@ const Review = () => {
   const { courseKey: courseKeyUrlParam } = useParams();
   const [courses, setCourses] = useState<Courses>(testState);
   const [currentCourseKey, setCurrentCourseKey] = useState<string | null>(null);
+  const coursesRef = useRef(courses);
 
   // For NavigationDrawer adapting in smaller desktop screens
   const navRef = useRef<HTMLDivElement>(null);
@@ -62,7 +63,10 @@ const Review = () => {
     if (currentCourseKey === null) {
       setTimeout(() => history.pushState(null, "", "/app"), 10);
     } else {
-      setTimeout(() => history.pushState(null, "", `/app/${currentCourseKey}`), 10);
+      setTimeout(
+        () => history.pushState(null, "", `/app/${currentCourseKey}`),
+        10
+      );
     }
   }, [currentCourseKey]);
 
@@ -95,23 +99,24 @@ const Review = () => {
 
   // Callback for when the courses are changed
   const onCoursesChanged = (course: Course) => {
-    const existingCourseKeys = courses.map((course) => course.key);
-    // Numbering undetermined courses
-    if (!course.code || !course.number) {
-      course.code = "Course";
-      course.number = Object.values(courses).length + 1;
-      course.title = "Course";
-    }
+    // const existingCourseKeys = courses.map((course) => course.key);
+    // // Numbering undetermined courses
+    // if (!course.code || !course.number) {
+    //   course.code = "Course";
+    //   course.number = Object.values(courses).length + 1;
+    //   course.title = "Course";
+    // }
 
-    // Generate course key
-    const key = `${course.code}-${course.number}`.toLowerCase();
-    if (existingCourseKeys.includes(key)) return;
+    // // Generate course key
+    // const key = `${course.code}-${course.number}`.toLowerCase();
+    // if (existingCourseKeys.includes(key)) return;
 
-    course.key = key;
-    courses.push(course);
-    existingCourseKeys.push(key);
+    // course.key = key;
+    // existingCourseKeys.push(key);
 
-    setCourses([...courses]);
+    const newCourses = [...courses, course];
+    setCourses(newCourses);
+    coursesRef.current = newCourses;
   };
 
   const onClickBack = () => setCurrentCourseKey(null);
@@ -128,8 +133,11 @@ const Review = () => {
   };
 
   const deleteCurrentCourse = () => {
-    setCourses(courses.filter((course) => course.key !== currentCourseKey));
+    setCourses(coursesRef.current.filter((course) => course.key !== currentCourseKey));
     setCurrentCourseKey(null);
+    coursesRef.current = coursesRef.current.filter(
+      (course) => course.key !== currentCourseKey
+    );
   };
 
   return (
@@ -158,7 +166,11 @@ const Review = () => {
             >
               {/* Icons */}
               <LeadingNavigation className="block md:hidden">
-                <IconButton className="text-on-surface" icon="arrow_back" onClick={onClickBack} />
+                <IconButton
+                  className="text-on-surface"
+                  icon="arrow_back"
+                  onClick={onClickBack}
+                />
               </LeadingNavigation>
               <TrailingIcon>
                 <IconButton
