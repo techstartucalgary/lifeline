@@ -58,6 +58,7 @@ const NavigationPanel = ({
                 weight: Number(a.weight),
               })
             ),
+            key: `${res.data.code.toLowerCase()}-${res.data.number}`
           };
           onCoursesChanged(course);
         })
@@ -66,6 +67,7 @@ const NavigationPanel = ({
         })
         .finally(() => {
           setLoading((prev) => prev.filter((f) => f !== file?.name));
+          inputRef.current?.value && (inputRef.current.value = "");
         });
     }
   };
