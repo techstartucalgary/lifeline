@@ -1,9 +1,8 @@
-import { useState, useEffect, useMemo, useRef, useLayoutEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useState, useEffect, useRef, useLayoutEffect } from "react";
 import { classnames } from "../../Utilities";
 import { Assessment, Course, Courses } from "../../logic/icsGen";
 
-import { Button, IconButton } from "../../components/Button";
+import { IconButton } from "../../components/Button";
 
 import AppTopBar, {
   LeadingNavigation,
@@ -17,27 +16,25 @@ import testState from "./data";
 import NavigationPanel from "./NavigationPanel";
 
 const Review = () => {
-  const [state, setState] = useState<Courses>(testState);
-  const stateRef = useRef(state);
-
-  const { courseKey: courseKeyUrlParam } = useParams();
+  const [courses, setCourses] = useState<Courses>(testState);
   const [currentCourse, setCurrentCourse] = useState<Course | null>(null);
+  const coursesRef = useRef(courses);
 
   const deleteCurrentCourse = () => {
-    setState(
-      stateRef.current.filter((course, i) => course.key !== currentCourse?.key)
+    setCourses(
+      coursesRef.current.filter((course) => course.key !== currentCourse?.key)
     );
-    stateRef.current = stateRef.current.filter(
-      (course, i) => course.key !== currentCourse?.key
+    coursesRef.current = coursesRef.current.filter(
+      (course) => course.key !== currentCourse?.key
     );
     setCurrentCourse(null);
-    window.history.pushState({}, "", "/review");
+    window.history.pushState({}, "", "/app");
   };
 
   const onCoursesChanged = (word: Course) => {
-    const newState = [...stateRef.current, word];
-    setState(newState);
-    stateRef.current = newState;
+    const newState = [...coursesRef.current, word];
+    setCourses(newState);
+    coursesRef.current = newState;
   };
 
   // For NavigationDrawer adapting in smaller desktop screens
@@ -80,8 +77,8 @@ const Review = () => {
   };
 
   const onChangeAssessment = (assessment: Assessment, index: number) => {
-    setState(
-      state.map((course) => {
+    setCourses(
+      courses.map((course) => {
         if (course.key === currentCourse?.key) {
           course.assessments[index] = assessment;
         }
@@ -101,7 +98,7 @@ const Review = () => {
         ref={navRef}
       >
         <NavigationPanel
-          courses={state}
+          courses={courses}
           currentCourse={currentCourse}
           onCourseClick={onCourseClick}
           onCoursesChanged={onCoursesChanged}
@@ -154,14 +151,6 @@ const Review = () => {
             ref={mainRef}
             style={{ paddingLeft: mainMarginLeft }}
           >
-            <div>
-              <Button variant="filled" onClick={deleteCurrentCourse}>
-                Delete one
-              </Button>
-              {state.map((s, i) => (
-                <p key={i}>{s.title}</p>
-              ))}
-            </div>
             <CoursePanel
               course={currentCourse}
               onChangeAssessment={onChangeAssessment}
