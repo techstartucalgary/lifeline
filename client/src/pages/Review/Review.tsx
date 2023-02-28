@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import { classnames } from "../../Utilities";
 import { Assessment, Course, Courses } from "../../logic/icsGen";
 
-import { IconButton } from "../../components/Button";
+import { Button, IconButton } from "../../components/Button";
 
 import AppTopBar, {
   LeadingNavigation,
@@ -17,9 +17,23 @@ import testState from "./data";
 import NavigationPanel from "./NavigationPanel";
 
 const Review = () => {
+  const [state, setState] = useState<Courses>(testState);
+  const stateRef = useRef(state);
+
+  const deleteOne = () => {
+    setState(stateRef.current.filter((course, index) => index !== 0));
+    stateRef.current = stateRef.current.filter((course, index) => index !== 0);
+  };
+
+  const onCoursesChanged = (word: Course) => {
+    const newState = [...stateRef.current, word];
+    setState(newState);
+    stateRef.current = newState;
+  };
+
   const { courseKey: courseKeyUrlParam } = useParams();
   const [courses, setCourses] = useState<Courses>(testState);
-  const [currentCourseKey, setCurrentCourseKey] = useState<string | null>(null);
+  const [currentCourse, setCurrentCourse] = useState<Course | null>(null);
   const coursesRef = useRef(courses);
 
   // For NavigationDrawer adapting in smaller desktop screens
@@ -37,19 +51,11 @@ const Review = () => {
     onMainMarginLeft();
     window.addEventListener("resize", onMainMarginLeft);
     return () => window.removeEventListener("resize", onMainMarginLeft);
-  }, [navRef.current, mainRef.current, currentCourseKey]);
+  }, [navRef.current, mainRef.current]);
 
   // At first render of the page, check if the course key is valid
   // and assign value to current course key
   useEffect(() => {
-    if (
-      courseKeyUrlParam === undefined ||
-      courseKeyLookup[courseKeyUrlParam] === undefined
-    ) {
-      setCurrentCourseKey(null);
-    } else {
-      setCurrentCourseKey(courseKeyUrlParam);
-    }
     // Gives a warning that they will lose their progress if the user tries to leave/refresh the page
     const beforeUnload = (e: BeforeUnloadEvent) => {
       e.preventDefault();
@@ -59,72 +65,17 @@ const Review = () => {
     return () => window.removeEventListener("beforeunload", beforeUnload);
   }, []);
 
-  useEffect(() => {
-    if (currentCourseKey === null) {
-      setTimeout(() => history.pushState(null, "", "/app"), 10);
-    } else {
-      setTimeout(
-        () => history.pushState(null, "", `/app/${currentCourseKey}`),
-        10
-      );
-    }
-  }, [currentCourseKey]);
-
-  // Memorize the course key lookup in format of { [key]: course } for performance
-  const courseKeyLookup = useMemo(
-    () =>
-      Object.fromEntries(
-        courses.map((course) => [course.key, course])
-      ) as Record<string, Course>,
-    [courses]
-  );
-
-  // Memorize the course based on the course key
-  const currentCourse = useMemo(
-    () =>
-      currentCourseKey && currentCourseKey in courseKeyLookup
-        ? courseKeyLookup[currentCourseKey]
-        : null,
-    [currentCourseKey, courseKeyLookup[currentCourseKey || ""]]
-  );
-
   // Callback for select course in navigation drawer
-  const onCourseClick = (course: Course | null) => {
-    if (course === null) {
-      setCurrentCourseKey(null);
-    } else {
-      setCurrentCourseKey(course.key);
-    }
+  const onCourseClick = (course: Course) => {
+    setCurrentCourse(course);
   };
 
-  // Callback for when the courses are changed
-  const onCoursesChanged = (course: Course) => {
-    // const existingCourseKeys = courses.map((course) => course.key);
-    // // Numbering undetermined courses
-    // if (!course.code || !course.number) {
-    //   course.code = "Course";
-    //   course.number = Object.values(courses).length + 1;
-    //   course.title = "Course";
-    // }
-
-    // // Generate course key
-    // const key = `${course.code}-${course.number}`.toLowerCase();
-    // if (existingCourseKeys.includes(key)) return;
-
-    // course.key = key;
-    // existingCourseKeys.push(key);
-
-    const newCourses = [...courses, course];
-    setCourses(newCourses);
-    coursesRef.current = newCourses;
-  };
-
-  const onClickBack = () => setCurrentCourseKey(null);
+  const onClickBack = () => setCurrentCourse(null);
 
   const onChangeAssessment = (assessment: Assessment, index: number) => {
     setCourses(
       courses.map((course) => {
-        if (course.key === currentCourseKey) {
+        if (course.key === currentCourse?.key) {
           course.assessments[index] = assessment;
         }
         return course;
@@ -133,10 +84,12 @@ const Review = () => {
   };
 
   const deleteCurrentCourse = () => {
-    setCourses(coursesRef.current.filter((course) => course.key !== currentCourseKey));
-    setCurrentCourseKey(null);
+    setCourses(
+      coursesRef.current.filter((course) => course.key !== currentCourse?.key)
+    );
+    setCurrentCourse(null);
     coursesRef.current = coursesRef.current.filter(
-      (course) => course.key !== currentCourseKey
+      (course) => course.key !== currentCourse?.key
     );
   };
 
@@ -145,13 +98,13 @@ const Review = () => {
       <nav
         className={classnames(
           "fixed top-0 left-0 w-full md:w-24 xl:w-[17rem] h-full bg-surface",
-          currentCourseKey && "hidden",
+          currentCourse && "hidden",
           "md:block z-20"
         )}
         ref={navRef}
       >
         <NavigationPanel
-          courses={courses}
+          courses={state}
           currentCourse={currentCourse}
           onCourseClick={onCourseClick}
           onCoursesChanged={onCoursesChanged}
@@ -204,6 +157,14 @@ const Review = () => {
             ref={mainRef}
             style={{ paddingLeft: mainMarginLeft }}
           >
+            <div>
+              <Button variant="filled" onClick={deleteOne}>
+                Delete one
+              </Button>
+              {state.map((s, i) => (
+                <p key={i}>{s.title}</p>
+              ))}
+            </div>
             <CoursePanel
               course={currentCourse}
               onChangeAssessment={onChangeAssessment}
