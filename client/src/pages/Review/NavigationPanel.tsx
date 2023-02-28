@@ -47,19 +47,24 @@ const NavigationPanel = ({
         .post("/files", formData, {
           headers: { "Content-Type": "multipart/form-data" },
         })
-        .then((res) => {
+        .then((res) => res.data)
+        .then((data) => {
           // convert to Course
           const course: Course = {
-            ...res.data,
-            assessments: res.data.assessments.map(
+            ...data,
+            assessments: data.assessments.map(
               (a: { name: string; date: string; weight: string }) => ({
                 ...a,
                 date: new Date(a.date),
                 weight: Number(a.weight),
               })
             ),
-            key: `${res.data.code.toLowerCase()}-${res.data.number}`
           };
+          course.code = course.code || "Course";
+          course.number = course.number || courses.length + 1;
+          course.title = course.title || course.code;
+          course.key = `${course.code.toLowerCase()}-${course.number}`;
+
           onCoursesChanged(course);
         })
         .catch((error) => {
