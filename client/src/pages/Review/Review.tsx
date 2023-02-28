@@ -21,13 +21,17 @@ const Review = () => {
   const stateRef = useRef(state);
 
   const { courseKey: courseKeyUrlParam } = useParams();
-  const [courses, setCourses] = useState<Courses>(testState);
   const [currentCourse, setCurrentCourse] = useState<Course | null>(null);
-  const coursesRef = useRef(courses);
 
-  const deleteOne = () => {
-    setState(stateRef.current.filter((course, index) => index !== 0));
-    stateRef.current = stateRef.current.filter((course, index) => index !== 0);
+  const deleteCurrentCourse = () => {
+    setState(
+      stateRef.current.filter((course, i) => course.key !== currentCourse?.key)
+    );
+    stateRef.current = stateRef.current.filter(
+      (course, i) => course.key !== currentCourse?.key
+    );
+    setCurrentCourse(null);
+    window.history.pushState({}, "", "/review");
   };
 
   const onCoursesChanged = (word: Course) => {
@@ -76,23 +80,13 @@ const Review = () => {
   };
 
   const onChangeAssessment = (assessment: Assessment, index: number) => {
-    setCourses(
-      courses.map((course) => {
+    setState(
+      state.map((course) => {
         if (course.key === currentCourse?.key) {
           course.assessments[index] = assessment;
         }
         return course;
       })
-    );
-  };
-
-  const deleteCurrentCourse = () => {
-    setCourses(
-      coursesRef.current.filter((course) => course.key !== currentCourse?.key)
-    );
-    setCurrentCourse(null);
-    coursesRef.current = coursesRef.current.filter(
-      (course) => course.key !== currentCourse?.key
     );
   };
 
@@ -161,7 +155,7 @@ const Review = () => {
             style={{ paddingLeft: mainMarginLeft }}
           >
             <div>
-              <Button variant="filled" onClick={deleteOne}>
+              <Button variant="filled" onClick={deleteCurrentCourse}>
                 Delete one
               </Button>
               {state.map((s, i) => (
