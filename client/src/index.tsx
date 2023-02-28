@@ -8,7 +8,6 @@ import Landing from "./pages/Landing";
 import Loading from "./pages/Loading";
 import Review from "./pages/Review";
 import NotFound from "./pages/NotFound";
-import Dev from "./Dev";
 
 const hostname = window.location.hostname;
 const port = window.location.port;
@@ -35,7 +34,6 @@ function App() {
           <Route path="/loading" element={<Loading />} />
           <Route path="/app" element={<Review />} />
           <Route path="/app/:courseKey" element={<Review />} />
-          <Route path="/dev" element={<Dev />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
