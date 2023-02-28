@@ -20,6 +20,11 @@ const Review = () => {
   const [state, setState] = useState<Courses>(testState);
   const stateRef = useRef(state);
 
+  const { courseKey: courseKeyUrlParam } = useParams();
+  const [courses, setCourses] = useState<Courses>(testState);
+  const [currentCourse, setCurrentCourse] = useState<Course | null>(null);
+  const coursesRef = useRef(courses);
+
   const deleteOne = () => {
     setState(stateRef.current.filter((course, index) => index !== 0));
     stateRef.current = stateRef.current.filter((course, index) => index !== 0);
@@ -30,11 +35,6 @@ const Review = () => {
     setState(newState);
     stateRef.current = newState;
   };
-
-  const { courseKey: courseKeyUrlParam } = useParams();
-  const [courses, setCourses] = useState<Courses>(testState);
-  const [currentCourse, setCurrentCourse] = useState<Course | null>(null);
-  const coursesRef = useRef(courses);
 
   // For NavigationDrawer adapting in smaller desktop screens
   const navRef = useRef<HTMLDivElement>(null);
@@ -53,8 +53,6 @@ const Review = () => {
     return () => window.removeEventListener("resize", onMainMarginLeft);
   }, [navRef.current, mainRef.current]);
 
-  // At first render of the page, check if the course key is valid
-  // and assign value to current course key
   useEffect(() => {
     // Gives a warning that they will lose their progress if the user tries to leave/refresh the page
     const beforeUnload = (e: BeforeUnloadEvent) => {
@@ -68,9 +66,14 @@ const Review = () => {
   // Callback for select course in navigation drawer
   const onCourseClick = (course: Course) => {
     setCurrentCourse(course);
+    window.history.pushState({}, "", `/app/${course.key}`);
   };
 
-  const onClickBack = () => setCurrentCourse(null);
+  // Callback for back arrow in top bar
+  const onClickBack = () => {
+    setCurrentCourse(null);
+    window.history.pushState({}, "", "/app");
+  };
 
   const onChangeAssessment = (assessment: Assessment, index: number) => {
     setCourses(
@@ -98,7 +101,7 @@ const Review = () => {
       <nav
         className={classnames(
           "fixed top-0 left-0 w-full md:w-24 xl:w-[17rem] h-full bg-surface",
-          currentCourse && "hidden",
+          currentCourse && "hidden", // For mobile
           "md:block z-20"
         )}
         ref={navRef}
