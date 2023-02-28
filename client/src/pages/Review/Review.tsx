@@ -1,9 +1,10 @@
 import { useState, useEffect, useRef, useLayoutEffect } from "react";
+
 import { classnames } from "../../Utilities";
 import { Assessment, Course, Courses } from "../../logic/icsGen";
+import testState from "./data";
 
 import { IconButton } from "../../components/Button";
-
 import AppTopBar, {
   LeadingNavigation,
   TrailingIcon,
@@ -11,8 +12,6 @@ import AppTopBar, {
   Subtitle,
 } from "../../components/AppTopBar";
 import CoursePanel from "./CoursePanel";
-
-import testState from "./data";
 import NavigationPanel from "./NavigationPanel";
 
 const Review = () => {
@@ -31,10 +30,15 @@ const Review = () => {
     window.history.pushState({}, "", "/app");
   };
 
-  const onCoursesChanged = (word: Course) => {
-    const newState = [...coursesRef.current, word];
-    setCourses(newState);
-    coursesRef.current = newState;
+  const onCoursesChanged = (newCourse: Course) => {
+    if (coursesRef.current.some((course) => course.key === newCourse.key)) {
+      console.log("Course already exists");
+      // Snackbar here
+      return;
+    }
+    const newCourses = [...coursesRef.current, newCourse];
+    setCourses(newCourses);
+    coursesRef.current = newCourses;
   };
 
   // For NavigationDrawer adapting in smaller desktop screens
