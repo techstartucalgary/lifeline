@@ -72,7 +72,8 @@ const NavigationPanel = ({
         })
         .finally(() => {
           setLoading((prev) => prev.filter((f) => f !== file?.name));
-          inputRef.current?.value && (inputRef.current.value = "");
+          // Clear the input so the onChange event is triggered even if the same file is uploaded again
+          if (inputRef.current) inputRef.current.value = "";
         });
     }
   };
