@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef, useLayoutEffect } from "react";
+import { useParams } from "react-router-dom";
 
 import { classnames } from "../../Utilities";
 import { Assessment, Course, Courses } from "../../logic/icsGen";
@@ -18,6 +19,7 @@ const Review = () => {
   const [courses, setCourses] = useState<Courses>(testState);
   const [currentCourse, setCurrentCourse] = useState<Course | null>(null);
   const coursesRef = useRef(courses);
+  const { courseKey: courseKeyURLParam } = useParams<{ courseKey: string | undefined }>();
 
   const deleteCurrentCourse = () => {
     setCourses(
@@ -27,7 +29,6 @@ const Review = () => {
       (course) => course.key !== currentCourse?.key
     );
     setCurrentCourse(null);
-    window.history.pushState({}, "", "/app");
   };
 
   const onCoursesChanged = (newCourse: Course) => {
@@ -68,16 +69,26 @@ const Review = () => {
     return () => window.removeEventListener("beforeunload", beforeUnload);
   }, []);
 
+  useEffect(() => {
+    // Update history when current course changes
+    if (currentCourse === null) {
+      setTimeout(() => history.pushState(null, "", "/app"), 10);
+    } else {
+      setTimeout(
+        () => history.pushState(null, "", `/app/${currentCourse.key}`),
+        10
+      );
+    }
+  }, [currentCourse]);
+
   // Callback for select course in navigation drawer
   const onCourseClick = (course: Course) => {
     setCurrentCourse(course);
-    window.history.pushState({}, "", `/app/${course.key}`);
   };
 
   // Callback for back arrow in top bar
   const onClickBack = () => {
     setCurrentCourse(null);
-    window.history.pushState({}, "", "/app");
   };
 
   const onChangeAssessment = (assessment: Assessment, index: number) => {
