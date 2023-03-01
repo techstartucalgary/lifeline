@@ -1,9 +1,14 @@
-import { useState, useEffect, useRef, useLayoutEffect } from "react";
-import { useParams } from "react-router-dom";
+import {
+  useState,
+  useEffect,
+  useRef,
+  useLayoutEffect,
+  useCallback,
+} from "react";
+import { useBeforeUnload, useParams } from "react-router-dom";
 
 import { classnames } from "../../Utilities";
 import { Assessment, Course, Courses } from "../../logic/icsGen";
-import testState from "./data";
 
 import { IconButton } from "../../components/Button";
 import AppTopBar, {
@@ -16,7 +21,7 @@ import CoursePanel from "./CoursePanel";
 import NavigationPanel from "./NavigationPanel";
 
 const Review = () => {
-  const [courses, setCourses] = useState<Courses>(testState);
+  const [courses, setCourses] = useState<Courses>([]);
   const [currentCourse, setCurrentCourse] = useState<Course | null>(null);
   const coursesRef = useRef(courses);
   const { courseKey: courseKeyURLParam } = useParams<{
@@ -62,22 +67,31 @@ const Review = () => {
   }, [navRef.current, mainRef.current, currentCourse]);
 
   useEffect(() => {
+    // Load courses from local storage
+    const foundCourses = localStorage.getItem("courses");
+    if (!foundCourses) return;
+
+    const parsedCourses: Courses = JSON.parse(foundCourses);
+    setCourses(parsedCourses);
+    coursesRef.current = parsedCourses;
+
     // Set current course based on URL
     if (courseKeyURLParam) {
-      const course = courses.find((course) => course.key === courseKeyURLParam);
+      const course = parsedCourses.find(
+        (course) => course.key === courseKeyURLParam
+      );
+
       if (course) {
         setCurrentCourse(course);
       }
     }
-
-    // Gives a warning that they will lose their progress if the user tries to leave/refresh the page
-    const beforeUnload = (e: BeforeUnloadEvent) => {
-      e.preventDefault();
-      e.returnValue = "";
-    };
-    window.addEventListener("beforeunload", beforeUnload);
-    return () => window.removeEventListener("beforeunload", beforeUnload);
   }, []);
+
+  useBeforeUnload(
+    useCallback(() => {
+      localStorage.setItem("courses", JSON.stringify(courses));
+    }, [courses])
+  );
 
   useEffect(() => {
     // Update history when current course changes
