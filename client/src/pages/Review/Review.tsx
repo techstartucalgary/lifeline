@@ -19,7 +19,9 @@ const Review = () => {
   const [courses, setCourses] = useState<Courses>(testState);
   const [currentCourse, setCurrentCourse] = useState<Course | null>(null);
   const coursesRef = useRef(courses);
-  const { courseKey: courseKeyURLParam } = useParams<{ courseKey: string | undefined }>();
+  const { courseKey: courseKeyURLParam } = useParams<{
+    courseKey: string | undefined;
+  }>();
 
   const deleteCurrentCourse = () => {
     setCourses(
@@ -80,12 +82,9 @@ const Review = () => {
   useEffect(() => {
     // Update history when current course changes
     if (currentCourse === null) {
-      setTimeout(() => history.pushState(null, "", "/app"), 10);
+      history.pushState(null, "", "/app");
     } else {
-      setTimeout(
-        () => history.pushState(null, "", `/app/${currentCourse.key}`),
-        10
-      );
+      history.pushState(null, "", `/app/${currentCourse.key}`);
     }
   }, [currentCourse]);
 
