@@ -1,10 +1,11 @@
-import { useState, useEffect, useMemo, useRef, useLayoutEffect } from "react";
+import { useState, useEffect, useRef, useLayoutEffect } from "react";
 import { useParams } from "react-router-dom";
+
 import { classnames } from "../../Utilities";
 import { Assessment, Course, Courses } from "../../logic/icsGen";
+import testState from "./data";
 
 import { IconButton } from "../../components/Button";
-
 import AppTopBar, {
   LeadingNavigation,
   TrailingIcon,
@@ -12,14 +13,36 @@ import AppTopBar, {
   Subtitle,
 } from "../../components/AppTopBar";
 import CoursePanel from "./CoursePanel";
-
-import testState from "./data";
 import NavigationPanel from "./NavigationPanel";
 
 const Review = () => {
-  const { courseKey: courseKeyUrlParam } = useParams();
   const [courses, setCourses] = useState<Courses>(testState);
-  const [currentCourseKey, setCurrentCourseKey] = useState<string | null>(null);
+  const [currentCourse, setCurrentCourse] = useState<Course | null>(null);
+  const coursesRef = useRef(courses);
+  const { courseKey: courseKeyURLParam } = useParams<{
+    courseKey: string | undefined;
+  }>();
+
+  const deleteCurrentCourse = () => {
+    setCourses(
+      coursesRef.current.filter((course) => course.key !== currentCourse?.key)
+    );
+    coursesRef.current = coursesRef.current.filter(
+      (course) => course.key !== currentCourse?.key
+    );
+    setCurrentCourse(null);
+  };
+
+  const onCoursesChanged = (newCourse: Course) => {
+    if (coursesRef.current.some((course) => course.key === newCourse.key)) {
+      console.log("Course already exists");
+      // Snackbar here
+      return;
+    }
+    const newCourses = [...coursesRef.current, newCourse];
+    setCourses(newCourses);
+    coursesRef.current = newCourses;
+  };
 
   // For NavigationDrawer adapting in smaller desktop screens
   const navRef = useRef<HTMLDivElement>(null);
@@ -36,19 +59,17 @@ const Review = () => {
     onMainMarginLeft();
     window.addEventListener("resize", onMainMarginLeft);
     return () => window.removeEventListener("resize", onMainMarginLeft);
-  }, [navRef.current, mainRef.current, currentCourseKey]);
+  }, [navRef.current, mainRef.current, currentCourse]);
 
-  // At first render of the page, check if the course key is valid
-  // and assign value to current course key
   useEffect(() => {
-    if (
-      courseKeyUrlParam === undefined ||
-      courseKeyLookup[courseKeyUrlParam] === undefined
-    ) {
-      setCurrentCourseKey(null);
-    } else {
-      setCurrentCourseKey(courseKeyUrlParam);
+    // Set current course based on URL
+    if (courseKeyURLParam) {
+      const course = courses.find((course) => course.key === courseKeyURLParam);
+      if (course) {
+        setCurrentCourse(course);
+      }
     }
+
     // Gives a warning that they will lose their progress if the user tries to leave/refresh the page
     const beforeUnload = (e: BeforeUnloadEvent) => {
       e.preventDefault();
@@ -59,67 +80,28 @@ const Review = () => {
   }, []);
 
   useEffect(() => {
-    if (currentCourseKey === null) {
-      setTimeout(() => history.pushState(null, "", "/app"), 10);
+    // Update history when current course changes
+    if (currentCourse === null) {
+      history.pushState(null, "", "/app");
     } else {
-      setTimeout(() => history.pushState(null, "", `/app/${currentCourseKey}`), 10);
+      history.pushState(null, "", `/app/${currentCourse.key}`);
     }
-  }, [currentCourseKey]);
-
-  // Memorize the course key lookup in format of { [key]: course } for performance
-  const courseKeyLookup = useMemo(
-    () =>
-      Object.fromEntries(
-        courses.map((course) => [course.key, course])
-      ) as Record<string, Course>,
-    [courses]
-  );
-
-  // Memorize the course based on the course key
-  const currentCourse = useMemo(
-    () =>
-      currentCourseKey && currentCourseKey in courseKeyLookup
-        ? courseKeyLookup[currentCourseKey]
-        : null,
-    [currentCourseKey, courseKeyLookup[currentCourseKey || ""]]
-  );
+  }, [currentCourse]);
 
   // Callback for select course in navigation drawer
-  const onCourseClick = (course: Course | null) => {
-    if (course === null) {
-      setCurrentCourseKey(null);
-    } else {
-      setCurrentCourseKey(course.key);
-    }
+  const onCourseClick = (course: Course) => {
+    setCurrentCourse(course);
   };
 
-  // Callback for when the courses are changed
-  const onCoursesChanged = (course: Course) => {
-    const existingCourseKeys = courses.map((course) => course.key);
-    // Numbering undetermined courses
-    if (!course.code || !course.number) {
-      course.code = "Course";
-      course.number = Object.values(courses).length + 1;
-      course.title = "Course";
-    }
-
-    // Generate course key
-    const key = `${course.code}-${course.number}`.toLowerCase();
-    if (existingCourseKeys.includes(key)) return;
-
-    course.key = key;
-    courses.push(course);
-    existingCourseKeys.push(key);
-
-    setCourses([...courses]);
+  // Callback for back arrow in top bar
+  const onClickBack = () => {
+    setCurrentCourse(null);
   };
-
-  const onClickBack = () => setCurrentCourseKey(null);
 
   const onChangeAssessment = (assessment: Assessment, index: number) => {
     setCourses(
       courses.map((course) => {
-        if (course.key === currentCourseKey) {
+        if (course.key === currentCourse?.key) {
           course.assessments[index] = assessment;
         }
         return course;
@@ -127,17 +109,12 @@ const Review = () => {
     );
   };
 
-  const deleteCurrentCourse = () => {
-    setCourses(courses.filter((course) => course.key !== currentCourseKey));
-    setCurrentCourseKey(null);
-  };
-
   return (
     <>
       <nav
         className={classnames(
           "fixed top-0 left-0 w-full md:w-24 xl:w-[17rem] h-full bg-surface",
-          currentCourseKey && "hidden",
+          currentCourse && "hidden", // For mobile
           "md:block z-20"
         )}
         ref={navRef}
@@ -158,7 +135,11 @@ const Review = () => {
             >
               {/* Icons */}
               <LeadingNavigation className="block md:hidden">
-                <IconButton className="text-on-surface" icon="arrow_back" onClick={onClickBack} />
+                <IconButton
+                  className="text-on-surface"
+                  icon="arrow_back"
+                  onClick={onClickBack}
+                />
               </LeadingNavigation>
               <TrailingIcon>
                 <IconButton

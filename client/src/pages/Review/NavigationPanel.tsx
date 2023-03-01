@@ -47,11 +47,12 @@ const NavigationPanel = ({
         .post("/files", formData, {
           headers: { "Content-Type": "multipart/form-data" },
         })
-        .then((res) => {
+        .then((res) => res.data)
+        .then((data) => {
           // convert to Course
           const course: Course = {
-            ...res.data,
-            assessments: res.data.assessments.map(
+            ...data,
+            assessments: data.assessments.map(
               (a: { name: string; date: string; weight: string }) => ({
                 ...a,
                 date: new Date(a.date),
@@ -59,6 +60,11 @@ const NavigationPanel = ({
               })
             ),
           };
+          course.code = course.code || "Course";
+          course.number = course.number || courses.length + 1;
+          course.title = course.title || course.code;
+          course.key = `${course.code.toLowerCase()}-${course.number}`;
+
           onCoursesChanged(course);
         })
         .catch((error) => {
@@ -66,6 +72,8 @@ const NavigationPanel = ({
         })
         .finally(() => {
           setLoading((prev) => prev.filter((f) => f !== file?.name));
+          // Clear the input so the onChange event is triggered even if the same file is uploaded again
+          if (inputRef.current) inputRef.current.value = "";
         });
     }
   };
