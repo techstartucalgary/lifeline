@@ -60,6 +60,14 @@ const Review = () => {
   }, [navRef.current, mainRef.current]);
 
   useEffect(() => {
+    // Set current course based on URL
+    if (courseKeyURLParam) {
+      const course = courses.find((course) => course.key === courseKeyURLParam);
+      if (course) {
+        setCurrentCourse(course);
+      }
+    }
+
     // Gives a warning that they will lose their progress if the user tries to leave/refresh the page
     const beforeUnload = (e: BeforeUnloadEvent) => {
       e.preventDefault();
