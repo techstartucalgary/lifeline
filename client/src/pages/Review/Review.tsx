@@ -59,7 +59,7 @@ const Review = () => {
     onMainMarginLeft();
     window.addEventListener("resize", onMainMarginLeft);
     return () => window.removeEventListener("resize", onMainMarginLeft);
-  }, [navRef.current, mainRef.current]);
+  }, [navRef.current, mainRef.current, currentCourse]);
 
   useEffect(() => {
     // Set current course based on URL
