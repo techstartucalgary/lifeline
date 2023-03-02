@@ -20,7 +20,6 @@ import { Assessment, Course, Courses, parseCourse } from "../../logic/icsGen";
 import CoursePanel from "./CoursePanel";
 import NavigationPanel from "./NavigationPanel";
 
-
 const Review = () => {
   const [courses, setCourses] = useState<Courses>([]);
   const [currentCourse, setCurrentCourse] = useState<Course | null>(null);
@@ -65,7 +64,8 @@ const Review = () => {
     onMainMarginLeft();
     window.addEventListener("resize", onMainMarginLeft);
     return () => window.removeEventListener("resize", onMainMarginLeft);
-  }, [currentCourse]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [navRef.current, mainRef.current, currentCourse]);
 
   useEffect(() => {
     // Load courses from local storage

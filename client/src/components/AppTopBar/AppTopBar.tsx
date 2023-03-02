@@ -56,7 +56,8 @@ const AppTopBar = ({ variant = "large", elevation, children, ...args }: AppTopBa
     onTopbarHeight();
     window.addEventListener("resize", onTopbarHeight);
     return () => window.removeEventListener("resize", onTopbarHeight);
-  }, []);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [compactHeadlineRef.current]);
 
   return (
     <>
