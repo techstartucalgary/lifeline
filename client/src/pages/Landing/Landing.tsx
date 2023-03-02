@@ -1,3 +1,4 @@
+/* eslint-disable max-lines */
 import { useEffect } from "react";
 
 import { classnames } from "../../Utilities";
