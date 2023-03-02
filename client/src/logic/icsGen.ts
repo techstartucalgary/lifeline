@@ -16,6 +16,32 @@ export interface Course {
   assessments: Assessment[];
 }
 
+// rawCourse is the JSON object from the server or from local storage, so Dates and Numbers are strings
+export function parseCourse(rawCourse: {
+  code: string;
+  number: string;
+  title: string;
+  key: string;
+  topic: string;
+  assessments: { name: string; date: string; weight: string }[];
+}): Course {
+  const course: Course = {
+    ...rawCourse,
+    number: Number(rawCourse.number),
+    assessments: rawCourse.assessments.map(
+      (a: { name: string; date: string; weight: string }) => {
+        return {
+          name: a.name,
+          date: new Date(a.date),
+          weight: Number(a.weight),
+        } as Assessment;
+      }
+    ),
+  };
+
+  return course;
+}
+
 export interface Courses extends Array<Course> {
   [index: number]: Course;
 }

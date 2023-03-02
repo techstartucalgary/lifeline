@@ -8,7 +8,7 @@ import {
 import { useBeforeUnload, useParams } from "react-router-dom";
 
 import { classnames } from "../../Utilities";
-import { Assessment, Course, Courses } from "../../logic/icsGen";
+import { Assessment, Course, Courses, parseCourse } from "../../logic/icsGen";
 
 import { IconButton } from "../../components/Button";
 import AppTopBar, {
@@ -71,7 +71,7 @@ const Review = () => {
     const foundCourses = localStorage.getItem("courses");
     if (!foundCourses) return;
 
-    const parsedCourses: Courses = JSON.parse(foundCourses);
+    const parsedCourses: Courses = JSON.parse(foundCourses).map(parseCourse);
     setCourses(parsedCourses);
     coursesRef.current = parsedCourses;
 
