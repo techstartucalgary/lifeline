@@ -49,6 +49,7 @@ module.exports = {
     "no-empty-function": "error",
     "no-trailing-spaces": "error",
     "no-whitespace-before-property": "error",
+    "max-lines": ["error", 200],
     "import/order": [
       "error",
       {
