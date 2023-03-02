@@ -209,6 +209,7 @@ const BlobIcon = ({ icon }: { icon: string }) => {
         className={classnames(
           "absolute",
           "top-0",
+          // eslint-disable-next-line max-lines
           "left-0",
           "w-full",
           "h-full"
