@@ -1,6 +1,8 @@
 import { ReactNode } from "react";
-import Button, { ButtonProps } from "./Button";
+
 import { classnames } from "../../Utilities";
+
+import Button, { ButtonProps } from "./Button";
 
 interface IconButtonProps extends ButtonProps {
   icon: ReactNode | string;

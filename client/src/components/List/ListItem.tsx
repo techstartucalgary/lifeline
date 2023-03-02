@@ -1,6 +1,7 @@
 import { ReactNode } from "react";
-import { Button, ButtonProps } from "../Button";
+
 import { classnames } from "../../Utilities";
+import { Button, ButtonProps } from "../Button";
 
 interface ListItemProps extends Omit<ButtonProps, "icon"> {
   leadingIcon?: ReactNode | string;
@@ -9,7 +10,7 @@ interface ListItemProps extends Omit<ButtonProps, "icon"> {
   metadata?: ReactNode | string;
 }
 
-const ListItem = ({ title, supportingText, metadata, leadingIcon, trailingIcon, color = "primary", className, ...args }: ListItemProps) => { 
+const ListItem = ({ title, supportingText, metadata, leadingIcon, trailingIcon, color = "primary", className, ...args }: ListItemProps) => {
   return (
     <Button
       {...args}

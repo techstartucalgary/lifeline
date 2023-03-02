@@ -1,8 +1,10 @@
 import { useState } from "react";
+
 import { classnames } from "../../Utilities";
-import { Button } from "../Button";
-import blob from "./blob-small.svg";
 import { Assessment } from "../../logic/icsGen";
+import { Button } from "../Button";
+
+import blob from "./blob-small.svg";
 
 interface EditAssessmentProps {
   onClose: () => void;

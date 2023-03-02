@@ -1,5 +1,7 @@
-import { HTMLAttributes, ReactElement, useState, useRef, useLayoutEffect } from "react";
 import useScrollPosition from "@react-hook/window-scroll";
+import { HTMLAttributes, ReactElement, useState, useRef, useLayoutEffect } from "react";
+
+import { classnames } from "../../Utilities";
 
 import CompactHeadline from "./CompactHeadline";
 import Headline from "./Headline";
@@ -13,7 +15,6 @@ import {
   Subtitle,
   SubtitleProp
 } from "./Subcomponents";
-import { classnames } from "../../Utilities";
 
 interface AppTopBarProps extends HTMLAttributes<HTMLDivElement> {
   elevation?: boolean;
@@ -28,10 +29,10 @@ const AppTopBar = ({ variant = "large", elevation, children, ...args }: AppTopBa
   children = Array.isArray(children) ? children : [children];
 
   // Find elements in children
-  const leadingNavigation = children.find((child) => child != undefined && child.type === LeadingNavigation);
-  const trailingIcon = children.find((child) => child != undefined && child.type === TrailingIcon);
-  const title = children.find((child) => child != undefined && child.type === Title);
-  const subtitle = children.find((child) => child != undefined && child.type === Subtitle);
+  const leadingNavigation = children.find((child) => child !== undefined && child.type === LeadingNavigation);
+  const trailingIcon = children.find((child) => child !== undefined && child.type === TrailingIcon);
+  const title = children.find((child) => child !== undefined && child.type === Title);
+  const subtitle = children.find((child) => child !== undefined && child.type === Subtitle);
 
   // For scrolling
   const scrollY = useScrollPosition(240);
@@ -55,7 +56,7 @@ const AppTopBar = ({ variant = "large", elevation, children, ...args }: AppTopBa
     onTopbarHeight();
     window.addEventListener("resize", onTopbarHeight);
     return () => window.removeEventListener("resize", onTopbarHeight);
-  }, [compactHeadlineRef.current]);
+  }, []);
 
   return (
     <>

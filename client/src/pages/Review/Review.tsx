@@ -1,24 +1,25 @@
 import {
-  useState,
-  useEffect,
-  useRef,
-  useLayoutEffect,
   useCallback,
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState,
 } from "react";
 import { useBeforeUnload, useParams } from "react-router-dom";
 
 import { classnames } from "../../Utilities";
-import { Assessment, Course, Courses, parseCourse } from "../../logic/icsGen";
-
-import { IconButton } from "../../components/Button";
 import AppTopBar, {
   LeadingNavigation,
-  TrailingIcon,
-  Title,
   Subtitle,
+  Title,
+  TrailingIcon,
 } from "../../components/AppTopBar";
+import { IconButton } from "../../components/Button";
+import { Assessment, Course, Courses, parseCourse } from "../../logic/icsGen";
+
 import CoursePanel from "./CoursePanel";
 import NavigationPanel from "./NavigationPanel";
+
 
 const Review = () => {
   const [courses, setCourses] = useState<Courses>([]);
@@ -64,7 +65,7 @@ const Review = () => {
     onMainMarginLeft();
     window.addEventListener("resize", onMainMarginLeft);
     return () => window.removeEventListener("resize", onMainMarginLeft);
-  }, [navRef.current, mainRef.current, currentCourse]);
+  }, [currentCourse]);
 
   useEffect(() => {
     // Load courses from local storage
@@ -85,7 +86,7 @@ const Review = () => {
         setCurrentCourse(course);
       }
     }
-  }, []);
+  }, [courseKeyURLParam]);
 
   useBeforeUnload(
     useCallback(() => {
@@ -96,8 +97,10 @@ const Review = () => {
   useEffect(() => {
     // Update history when current course changes
     if (currentCourse === null) {
+      // eslint-disable-next-line no-restricted-globals
       history.pushState(null, "", "/app");
     } else {
+      // eslint-disable-next-line no-restricted-globals
       history.pushState(null, "", `/app/${currentCourse.key}`);
     }
   }, [currentCourse]);
