@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { classnames } from "../../Utilities";
 import { Button } from "../../components/Button";
 import NavigationBar from "../../components/NavigationBar";
-import Footer from "../Footer";
+import Footer from "../../components/Footer";
 
 import wfh1 from "./wfh_1.svg";
 import wfh7 from "./wfh_7.svg";
