@@ -2,8 +2,8 @@ import { useEffect, useRef, useState } from "react";
 import { classnames } from "../../Utilities";
 
 interface CourseInfoProps {
-  hours: string;
-  department: string;
+  hours?: string;
+  faculty?: string;
   description?: string;
 }
 
@@ -19,7 +19,7 @@ const BentoBase = [
   "text-left",
 ];
 
-const CourseInfo = ({ hours, department, description }: CourseInfoProps) => {
+const CourseInfo = ({ hours, faculty, description }: CourseInfoProps) => {
   return (
     <>
       <div
@@ -35,10 +35,8 @@ const CourseInfo = ({ hours, department, description }: CourseInfoProps) => {
           <p>{hours}</p>
         </div>
         <div className={classnames(...BentoBase, "md:w-1/2", "flex-grow")}>
-          <h1 className={classnames("text-lg", "font-bold")}>
-            Department / Faculty
-          </h1>
-          <p>{department}</p>
+          <h1 className={classnames("text-lg", "font-bold")}>Faculty</h1>
+          <p>{faculty}</p>
         </div>
       </div>
       {description && <Description text={description} />}

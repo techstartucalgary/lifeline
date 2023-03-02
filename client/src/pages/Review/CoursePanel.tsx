@@ -9,14 +9,12 @@ import EditAssessment from "../../components/EditAssessment";
 import AssessmentsPanel from "./AssessmentsPanel";
 import DocumentPanel from "./DocumentPanel";
 
-
 interface CoursePanelProp {
   course: Course;
   onChangeAssessment(assessment: Assessment, index: number): void;
 }
 
 const CoursePanel = ({ course, onChangeAssessment }: CoursePanelProp) => {
-
   const [selectedTab, setSelectedTab] = useState<Tab>(Tab.Assessments);
   const [editingAssessment, setEditingAssessment] = useState<{
     assessment: Assessment;
@@ -27,20 +25,19 @@ const CoursePanel = ({ course, onChangeAssessment }: CoursePanelProp) => {
     <>
       <div className="flex flex-col md:flex-row">
         <section className={classnames("w-full md:w-1/2", "p-4")}>
-          <CourseInfo
-            hours="H(3-2T)"
-            department="Computer Science"
-            description={course.description}
-          />
-          <Tabs
-            selectedTab={selectedTab}
-            setSelectedTab={setSelectedTab}
-          />
+          {(course.hours || course.faculty || course.description) && (
+            <CourseInfo
+              hours={course.hours}
+              faculty={course.faculty?.title}
+              description={course.description}
+            />
+          )}
+          <Tabs selectedTab={selectedTab} setSelectedTab={setSelectedTab} />
           {editingAssessment === null ? (
             <div
               className={classnames(
                 "w-full",
-                selectedTab === Tab.Document && "hidden md:block",
+                selectedTab === Tab.Document && "hidden md:block"
               )}
             >
               <AssessmentsPanel
@@ -51,7 +48,11 @@ const CoursePanel = ({ course, onChangeAssessment }: CoursePanelProp) => {
               />
             </div>
           ) : (
-            <div className={classnames(selectedTab === Tab.Document && "hidden md:block")}>
+            <div
+              className={classnames(
+                selectedTab === Tab.Document && "hidden md:block"
+              )}
+            >
               <EditAssessment
                 assessment={editingAssessment.assessment}
                 onClose={() => setEditingAssessment(null)}
