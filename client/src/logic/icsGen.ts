@@ -14,6 +14,9 @@ export interface Course {
   key: string;
   topic: string;
   assessments: Assessment[];
+  description?: string;
+  faculty?: { title: string };
+  hours?: string;
 }
 
 // rawCourse is the JSON object from the server or from local storage, so Dates and Numbers are strings
