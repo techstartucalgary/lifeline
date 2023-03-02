@@ -77,4 +77,4 @@ A few more examples:
 
 ### React Hooks
 
-This library imports [React Hooks](https://github.com/streamich/react-use) for more convinient frontend development. You can find so many useful hooks in this library, so please utilize these hooks over native js approaches. 
+This library imports [React Hooks](https://github.com/streamich/react-use) for more convenient frontend development. You can find so many useful hooks in this library, so please utilize these hooks over native js approaches. 
