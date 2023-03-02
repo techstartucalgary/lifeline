@@ -1,7 +1,7 @@
 import { useRef, useState } from "react";
 import List from "../../components/List";
 import NavigationDrawer from "../../components/NavigationDrawer";
-import jsonToICS, { Course, Courses } from "../../logic/icsGen";
+import jsonToICS, { Course, Courses, parseCourse } from "../../logic/icsGen";
 import axios from "axios";
 import { classnames } from "../../Utilities";
 import ProgressIndicator from "../../components/ProgressIndicator";
@@ -50,16 +50,7 @@ const NavigationPanel = ({
         .then((res) => res.data)
         .then((data) => {
           // convert to Course
-          const course: Course = {
-            ...data,
-            assessments: data.assessments.map(
-              (a: { name: string; date: string; weight: string }) => ({
-                ...a,
-                date: new Date(a.date),
-                weight: Number(a.weight),
-              })
-            ),
-          };
+          const course: Course = parseCourse(data);
           course.code = course.code || "Course";
           course.number = course.number || courses.length + 1;
           course.title = course.title || course.code;
