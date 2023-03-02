@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { classnames } from "../../Utilities";
+import { Button } from "../Button";
 
 interface CourseInfoProps {
   hours?: string;
@@ -8,15 +9,11 @@ interface CourseInfoProps {
 }
 
 const BentoBase = [
-  "flex",
-  "flex-col",
-  "p-4",
-  "my-2",
+  "flex flex-col items-start gap-0",
+  "p-4 my-2 text-left font-normal",
   "rounded-3xl",
-  "bg-tertiary-95",
-  "hover:bg-tertiary-90",
-  "transition-all",
-  "text-left",
+  "bg-tertiary-95 hover:before:bg-state-layers-on-primary-container/5",
+  "transition-all pointer-events-none",
 ];
 
 const CourseInfo = ({ hours, faculty, description }: CourseInfoProps) => {
@@ -26,18 +23,26 @@ const CourseInfo = ({ hours, faculty, description }: CourseInfoProps) => {
         className={classnames(
           "flex",
           "flex-row",
-          "gap-4",
+          "gap-3.5", // visual correction
           "text-sys-on-tertiary-container"
         )}
       >
-        <div className={classnames(...BentoBase, "md:w-1/2")}>
-          <h1 className={classnames("text-lg", "font-bold")}>Hours</h1>
+        <Button
+          variant="tonal"
+          color="tertiary"
+          className={classnames(...BentoBase, "md:w-1/2")}
+        >
+          <h1 className={classnames("text-lg", "font-medium")}>Hours</h1>
           <p>{hours}</p>
-        </div>
-        <div className={classnames(...BentoBase, "md:w-1/2", "flex-grow")}>
-          <h1 className={classnames("text-lg", "font-bold")}>Faculty</h1>
+        </Button>
+        <Button
+          variant="tonal"
+          color="tertiary"
+          className={classnames(...BentoBase, "md:w-1/2 flex-grow")}
+        >
+          <h1 className={classnames("text-lg", "font-medium")}>Faculty</h1>
           <p>{faculty}</p>
-        </div>
+        </Button>
       </div>
       {description && <Description text={description} />}
     </>
@@ -61,19 +66,25 @@ const Description = ({ text }: { text: string }) => {
   }, [text, paragraphRef.current]);
 
   return (
-    <button
+    <Button
+      variant="tonal"
+      color="tertiary"
+      ripple={false}
       className={classnames(
         ...BentoBase,
-        "w-full",
-        "mb-4",
-        "text-sys-on-tertiary-container"
+        "w-full mb-4 min-h-[5rem]",
+        clampable && "pointer-events-auto"
       )}
       onClick={() => setShowMore(!showMore)}
     >
       <p ref={paragraphRef} className={showMore ? "" : "line-clamp-3"}>
         {text}
       </p>
-      <p>{clampable && (showMore ? "LESS" : "MORE")}</p>
-    </button>
+      {clampable && (
+        <p className="font-medium uppercase text-sm mt-2 text-tertiary">
+          {showMore ? "Less" : "More"}
+        </p>
+      )}
+    </Button>
   );
 };
