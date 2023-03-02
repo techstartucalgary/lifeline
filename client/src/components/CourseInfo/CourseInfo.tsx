@@ -4,7 +4,7 @@ import { classnames } from "../../Utilities";
 interface CourseInfoProps {
   hours: string;
   department: string;
-  description: string;
+  description?: string;
 }
 
 const BentoBase = [
@@ -41,7 +41,7 @@ const CourseInfo = ({ hours, department, description }: CourseInfoProps) => {
           <p>{department}</p>
         </div>
       </div>
-      <Description text={description} />
+      {description && <Description text={description} />}
     </>
   );
 };

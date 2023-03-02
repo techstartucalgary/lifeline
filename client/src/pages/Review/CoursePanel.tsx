@@ -30,7 +30,7 @@ const CoursePanel = ({ course, onChangeAssessment }: CoursePanelProp) => {
           <CourseInfo
             hours="H(3-2T)"
             department="Computer Science"
-            description="This course is an introduction to the design and analysis of algorithms. Topics include: algorithmic problem solving, algorithmic efficiency, sorting and searching, divide-and-conquer, greedy algorithms, dynamic programming, and graph algorithms. Prerequisite: CSE 143 or equivalent."
+            description={course.description}
           />
           <Tabs
             selectedTab={selectedTab}

@@ -14,6 +14,7 @@ export interface Course {
   key: string;
   topic: string;
   assessments: Assessment[];
+  description?: string;
 }
 
 export interface Courses extends Array<Course> {
