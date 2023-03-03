@@ -95,20 +95,18 @@ const Review = () => {
 
   useEffect(recoverCourses, []);
 
-  window.addEventListener("popstate", (event) => {
-    cacheCourses();
-  });
+  window.addEventListener("popstate", cacheCourses);
 
   useBeforeUnload(useCallback(cacheCourses, [courses]));
 
-  useEffect(() => {
-    // Update history when current course changes
-    if (currentCourse === null) {
-      history.pushState(null, "", "/app");
-    } else {
-      history.pushState(null, "", `/app/${currentCourse.key}`);
-    }
-  }, [currentCourse]);
+  // useEffect(() => {
+  //   // Update history when current course changes
+  //   if (currentCourse === null) {
+  //     history.pushState(null, "", "/app");
+  //   } else {
+  //     history.pushState(null, "", `/app/${currentCourse.key}`);
+  //   }
+  // }, [currentCourse]);
 
   // Callback for select course in navigation drawer
   const onCourseClick = (course: Course) => {
