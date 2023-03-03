@@ -8,6 +8,7 @@ import EditAssessment from "../../components/EditAssessment";
 
 import AssessmentsPanel from "./AssessmentsPanel";
 import DocumentPanel from "./DocumentPanel";
+import { motion } from "framer-motion";
 
 interface CoursePanelProp {
   course: Course;
@@ -23,7 +24,14 @@ const CoursePanel = ({ course, onChangeAssessment }: CoursePanelProp) => {
 
   return (
     <>
-      <div className="flex flex-col md:flex-row">
+      <motion.div
+        key={course.key}
+        initial={{ y: 30, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        exit={{ y: -10, opacity: 0 }}
+        transition={{ duration: 0.3, ease: [0.2, 0.0, 0, 1.0] }}
+        className="flex flex-col md:flex-row"
+      >
         <section className={classnames("w-full md:w-1/2", "p-4")}>
           {(course.hours || course.faculty || course.description) && (
             <CourseInfo
@@ -74,7 +82,7 @@ const CoursePanel = ({ course, onChangeAssessment }: CoursePanelProp) => {
         >
           <DocumentPanel />
         </section>
-      </div>
+      </motion.div>
     </>
   );
 };
