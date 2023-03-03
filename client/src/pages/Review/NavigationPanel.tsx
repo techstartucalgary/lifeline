@@ -60,6 +60,7 @@ const NavigationPanel = ({
         })
         .catch((error) => {
           console.log(error);
+          // Trigger snackbar here
         })
         .finally(() => {
           setLoading((prev) => prev.filter((f) => f !== file?.name));
