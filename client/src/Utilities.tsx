@@ -6,6 +6,7 @@ import {
   mergeConfigs,
 } from "tailwind-merge";
 import { ClassNameValue } from "tailwind-merge/dist/lib/tw-join";
+import resolveConfig from "tailwindcss/resolveConfig";
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore-next-line
 import projectConfig from "@tailwind.config";
@@ -61,4 +62,6 @@ const classnames = (...args: ClassNameValue[]) => {
   return classnames(...args);
 };
 
-export { classnames };
+const config = resolveConfig(projectConfig);
+
+export { classnames, config };
