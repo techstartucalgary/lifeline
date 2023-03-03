@@ -29,12 +29,10 @@ const Review = () => {
   }>();
 
   const cacheCourses = () => {
-    console.log("Caching courses");
     localStorage.setItem("courses", JSON.stringify(coursesRef.current));
   };
 
   const recoverCourses = () => {
-    console.log("Recovering courses");
     // Load courses from local storage
     const foundCourses = localStorage.getItem("courses");
     if (!foundCourses) return;
