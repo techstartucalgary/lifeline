@@ -5,7 +5,7 @@ import Footer from "../../components/Footer";
 export default function Disclaimer() {
   return (
     <>
-      <div className="w-1/2 mx-auto text-on-primary-container">
+      <div className="w-1/2 mx-auto text-on-primary-container h-screen">
         <NavigationBar />
       
         <div className="mt-28">
@@ -18,7 +18,7 @@ export default function Disclaimer() {
         Lifeline assumes no responsibility for losses/damages of any nature whatsoever 
         as a result of the use of our service. Lifeline has made every attempt to ensure 
         the accuracy and reliability of our product. However, we cannot guarantee that 
-        the results will be fully as expected. Individualresults may vary.
+        the results will be fully as expected. Individual results may vary.
             </p>
             <br />
             <p>
