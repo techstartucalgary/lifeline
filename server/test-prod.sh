@@ -14,7 +14,7 @@ ls -l ./CPSC331.pdf # Size should be 86914 bytes
 API_RESPONSE=$(curl --silent --show-error --location --request POST "${API_URL}/files" \
   -H 'accept: application/json' \
   -H 'Content-Type: multipart/form-data' \
-  -F 'outline_files=@CPSC331.pdf;type=application/pdf')
+  -F 'outline_file=@CPSC331.pdf;type=application/pdf')
 rm ./CPSC331.pdf
 
 # Compare the API response to the expected response file

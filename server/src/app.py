@@ -1,7 +1,6 @@
 """Entry point for the server"""
 
 from os import environ
-from typing import List
 import uvicorn
 from fastapi import FastAPI, File, UploadFile, Response
 from fastapi.middleware.cors import CORSMiddleware
@@ -43,9 +42,9 @@ async def show_calendar():
 
 
 @app.post("/files", status_code=200)
-async def get_deadlines(response: Response, outline_files: List[UploadFile] = File(...)):
-    """Returns the extracted dates from the uploaded file(s)"""
-    return file_handler.handle_files(outline_files, response)
+async def get_deadlines(response: Response, outline_file: UploadFile = File(...)):
+    """Returns the extracted dates and info from the uploaded file"""
+    return file_handler.handle_file(outline_file, response)
 
 
 if __name__ == "__main__":

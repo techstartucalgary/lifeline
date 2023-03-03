@@ -8,21 +8,15 @@ interface AssessmentCardProps {
   onAssessmentClick: (assessment: Assessment) => void;
 }
 
-const formatDate = (dateString: string): string | null => {
-  try {
-    const date = new Date(dateString);
-    return date.toLocaleString("en-US", {
-      month: "long",
-      day: "numeric",
-      year: "numeric",
-      hour: "numeric",
-      minute: "numeric",
-      hour12: false,
-    });
-  } catch (e) {
-    return null;
-  }
-};
+const formatDate = (date: Date): string =>
+  date.toLocaleString("en-US", {
+    month: "long",
+    day: "numeric",
+    year: "numeric",
+    hour: "numeric",
+    minute: "numeric",
+    hour12: false,
+  });
 
 const AssessmentCard = ({
   assessment,
@@ -31,6 +25,7 @@ const AssessmentCard = ({
   return (
     <Button
       className={classnames(
+        "w-full",
         "p-4",
         "my-1",
         "rounded-3xl",
@@ -65,11 +60,26 @@ const AssessmentCard = ({
             "text-3xl"
           )}
         >
-          {
-            ["event", "star"][
-              Math.floor((assessment.name.charCodeAt(0) + 1) % 2)
-            ] // TODO: replace with a better way to determine icon
-          }
+          {/* If assessment name contains any of the keywords, use the star icon, otherwise use the event icon */}
+          {assessment.name
+            .toLowerCase()
+            .split(" ")
+            .some((word) =>
+              [
+                // Star icon keywords
+                "test",
+                "quiz",
+                "final",
+                "midterm",
+                "exam",
+                "examination",
+                "evaluation",
+                "presentation",
+                "project",
+              ].includes(word)
+            )
+            ? "star"
+            : "event"}
         </span>
       </div>
       <div
@@ -82,10 +92,7 @@ const AssessmentCard = ({
         <p className="text-sys-outline mt-2 text-sm font-normal">
           Weight: {assessment.weight}
           <br />
-          {"Hello, additional information can be added here. This is a placeholder. Additional information can be added here. This is a placeholder."
-            .split(" ")
-            .slice(0, Math.floor((assessment.name.charCodeAt(5) + 1) % 2) * 22)
-            .join(" ")}
+          {assessment.notes}
         </p>
       </div>
     </Button>

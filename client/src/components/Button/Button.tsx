@@ -16,12 +16,13 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   to?: To;
   icon?: ReactNode | string;
   color?: "primary" | "secondary" | "tertiary";
+  ripple?: boolean;
 }
 
 const base = `
   bg-transparent text-center font-medium tracking-[0.01rem] overflow-hidden
   px-7 py-3 pt-[0.67rem] align-middle rounded-full relative
-  transition-color transition-opacity ease-emphasized before:transition-all before:ease-emphasized
+  transition-all ease-emphasized before:transition-all before:ease-emphasized
 
   before:block before:absolute before:top-0 before:left-0 before:bottom-0 before:right-0
   before:bg-transparent before:user-select-none before:pointer-events-none before:-z-1
@@ -29,7 +30,7 @@ const base = `
   disabled:bg-state-layers-on-surface/12 disabled:text-sys-on-surface/[.38] disabled:cursor-not-allowed
   disabled:before:bg-transparent
 
-  flex flex-row items-center
+  flex flex-row items-center gap-2.5
 `;
 
 const cls2 = {
@@ -108,6 +109,7 @@ const Button = ({
   className,
   to,
   icon,
+  ripple = true,
   ...props
 }: ButtonProps) => {
   const navigate = useNavigate();
@@ -123,14 +125,16 @@ const Button = ({
 
   const onMouseDown = useCallback(
     (event: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>) => {
-      const rect = event.currentTarget.getBoundingClientRect();
-      rippleQueue.push({
-        x: event.clientX - rect.left,
-        y: event.clientY - rect.top,
-        persist: true,
-        className: cls3[variant][color],
-      });
-      setRippleQueue([...rippleQueue]);
+      if (ripple) {
+        const rect = event.currentTarget.getBoundingClientRect();
+        rippleQueue.push({
+          x: event.clientX - rect.left,
+          y: event.clientY - rect.top,
+          persist: true,
+          className: cls3[variant][color],
+        });
+        setRippleQueue([...rippleQueue]);
+      }
 
       if (props.onMouseDown) props.onMouseDown(event);
     },
@@ -193,12 +197,7 @@ const Button = ({
         ) : (
           <i className={styles.icon}>{icon}</i>
         ))}
-      {children &&
-        (typeof children === "string" ? (
-          <>{children}</>
-        ) : (
-          <div className="flex flex-row gap-2 w-full">{children}</div>
-        ))}
+      {children && <>{children}</>}
       {/* RIPPLE */}
       <div className="absolute top-0 left-0 overflow-hidden h-full w-full pointer-events-none -z-10">
         {rippleQueue.map(({ x, y, persist, className }, i) => (

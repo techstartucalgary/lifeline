@@ -48,7 +48,7 @@ This project uses ESLint and Prettier to lint and format code. This can be done 
 
 <img width="600" alt="Screenshot 2022-12-08 at 2 37 32 PM" src="https://user-images.githubusercontent.com/20573623/206572750-cf2218f8-5f7f-44b7-8aad-7366edac537b.png">
 
-The codebase and prototype are sharing the same color palette.The colors are defined in `tailwind.config.js`.
+The codebase and prototype are sharing the same color palette. The colors are defined in `tailwind.config.cjs`.
 They are originally named according to the **Material Design 3** standard but adopt the **Tailwind** naming convention here.
 
 For example, the colour `M3/sys/light/primary` will simply be used as `primary`  ***or***  `sys-primary` in the code as the `className` for an element:
@@ -73,3 +73,8 @@ A few more examples:
 - Border `M3/sys/light/secondary-container` will become `border-sys-secondary-container` or `border-secondary-container`
 
 > **Note**: If you find any color in the color palette that's not defined in `tailwind.config.js`, feel free to add it to the file.
+
+
+### React Hooks
+
+This library imports [React Hooks](https://github.com/streamich/react-use) for more convenient frontend development. You can find so many useful hooks in this library, so please utilize these hooks over native js approaches. 
