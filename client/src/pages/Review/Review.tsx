@@ -28,6 +28,33 @@ const Review = () => {
     courseKey: string | undefined;
   }>();
 
+  const cacheCourses = () => {
+    console.log("Caching courses");
+    localStorage.setItem("courses", JSON.stringify(coursesRef.current));
+  };
+
+  const recoverCourses = () => {
+    console.log("Recovering courses");
+    // Load courses from local storage
+    const foundCourses = localStorage.getItem("courses");
+    if (!foundCourses) return;
+
+    const parsedCourses: Courses = JSON.parse(foundCourses).map(parseCourse);
+    setCourses(parsedCourses);
+    coursesRef.current = parsedCourses;
+
+    // Set current course based on URL
+    if (courseKeyURLParam) {
+      const course = parsedCourses.find(
+        (course) => course.key === courseKeyURLParam
+      );
+
+      if (course) {
+        setCurrentCourse(course);
+      }
+    }
+  };
+
   const deleteCurrentCourse = () => {
     setCourses(
       coursesRef.current.filter((course) => course.key !== currentCourse?.key)
@@ -41,7 +68,7 @@ const Review = () => {
   const onCoursesChanged = (newCourse: Course) => {
     if (coursesRef.current.some((course) => course.key === newCourse.key)) {
       console.log("Course already exists");
-      // Snackbar here
+      // Trigger snackbar here
       return;
     }
     const newCourses = [...coursesRef.current, newCourse];
@@ -66,32 +93,13 @@ const Review = () => {
     return () => window.removeEventListener("resize", onMainMarginLeft);
   }, [navRef.current, mainRef.current, currentCourse]);
 
-  useEffect(() => {
-    // Load courses from local storage
-    const foundCourses = localStorage.getItem("courses");
-    if (!foundCourses) return;
+  useEffect(recoverCourses, []);
 
-    const parsedCourses: Courses = JSON.parse(foundCourses).map(parseCourse);
-    setCourses(parsedCourses);
-    coursesRef.current = parsedCourses;
+  window.addEventListener("popstate", (event) => {
+    cacheCourses();
+  });
 
-    // Set current course based on URL
-    if (courseKeyURLParam) {
-      const course = parsedCourses.find(
-        (course) => course.key === courseKeyURLParam
-      );
-
-      if (course) {
-        setCurrentCourse(course);
-      }
-    }
-  }, []);
-
-  useBeforeUnload(
-    useCallback(() => {
-      localStorage.setItem("courses", JSON.stringify(courses));
-    }, [courses])
-  );
+  useBeforeUnload(useCallback(cacheCourses, [courses]));
 
   useEffect(() => {
     // Update history when current course changes
