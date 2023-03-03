@@ -4,6 +4,7 @@
     "ms-vscode.vscode-typescript-tslint-plugin",
     "esbenp.prettier-vscode",
     "ms-python.python",
+    "ms-python.pylint",
     "dbaeumer.vscode-eslint",
     "bradlc.vscode-tailwindcss"
   ]
