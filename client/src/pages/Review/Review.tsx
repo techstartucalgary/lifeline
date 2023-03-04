@@ -6,7 +6,7 @@ import {
   useCallback,
 } from "react";
 import { useBeforeUnload, useParams } from "react-router-dom";
-import { motion, AnimatePresence } from "framer-motion";
+import { AnimatePresence } from "framer-motion";
 
 import { classnames } from "../../Utilities";
 import { Assessment, Course, Courses, parseCourse } from "../../logic/icsGen";
