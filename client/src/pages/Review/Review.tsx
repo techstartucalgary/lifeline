@@ -12,13 +12,7 @@ import { createBreakpoint } from "react-use";
 import { classnames, config } from "../../Utilities";
 import { Assessment, Course, Courses, parseCourse } from "../../logic/icsGen";
 
-import { IconButton } from "../../components/Button";
-import AppTopBar, {
-  LeadingNavigation,
-  TrailingIcon,
-  Title,
-  Subtitle,
-} from "../../components/AppTopBar";
+
 import CoursePanel from "./CoursePanel";
 import NavigationPanel from "./NavigationPanel";
 
@@ -156,51 +150,16 @@ const Review = () => {
 
       {currentCourse && (
         <>
-          <div className="z-10">
-            <AppTopBar
-              className="max-w-9xl mx-auto"
-              style={{ paddingLeft: mainMarginLeft }}
-            >
-              {/* Icons */}
-              <LeadingNavigation className="block md:hidden">
-                <IconButton
-                  className="text-on-surface"
-                  icon="arrow_back"
-                  onClick={onClickBack}
-                />
-              </LeadingNavigation>
-              <TrailingIcon>
-                <IconButton
-                  className="text-on-surface-variant hidden md:block"
-                  icon="error"
-                />
-                <IconButton
-                  className="text-on-surface-variant hidden md:block"
-                  icon="delete"
-                  onClick={deleteCurrentCourse}
-                />
-                <IconButton
-                  className="text-on-surface-variant block md:hidden"
-                  icon="more_vert"
-                />
-              </TrailingIcon>
-
-              {/* Titles */}
-              <Title>
-                {currentCourse.title} {currentCourse.number}
-              </Title>
-              <Subtitle>{currentCourse.topic}</Subtitle>
-            </AppTopBar>
-          </div>
-
           <main
             className="max-w-9xl mx-auto relative overflow-hidden"
             ref={mainRef}
-            style={{ paddingLeft: mainMarginLeft }}
           >
             <CoursePanel
               course={currentCourse}
+              left={mainMarginLeft}
               onChangeAssessment={onChangeAssessment}
+              onClickBack={onClickBack}
+              onDeleteCourse={deleteCurrentCourse}
             />
           </main>
         </>
