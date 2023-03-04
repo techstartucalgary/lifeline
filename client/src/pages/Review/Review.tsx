@@ -7,8 +7,9 @@ import {
 } from "react";
 import { useBeforeUnload, useParams } from "react-router-dom";
 import { AnimatePresence } from "framer-motion";
+import { createBreakpoint } from "react-use";
 
-import { classnames } from "../../Utilities";
+import { classnames, config } from "../../Utilities";
 import { Assessment, Course, Courses, parseCourse } from "../../logic/icsGen";
 
 import { IconButton } from "../../components/Button";
@@ -124,23 +125,34 @@ const Review = () => {
     );
   };
 
+  const screens = JSON.parse(JSON.stringify(config.theme?.screens));
+  for (const key in screens) {
+    screens[key] = parseInt(screens[key]);
+  }
+
+  const useBreakpoint = createBreakpoint(screens);
+  const breakpoint = useBreakpoint();
+
   return (
     <>
-      <nav
-        className={classnames(
-          "fixed top-0 left-0 w-full md:w-24 xl:w-[17rem] h-full bg-surface",
-          currentCourse && "hidden", // For mobile
-          "md:block z-20"
-        )}
-        ref={navRef}
-      >
-        <NavigationPanel
-          courses={courses}
-          currentCourse={currentCourse}
-          onCourseClick={onCourseClick}
-          onCoursesChanged={onCoursesChanged}
-        />
-      </nav>
+      {((breakpoint === "sm" && !currentCourse) || breakpoint !== "sm") && (
+        <nav
+          className={classnames(
+            "fixed top-0 left-0 w-full md:w-24 xl:w-[17rem] h-full bg-surface",
+            currentCourse && "hidden", // For mobile
+            "md:block z-20"
+          )}
+          ref={navRef}
+        >
+          <NavigationPanel
+            courses={courses}
+            currentCourse={currentCourse}
+            onCourseClick={onCourseClick}
+            onCoursesChanged={onCoursesChanged}
+          />
+        </nav>
+      )}
+
       {currentCourse && (
         <>
           <div className="z-10">
