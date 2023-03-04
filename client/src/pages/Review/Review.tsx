@@ -145,7 +145,7 @@ const Review = () => {
         <>
           <div className="z-10">
             <AppTopBar
-              className="max-w-7xl mx-auto"
+              className="max-w-9xl mx-auto"
               style={{ paddingLeft: mainMarginLeft }}
             >
               {/* Icons */}
@@ -182,7 +182,7 @@ const Review = () => {
 
           <main
             className={classnames(
-              "max-w-7xl mx-auto relative overflow-hidden",
+              "max-w-9xl mx-auto relative overflow-hidden",
               mainMarginLeft < 0 && "hidden"
             )}
             ref={mainRef}
