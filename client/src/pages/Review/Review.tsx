@@ -7,15 +7,16 @@ import {
 } from "react";
 import { useBeforeUnload, useParams } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
-import { createBreakpoint } from "react-use";
 
-import { classnames, config } from "../../Utilities";
+import { classnames, config, useBreakpoint } from "../../Utilities";
 import { Assessment, Course, Courses, parseCourse } from "../../logic/icsGen";
 
 import CoursePanel from "./CoursePanel";
 import NavigationPanel from "./NavigationPanel";
 
 const Review = () => {
+  const breakpoint = useBreakpoint();
+
   const [courses, setCourses] = useState<Courses>([]);
   const [currentCourse, setCurrentCourse] = useState<Course | null>(null);
   const coursesRef = useRef(courses);
@@ -61,7 +62,7 @@ const Review = () => {
     onMainMarginLeft();
     window.addEventListener("resize", onMainMarginLeft);
     return () => window.removeEventListener("resize", onMainMarginLeft);
-  }, [navRef.current, mainRef.current, currentCourse]);
+  }, [navRef.current, mainRef.current, currentCourse, breakpoint]);
 
   useEffect(() => {
     // Load courses from local storage
@@ -124,9 +125,6 @@ const Review = () => {
   for (const key in screens) {
     screens[key] = parseInt(screens[key]);
   }
-
-  const useBreakpoint = createBreakpoint(screens);
-  const breakpoint = useBreakpoint();
 
   return (
     <div className="overflow-hidden">
