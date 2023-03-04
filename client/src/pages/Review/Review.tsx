@@ -50,10 +50,12 @@ const Review = () => {
   const [mainMarginLeft, setMainMarginLeft] = useState(-1);
   useLayoutEffect(() => {
     const onMainMarginLeft = () => {
-      if (navRef.current && mainRef.current) {
-        const marginLeft = mainRef.current.offsetLeft || 0;
-        const navWidth = navRef.current?.offsetWidth || 0;
-        setMainMarginLeft(Math.max(navWidth - marginLeft, 0));
+      const marginLeft = mainRef.current?.offsetLeft || 0;
+      const navWidth = navRef.current?.offsetWidth || 0;
+      setMainMarginLeft(Math.max(navWidth - marginLeft, 0));
+
+      if (["xs", "sm"].includes(breakpoint)) {
+        setMainMarginLeft(0);
       }
     };
     onMainMarginLeft();
@@ -179,10 +181,7 @@ const Review = () => {
             transition={{ duration: 0.6, ease: [0.2, 0.0, 0, 1.0] }}
             className="w-full"
           >
-            <main
-              className="max-w-9xl mx-auto"
-              ref={mainRef}
-            >
+            <main className="max-w-9xl mx-auto" ref={mainRef}>
               <CoursePanel
                 course={currentCourse}
                 left={mainMarginLeft}
