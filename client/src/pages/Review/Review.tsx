@@ -180,7 +180,7 @@ const Review = () => {
             className="w-full"
           >
             <main
-              className="max-w-9xl mx-auto relative overflow-hidden"
+              className="max-w-9xl mx-auto"
               ref={mainRef}
             >
               <CoursePanel
