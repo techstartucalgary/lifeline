@@ -135,7 +135,8 @@ const Review = () => {
 
   return (
     <>
-      {((breakpoint === "sm" && !currentCourse) || breakpoint !== "sm") && (
+      {((["xs", "sm"].includes(breakpoint) && !currentCourse) ||
+        breakpoint !== "sm") && (
         <nav
           className={classnames(
             "fixed top-0 left-0 w-full md:w-24 xl:w-[17rem] h-full bg-surface",
@@ -193,19 +194,14 @@ const Review = () => {
           </div>
 
           <main
-            className={classnames(
-              "max-w-9xl mx-auto relative overflow-hidden",
-              mainMarginLeft < 0 && "hidden"
-            )}
+            className="max-w-9xl mx-auto relative overflow-hidden"
             ref={mainRef}
             style={{ paddingLeft: mainMarginLeft }}
           >
-            <AnimatePresence mode="wait">
-              <CoursePanel
-                course={currentCourse}
-                onChangeAssessment={onChangeAssessment}
-              />
-            </AnimatePresence>
+            <CoursePanel
+              course={currentCourse}
+              onChangeAssessment={onChangeAssessment}
+            />
           </main>
         </>
       )}
