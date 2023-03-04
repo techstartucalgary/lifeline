@@ -6,7 +6,7 @@ import {
   useCallback,
 } from "react";
 import { useBeforeUnload, useParams } from "react-router-dom";
-import { AnimatePresence } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import { createBreakpoint } from "react-use";
 
 import { classnames, config } from "../../Utilities";
@@ -128,7 +128,7 @@ const Review = () => {
   const breakpoint = useBreakpoint();
 
   return (
-    <>
+    <div className="overflow-hidden">
       {((["xs", "sm"].includes(breakpoint) && !currentCourse) ||
         breakpoint !== "sm") && (
         <nav
@@ -150,9 +150,18 @@ const Review = () => {
 
       {currentCourse && (
         <>
-          <main
+          <motion.main
             className="max-w-9xl mx-auto relative overflow-hidden"
             ref={mainRef}
+            key={currentCourse.key}
+            initial={{
+              x: ["xs", "sm"].includes(breakpoint) ? 30 : 0,
+              y: ["xs", "sm"].includes(breakpoint) ? 0 : 30,
+              opacity: 0,
+            }}
+            animate={{ x: 0, y: 0, opacity: 1 }}
+            exit={{ x: -10, opacity: 0 }}
+            transition={{ duration: 0.3, ease: [0.2, 0.0, 0, 1.0] }}
           >
             <CoursePanel
               course={currentCourse}
@@ -161,10 +170,10 @@ const Review = () => {
               onClickBack={onClickBack}
               onDeleteCourse={deleteCurrentCourse}
             />
-          </main>
+          </motion.main>
         </>
       )}
-    </>
+    </div>
   );
 };
 

@@ -15,7 +15,6 @@ import AppTopBar, {
 
 import AssessmentsPanel from "./AssessmentsPanel";
 import DocumentPanel from "./DocumentPanel";
-import { motion } from "framer-motion";
 
 interface CoursePanelProp {
   course: Course;
@@ -74,12 +73,7 @@ const CoursePanel = ({
         </AppTopBar>
       </div>
 
-      <motion.div
-        key={course.key}
-        initial={{ y: 30, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        exit={{ y: -10, opacity: 0 }}
-        transition={{ duration: 0.3, ease: [0.2, 0.0, 0, 1.0] }}
+      <div
         className="flex flex-col md:flex-row"
         style={{ paddingLeft: left }}
       >
@@ -133,7 +127,7 @@ const CoursePanel = ({
         >
           <DocumentPanel />
         </section>
-      </motion.div>
+      </div>
     </>
   );
 };
