@@ -143,26 +143,27 @@ const Review = () => {
               opacity: 0,
             }}
             transition={{ duration: 0.6, ease: [0.2, 0.0, 0, 1.0] }}
-            className={classnames(
-              "fixed top-0 left-0 w-full md:w-24 xl:w-[17rem] h-full bg-surface",
-              currentCourse && "hidden", // For mobile
-              "md:block z-20"
-            )}
-            ref={navRef}
           >
-            <NavigationPanel
-              courses={courses}
-              currentCourse={currentCourse}
-              onCourseClick={onCourseClick}
-              onCoursesChanged={onCoursesChanged}
-            />
+            <nav
+              className={classnames(
+                "fixed top-0 left-0 w-full md:w-24 xl:w-[17rem] h-full bg-surface",
+                currentCourse && "hidden", // For mobile
+                "md:block z-20"
+              )}
+              ref={navRef}
+            >
+              <NavigationPanel
+                courses={courses}
+                currentCourse={currentCourse}
+                onCourseClick={onCourseClick}
+                onCoursesChanged={onCoursesChanged}
+              />
+            </nav>
           </motion.nav>
         )}
 
         {currentCourse && (
           <motion.main
-            className="max-w-9xl mx-auto relative overflow-hidden"
-            ref={mainRef}
             key={"fty89gft789oijhgy789iuygf"}
             initial={{
               x: ["xs", "sm"].includes(breakpoint) ? 30 : 0,
@@ -176,14 +177,20 @@ const Review = () => {
               opacity: 0,
             }}
             transition={{ duration: 0.6, ease: [0.2, 0.0, 0, 1.0] }}
+            className="w-full"
           >
-            <CoursePanel
-              course={currentCourse}
-              left={mainMarginLeft}
-              onChangeAssessment={onChangeAssessment}
-              onClickBack={onClickBack}
-              onDeleteCourse={deleteCurrentCourse}
-            />
+            <main
+              className="max-w-9xl mx-auto relative overflow-hidden"
+              ref={mainRef}
+            >
+              <CoursePanel
+                course={currentCourse}
+                left={mainMarginLeft}
+                onChangeAssessment={onChangeAssessment}
+                onClickBack={onClickBack}
+                onDeleteCourse={deleteCurrentCourse}
+              />
+            </main>
           </motion.main>
         )}
       </AnimatePresence>
