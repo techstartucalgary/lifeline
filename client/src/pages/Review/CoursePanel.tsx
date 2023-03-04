@@ -40,7 +40,7 @@ const CoursePanel = ({
   return (
     <>
       <div className="z-10">
-        <AppTopBar style={{ paddingLeft: left }} variant="large">
+        <AppTopBar className="max-w-9xl mx-auto" style={{ paddingLeft: left }} variant="large">
           {/* Icons */}
           <LeadingNavigation className="block md:hidden">
             <IconButton

@@ -128,7 +128,7 @@ const Review = () => {
 
   return (
     <div className="overflow-hidden">
-      <AnimatePresence mode="popLayout">
+      <AnimatePresence mode="sync">
         {((["xs", "sm"].includes(breakpoint) && !currentCourse) ||
           breakpoint !== "sm") && (
           <motion.nav
@@ -142,7 +142,7 @@ const Review = () => {
               x: ["xs", "sm"].includes(breakpoint) ? -30 : 0,
               opacity: 0,
             }}
-            transition={{ duration: 2, ease: [0.2, 0.0, 0, 1.0] }}
+            transition={{ duration: 0.6, ease: [0.2, 0.0, 0, 1.0] }}
           >
             <nav
               className="fixed top-0 left-0 w-full md:w-24 xl:w-[17rem] h-full bg-surface z-20"
@@ -172,7 +172,7 @@ const Review = () => {
               y: ["xs", "sm"].includes(breakpoint) ? 0 : 30,
               opacity: 0,
             }}
-            transition={{ duration: 2, ease: [0.2, 0.0, 0, 1.0] }}
+            transition={{ duration: 0.6, ease: [0.2, 0.0, 0, 1.0] }}
             className="w-full"
           >
             <main className="max-w-9xl mx-auto" ref={mainRef}>
