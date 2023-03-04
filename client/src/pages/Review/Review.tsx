@@ -128,56 +128,65 @@ const Review = () => {
 
   return (
     <div className="overflow-hidden">
-      {((["xs", "sm"].includes(breakpoint) && !currentCourse) ||
-        breakpoint !== "sm") && (
-        <motion.nav
-          key="navigation-panel"
-          initial={{
-            x: ["xs", "sm"].includes(breakpoint) ? -30 : 0,
-            opacity: 0,
-          }}
-          animate={{ x: 0, opacity: 1 }}
-          exit={{ x: -10, opacity: 0 }}
-          transition={{ duration: 0.3, ease: [0.2, 0.0, 0, 1.0] }}
-          className={classnames(
-            "fixed top-0 left-0 w-full md:w-24 xl:w-[17rem] h-full bg-surface",
-            currentCourse && "hidden", // For mobile
-            "md:block z-20"
-          )}
-          ref={navRef}
-        >
-          <NavigationPanel
-            courses={courses}
-            currentCourse={currentCourse}
-            onCourseClick={onCourseClick}
-            onCoursesChanged={onCoursesChanged}
-          />
-        </motion.nav>
-      )}
+      <AnimatePresence mode="popLayout">
+        {((["xs", "sm"].includes(breakpoint) && !currentCourse) ||
+          breakpoint !== "sm") && (
+          <motion.nav
+            key="navigation-panel"
+            initial={{
+              x: ["xs", "sm"].includes(breakpoint) ? -30 : 0,
+              opacity: 0,
+            }}
+            animate={{ x: 0, opacity: 1 }}
+            exit={{
+              x: ["xs", "sm"].includes(breakpoint) ? -30 : 0,
+              opacity: 0,
+            }}
+            transition={{ duration: 0.6, ease: [0.2, 0.0, 0, 1.0] }}
+            className={classnames(
+              "fixed top-0 left-0 w-full md:w-24 xl:w-[17rem] h-full bg-surface",
+              currentCourse && "hidden", // For mobile
+              "md:block z-20"
+            )}
+            ref={navRef}
+          >
+            <NavigationPanel
+              courses={courses}
+              currentCourse={currentCourse}
+              onCourseClick={onCourseClick}
+              onCoursesChanged={onCoursesChanged}
+            />
+          </motion.nav>
+        )}
 
-      {currentCourse && (
-        <motion.main
-          className="max-w-9xl mx-auto relative overflow-hidden"
-          ref={mainRef}
-          key={currentCourse.key}
-          initial={{
-            x: ["xs", "sm"].includes(breakpoint) ? 30 : 0,
-            y: ["xs", "sm"].includes(breakpoint) ? 0 : 30,
-            opacity: 0,
-          }}
-          animate={{ x: 0, y: 0, opacity: 1 }}
-          exit={{ x: -10, opacity: 0 }}
-          transition={{ duration: 0.3, ease: [0.2, 0.0, 0, 1.0] }}
-        >
-          <CoursePanel
-            course={currentCourse}
-            left={mainMarginLeft}
-            onChangeAssessment={onChangeAssessment}
-            onClickBack={onClickBack}
-            onDeleteCourse={deleteCurrentCourse}
-          />
-        </motion.main>
-      )}
+        {currentCourse && (
+          <motion.main
+            className="max-w-9xl mx-auto relative overflow-hidden"
+            ref={mainRef}
+            key={"fty89gft789oijhgy789iuygf"}
+            initial={{
+              x: ["xs", "sm"].includes(breakpoint) ? 30 : 0,
+              y: ["xs", "sm"].includes(breakpoint) ? 0 : 30,
+              opacity: 0,
+            }}
+            animate={{ x: 0, y: 0, opacity: 1 }}
+            exit={{
+              x: ["xs", "sm"].includes(breakpoint) ? 30 : 0,
+              y: ["xs", "sm"].includes(breakpoint) ? 0 : 30,
+              opacity: 0,
+            }}
+            transition={{ duration: 0.6, ease: [0.2, 0.0, 0, 1.0] }}
+          >
+            <CoursePanel
+              course={currentCourse}
+              left={mainMarginLeft}
+              onChangeAssessment={onChangeAssessment}
+              onClickBack={onClickBack}
+              onDeleteCourse={deleteCurrentCourse}
+            />
+          </motion.main>
+        )}
+      </AnimatePresence>
     </div>
   );
 };
