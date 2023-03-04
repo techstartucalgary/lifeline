@@ -40,7 +40,7 @@ const CoursePanel = ({
   return (
     <>
       <div className="z-10">
-        <AppTopBar style={{ paddingLeft: left }}>
+        <AppTopBar style={{ paddingLeft: left }} variant="large">
           {/* Icons */}
           <LeadingNavigation className="block md:hidden">
             <IconButton
@@ -73,10 +73,7 @@ const CoursePanel = ({
         </AppTopBar>
       </div>
 
-      <div
-        className="flex flex-col md:flex-row"
-        style={{ paddingLeft: left }}
-      >
+      <div className="flex flex-col md:flex-row" style={{ paddingLeft: left }}>
         <section className={classnames("w-full md:w-1/2", "p-4")}>
           {(course.hours || course.faculty || course.description) && (
             <CourseInfo

@@ -69,16 +69,17 @@ const AppTopBar = ({ variant = "large", elevation, children, ...args }: AppTopBa
         elevationClassName={classnames("opacity-0", (scrollY > headlineHeight) && "opacity-1")}
         ref={compactHeadlineRef}
       />
-      <Headline
-        {...args}
-        style={{ marginTop: compactHeadlineHeight, ...args.style }}
-        className={classnames(variant === "small" && "h-0", variant === "large" && "pt-6", args.className)}
-        title={title}
-        subtitle={subtitle}
-        titleClassName={classnames("opacity-1", (scrollY > compactHeadlineHeight * 0.75) && "opacity-0")}
-        subtitleClassName={classnames("opacity-1", (scrollY > compactHeadlineHeight * 0.75) && "opacity-0")}
-        ref={headlineRef}
-      />
+      <div style={{paddingTop: compactHeadlineHeight }}>
+        <Headline
+          {...args}
+          className={classnames(variant === "small" && "h-0", variant === "large" && "pt-6", args.className)}
+          title={title}
+          subtitle={subtitle}
+          titleClassName={classnames("opacity-1", (scrollY > compactHeadlineHeight * 0.75) && "opacity-0")}
+          subtitleClassName={classnames("opacity-1", (scrollY > compactHeadlineHeight * 0.75) && "opacity-0")}
+          ref={headlineRef}
+        />
+      </div>
     </>
   );
 };
