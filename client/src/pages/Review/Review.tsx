@@ -127,19 +127,19 @@ const Review = () => {
   }
 
   return (
-    <div className="overflow-hidden">
-      <AnimatePresence mode="sync">
+    <div className="overflow-x-hidden min-h-screen">
+      <AnimatePresence mode="popLayout">
         {((["xs", "sm"].includes(breakpoint) && !currentCourse) ||
-          breakpoint !== "sm") && (
+          !["xs", "sm"].includes(breakpoint)) && (
           <motion.nav
             key="navigation-panel"
             initial={{
-              x: ["xs", "sm"].includes(breakpoint) ? -30 : 0,
+              x: ["xs", "sm"].includes(breakpoint) ? -60 : 0,
               opacity: 0,
             }}
             animate={{ x: 0, opacity: 1 }}
             exit={{
-              x: ["xs", "sm"].includes(breakpoint) ? -30 : 0,
+              x: ["xs", "sm"].includes(breakpoint) ? -60 : 0,
               opacity: 0,
             }}
             transition={{ duration: 0.6, ease: [0.2, 0.0, 0, 1.0] }}
@@ -162,14 +162,14 @@ const Review = () => {
           <motion.main
             key={"fty89gft789oijhgy789iuygf"}
             initial={{
-              x: ["xs", "sm"].includes(breakpoint) ? 30 : 0,
-              y: ["xs", "sm"].includes(breakpoint) ? 0 : 30,
+              x: ["xs", "sm"].includes(breakpoint) ? 60 : 0,
+              y: ["xs", "sm"].includes(breakpoint) ? 0 : 60,
               opacity: 0,
             }}
             animate={{ x: 0, y: 0, opacity: 1 }}
             exit={{
-              x: ["xs", "sm"].includes(breakpoint) ? 30 : 0,
-              y: ["xs", "sm"].includes(breakpoint) ? 0 : 30,
+              x: ["xs", "sm"].includes(breakpoint) ? 60 : 0,
+              y: ["xs", "sm"].includes(breakpoint) ? 0 : 60,
               opacity: 0,
             }}
             transition={{ duration: 0.6, ease: [0.2, 0.0, 0, 1.0] }}
