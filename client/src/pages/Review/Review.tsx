@@ -127,22 +127,42 @@ const Review = () => {
   }
 
   return (
-    <div className="overflow-x-hidden min-h-screen">
+    <div className="overflow-hidden min-h-screen">
       <AnimatePresence mode="popLayout">
         {((["xs", "sm"].includes(breakpoint) && !currentCourse) ||
           !["xs", "sm"].includes(breakpoint)) && (
           <motion.nav
             key="navigation-panel"
             initial={{
-              x: ["xs", "sm"].includes(breakpoint) ? -60 : 0,
+              x: ["xs", "sm"].includes(breakpoint) ? "-40%" : 0,
               opacity: 0,
             }}
             animate={{ x: 0, opacity: 1 }}
             exit={{
-              x: ["xs", "sm"].includes(breakpoint) ? -60 : 0,
+              x: ["xs", "sm"].includes(breakpoint) ? "-40%" : 0,
               opacity: 0,
+              transition: {
+                x: {
+                  duration: 0.6,
+                  ease: [0.2, 0.0, 0, 1.0],
+                },
+                opacity: {
+                  duration: 0.3,
+                  ease: [0.3, 0.0, 0.8, 0.15],
+                },
+              },
             }}
-            transition={{ duration: 0.6, ease: [0.2, 0.0, 0, 1.0] }}
+            transition={{
+              x: {
+                duration: 0.6,
+                ease: [0.2, 0.0, 0, 1.0],
+              },
+              opacity: {
+                duration: 0.4,
+                ease: [0.3, 0.0, 0.8, 0.15],
+                delay: 0.1,
+              },
+            }}
           >
             <nav
               className="fixed top-0 left-0 w-full md:w-24 xl:w-[17rem] h-full bg-surface z-20"
@@ -162,17 +182,37 @@ const Review = () => {
           <motion.main
             key={"fty89gft789oijhgy789iuygf"}
             initial={{
-              x: ["xs", "sm"].includes(breakpoint) ? 60 : 0,
-              y: ["xs", "sm"].includes(breakpoint) ? 0 : 60,
+              x: ["xs", "sm"].includes(breakpoint) ? "40%" : 0,
+              // y: ["xs", "sm"].includes(breakpoint) ? 0 : 60,
               opacity: 0,
             }}
             animate={{ x: 0, y: 0, opacity: 1 }}
             exit={{
-              x: ["xs", "sm"].includes(breakpoint) ? 60 : 0,
-              y: ["xs", "sm"].includes(breakpoint) ? 0 : 60,
+              x: ["xs", "sm"].includes(breakpoint) ? "40%" : 0,
+              // y: ["xs", "sm"].includes(breakpoint) ? 0 : 60,
               opacity: 0,
+              transition: {
+                x: {
+                  duration: 0.6,
+                  ease: [0.2, 0.0, 0, 1.0],
+                },
+                opacity: {
+                  duration: 0.3,
+                  ease: [0.3, 0.0, 0.8, 0.15],
+                },
+              },
             }}
-            transition={{ duration: 0.6, ease: [0.2, 0.0, 0, 1.0] }}
+            transition={{
+              x: {
+                duration: 0.6,
+                ease: [0.2, 0.0, 0, 1.0],
+              },
+              opacity: {
+                duration: 0.4,
+                ease: [0.3, 0.0, 0.8, 0.15],
+                delay: 0.1,
+              },
+            }}
             className="w-full"
           >
             <main className="max-w-9xl mx-auto" ref={mainRef}>
