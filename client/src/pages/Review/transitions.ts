@@ -1,5 +1,6 @@
 const easeEmphasized = [0.2, 0.0, 0, 1.0];
 const easeEmphasizedAccelerate = [0.3, 0.0, 0.8, 0.15];
+const shiftingDuration = 0.4;
 
 const variants = {
   initial: (x: number | string) => ({
@@ -11,13 +12,13 @@ const variants = {
     opacity: 1,
     transition: {
       x: {
-        duration: 0.6,
+        duration: shiftingDuration,
         ease: easeEmphasized,
       },
       opacity: {
-        duration: 0.4,
+        duration: 0.24,
         ease: easeEmphasizedAccelerate,
-        delay: 0.1,
+        delay: 0.14,
       },
     },
   },
@@ -26,11 +27,11 @@ const variants = {
     opacity: 0,
     transition: {
       x: {
-        duration: 0.6,
+        duration: shiftingDuration,
         ease: easeEmphasized,
       },
       opacity: {
-        duration: 0.3,
+        duration: 0.14,
         ease: easeEmphasizedAccelerate,
       },
     },
@@ -40,6 +41,6 @@ const variants = {
 // When transform is finished on `enter`, remove transform property to
 // restore `fixed` elements layout
 const transformTemplate = ({ x }: never) =>
-  parseInt(String(x)) === 0 ? "none" : `translateX(${x})`;
+  parseFloat(String(x)) === 0.0 ? "none" : `translateX(${x})`;
 
 export { variants, transformTemplate };
