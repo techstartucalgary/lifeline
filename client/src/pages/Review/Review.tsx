@@ -186,7 +186,12 @@ const Review = () => {
               // y: ["xs", "sm"].includes(breakpoint) ? 0 : 60,
               opacity: 0,
             }}
-            animate={{ x: 0, y: 0, opacity: 1 }}
+            animate={{
+              x: 0,
+              y: 0,
+              opacity: 1,
+              transitionEnd: { transform: "none" },
+            }}
             exit={{
               x: ["xs", "sm"].includes(breakpoint) ? "40%" : 0,
               // y: ["xs", "sm"].includes(breakpoint) ? 0 : 60,
