@@ -13,6 +13,7 @@ import { Assessment, Course, Courses, parseCourse } from "../../logic/icsGen";
 
 import CoursePanel from "./CoursePanel";
 import NavigationPanel from "./NavigationPanel";
+import { variants } from "./transitions";
 
 const Review = () => {
   const breakpoint = useBreakpoint();
@@ -181,43 +182,10 @@ const Review = () => {
         {currentCourse && (
           <motion.main
             key={"fty89gft789oijhgy789iuygf"}
-            initial={{
-              x: ["xs", "sm"].includes(breakpoint) ? "40%" : 0,
-              // y: ["xs", "sm"].includes(breakpoint) ? 0 : 60,
-              opacity: 0,
-            }}
-            animate={{
-              x: 0,
-              y: 0,
-              opacity: 1,
-              transitionEnd: { transform: "none" },
-            }}
-            exit={{
-              x: ["xs", "sm"].includes(breakpoint) ? "40%" : 0,
-              // y: ["xs", "sm"].includes(breakpoint) ? 0 : 60,
-              opacity: 0,
-              transition: {
-                x: {
-                  duration: 0.6,
-                  ease: [0.2, 0.0, 0, 1.0],
-                },
-                opacity: {
-                  duration: 0.3,
-                  ease: [0.3, 0.0, 0.8, 0.15],
-                },
-              },
-            }}
-            transition={{
-              x: {
-                duration: 0.6,
-                ease: [0.2, 0.0, 0, 1.0],
-              },
-              opacity: {
-                duration: 0.4,
-                ease: [0.3, 0.0, 0.8, 0.15],
-                delay: 0.1,
-              },
-            }}
+            variants={variants}
+            initial="initial"
+            animate="enter"
+            exit="leave"
             className="w-full"
           >
             <main className="max-w-9xl mx-auto" ref={mainRef}>
