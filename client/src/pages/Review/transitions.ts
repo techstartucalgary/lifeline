@@ -2,18 +2,13 @@ const easeEmphasized = [0.2, 0.0, 0, 1.0];
 const easeEmphasizedAccelerate = [0.3, 0.0, 0.8, 0.15];
 
 const variants = {
-  "initial": {
-    x: "40%",
+  initial: (x: number | string) => ({
+    x: x,
     opacity: 0,
-  },
-  "initial-lrt": {
-    x: "-40%",
-    opacity: 0,
-  },
+  }),
   enter: {
     x: 0,
     opacity: 1,
-    transitionEnd: { transform: "none" },
     transition: {
       x: {
         duration: 0.6,
@@ -26,8 +21,8 @@ const variants = {
       },
     },
   },
-  "leave": {
-    x: "40%",
+  leave: (x: number | string) => ({
+    x: x,
     opacity: 0,
     transition: {
       x: {
@@ -39,21 +34,12 @@ const variants = {
         ease: easeEmphasizedAccelerate,
       },
     },
-  },
-  "leave-rtl": {
-    x: "-40%",
-    opacity: 0,
-    transition: {
-      x: {
-        duration: 0.6,
-        ease: easeEmphasized,
-      },
-      opacity: {
-        duration: 0.3,
-        ease: easeEmphasizedAccelerate,
-      },
-    },
-  },
+  }),
 };
 
-export { variants };
+// When transform is finished on `enter`, remove transform property to
+// restore `fixed` elements layout
+const transformTemplate = ({ x }: never) =>
+  parseInt(String(x)) === 0 ? "none" : `translateX(${x})`;
+
+export { variants, transformTemplate };

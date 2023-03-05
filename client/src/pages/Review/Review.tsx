@@ -13,7 +13,7 @@ import { Assessment, Course, Courses, parseCourse } from "../../logic/icsGen";
 
 import CoursePanel from "./CoursePanel";
 import NavigationPanel from "./NavigationPanel";
-import { variants } from "./transitions";
+import { transformTemplate, variants } from "./transitions";
 
 const Review = () => {
   const breakpoint = useBreakpoint();
@@ -133,6 +133,7 @@ const Review = () => {
         {((["xs", "sm"].includes(breakpoint) && !currentCourse) ||
           !["xs", "sm"].includes(breakpoint)) && (
           <motion.nav
+            layout="position"
             key="navigation-panel"
             initial={{
               x: ["xs", "sm"].includes(breakpoint) ? "-40%" : 0,
@@ -182,10 +183,13 @@ const Review = () => {
         {currentCourse && (
           <motion.main
             key={"fty89gft789oijhgy789iuygf"}
+            layout="position"
             variants={variants}
+            custom={"40%"}
             initial="initial"
             animate="enter"
             exit="leave"
+            transformTemplate={transformTemplate}
             className="w-full"
           >
             <main className="max-w-9xl mx-auto" ref={mainRef}>
