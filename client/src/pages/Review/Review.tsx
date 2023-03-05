@@ -141,7 +141,7 @@ const Review = () => {
             animate="enter"
             exit="leave"
             transformTemplate={transformTemplate}
-            className="will-change-transform z-20 ease-emphasized"
+            className="will-change-auto z-20 ease-emphasized"
           >
             <nav
               className="fixed top-0 left-0 w-full md:w-24 xl:w-[17rem] h-full bg-surface z-20"
@@ -167,7 +167,7 @@ const Review = () => {
             animate="enter"
             exit="leave"
             transformTemplate={transformTemplate}
-            className="w-full will-change-transform ease-emphasized"
+            className="w-full will-change-auto ease-emphasized"
           >
             <main className="max-w-9xl mx-auto" ref={mainRef}>
               <CoursePanel
