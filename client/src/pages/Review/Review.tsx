@@ -8,7 +8,7 @@ import {
 import { useBeforeUnload, useParams } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
 
-import { config, useBreakpoint } from "../../Utilities";
+import { useBreakpoint } from "../../Utilities";
 import { Assessment, Course, Courses, parseCourse } from "../../logic/icsGen";
 
 import CoursePanel from "./CoursePanel";
@@ -121,11 +121,6 @@ const Review = () => {
       })
     );
   };
-
-  const screens = JSON.parse(JSON.stringify(config.theme?.screens));
-  for (const key in screens) {
-    screens[key] = parseInt(screens[key]);
-  }
 
   return (
     <div className="overflow-hidden min-h-screen">
