@@ -135,8 +135,8 @@ const Review = () => {
           <motion.nav
             layout="position"
             key="navigation-panel"
-            variants={variants}
-            custom={"-10%"}
+            variants={["xs", "sm"].includes(breakpoint) ? variants : undefined}
+            custom={"-4rem"}
             initial="initial"
             animate="enter"
             exit="leave"
@@ -161,8 +161,8 @@ const Review = () => {
           <motion.main
             key={"fty89gft789oijhgy789iuygf"}
             layout="position"
-            variants={variants}
-            custom={"10%"}
+            variants={["xs", "sm"].includes(breakpoint) ? variants : undefined}
+            custom={"4rem"}
             initial="initial"
             animate="enter"
             exit="leave"

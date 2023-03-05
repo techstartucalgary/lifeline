@@ -39,7 +39,8 @@ const variants = {
 };
 
 // When transform is finished on `enter`, remove transform property to
-// restore `fixed` elements layout
+// restore `fixed` elements layout, because `fixed` elements are no
+// longer fixed if parent element has `transform`s applied.
 const transformTemplate = ({ x }: never) =>
   parseFloat(String(x)) === 0.0 ? "none" : `translateX(${x})`;
 
