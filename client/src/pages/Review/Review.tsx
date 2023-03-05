@@ -8,7 +8,7 @@ import {
 import { useBeforeUnload, useParams } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
 
-import { classnames, config, useBreakpoint } from "../../Utilities";
+import { config, useBreakpoint } from "../../Utilities";
 import { Assessment, Course, Courses, parseCourse } from "../../logic/icsGen";
 
 import CoursePanel from "./CoursePanel";
