@@ -8,8 +8,7 @@ from fastapi import FastAPI, File, UploadFile, Response
 
 from fastapi.middleware.cors import CORSMiddleware
 from mangum import Mangum
-from handlers import calendar_handler, file_handler
-from handlers import xlsx_handler
+from handlers import calendar_handler, file_handler, xlsx_handler
 
 
 IS_IN_PROD = "LAMBDA_TASK_ROOT" in dict(environ)
@@ -54,7 +53,6 @@ async def get_deadlines(response: Response, outline_file: UploadFile = File(...)
 @app.post("/xlsx")
 async def get_xlsx(semester: List[dict]):
     """ Returns the generated XLSX file """
-    #semester = await info.json()
     return xlsx_handler.get_xlsx_file(semester)
 
 if __name__ == "__main__":
