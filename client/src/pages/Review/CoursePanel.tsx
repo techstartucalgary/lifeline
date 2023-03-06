@@ -1,4 +1,5 @@
 import { useState } from "react";
+import SwipeableViews from "react-swipeable-views";
 
 import { classnames } from "../../Utilities";
 import CourseInfo from "../../components/CourseInfo";
@@ -32,7 +33,33 @@ const CoursePanel = ({ course, onChangeAssessment }: CoursePanelProp) => {
               description={course.description}
             />
           )}
+
           <Tabs selectedTab={selectedTab} setSelectedTab={setSelectedTab} />
+
+          <div className="-mx-4">
+            <SwipeableViews
+              index={selectedTab === Tab.Assessments ? 0 : 1}
+              onChangeIndex={(index: number) =>
+                setSelectedTab(index === 0 ? Tab.Assessments : Tab.Document)
+              }
+            >
+              <div className="px-4">
+                <AssessmentsPanel
+                  assessments={course.assessments}
+                  onAssessmentClick={(
+                    assessment: Assessment,
+                    index: number
+                  ) => {
+                    setEditingAssessment({ assessment, index });
+                  }}
+                />
+              </div>
+              <div className="px-4">
+                <DocumentPanel />
+              </div>
+            </SwipeableViews>
+          </div>
+
           {editingAssessment === null ? (
             <div
               className={classnames(
