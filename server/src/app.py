@@ -1,16 +1,15 @@
 """Entry point for the server"""
 
 from os import environ
-from typing import List
 import uvicorn
 
-from fastapi import FastAPI, File, UploadFile, Response
+from fastapi import FastAPI, File, UploadFile, Response, Request
 
 from fastapi.middleware.cors import CORSMiddleware
 from mangum import Mangum
 from handlers import calendar_handler, file_handler
 from handlers import xlsx_handler
-
+from typing import List
 
 IS_IN_PROD = "LAMBDA_TASK_ROOT" in dict(environ)
 
