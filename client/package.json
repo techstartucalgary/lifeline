@@ -23,6 +23,7 @@
     "react-notifications-component": "^4.0.1",
     "react-router-dom": "^6.4.2",
     "react-scripts": "^5.0.1",
+    "react-use": "^17.4.0",
     "tailwind-merge": "^1.8.0",
     "tailwindcss": "^3.2.1",
     "tailwindcss-classnames": "^3.0.7",
@@ -33,7 +34,7 @@
     "dev": "vite --host --port 3000",
     "start": "vite --host --port 3000",
     "build": "vite build --out-dir build",
-    "check-lint": "eslint . --ext .js,.jsx,.ts,.tsx --max-warnings 0 && tsc --noEmit",
+    "check-lint": "eslint . --ext .js,.jsx,.ts,.tsx --max-warnings 0 --ignore-path ../.gitignore && tsc --noEmit",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx --fix",
     "eject": "react-scripts eject"
   },

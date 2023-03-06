@@ -1,47 +1,52 @@
 import { useEffect, useRef, useState } from "react";
+import { useWindowSize } from "react-use";
+
 import { classnames } from "../../Utilities";
+import { Button } from "../Button";
 
 interface CourseInfoProps {
-  hours: string;
-  department: string;
-  description: string;
+  hours?: string;
+  faculty?: string;
+  description?: string;
 }
 
 const BentoBase = [
-  "flex",
-  "flex-col",
-  "p-4",
-  "my-2",
+  "flex flex-col items-start gap-0",
+  "p-4 my-2 text-left font-normal",
   "rounded-3xl",
-  "bg-secondary-95",
-  "hover:bg-secondary-90",
-  "transition-all",
-  "text-left",
+  "bg-tertiary-95 hover:before:bg-state-layers-on-primary-container/5 focus:before:bg-transparent",
+  "transition-all pointer-events-none",
 ];
 
-const CourseInfo = ({ hours, department, description }: CourseInfoProps) => {
+const CourseInfo = ({ hours, faculty, description }: CourseInfoProps) => {
   return (
     <>
       <div
         className={classnames(
           "flex",
           "flex-row",
-          "gap-4",
-          "text-sys-on-secondary-container"
+          "gap-3.5", // visual correction
+          "text-sys-on-tertiary-container"
         )}
       >
-        <div className={classnames(...BentoBase, "md:w-1/2")}>
-          <h1 className={classnames("text-lg", "font-bold")}>Hours</h1>
+        <Button
+          variant="tonal"
+          color="tertiary"
+          className={classnames(...BentoBase, "md:w-1/2")}
+        >
+          <h1 className={classnames("text-lg", "font-medium")}>Hours</h1>
           <p>{hours}</p>
-        </div>
-        <div className={classnames(...BentoBase, "md:w-1/2", "flex-grow")}>
-          <h1 className={classnames("text-lg", "font-bold")}>
-            Department / Faculty
-          </h1>
-          <p>{department}</p>
-        </div>
+        </Button>
+        <Button
+          variant="tonal"
+          color="tertiary"
+          className={classnames(...BentoBase, "md:w-1/2 flex-grow")}
+        >
+          <h1 className={classnames("text-lg", "font-medium")}>Faculty</h1>
+          <p>{faculty}</p>
+        </Button>
       </div>
-      <Description text={description} />
+      {description && <Description text={description} />}
     </>
   );
 };
@@ -49,6 +54,8 @@ const CourseInfo = ({ hours, department, description }: CourseInfoProps) => {
 export default CourseInfo;
 
 const Description = ({ text }: { text: string }) => {
+  const { width } = useWindowSize();
+
   const [showMore, setShowMore] = useState(false);
   const [clampable, setClampable] = useState(true);
   const paragraphRef = useRef<HTMLParagraphElement>(null);
@@ -60,22 +67,29 @@ const Description = ({ text }: { text: string }) => {
     paragraphRef.current.classList.add("line-clamp-3");
     const clampedHeight = paragraphRef.current.clientHeight;
     setClampable(originalHeight !== clampedHeight);
-  }, [text, paragraphRef.current]);
+    console.log(originalHeight, clampedHeight);
+  }, [text, paragraphRef.current, width]);
 
   return (
-    <button
+    <Button
+      variant="tonal"
+      color="tertiary"
+      ripple={false}
       className={classnames(
         ...BentoBase,
-        "w-full",
-        "mb-4",
-        "text-sys-on-secondary-container"
+        "w-full mb-4",
+        clampable && "pointer-events-auto"
       )}
       onClick={() => setShowMore(!showMore)}
     >
       <p ref={paragraphRef} className={showMore ? "" : "line-clamp-3"}>
         {text}
       </p>
-      <p>{clampable && (showMore ? "LESS" : "MORE")}</p>
-    </button>
+      {clampable && (
+        <p className="font-medium uppercase text-sm mt-2 text-tertiary">
+          {showMore ? "Less" : "More"}
+        </p>
+      )}
+    </Button>
   );
 };
