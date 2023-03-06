@@ -50,10 +50,14 @@ async def get_deadlines(response: Response, outline_file: UploadFile = File(...)
     """Returns the extracted dates and info from the uploaded file"""
     return file_handler.handle_file(outline_file, response)
 
+
 @app.post("/xlsx")
 async def get_xlsx(semester: List[dict]):
-    """ Returns the generated XLSX file """
+    """Takes as input an array of JSON objects, each containing a course code and list
+    of assessments like in ./data/calendar.json.
+    Returns an XLSX file which is a to-do list for the assessments"""
     return xlsx_handler.get_xlsx_file(semester)
+
 
 if __name__ == "__main__":
     uvicorn.run("app:app", host="127.0.0.1", port=8000)
