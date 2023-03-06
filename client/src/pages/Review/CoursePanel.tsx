@@ -24,7 +24,7 @@ const CoursePanel = ({ course, onChangeAssessment }: CoursePanelProp) => {
 
   return (
     <>
-      <div className="flex flex-col md:flex-row">
+      <div className="hidden md:flex md:flex-row">
         <section className={classnames("w-full md:w-1/2", "p-4")}>
           {(course.hours || course.faculty || course.description) && (
             <CourseInfo
@@ -34,39 +34,8 @@ const CoursePanel = ({ course, onChangeAssessment }: CoursePanelProp) => {
             />
           )}
 
-          <Tabs selectedTab={selectedTab} setSelectedTab={setSelectedTab} />
-
-          <div className="-mx-4">
-            <SwipeableViews
-              index={selectedTab === Tab.Assessments ? 0 : 1}
-              onChangeIndex={(index: number) =>
-                setSelectedTab(index === 0 ? Tab.Assessments : Tab.Document)
-              }
-            >
-              <div className="px-4">
-                <AssessmentsPanel
-                  assessments={course.assessments}
-                  onAssessmentClick={(
-                    assessment: Assessment,
-                    index: number
-                  ) => {
-                    setEditingAssessment({ assessment, index });
-                  }}
-                />
-              </div>
-              <div className="px-4">
-                <DocumentPanel />
-              </div>
-            </SwipeableViews>
-          </div>
-
           {editingAssessment === null ? (
-            <div
-              className={classnames(
-                "w-full",
-                selectedTab === Tab.Document && "hidden md:block"
-              )}
-            >
+            <div className="w-full">
               <AssessmentsPanel
                 assessments={course.assessments}
                 onAssessmentClick={(assessment: Assessment, index: number) => {
@@ -75,11 +44,7 @@ const CoursePanel = ({ course, onChangeAssessment }: CoursePanelProp) => {
               />
             </div>
           ) : (
-            <div
-              className={classnames(
-                selectedTab === Tab.Document && "hidden md:block"
-              )}
-            >
+            <div>
               <EditAssessment
                 assessment={editingAssessment.assessment}
                 onClose={() => setEditingAssessment(null)}
@@ -92,16 +57,44 @@ const CoursePanel = ({ course, onChangeAssessment }: CoursePanelProp) => {
           )}
         </section>
 
-        <section
-          className={classnames(
-            "p-4",
-            "w-full md:w-1/2",
-            selectedTab === Tab.Assessments && "hidden md:block"
-          )}
-        >
+        <section className={classnames("p-4", "w-full md:w-1/2")}>
           <DocumentPanel />
         </section>
       </div>
+
+      {/* Mobile screen */}
+      <section className="md:hidden">
+        {(course.hours || course.faculty || course.description) && (
+          <div className="p-4 pb-2">
+            <CourseInfo
+              hours={course.hours}
+              faculty={course.faculty?.title}
+              description={course.description}
+            />
+          </div>
+        )}
+
+        <Tabs selectedTab={selectedTab} setSelectedTab={setSelectedTab} />
+
+        <SwipeableViews
+          index={selectedTab === Tab.Assessments ? 0 : 1}
+          onChangeIndex={(index: number) =>
+            setSelectedTab(index === 0 ? Tab.Assessments : Tab.Document)
+          }
+        >
+          <div className="p-4">
+            <AssessmentsPanel
+              assessments={course.assessments}
+              onAssessmentClick={(assessment: Assessment, index: number) => {
+                setEditingAssessment({ assessment, index });
+              }}
+            />
+          </div>
+          <div className="p-4">
+            <DocumentPanel />
+          </div>
+        </SwipeableViews>
+      </section>
     </>
   );
 };

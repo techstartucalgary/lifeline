@@ -14,7 +14,7 @@ export enum Tab {
 
 function Tabs({ selectedTab, setSelectedTab }: TabsProps) {
   return (
-    <div className="md:hidden border-b-2">
+    <div className="md:hidden border-b-[1px] border-b-surface-variant">
       <div className="w-full flex flex-row">
         <Button
           className={classnames(
