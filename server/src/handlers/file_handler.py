@@ -125,7 +125,7 @@ def subtract_text(path):
             table_bboxes = [table.bbox for table in page.find_tables()]
             # Remove the text within the table boundaries
             print("The table bbox length of list is", len(table_bboxes))
-            # While there are still table coordinates, continue to crop 
+            # While there are still table coordinates, continue to crop
             if table_bboxes:
                 cropped_text_blocks = []
                 for bbox in table_bboxes:
