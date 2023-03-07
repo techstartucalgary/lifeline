@@ -19,7 +19,7 @@ import AppTopBar, {
 } from "../../components/AppTopBar";
 import CoursePanel from "./CoursePanel";
 import NavigationPanel from "./NavigationPanel";
-import Dropzone from "../../Dev";
+import { useDropzone } from "react-dropzone";
 
 const Review = () => {
   const [courses, setCourses] = useState<Courses>([]);
@@ -28,6 +28,23 @@ const Review = () => {
   const { courseKey: courseKeyURLParam } = useParams<{
     courseKey: string | undefined;
   }>();
+
+  const onDrop = (files: File[]) => {
+    console.log(files);
+  };
+
+  const { getRootProps, getInputProps, isDragActive } = useDropzone({
+    onDrop: useCallback(
+      (acceptedFiles: File[]) => {
+        onDrop(acceptedFiles);
+      },
+      [onDrop]
+    ),
+    accept: {
+      "application/pdf": [".pdf"],
+    },
+    noClick: true,
+  });
 
   const deleteCurrentCourse = () => {
     setCourses(
@@ -125,90 +142,106 @@ const Review = () => {
   };
 
   return (
-    <>
-      <nav
-        className={classnames(
-          "fixed top-0 left-0 w-full md:w-24 xl:w-[17rem] h-full bg-surface",
-          currentCourse && "hidden", // For mobile
-          "md:block z-20"
-        )}
-        ref={navRef}
-      >
-        <NavigationPanel
-          courses={courses}
-          currentCourse={currentCourse}
-          onCourseClick={onCourseClick}
-          onCoursesChanged={onCoursesChanged}
-        />
-      </nav>
-      {currentCourse ? (
-        <>
-          <div className="z-10">
-            <AppTopBar
-              className="max-w-7xl mx-auto"
-              style={{ paddingLeft: mainMarginLeft }}
-            >
-              {/* Icons */}
-              <LeadingNavigation className="block md:hidden">
-                <IconButton
-                  className="text-on-surface"
-                  icon="arrow_back"
-                  onClick={onClickBack}
-                />
-              </LeadingNavigation>
-              <TrailingIcon>
-                <IconButton
-                  className="text-on-surface-variant hidden md:block"
-                  icon="error"
-                />
-                <IconButton
-                  className="text-on-surface-variant hidden md:block"
-                  icon="delete"
-                  onClick={deleteCurrentCourse}
-                />
-                <IconButton
-                  className="text-on-surface-variant block md:hidden"
-                  icon="more_vert"
-                />
-              </TrailingIcon>
-
-              {/* Titles */}
-              <Title>
-                {currentCourse.title} {currentCourse.number}
-              </Title>
-              <Subtitle>{currentCourse.topic}</Subtitle>
-            </AppTopBar>
-          </div>
-
-          <main
-            className={classnames(
-              "max-w-7xl mx-auto relative",
-              mainMarginLeft < 0 && "hidden"
-            )}
-            ref={mainRef}
-            style={{ paddingLeft: mainMarginLeft }}
-          >
-            <CoursePanel
-              course={currentCourse}
-              onChangeAssessment={onChangeAssessment}
-            />
-          </main>
-        </>
-      ) : (
-        <>
-          <div
-            className={classnames(
-              "mx-auto relative h-screen",
-              mainMarginLeft < 0 && "hidden"
-            )}
-            ref={mainRef}
-            style={{ paddingLeft: mainMarginLeft }}
-          >
-            <Dropzone onDrop={(files) => console.log(files)} />
-          </div>
-        </>
+    <div
+      {...getRootProps()}
+      className={classnames(
+        "h-full",
+        "flex flex-col justify-center items-center"
       )}
-    </>
+    >
+      <input {...getInputProps()} disabled={currentCourse !== null} />
+      <>
+        {isDragActive ? (
+          <>Drop the files here ...</>
+        ) : (
+          <>
+            <nav
+              className={classnames(
+                "fixed top-0 left-0 w-full md:w-24 xl:w-[17rem] h-full bg-surface",
+                currentCourse && "hidden", // For mobile
+                "md:block z-20"
+              )}
+              ref={navRef}
+            >
+              <NavigationPanel
+                courses={courses}
+                currentCourse={currentCourse}
+                onCourseClick={onCourseClick}
+                onCoursesChanged={onCoursesChanged}
+              />
+            </nav>
+            {currentCourse ? (
+              <>
+                <div className="z-10">
+                  <AppTopBar
+                    className="max-w-7xl mx-auto"
+                    style={{ paddingLeft: mainMarginLeft }}
+                  >
+                    {/* Icons */}
+                    <LeadingNavigation className="block md:hidden">
+                      <IconButton
+                        className="text-on-surface"
+                        icon="arrow_back"
+                        onClick={onClickBack}
+                      />
+                    </LeadingNavigation>
+                    <TrailingIcon>
+                      <IconButton
+                        className="text-on-surface-variant hidden md:block"
+                        icon="error"
+                      />
+                      <IconButton
+                        className="text-on-surface-variant hidden md:block"
+                        icon="delete"
+                        onClick={deleteCurrentCourse}
+                      />
+                      <IconButton
+                        className="text-on-surface-variant block md:hidden"
+                        icon="more_vert"
+                      />
+                    </TrailingIcon>
+
+                    {/* Titles */}
+                    <Title>
+                      {currentCourse.title} {currentCourse.number}
+                    </Title>
+                    <Subtitle>{currentCourse.topic}</Subtitle>
+                  </AppTopBar>
+                </div>
+
+                <main
+                  className={classnames(
+                    "max-w-7xl mx-auto relative",
+                    mainMarginLeft < 0 && "hidden"
+                  )}
+                  ref={mainRef}
+                  style={{ paddingLeft: mainMarginLeft }}
+                >
+                  <CoursePanel
+                    course={currentCourse}
+                    onChangeAssessment={onChangeAssessment}
+                  />
+                </main>
+              </>
+            ) : (
+              <>
+                <div
+                  className={classnames(
+                    "mx-auto relative h-screen",
+                    mainMarginLeft < 0 && "hidden"
+                  )}
+                  ref={mainRef}
+                  style={{ paddingLeft: mainMarginLeft }}
+                >
+                  <span className="material-symbols-outlined">add</span>
+                  Drag and drop a course outline here
+                </div>
+              </>
+            )}
+          </>
+        )}
+      </>
+    </div>
   );
 };
 
