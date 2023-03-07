@@ -2,11 +2,12 @@ import React, { useCallback } from "react";
 import { useDropzone } from "react-dropzone";
 import { classnames } from "../../Utilities";
 
-interface Props {
+interface DropzoneProps {
   onDrop: (acceptedFiles: File[]) => void;
+  isLoading: boolean;
 }
 
-const Dropzone = ({ onDrop }: Props) => {
+const Dropzone = ({ onDrop, isLoading }: DropzoneProps) => {
   const onDropCallback = useCallback(
     (acceptedFiles: File[]) => {
       onDrop(acceptedFiles);
@@ -19,6 +20,7 @@ const Dropzone = ({ onDrop }: Props) => {
     accept: {
       "application/pdf": [".pdf"],
     },
+    noClick: true,
   });
 
   return (
@@ -27,16 +29,20 @@ const Dropzone = ({ onDrop }: Props) => {
       className={classnames(
         "h-full",
         "flex flex-col justify-center items-center",
-        isDragActive ? "bg-gray-200" : "bg-gray-100"
+        isDragActive && "bg-gray-200"
       )}
     >
       <input {...getInputProps()} />
-      <span className="material-symbols-outlined text-5xl">add</span>
-      <p>
-        {isDragActive
-          ? "Drop the file(s) here..."
-          : "To get started, drag and drop your course outlines here or click \"Add course\""}
-      </p>
+      {!isLoading && (
+        <>
+          <span className="material-symbols-outlined text-5xl">add</span>
+          <p>
+            {isDragActive
+              ? "Drop the file(s) here..."
+              : "To get started, drag and drop your course outlines here or click \"Add course\""}
+          </p>
+        </>
+      )}
     </div>
   );
 };

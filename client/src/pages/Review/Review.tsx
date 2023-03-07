@@ -74,6 +74,7 @@ const Review = () => {
           course.key = `${course.code.toLowerCase()}-${course.number}`;
 
           onCoursesChanged(course);
+          setCurrentCourse(course);
         })
         .catch((error) => {
           console.log(error);
@@ -235,18 +236,19 @@ const Review = () => {
           </main>
         </>
       ) : (
-        <>
-          <div
-            className={classnames(
-              "mx-auto relative h-screen",
-              mainMarginLeft < 0 && "hidden"
-            )}
-            ref={mainRef}
-            style={{ paddingLeft: mainMarginLeft }}
-          >
-            <Dropzone onDrop={(files: File[]) => handleOutlineUpload(files)} />
-          </div>
-        </>
+        <div
+          className={classnames(
+            "mx-auto relative h-screen",
+            mainMarginLeft < 0 && "hidden"
+          )}
+          ref={mainRef}
+          style={{ paddingLeft: mainMarginLeft }}
+        >
+          <Dropzone
+            onDrop={(files: File[]) => handleOutlineUpload(files)}
+            isLoading={loading.length > 0}
+          />
+        </div>
       )}
     </>
   );
