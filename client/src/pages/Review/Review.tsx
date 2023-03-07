@@ -6,6 +6,7 @@ import {
   useCallback,
 } from "react";
 import { useBeforeUnload, useParams } from "react-router-dom";
+import axios from "axios";
 
 import { classnames } from "../../Utilities";
 import { Assessment, Course, Courses, parseCourse } from "../../logic/icsGen";
@@ -22,6 +23,7 @@ import NavigationPanel from "./NavigationPanel";
 import { Dropzone } from "../../components/Dropzone";
 
 const Review = () => {
+  const [loading, setLoading] = useState<string[]>([]);
   const [courses, setCourses] = useState<Courses>([]);
   const [currentCourse, setCurrentCourse] = useState<Course | null>(null);
   const coursesRef = useRef(courses);
@@ -49,6 +51,39 @@ const Review = () => {
     setCourses(newCourses);
     coursesRef.current = newCourses;
   };
+
+  async function handleOutlineUpload(files: File[]) {
+    setLoading(files.map((f: File) => f.name));
+
+    while (files.length > 0) {
+      const file = files.pop();
+
+      const formData = new FormData();
+      formData.append("outline_file", file as File);
+
+      await axios
+        .post("/files", formData, {
+          headers: { "Content-Type": "multipart/form-data" },
+        })
+        .then((res) => res.data)
+        .then((data) => {
+          const course: Course = parseCourse(data);
+          course.code = course.code || "Course";
+          course.number = course.number || courses.length + 1;
+          course.title = course.title || course.code;
+          course.key = `${course.code.toLowerCase()}-${course.number}`;
+
+          onCoursesChanged(course);
+        })
+        .catch((error) => {
+          console.log(error);
+          alert("Error uploading file");
+        })
+        .finally(() => {
+          setLoading((prev) => prev.filter((f) => f !== file?.name));
+        });
+    }
+  }
 
   // For NavigationDrawer adapting in smaller desktop screens
   const navRef = useRef<HTMLDivElement>(null);
@@ -138,7 +173,12 @@ const Review = () => {
           courses={courses}
           currentCourse={currentCourse}
           onCourseClick={onCourseClick}
-          onCoursesChanged={onCoursesChanged}
+          handleOutlineUpload={(e) => {
+            if (!e.target.files) return;
+            const files = Array.from(e.target.files);
+            handleOutlineUpload(files);
+          }}
+          loading={loading}
         />
       </nav>
       {currentCourse ? (
@@ -204,7 +244,7 @@ const Review = () => {
             ref={mainRef}
             style={{ paddingLeft: mainMarginLeft }}
           >
-            <Dropzone onDrop={(files) => console.log(files)} />
+            <Dropzone onDrop={(files: File[]) => handleOutlineUpload(files)} />
           </div>
         </>
       )}
