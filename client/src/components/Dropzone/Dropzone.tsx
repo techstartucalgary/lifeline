@@ -31,11 +31,11 @@ const Dropzone = ({ onDrop }: Props) => {
       )}
     >
       <input {...getInputProps()} />
-      <span className="material-symbols-outlined">add</span>
+      <span className="material-symbols-outlined text-5xl">add</span>
       <p>
         {isDragActive
-          ? "Drop the files here ..."
-          : "Drag and drop some files here, or click to select files"}
+          ? "Drop the file(s) here..."
+          : "To get started, drag and drop your course outlines here or click \"Add course\""}
       </p>
     </div>
   );
