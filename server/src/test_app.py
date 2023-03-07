@@ -53,7 +53,7 @@ def test_bad_file():
     assert response.status_code == 422
 
 
-def future_test_too_large_file():
+def test_too_large_file():
     """Sends a file that is too large to the endpoint and checks that the response is correct"""
     with open("../test-data/too-large.pdf", "rb") as file:
         request_data = {"outline_file": ("CPSC331.pdf", file, "application/pdf")}
