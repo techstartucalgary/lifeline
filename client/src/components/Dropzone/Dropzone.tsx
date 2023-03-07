@@ -1,6 +1,6 @@
 import React, { useCallback } from "react";
 import { useDropzone } from "react-dropzone";
-import { classnames } from "./Utilities";
+import { classnames } from "../../Utilities";
 
 interface Props {
   onDrop: (acceptedFiles: File[]) => void;
