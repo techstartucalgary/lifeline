@@ -19,6 +19,7 @@ import AppTopBar, {
 } from "../../components/AppTopBar";
 import CoursePanel from "./CoursePanel";
 import NavigationPanel from "./NavigationPanel";
+import Dropzone from "../../Dev";
 
 const Review = () => {
   const [courses, setCourses] = useState<Courses>([]);
@@ -140,7 +141,7 @@ const Review = () => {
           onCoursesChanged={onCoursesChanged}
         />
       </nav>
-      {currentCourse && (
+      {currentCourse ? (
         <>
           <div className="z-10">
             <AppTopBar
@@ -192,6 +193,19 @@ const Review = () => {
               onChangeAssessment={onChangeAssessment}
             />
           </main>
+        </>
+      ) : (
+        <>
+          <div
+            className={classnames(
+              "mx-auto relative h-screen",
+              mainMarginLeft < 0 && "hidden"
+            )}
+            ref={mainRef}
+            style={{ paddingLeft: mainMarginLeft }}
+          >
+            <Dropzone onDrop={(files) => console.log(files)} />
+          </div>
         </>
       )}
     </>
