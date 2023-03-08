@@ -1,14 +1,11 @@
+import { Document, Page } from "react-pdf/dist/esm/entry.vite";
 
-const DocumentPanel = () => {
+function PDFViewer({ pdfUrl }: { pdfUrl: string }) {
   return (
-    <>
-      <img
-        src="../pdf.png"
-        alt="the pdf viewer"
-        className="border-x border-y border-dashed border-gray-400 rounded-3xl w-full mt-2"
-      />
-    </>
+    <Document file={pdfUrl}>
+      <Page pageNumber={1} />
+    </Document>
   );
-};
+}
 
-export default DocumentPanel;
+export default PDFViewer;
