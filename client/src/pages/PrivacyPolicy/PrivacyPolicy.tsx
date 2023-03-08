@@ -5,11 +5,10 @@ import Footer from "../../components/Footer";
 export default function Policy() {
   return (
     <>
-      <div className="w-1/2 mx-auto text-on-primary-container h-screen">
-        <NavigationBar />
-
-        <div className="mt-28">
-          <h1 className={classnames("text-4xl", "font-display")}>
+      <div className="text-on-primary-container h-screen flex flex-col">
+        <div className="w-1/2 mx-auto flex-grow">
+          <NavigationBar />
+          <h1 className={classnames("text-4xl", "font-display", "mt-28")}>
             Privacy Policy
           </h1>
           <h3
@@ -46,8 +45,8 @@ export default function Policy() {
             <br />
           </section>
         </div>
+        <Footer />
       </div>
-      <Footer />
     </>
   );
 }

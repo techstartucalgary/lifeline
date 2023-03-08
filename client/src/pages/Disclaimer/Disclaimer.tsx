@@ -5,11 +5,13 @@ import Footer from "../../components/Footer";
 export default function Disclaimer() {
   return (
     <>
-      <div className="w-1/2 mx-auto text-on-primary-container h-screen">
-        <NavigationBar />
+      <div className="text-on-primary-container h-screen flex flex-col">
+        <div className="flex-grow w-1/2 mx-auto">
+          <NavigationBar />
 
-        <div className="mt-28">
-          <h1 className={classnames("text-4xl", "font-display")}>Disclaimer</h1>
+          <h1 className={classnames("text-4xl", "font-display", "mt-28")}>
+            Disclaimer
+          </h1>
           <h3
             className={classnames(
               "text-primary",
@@ -62,8 +64,8 @@ export default function Disclaimer() {
             </p>
           </section>
         </div>
+        <Footer />
       </div>
-      <Footer />
     </>
   );
 }
