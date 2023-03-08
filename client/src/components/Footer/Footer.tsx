@@ -36,7 +36,7 @@ export default function Footer() {
                   </a>
                 </div>
                 <div>
-                  <Link to="/policy">Privacy Policy</Link>
+                  <Link to="/privacy-policy">Privacy Policy</Link>
                 </div>
               </div>
               <div className="col-span-2 sm:col-span-1 space-y-2">

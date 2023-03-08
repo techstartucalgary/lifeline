@@ -37,7 +37,7 @@ function App() {
           <Route path="/app" element={<Review />} />
           <Route path="/app/:courseKey" element={<Review />} />
           <Route path="/disclaimer" element={<Disclaimer />} />
-          <Route path="/policy" element={<PrivacyPolicy />} />
+          <Route path="/privacy-policy" element={<PrivacyPolicy />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
