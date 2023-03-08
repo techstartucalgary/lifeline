@@ -7,7 +7,9 @@ import "./index.css";
 import Landing from "./pages/Landing";
 import Loading from "./pages/Loading";
 import Review from "./pages/Review";
+import Disclaimer from "./pages/Disclaimer";
 import NotFound from "./pages/NotFound";
+import PrivacyPolicy from "./pages/PrivacyPolicy";
 
 const hostname = window.location.hostname;
 const port = window.location.port;
@@ -34,6 +36,8 @@ function App() {
           <Route path="/loading" element={<Loading />} />
           <Route path="/app" element={<Review />} />
           <Route path="/app/:courseKey" element={<Review />} />
+          <Route path="/disclaimer" element={<Disclaimer />} />
+          <Route path="/privacy-policy" element={<PrivacyPolicy />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
