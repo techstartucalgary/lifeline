@@ -26,10 +26,6 @@ button, input[type=text], input[type=button] {
 }
 
 :root {
-  -moz-user-select: none;
-  -webkit-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
   font-size: 14px;
   line-height: 1.43;
   overflow-x: hidden;

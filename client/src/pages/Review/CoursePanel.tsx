@@ -72,7 +72,7 @@ const CoursePanel = ({ course, onChangeAssessment }: CoursePanelProp) => {
             selectedTab === Tab.Assessments && "hidden md:block"
           )}
         >
-          <DocumentPanel pdfUrl="https://arxiv.org/pdf/quant-ph/0410100.pdf" />
+          <DocumentPanel />
         </section>
       </div>
     </>
