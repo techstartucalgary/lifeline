@@ -6,11 +6,17 @@ import "react-pdf/dist/esm/Page/TextLayer.css";
 
 import pdf from "./CPSC331.pdf";
 
-function PDFViewer() {
+export interface PDFViewerProps {
+  file: File;
+}
+
+function PDFViewer({ file }: PDFViewerProps) {
   const [numPages, setNumPages] = useState(0);
+
   return (
     <Document
-      file={pdf}
+      // temp workaround
+      file={file ?? pdf}
       onLoadSuccess={(pdfInfo) => setNumPages(pdfInfo.numPages)}
       onLoadError={(e) => alert(e)}
     >

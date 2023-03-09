@@ -76,7 +76,10 @@ const CoursePanel = ({ course, onChangeAssessment }: CoursePanelProp) => {
             selectedTab === Tab.Assessments && "hidden md:block"
           )}
         >
-          <DocumentPanel />
+          {/* course.file will be assigned at file input handler function */}
+          {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
+          {/* @ts-ignore */}
+          <DocumentPanel file={undefined} />
         </section>
       </div>
     </>
