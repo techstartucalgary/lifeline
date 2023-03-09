@@ -69,6 +69,10 @@ const CoursePanel = ({ course, onChangeAssessment }: CoursePanelProp) => {
           className={classnames(
             "p-4",
             "w-full md:w-1/2",
+            "h-screen",
+            "overflow-y-auto",
+            "overflow-x-hidden",
+            "border-x border-y border-dashed border-gray-400 rounded-3xl w-full mt-2",
             selectedTab === Tab.Assessments && "hidden md:block"
           )}
         >

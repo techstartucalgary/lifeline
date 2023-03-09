@@ -15,7 +15,10 @@ function PDFViewer() {
       onLoadError={(e) => alert(e)}
     >
       {Array.from(new Array(numPages), (el, index) => (
-        <Page key={`page_${index + 1}`} pageNumber={index + 1} />
+        <div key={index}>
+          <Page pageNumber={index + 1} />
+          <hr className="border-2 border-gray-200" />
+        </div>
       ))}
     </Document>
   );
