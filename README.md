@@ -17,8 +17,31 @@
   </h2>
 </div>
 
-<p>Lifeline is here to ensure you stay organized and on top of your schedule, all through a fast and easy process. Say goodbye to the stress of managing important dates yourself and discover a better way.</p>
+## Description :date:
 
-_Lifeline uses AI to extract and organize deadlines from your course documents for you to download._
+**A better way to organize deadlines** Lifeline takes the stress out of managing important dates and tasks for your courses. 
 
-# **[Try it out here](https://lifeline.techstartucalgary.com)**
+In just a few clicks, **compile your deadlines** from your **course outlines** :page_facing_up:, as well as other related tasks, into **calendar reminders :alarm_clock:** and **productivity trackers :chart_with_upwards_trend:.** 
+
+## Key Features :bulb:
+
+-   :calendar: **JSON to ICal** 
+Converts your deadline data into Ical files, which are industry standard for integration into your favourite calendar!
+
+- :clock130:  **Saves you time** 
+Lifeline processes your PDFs and creates calendar reminders for each through our in-house algorithm and natural language processing!
+
+- :white_check_mark: **Less errors** 
+Save your energy for more important tasks! Scan through the automatically generated reminders and edit only the ones that are not right. 
+
+- :green_book:  **Export deadlines to productivity tools** 
+ Lifeline automates the process of data-entry and places them into an excel productivity tool
+
+## Getting Started :rocket:
+
+1. Head over to https://lifeline.techstartucalgary.com/
+2. Click get started
+3. Upload a course syllabus
+4. Edit/Add your deadline information
+5. Go back to step 2 if needed
+6. Export your deadlines to an ICal file or Excel Productivity Tracker
