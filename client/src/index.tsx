@@ -26,7 +26,7 @@ if (hostname === "localhost" || hostname === "127.0.0.1" || port === "3000") {
 axios.defaults.withCredentials = false;
 axios.defaults.timeout = 30000;
 
-function App() {
+const App = () => {
   return (
     <>
       <BrowserRouter>
@@ -43,7 +43,7 @@ function App() {
       </BrowserRouter>
     </>
   );
-}
+};
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>

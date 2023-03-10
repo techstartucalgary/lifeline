@@ -11,8 +11,8 @@ import jsonToICS, { Course, Courses } from "../../logic/icsGen";
 
 import symbols from "./symbols";
 
-const generateIcon = (course_key: string) =>
-  symbols[course_key] || symbols["default"];
+const generateIcon = (courseKey: string) =>
+  symbols[courseKey] || symbols["default"];
 
 interface NavigationPanelProps {
   courses: Courses;

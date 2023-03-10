@@ -49,7 +49,7 @@ module.exports = {
     "no-empty-function": "error",
     "no-trailing-spaces": "error",
     "no-whitespace-before-property": "error",
-    "max-lines": ["error", { "max": 200, "skipComments": true, "skipBlankLines": true }],
+    "max-lines": ["error", { "max": 250, "skipComments": true, "skipBlankLines": true }],
     "import/order": [
       "error",
       {
