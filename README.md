@@ -18,24 +18,22 @@
 
 ## Description :date:
 
-Lifeline takes the stress out of managing important deadlines for your courses.
-
-In just a few clicks, **compile your deadlines** from your **course outlines** :page_facing_up:, into **calendar reminders :alarm_clock:** and a **spreadsheet to-do list :chart_with_upwards_trend:.**
+Lifeline takes the stress out of managing important deadlines for your courses. In just a few clicks, **compile your deadlines** from your **course outlines** :page_facing_up:, into **calendar reminders :alarm_clock:** and a **spreadsheet to-do list :chart_with_upwards_trend:.**
 
 ## Key Features :bulb:
 
 - :calendar: **PDF &rarr; iCal** <br>
-  Converts your deadline data into iCal files, which are industry standard for integration into your favourite calendar!
+  Converts your deadline data into iCal files, which easily integrates with all major digital calendars.
 
 - :green_book: **PDF &rarr; XLSX** <br>
-  Lifeline automates the process of data-entry and places your deadlines into an Excel productivity tool
+  Lifeline automates the process of data-entry and places your deadlines into an Excel productivity tool.
 
-## Advantages :thumbs_up\*\*
+## Advantages 👍
 
-- :clock130: **Saves you time** <br>
+- 🕜 **Saves you time** <br>
   Lifeline's in-house algorithm takes seconds to scan your course outlines, so you can save your energy for more important tasks!
 
-- :green_check_mark: #**Less errors** <br>
+- ✅ **Less errors** <br>
   Manually edit any deadlines that we got wrong with an intuitive process.
 
 ## Getting Started :rocket:
