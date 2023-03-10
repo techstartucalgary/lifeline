@@ -40,7 +40,11 @@ const CoursePanel = ({
   return (
     <>
       <div className="z-10">
-        <AppTopBar className="max-w-9xl mx-auto" style={{ paddingLeft: left }} variant="large">
+        <AppTopBar
+          className="max-w-9xl mx-auto"
+          style={{ paddingLeft: left }}
+          variant="large"
+        >
           {/* Icons */}
           <LeadingNavigation className="block md:hidden">
             <IconButton
@@ -126,10 +130,7 @@ const CoursePanel = ({
             selectedTab === Tab.Assessments && "hidden md:block"
           )}
         >
-          {/* course.file will be assigned at file input handler function */}
-          {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
-          {/* @ts-ignore */}
-          <DocumentPanel file={undefined} />
+          {course.file && <DocumentPanel file={course.file} />}
         </section>
       </div>
     </>

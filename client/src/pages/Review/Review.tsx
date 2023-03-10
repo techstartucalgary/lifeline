@@ -55,6 +55,7 @@ const Review = () => {
 
     while (files.length > 0) {
       const file = files.pop();
+      if (!file) continue;
 
       const formData = new FormData();
       formData.append("outline_file", file as File);
@@ -70,6 +71,7 @@ const Review = () => {
           course.number = course.number || courses.length + 1;
           course.title = course.title || course.code;
           course.key = `${course.code.toLowerCase()}-${course.number}`;
+          course.file = file;
 
           onCoursesChanged(course);
           setCurrentCourse(course);
