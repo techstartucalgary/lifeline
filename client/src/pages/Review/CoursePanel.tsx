@@ -121,7 +121,7 @@ const CoursePanel = ({
 
         <section
           className={classnames(
-            "p-4",
+            "p-4 mr-2",
             "w-full md:w-1/2",
             "h-screen",
             "overflow-y-auto",
@@ -130,7 +130,11 @@ const CoursePanel = ({
             selectedTab === Tab.Assessments && "hidden md:block"
           )}
         >
-          {course.file && <DocumentPanel file={course.file} />}
+          {course.file ? (
+            <DocumentPanel file={course.file} />
+          ) : (
+            <p>File not found</p>
+          )}
         </section>
       </div>
     </>
