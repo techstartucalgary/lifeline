@@ -1,13 +1,28 @@
+import { SetStateAction, useState } from "react";
+import { Document, Page } from "react-pdf/dist/esm/entry.vite";
+import "react-pdf/dist/esm/Page/AnnotationLayer.css";
+import "react-pdf/dist/esm/Page/TextLayer.css";
 
-const DocumentPanel = () => {
+export interface DocumentPanelProps {
+  file: File;
+}
+
+const DocumentPanel = ({ file }: DocumentPanelProps) => {
+  const [numPages, setNumPages] = useState(0);
+
   return (
-    <>
-      <img
-        src="../pdf.png"
-        alt="the pdf viewer"
-        className="border-x border-y border-dashed border-gray-400 rounded-3xl w-full mt-2"
-      />
-    </>
+    <Document
+      file={file}
+      onLoadSuccess={(pdfInfo: { numPages: SetStateAction<number>; }) => setNumPages(pdfInfo.numPages)}
+      onLoadError={(e: unknown) => alert(e)}
+    >
+      {Array.from(new Array(numPages), (el, index) => (
+        <div key={index}>
+          <Page pageNumber={index + 1} />
+          <hr className="border-2 border-gray-200" />
+        </div>
+      ))}
+    </Document>
   );
 };
 

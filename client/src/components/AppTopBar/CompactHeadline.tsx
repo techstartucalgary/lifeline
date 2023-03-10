@@ -17,7 +17,7 @@ const CompactHeadline = forwardRef<HTMLDivElement, CompactHeadlineProp>(
   (
     { title, titleClassName, leadingNavigation, trailingIcon, elevation = true, elevationClassName, ...args }: CompactHeadlineProp,
     ref: ForwardedRef<HTMLDivElement>
-  ) => { 
+  ) => {
     return (
       <div className="fixed top-0 left-0 right-0 h-fit z-10" ref={ref}>
         <div className="relative">
@@ -45,11 +45,11 @@ const CompactHeadline = forwardRef<HTMLDivElement, CompactHeadlineProp>(
               </div>
             </div>
           </div>
-        
+
           {elevation &&
             <div
               className={classnames(
-                "opacity-0 bg-primary/8 absolute -top-full left-0 right-0 bottom-0", 
+                "opacity-0 bg-primary/8 absolute -top-full left-0 right-0 bottom-0",
                 "transition-all pointer-events-none z-0",
                 "md:ease-emphasized ease-emphasized-decelerate",
                 "duration-1000 md:duration-200",

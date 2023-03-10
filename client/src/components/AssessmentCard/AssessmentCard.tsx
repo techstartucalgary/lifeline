@@ -1,6 +1,7 @@
+import { classnames } from "../../Utilities";
 import { Assessment } from "../../logic/icsGen";
 import { Button } from "../Button";
-import { classnames } from "../../Utilities";
+
 import blob from "./blob.svg";
 
 interface AssessmentCardProps {
