@@ -45,3 +45,13 @@ Lifeline takes the stress out of managing important deadlines for your courses. 
 5. Go back to step 3 if needed
 6. Export your deadlines to an iCal file and/or Excel Productivity Tracker
 7. Never miss a deadline!
+
+## [Contributors](https://github.com/techstartucalgary/lifeline/graphs/contributors)
+- [Tim Macphail](https://github.com/tim-macphail)
+- [Yunfan Yang](https://github.com/cloudyyoung)
+- [Bradley Li](https://github.com/BradleyLi)
+- [Harsweet Singh](https://github.com/harsweet)
+- [Jaza Khan](https://github.com/jaza-k)
+- [Amrit Mahendrarajah](https://github.com/skilledd007)
+- [Kevin Amado](https://github.com/kamadorueda)
+- [Hilton Luu](https://github.com/HiltonLuu)
