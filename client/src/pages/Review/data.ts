@@ -7,6 +7,7 @@ const testState: Courses = [
     title: "Psychology",
     key: "psyc-203",
     topic: "Psychology of Everyday Life",
+    file: new File([], ""),
     assessments: [
       {
         name: "Identity Assignment",

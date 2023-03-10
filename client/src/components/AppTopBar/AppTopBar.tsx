@@ -1,3 +1,4 @@
+import useScrollPosition from "@react-hook/window-scroll";
 import {
   HTMLAttributes,
   ReactElement,
@@ -5,7 +6,8 @@ import {
   useRef,
   useLayoutEffect,
 } from "react";
-import useScrollPosition from "@react-hook/window-scroll";
+
+import { classnames } from "../../Utilities";
 
 import CompactHeadline from "./CompactHeadline";
 import Headline from "./Headline";
@@ -19,7 +21,6 @@ import {
   Subtitle,
   SubtitleProp,
 } from "./Subcomponents";
-import { classnames } from "../../Utilities";
 
 interface AppTopBarProps extends HTMLAttributes<HTMLDivElement> {
   elevation?: boolean;
@@ -46,16 +47,16 @@ const AppTopBar = ({
 
   // Find elements in children
   const leadingNavigation = children.find(
-    (child) => child != undefined && child.type === LeadingNavigation
+    (child) => child !== undefined && child.type === LeadingNavigation
   );
   const trailingIcon = children.find(
-    (child) => child != undefined && child.type === TrailingIcon
+    (child) => child !== undefined && child.type === TrailingIcon
   );
   const title = children.find(
-    (child) => child != undefined && child.type === Title
+    (child) => child !== undefined && child.type === Title
   );
   const subtitle = children.find(
-    (child) => child != undefined && child.type === Subtitle
+    (child) => child !== undefined && child.type === Subtitle
   );
 
   // For scrolling
@@ -77,6 +78,7 @@ const AppTopBar = ({
     onTopbarHeight();
     window.addEventListener("resize", onTopbarHeight);
     return () => window.removeEventListener("resize", onTopbarHeight);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [compactHeadlineRef.current, headlineRef.current]);
 
   return (

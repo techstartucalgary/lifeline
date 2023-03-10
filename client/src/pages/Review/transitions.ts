@@ -42,6 +42,6 @@ const variants = {
 // restore `fixed` elements layout, because `fixed` elements are no
 // longer fixed if parent element has `transform`s applied.
 const transformTemplate = ({ x }: never) =>
-  parseFloat(String(x)) === 0.0 ? "none" : `translateX(${x})`;
+  (parseFloat(String(x)) === 0.0 ? "none" : `translateX(${x})`);
 
 export { variants, transformTemplate };

@@ -1,16 +1,18 @@
 import { useRef } from "react";
+
+import { classnames } from "../../Utilities";
+import AppTopBar from "../../components/AppTopBar/AppTopBar";
+import { Button, IconButton } from "../../components/Button";
 import List from "../../components/List";
 import NavigationDrawer from "../../components/NavigationDrawer";
-import jsonToICS, { Course, Courses } from "../../logic/icsGen";
-import { classnames } from "../../Utilities";
-import ProgressIndicator from "../../components/ProgressIndicator";
-import { Button, IconButton } from "../../components/Button";
-import AppTopBar from "../../components/AppTopBar/AppTopBar";
 import NavigationRail from "../../components/NavigationRail";
+import ProgressIndicator from "../../components/ProgressIndicator";
+import jsonToICS, { Course, Courses } from "../../logic/icsGen";
+
 import symbols from "./symbols";
 
-const generateIcon = (course_key: string) =>
-  symbols[course_key] || symbols["default"];
+const generateIcon = (courseKey: string) =>
+  symbols[courseKey] || symbols["default"];
 
 interface NavigationPanelProps {
   courses: Courses;

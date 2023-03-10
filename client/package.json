@@ -39,7 +39,7 @@
     "start": "vite --host --port 3000",
     "build": "vite build --out-dir build",
     "check-lint": "eslint . --ext .js,.jsx,.ts,.tsx --max-warnings 0 --ignore-path ../.gitignore && tsc --noEmit",
-    "lint": "eslint . --ext .js,.jsx,.ts,.tsx --fix",
+    "lint": "eslint . --fix --ext .js,.jsx,.ts,.tsx --max-warnings 0 --ignore-path ../.gitignore && tsc --noEmit",
     "eject": "react-scripts eject"
   },
   "browserslist": {

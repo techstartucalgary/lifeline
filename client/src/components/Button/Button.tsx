@@ -138,7 +138,7 @@ const Button = ({
 
       if (props.onMouseDown) props.onMouseDown(event);
     },
-    [color, props, rippleQueue, variant]
+    [color, props, ripple, rippleQueue, variant]
   );
 
   const onUnpersistRipple = useCallback(() => {

@@ -1,5 +1,6 @@
-import { classnames } from "../../Utilities";
 import { Link } from "react-router-dom";
+
+import { classnames } from "../../Utilities";
 
 export default function Footer() {
   return (

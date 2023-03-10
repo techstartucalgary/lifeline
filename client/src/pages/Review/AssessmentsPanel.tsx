@@ -22,7 +22,7 @@ const AssessmentsPanel = ({
           "w-full justify-between items-center py-4 mb-3"
         )}
       >
-        <img src={divider} className="w-full" />
+        <img src={divider} className="w-full" aria-hidden alt="divider" />
         <Button
           variant="tonal"
           className={classnames(

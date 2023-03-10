@@ -1,6 +1,8 @@
 import { HTMLAttributes } from "react";
-import ListItem from "./ListItem";
+
 import { classnames } from "../../Utilities";
+
+import ListItem from "./ListItem";
 
 type ListProps = HTMLAttributes<HTMLDivElement>;
 

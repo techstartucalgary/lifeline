@@ -1,3 +1,6 @@
+/* eslint-disable no-restricted-globals */
+import axios from "axios";
+import { AnimatePresence, motion } from "framer-motion";
 import {
   useState,
   useEffect,
@@ -6,16 +9,13 @@ import {
   useCallback,
 } from "react";
 import { useBeforeUnload, useParams } from "react-router-dom";
-import axios from "axios";
-import { AnimatePresence, motion } from "framer-motion";
 
 import { useBreakpoint } from "../../Utilities";
+import { Dropzone } from "../../components/Dropzone";
 import { Assessment, Course, Courses, parseCourse } from "../../logic/icsGen";
 
 import CoursePanel from "./CoursePanel";
 import NavigationPanel from "./NavigationPanel";
-import { Dropzone } from "../../components/Dropzone";
-
 import { transformTemplate, variants } from "./transitions";
 
 const Review = () => {
@@ -50,7 +50,7 @@ const Review = () => {
     coursesRef.current = newCourses;
   };
 
-  async function onOutlineUpload(files: File[]) {
+  const onOutlineUpload = async (files: File[]) => {
     setLoading(files.map((f: File) => f.name));
 
     while (files.length > 0) {
@@ -84,7 +84,7 @@ const Review = () => {
           setLoading((prev) => prev.filter((f) => f !== file?.name));
         });
     }
-  }
+  };
 
   // For NavigationDrawer adapting in smaller desktop screens
   const navRef = useRef<HTMLDivElement>(null);
@@ -103,6 +103,7 @@ const Review = () => {
     onMainMarginLeft();
     window.addEventListener("resize", onMainMarginLeft);
     return () => window.removeEventListener("resize", onMainMarginLeft);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [navRef.current, mainRef.current, currentCourse, breakpoint]);
 
   useEffect(() => {
@@ -124,7 +125,7 @@ const Review = () => {
         setCurrentCourse(course);
       }
     }
-  }, []);
+  }, [courseKeyURLParam]);
 
   useBeforeUnload(
     useCallback(() => {

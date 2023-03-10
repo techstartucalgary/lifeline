@@ -1,17 +1,17 @@
 import { useState } from "react";
 
 import { classnames } from "../../Utilities";
-import CourseInfo from "../../components/CourseInfo";
-import Tabs, { Tab } from "../../components/Tabs";
-import { Assessment, Course } from "../../logic/icsGen";
-import EditAssessment from "../../components/EditAssessment";
-import { IconButton } from "../../components/Button";
 import AppTopBar, {
   LeadingNavigation,
   TrailingIcon,
   Title,
   Subtitle,
 } from "../../components/AppTopBar";
+import { IconButton } from "../../components/Button";
+import CourseInfo from "../../components/CourseInfo";
+import EditAssessment from "../../components/EditAssessment";
+import Tabs, { Tab } from "../../components/Tabs";
+import { Assessment, Course } from "../../logic/icsGen";
 
 import AssessmentsPanel from "./AssessmentsPanel";
 import DocumentPanel from "./DocumentPanel";

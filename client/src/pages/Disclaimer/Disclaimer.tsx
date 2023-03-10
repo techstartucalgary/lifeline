@@ -1,6 +1,6 @@
-import NavigationBar from "../../components/NavigationBar";
 import { classnames } from "../../Utilities";
 import Footer from "../../components/Footer";
+import NavigationBar from "../../components/NavigationBar";
 
 export default function Disclaimer() {
   return (
