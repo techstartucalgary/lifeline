@@ -18,25 +18,32 @@
 
 ## Description :date:
 
-**A better way to organize deadlines** Lifeline takes the stress out of managing important dates and tasks for your courses.
+Lifeline takes the stress out of managing important deadlines for your courses.
 
-In just a few clicks, **compile your deadlines** from your **course outlines** :page_facing_up:, as well as other related tasks, into **calendar reminders :alarm_clock:** and **productivity trackers :chart_with_upwards_trend:.**
+In just a few clicks, **compile your deadlines** from your **course outlines** :page_facing_up:, into **calendar reminders :alarm_clock:** and a **spreadsheet to-do list :chart_with_upwards_trend:.**
 
 ## Key Features :bulb:
 
-- :calendar: **JSON to iCal** <br>Converts your deadline data into iCal files, which are industry standard for <br>integration into your favourite calendar!
+- :calendar: **PDF &rarr; iCal** <br>
+  Converts your deadline data into iCal files, which are industry standard for integration into your favourite calendar!
 
-- :clock130: **Saves you time** <br>Lifeline processes your PDFs and creates calendar reminders for each through our in-house<br> algorithm and natural language processing!
+- :green_book: **PDF &rarr; XLSX** <br>
+  Lifeline automates the process of data-entry and places your deadlines into an Excel productivity tool
 
-- :white_check_mark: **Less errors** <br>Save your energy for more important tasks! Scan through the automatically <br>generated reminders and edit only the ones that are not right.
+## Advantages :thumbs_up\*\*
 
-- :green_book: **Export deadlines to productivity tools** <br>Lifeline automates the process of data-entry and places them into an excel productivity tool
+- :clock130: **Saves you time** <br>
+  Lifeline's in-house algorithm takes seconds to scan your course outlines, so you can save your energy for more important tasks!
+
+- :green_check_mark: #**Less errors** <br>
+  Manually edit any deadlines that we got wrong with an intuitive process.
 
 ## Getting Started :rocket:
 
 1. Head over to https://lifeline.techstartucalgary.com/
 2. Click get started
 3. Upload a course syllabus
-4. Edit/Add your deadline information
+4. Edit your deadline information
 5. Go back to step 3 if needed
-6. Export your deadlines to an iCal file or Excel Productivity Tracker
+6. Export your deadlines to an iCal file and/or Excel Productivity Tracker
+7. Never miss a deadline!
