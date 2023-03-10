@@ -4,7 +4,7 @@ import json
 from fastapi.testclient import TestClient
 from handlers import calendar_handler
 
-from app import app
+from server.src.main import app
 
 EXPECTEDCALENDARJSON = None
 with open("data/calendar.json", encoding="utf8") as stream:
