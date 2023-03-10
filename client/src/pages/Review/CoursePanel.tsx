@@ -40,8 +40,7 @@ const CoursePanel = ({
 
   return (
     <>
-      <div className="hidden md:flex md:flex-row">
-        <div className="z-10">
+      <div className="z-10">
         <AppTopBar
           className="max-w-9xl mx-auto"
           style={{ paddingLeft: left }}
@@ -79,7 +78,7 @@ const CoursePanel = ({
         </AppTopBar>
       </div>
 
-      <div className="flex flex-col md:flex-row" style={{ paddingLeft: left }}>
+      <div className="hidden md:flex md:flex-row" style={{ paddingLeft: left }}>
         <section className={classnames("w-full md:w-1/2", "p-4")}>
           {(course.hours || course.faculty || course.description) && (
             <CourseInfo
@@ -132,7 +131,7 @@ const CoursePanel = ({
       </div>
 
       {/* Mobile screen */}
-      <section className="md:hidden">
+      <div className="md:hidden">
         {(course.hours || course.faculty || course.description) && (
           <div className="p-4 pb-2">
             <CourseInfo
@@ -163,7 +162,7 @@ const CoursePanel = ({
             <DocumentPanel file={course.file} />
           </div>
         </SwipeableViews>
-      </section>
+      </div>
     </>
   );
 };
