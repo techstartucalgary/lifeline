@@ -32,12 +32,13 @@ const CoursePanel = ({
   onClickBack,
   onDeleteCourse,
 }: CoursePanelProp) => {
-  const [selectedTab, setSelectedTab] = useState<Tab>(Tab.Assessments);
+  const tabs: Tab[] = [{ name: "Assessments" }, { name: "Document" }];
+
+  const [selectedTab, setSelectedTab] = useState<number>(0);
   const [editingAssessment, setEditingAssessment] = useState<{
     assessment: Assessment;
     index: number;
   } | null>(null);
-
   return (
     <>
       <div className="z-10">
@@ -118,8 +119,7 @@ const CoursePanel = ({
             "h-screen",
             "overflow-y-auto",
             "overflow-x-hidden",
-            "border-x border-y border-dashed border-gray-400 rounded-3xl w-full mt-2",
-            selectedTab === Tab.Assessments && "hidden md:block"
+            "border-x border-y border-dashed border-gray-400 rounded-3xl w-full mt-2"
           )}
         >
           {course.file ? (
@@ -142,12 +142,16 @@ const CoursePanel = ({
           </div>
         )}
 
-        <Tabs selectedTab={selectedTab} setSelectedTab={setSelectedTab} />
+        <Tabs
+          tabs={tabs}
+          tab={tabs[selectedTab]}
+          onChangeTab={(_, index) => setSelectedTab(index)}
+        />
 
         <SwipeableViews
-          index={selectedTab === Tab.Assessments ? 0 : 1}
+          index={selectedTab}
           onChangeIndex={(index: number) =>
-            setSelectedTab(index === 0 ? Tab.Assessments : Tab.Document)
+            setTimeout(() => setSelectedTab(index), 50)
           }
         >
           <div className="p-4">

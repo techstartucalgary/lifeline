@@ -1,60 +1,38 @@
 import { classnames } from "../../Utilities";
 import { Button } from "../Button";
 
-export interface TabsProps {
-  selectedTab: Tab;
-  setSelectedTab: (tab: Tab) => void;
+type Tab = {
+  name: string;
+};
+
+interface TabsProps {
+  tabs: Tab[];
+  tab: Tab;
+  onChangeTab?: (item: Tab, index: number) => void;
 }
 
-// Enum for the tabs
-export enum Tab {
-  Assessments,
-  Document,
-}
-
-const Tabs = ({ selectedTab, setSelectedTab }: TabsProps) => {
+const Tabs = ({ tabs, tab, onChangeTab = () => null }: TabsProps) => {
   return (
     <div className="md:hidden border-b-[1px] border-b-surface-variant">
       <div className="w-full flex flex-row">
-        <Button
-          className={classnames(
-            "w-full p-2",
-            "justify-center",
-            "text-on-surface-variant",
-            selectedTab === Tab.Assessments && "text-primary"
-          )}
-          onClick={() => setSelectedTab(Tab.Assessments)}
-        >
-          Assessments
-        </Button>
-        <Button
-          className={classnames(
-            "w-full p-2",
-            "justify-center",
-            "text-on-surface-variant",
-            selectedTab === Tab.Document && "text-primary"
-          )}
-          onClick={() => setSelectedTab(Tab.Document)}
-        >
-          Document
-        </Button>
-      </div>
-      <div className="w-full flex flex-row justify-around">
-        <div
-          className={classnames(
-            "w-24 h-1 rounded-t-lg",
-            selectedTab === Tab.Assessments && "bg-primary"
-          )}
-        />
-        <div
-          className={classnames(
-            "w-24 h-1 rounded-t-lg",
-            selectedTab === Tab.Document && "bg-primary"
-          )}
-        />
+        {tabs.map((item, index) => (
+          <Button
+            key={index}
+            className={classnames(
+              "w-full p-4",
+              "justify-center",
+              "text-on-surface-variant",
+              tab === item && "text-primary"
+            )}
+            onClick={() => onChangeTab(item, index)}
+          >
+            {item.name}
+          </Button>
+        ))}
       </div>
     </div>
   );
 };
 
 export default Tabs;
+export type { TabsProps, Tab };
