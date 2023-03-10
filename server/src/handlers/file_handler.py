@@ -111,6 +111,29 @@ def read_tables(pdf: pdfplumber.pdf.PDF) -> List[List[List[Optional[str]]]]:
     print("Found", len(tables), "tables")
     return tables
 
+def subtract_text(path):
+    """Returns all plain text contained within pdf with the exception of the tables"""
+    # Extract the text on the page
+    with pdfplumber.open(path) as pdf:
+        full_text = ""
+        for page in pdf.pages:
+            page_text = page.extract_text()
+            if not page_text:
+                continue
+            full_text += page_text + "\n"
+            # Extract the table boundaries
+            table_bboxes = [table.bbox for table in page.find_tables()]
+            # Remove the text within the table boundaries
+            print("The table bbox length of list is", len(table_bboxes))
+            # While there are still table coordinates, continue to crop
+            if table_bboxes:
+                cropped_text_blocks = []
+                for bbox in table_bboxes:
+                    cropped_text_blocks.append(page.crop(bbox).extract_text() + "\n")
+                    for text_block in cropped_text_blocks:
+                        full_text = full_text.replace(text_block, "")
+    return full_text
+
 
 def extract_assessments(table: List[List[Optional[str]]]) -> List[Dict]:
     """Returns the assessments in a table by identifying a date
