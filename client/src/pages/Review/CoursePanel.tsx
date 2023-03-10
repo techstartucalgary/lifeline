@@ -40,7 +40,11 @@ const CoursePanel = ({
   return (
     <>
       <div className="z-10">
-        <AppTopBar className="max-w-9xl mx-auto" style={{ paddingLeft: left }} variant="large">
+        <AppTopBar
+          className="max-w-9xl mx-auto"
+          style={{ paddingLeft: left }}
+          variant="large"
+        >
           {/* Icons */}
           <LeadingNavigation className="block md:hidden">
             <IconButton
@@ -117,12 +121,20 @@ const CoursePanel = ({
 
         <section
           className={classnames(
-            "p-4",
+            "p-4 mr-2",
             "w-full md:w-1/2",
+            "h-screen",
+            "overflow-y-auto",
+            "overflow-x-hidden",
+            "border-x border-y border-dashed border-gray-400 rounded-3xl w-full mt-2",
             selectedTab === Tab.Assessments && "hidden md:block"
           )}
         >
-          <DocumentPanel />
+          {course.file ? (
+            <DocumentPanel file={course.file} />
+          ) : (
+            <p>File not found</p>
+          )}
         </section>
       </div>
     </>
