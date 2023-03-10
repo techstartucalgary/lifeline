@@ -4,8 +4,6 @@ import { Document, Page } from "react-pdf/dist/esm/entry.vite";
 import "react-pdf/dist/esm/Page/AnnotationLayer.css";
 import "react-pdf/dist/esm/Page/TextLayer.css";
 
-import pdf from "./CPSC331.pdf";
-
 export interface PDFViewerProps {
   file: File;
 }
@@ -16,7 +14,7 @@ function PDFViewer({ file }: PDFViewerProps) {
   return (
     <Document
       // temp workaround
-      file={file ?? pdf}
+      file={file}
       onLoadSuccess={(pdfInfo) => setNumPages(pdfInfo.numPages)}
       onLoadError={(e) => alert(e)}
     >
