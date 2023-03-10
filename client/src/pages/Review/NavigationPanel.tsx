@@ -16,7 +16,7 @@ interface NavigationPanelProps {
   courses: Courses;
   currentCourse: Course | null;
   onCourseClick(course: Course | null): void;
-  handleOutlineUpload(e: React.ChangeEvent<HTMLInputElement>): void;
+  onOutlineUpload(e: React.ChangeEvent<HTMLInputElement>): void;
   loading: string[];
 }
 
@@ -24,7 +24,7 @@ const NavigationPanel = ({
   courses,
   currentCourse,
   onCourseClick,
-  handleOutlineUpload,
+  onOutlineUpload,
   loading,
 }: NavigationPanelProps) => {
   const inputRef = useRef<HTMLInputElement>(null);
@@ -46,7 +46,7 @@ const NavigationPanel = ({
           type="file"
           accept=".pdf"
           multiple
-          onChange={handleOutlineUpload}
+          onChange={onOutlineUpload}
           className="hidden"
           aria-hidden
         />

@@ -52,7 +52,7 @@ const Review = () => {
     coursesRef.current = newCourses;
   };
 
-  async function handleOutlineUpload(files: File[]) {
+  async function onOutlineUpload(files: File[]) {
     setLoading(files.map((f: File) => f.name));
 
     while (files.length > 0) {
@@ -174,10 +174,10 @@ const Review = () => {
           courses={courses}
           currentCourse={currentCourse}
           onCourseClick={onCourseClick}
-          handleOutlineUpload={(e) => {
+          onOutlineUpload={(e) => {
             if (!e.target.files) return;
             const files = Array.from(e.target.files);
-            handleOutlineUpload(files);
+            onOutlineUpload(files);
           }}
           loading={loading}
         />
@@ -245,7 +245,7 @@ const Review = () => {
           style={{ paddingLeft: mainMarginLeft }}
         >
           <Dropzone
-            onDrop={(files: File[]) => handleOutlineUpload(files)}
+            onDrop={(files: File[]) => onOutlineUpload(files)}
             isLoading={loading.length > 0}
           />
         </div>
