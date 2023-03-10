@@ -14,8 +14,8 @@
       "sizes": "192x192"
     }
   ],
-  "start_url": ".",
+  "start_url": "./app",
   "display": "standalone",
-  "theme_color": "#B7194A",
-  "background_color": "#ffffff"
+  "theme_color": "#FFFBFF",
+  "background_color": "#FFFBFF"
 }

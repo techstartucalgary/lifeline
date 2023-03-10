@@ -1,19 +1,20 @@
+/* eslint-disable max-lines */
 import { useEffect } from "react";
 
 import { classnames } from "../../Utilities";
-import Button from "../../components/Button";
+import { Button } from "../../components/Button";
+import Footer from "../../components/Footer";
 import NavigationBar from "../../components/NavigationBar";
 
-import wfh1 from "./wfh_1.svg";
-import wfh7 from "./wfh_7.svg";
-import wfh8 from "./wfh_8.svg";
+import styles from "./Landing.module.css";
 import blob1 from "./blob1.svg";
 import blob2 from "./blob2.svg";
 import blob3 from "./blob3.svg";
 import blob4 from "./blob4.svg";
 import divider from "./divider.svg";
-
-import styles from "./Landing.module.css";
+import wfh1 from "./wfh_1.svg";
+import wfh7 from "./wfh_7.svg";
+import wfh8 from "./wfh_8.svg";
 
 const FlowStep = (
   {
@@ -52,7 +53,7 @@ export default function Landing() {
 
   return (
     <>
-      <div className="font-display max-w-7xl mx-auto px-5 sm:px-14 md:px-16 lg:px-20 relative">
+      <div className="max-w-7xl mx-auto px-5 sm:px-14 md:px-16 lg:px-20 relative">
         <NavigationBar />
 
         {/* Hero section */}
@@ -75,7 +76,7 @@ export default function Landing() {
             )}
           >
             <div className="flex flex-col">
-              <div className={classnames("font-bold tracking-[-0.075rem] sm:tracking-[-0.1rem]", "text-3xl sm:text-4xl md:text-5xl xl:text-6xl")}>
+              <div className={classnames("font-bold font-headline tracking-[-0.075rem] sm:tracking-[-0.1rem]", "text-3xl sm:text-4xl md:text-5xl xl:text-6xl")}>
                 <div className="sm:whitespace-nowrap text-on-surface">A better way to </div>
                 <div
                   className={classnames(
@@ -103,7 +104,7 @@ export default function Landing() {
                   "sm:justify-center lg:justify-start"
                 )}
               >
-                <Button to="/upload" variant="filled" className="py-5 px-7 hidden sm:block mr-2">Get Started</Button>
+                <Button to="/app" variant="filled" className="py-5 px-7 hidden sm:block mr-2">Get Started</Button>
                 <Button to="/workflow" variant="text" className="py-5 px-4 -ml-4 -mt-6 sm:ml-0 sm:mt-0">Learn more</Button>
               </div>
             </div>
@@ -186,7 +187,7 @@ export default function Landing() {
             </div>
           </div>
 
-          <div className="mt-8 flex justify-center mt-12">
+          <div className="flex justify-center mt-12">
             <img src={wfh8} className="w-10/12 max-w-sm md:w-8/12 md:max-w-lg lg:w-6/12 lg:max-w-full" alt="a girl sitting on a stool and working in her laptop by the window" />
           </div>
         </div>
@@ -217,7 +218,7 @@ export default function Landing() {
           <div className="sticky bottom-0 sm:relative">
             <div className="flex justify-center pt-8 pb-4">
               <Button
-                to="/upload"
+                to="/app"
                 variant="filled"
                 className={classnames(
                   "py-5 px-8",
@@ -229,43 +230,7 @@ export default function Landing() {
           </div>
         </>
       </div>
-
-      {/* Footer */}
-      <div className="bg-on-secondary-container">
-        <div className="bg-sys-background rounded-b-[2.6rem] sm:rounded-b-[6rem] h-11 sm:h-16 lg:h-24"></div>
-      </div>
-      <div className="bg-on-secondary-container">
-        <div
-          className={classnames(
-            "text-secondary-95 font-body font-light text-lg",
-            "gap-6 grid max-w-7xl mx-auto",
-            "px-5 sm:px-14 md:px-16 lg:px-20 pt-14 pb-16",
-            "grid-cols-4 sm:grid-cols-8 md:grid-cols-8 lg:grid-cols-12",
-            "text-md sm:text-lg md:text-lg lg:text-lg"
-          )}
-        >
-          <div className="col-span-7 flex flex-col justify-center">
-            <div>
-              <p>Designed with &hearts; in 2022</p>
-              <p className="block">All rights reserved.</p>
-            </div>
-          </div>
-          <div className="col-span-5">
-            <div className="grid grid-cols-2 gap-3">
-              <div className="col-span-2 sm:col-span-1 space-y-2">
-                <div>Disclaimer</div>
-                <div>Feedback</div>
-                <div>Privacy Policy</div>
-              </div>
-              <div className="col-span-2 sm:col-span-1 space-y-2">
-                <div>About</div>
-                <div>GitHub</div>
-                <div>University of Calgary</div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+      <Footer />
     </>
   );
 }

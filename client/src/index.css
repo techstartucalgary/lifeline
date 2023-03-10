@@ -1,9 +1,21 @@
+@import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200');
+@import url("./font.css");
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200');
-@import url("./font.css");
+html {
+  @apply bg-sys-background;
+  margin: 0;
+  padding: 0;
+}
+
+button, input[type=text], input[type=button] {
+  -webkit-appearance: none;
+  -webkit-tap-highlight-color: rgba(0,0,0,0);
+  appearance: none;
+}
 
 .material-symbols-outlined {
   font-variation-settings:
@@ -11,15 +23,9 @@
     'wght' 600,
     'GRAD' 0,
     'opsz' 48;
-  line-height: 1.0;
-  display: block;
 }
 
 :root {
-  -moz-user-select: none;
-  -webkit-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
   font-size: 14px;
   line-height: 1.43;
   overflow-x: hidden;
@@ -27,14 +33,4 @@
 
 body {
   overflow-x: hidden;
-}
-
-.app {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  overflow-x: hidden;
-  overflow-y: auto;
 }

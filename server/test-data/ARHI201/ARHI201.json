@@ -1,51 +1,52 @@
 {
-    "course": "ARHI 201",
-    "topic": "Introduction to Art History I",
-    "assessments": [
-        {
-            "name": "Questionnaire",
-            "date": "2022-09-18T23:59:59.999",
-            "weight": "10"
-        },
-        {
-            "name": "Research Report",
-            "date": "2022-10-04T11:00:00.000",
-            "weight": "20"
-        },
-        {
-            "name": "Comparison",
-            "date": "2022-10-27T11:00:00.000",
-            "weight": "15"
-        },
-        {
-            "name": "Global Diversity Exploration of Textbook 1",
-            "date": "2022-09-27T23:59:59.999",
-            "weight": "5"
-        },
-        {
-            "name": "Global Diversity Exploration of Textbook 2",
-            "date": "2022-10-11T23:59:59.999",
-            "weight": "5"
-        },
-        {
-            "name": "Global Diversity Exploration of Textbook 3",
-            "date": "2022-10-20T23:59:59.999",
-            "weight": "5"
-        },
-        {
-            "name": "Global Diversity Exploration of Textbook 4",
-            "date": "2022-11-17T23:59:59.999",
-            "weight": "5"
-        },
-        {
-            "name": "Concept Map",
-            "date": "2022-11-03T23:59:59.999",
-            "weight": "25"
-        },
-        {
-            "name": "Final Reflection",
-            "date": "2022-12-06T23:59:59.999",
-            "weight": "10"
-        }
-    ]
+  "token count": 4291,
+  "course": "ARHI 201",
+  "topic": "Introduction to Art History I",
+  "assessments": [
+    {
+      "name": "Questionnaire",
+      "date": "2022-09-18T23:59:59.999",
+      "weight": "10"
+    },
+    {
+      "name": "Research Report",
+      "date": "2022-10-04T11:00:00.000",
+      "weight": "20"
+    },
+    {
+      "name": "Comparison",
+      "date": "2022-10-27T11:00:00.000",
+      "weight": "15"
+    },
+    {
+      "name": "Global Diversity Exploration of Textbook 1",
+      "date": "2022-09-27T23:59:59.999",
+      "weight": "5"
+    },
+    {
+      "name": "Global Diversity Exploration of Textbook 2",
+      "date": "2022-10-11T23:59:59.999",
+      "weight": "5"
+    },
+    {
+      "name": "Global Diversity Exploration of Textbook 3",
+      "date": "2022-10-20T23:59:59.999",
+      "weight": "5"
+    },
+    {
+      "name": "Global Diversity Exploration of Textbook 4",
+      "date": "2022-11-17T23:59:59.999",
+      "weight": "5"
+    },
+    {
+      "name": "Concept Map",
+      "date": "2022-11-03T23:59:59.999",
+      "weight": "25"
+    },
+    {
+      "name": "Final Reflection",
+      "date": "2022-12-06T23:59:59.999",
+      "weight": "10"
+    }
+  ]
 }
