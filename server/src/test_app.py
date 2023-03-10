@@ -4,7 +4,7 @@ import json
 from fastapi.testclient import TestClient
 from handlers import calendar_handler
 
-from server.src.main import app
+from main import app
 
 EXPECTEDCALENDARJSON = None
 with open("data/calendar.json", encoding="utf8") as stream:
@@ -46,7 +46,7 @@ def test_one_expected_outline():
 
 def test_bad_file():
     """Sends a bad file to the endpoint and checks that the response is correct"""
-    with open("./app.py", "rb") as file:  # not a pdf
+    with open("./data/course_codes.pkl", "rb") as file:  # not a pdf
         request_data = {"outline_file": ("app.pdf", file, "application/pdf")}
         response = client.post("/files", files=request_data)
 
