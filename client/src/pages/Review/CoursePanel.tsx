@@ -97,8 +97,12 @@ const CoursePanel = ({
                   description={course.description}
                 />
               )}
-              <Tabs selectedTab={selectedTab} setSelectedTab={setSelectedTab} />
-
+              <div className="md:hidden border-b-2">
+                <Tabs
+                  selectedTab={selectedTab}
+                  setSelectedTab={setSelectedTab}
+                />
+              </div>
               <div
                 className={classnames(
                   "w-full",
