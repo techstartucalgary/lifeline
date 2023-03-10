@@ -18,19 +18,19 @@
 
 ## Description :date:
 
-**A better way to organize deadlines** Lifeline takes the stress out of managing important dates and tasks for your courses. 
+**A better way to organize deadlines** Lifeline takes the stress out of managing important dates and tasks for your courses.
 
-In just a few clicks, **compile your deadlines** from your **course outlines** :page_facing_up:, as well as other related tasks, into **calendar reminders :alarm_clock:** and **productivity trackers :chart_with_upwards_trend:.** 
+In just a few clicks, **compile your deadlines** from your **course outlines** :page_facing_up:, as well as other related tasks, into **calendar reminders :alarm_clock:** and **productivity trackers :chart_with_upwards_trend:.**
 
 ## Key Features :bulb:
 
--   :calendar: **JSON to ICal** <br>Converts your deadline data into Ical files, which are industry standard for <br>integration into your favourite calendar!
+- :calendar: **JSON to iCal** <br>Converts your deadline data into iCal files, which are industry standard for <br>integration into your favourite calendar!
 
-- :clock130:  **Saves you time** <br>Lifeline processes your PDFs and creates calendar reminders for each through our in-house<br> algorithm and natural language processing!
+- :clock130: **Saves you time** <br>Lifeline processes your PDFs and creates calendar reminders for each through our in-house<br> algorithm and natural language processing!
 
-- :white_check_mark: **Less errors** <br>Save your energy for more important tasks! Scan through the automatically <br>generated reminders and edit only the ones that are not right. 
+- :white_check_mark: **Less errors** <br>Save your energy for more important tasks! Scan through the automatically <br>generated reminders and edit only the ones that are not right.
 
-- :green_book:  **Export deadlines to productivity tools** <br>Lifeline automates the process of data-entry and places them into an excel productivity tool
+- :green_book: **Export deadlines to productivity tools** <br>Lifeline automates the process of data-entry and places them into an excel productivity tool
 
 ## Getting Started :rocket:
 
@@ -39,4 +39,4 @@ In just a few clicks, **compile your deadlines** from your **course outlines** :
 3. Upload a course syllabus
 4. Edit/Add your deadline information
 5. Go back to step 3 if needed
-6. Export your deadlines to an ICal file or Excel Productivity Tracker
+6. Export your deadlines to an iCal file or Excel Productivity Tracker
