@@ -4,16 +4,15 @@ import { Document, Page } from "react-pdf/dist/esm/entry.vite";
 import "react-pdf/dist/esm/Page/AnnotationLayer.css";
 import "react-pdf/dist/esm/Page/TextLayer.css";
 
-export interface PDFViewerProps {
+export interface DocumentPanelProps {
   file: File;
 }
 
-function PDFViewer({ file }: PDFViewerProps) {
+function DocumentPanel({ file }: DocumentPanelProps) {
   const [numPages, setNumPages] = useState(0);
 
   return (
     <Document
-      // temp workaround
       file={file}
       onLoadSuccess={(pdfInfo) => setNumPages(pdfInfo.numPages)}
       onLoadError={(e) => alert(e)}
@@ -28,4 +27,4 @@ function PDFViewer({ file }: PDFViewerProps) {
   );
 }
 
-export default PDFViewer;
+export default DocumentPanel;
