@@ -1,7 +1,13 @@
+from dotenv.main import load_dotenv
+import os
 from pymongo import MongoClient
 
+# Getting the connection string
+load_dotenv()
+connection_string = os.environ["CONNECTION_STRING"]
+
 # Defining a MongoDB client instance
-client = MongoClient("SOMETHING SOMETHING")
+client = MongoClient(connection_string)
 
 # DB name
 db = client["database1"]
