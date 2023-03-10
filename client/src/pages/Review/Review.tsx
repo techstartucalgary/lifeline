@@ -218,9 +218,13 @@ const Review = () => {
             </main>
           </motion.main>
         ) : (
-          <div className="max-w-9xl mx-auto h-full" ref={mainRef}>
+          <div
+            className="max-w-9xl mx-auto"
+            ref={mainRef}
+            style={{ height: "100vh" }}
+          >
             <Dropzone
-              onDrop={(files: File[]) => onOutlineUpload(files)}
+              onDrop={onOutlineUpload}
               isLoading={loading.length > 0}
             />
           </div>
