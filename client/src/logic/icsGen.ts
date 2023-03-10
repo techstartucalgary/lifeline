@@ -17,17 +17,19 @@ export interface Course {
   description?: string;
   faculty?: { title: string };
   hours?: string;
+  file: File
 }
 
 // rawCourse is the JSON object from the server or from local storage, so Dates and Numbers are strings
-export const parseCourse = (rawCourse: {
+export function parseCourse(rawCourse: {
   code: string;
   number: string;
   title: string;
   key: string;
   topic: string;
   assessments: { name: string; date: string; weight: string }[];
-}): Course => {
+  file: File;
+}): Course {
   const course: Course = {
     ...rawCourse,
     number: Number(rawCourse.number),
@@ -43,13 +45,13 @@ export const parseCourse = (rawCourse: {
   };
 
   return course;
-};
+}
 
 export interface Courses extends Array<Course> {
   [index: number]: Course;
 }
 
-const jsonToICS = (courses: Courses): string => {
+function jsonToICS(courses: Courses): string {
   const events: EventAttributes[] = [];
 
   for (const course of courses) {
@@ -76,6 +78,6 @@ const jsonToICS = (courses: Courses): string => {
     return value;
   }
   return "error";
-};
+}
 
 export default jsonToICS;

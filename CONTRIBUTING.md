@@ -73,3 +73,8 @@ A few more examples:
 - Border `M3/sys/light/secondary-container` will become `border-sys-secondary-container` or `border-secondary-container`
 
 > **Note**: If you find any color in the color palette that's not defined in `tailwind.config.js`, feel free to add it to the file.
+
+
+### React Hooks
+
+This library imports [React Hooks](https://github.com/streamich/react-use) for more convenient frontend development. You can find so many useful hooks in this library, so please utilize these hooks over native js approaches. 

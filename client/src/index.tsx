@@ -1,13 +1,15 @@
-import axios from "axios";
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { Routes, Route, BrowserRouter } from "react-router-dom";
+import axios from "axios";
 import "./index.css";
 
 import Landing from "./pages/Landing";
 import Loading from "./pages/Loading";
-import NotFound from "./pages/NotFound";
 import Review from "./pages/Review";
+import Disclaimer from "./pages/Disclaimer";
+import NotFound from "./pages/NotFound";
+import PrivacyPolicy from "./pages/PrivacyPolicy";
 
 const hostname = window.location.hostname;
 const port = window.location.port;
@@ -24,7 +26,7 @@ if (hostname === "localhost" || hostname === "127.0.0.1" || port === "3000") {
 axios.defaults.withCredentials = false;
 axios.defaults.timeout = 30000;
 
-const App = () => {
+function App() {
   return (
     <>
       <BrowserRouter>
@@ -34,12 +36,14 @@ const App = () => {
           <Route path="/loading" element={<Loading />} />
           <Route path="/app" element={<Review />} />
           <Route path="/app/:courseKey" element={<Review />} />
+          <Route path="/disclaimer" element={<Disclaimer />} />
+          <Route path="/privacy-policy" element={<PrivacyPolicy />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
     </>
   );
-};
+}
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>

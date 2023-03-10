@@ -1,0 +1,105 @@
+[
+  {
+    "token_count": 8278,
+    "course": "FNCE 449",
+    "topic": "unknown topic",
+    "assessments": [
+      {
+        "name": "Eikon Certification Test",
+        "date": "2021-02-08T23:59:00.000000",
+        "weight": "5",
+        "source": ""
+      },
+      {
+        "name": "Term Project",
+        "date": "2021-03-08T23:59:00.000000",
+        "weight": "20",
+        "source": ""
+      },
+      {
+        "name": "Assignment 1",
+        "date": "2021-01-06T23:59:00.000000",
+        "weight": "10",
+        "source": ""
+      },
+      {
+        "name": "Assignment 2",
+        "date": "2021-01-07T23:59:00.000000",
+        "weight": "10",
+        "source": ""
+      },
+      {
+        "name": "Assignment 3",
+        "date": "2021-01-08T23:59:00.000000",
+        "weight": "10",
+        "source": ""
+      },
+      {
+        "name": "Assignment 4",
+        "date": "2021-01-11T23:59:00.000000",
+        "weight": "10",
+        "source": ""
+      },
+      {
+        "name": "Daily News Summary 1",
+        "date": "2021-01-04T00:00:00.000000",
+        "weight": "3",
+        "source": ""
+      },
+      {
+        "name": "Daily News Summary 2",
+        "date": "2021-01-05T00:00:00.000000",
+        "weight": "3",
+        "source": ""
+      },
+      {
+        "name": "Daily News Summary 3",
+        "date": "2021-01-06T00:00:00.000000",
+        "weight": "3",
+        "source": ""
+      },
+      {
+        "name": "Daily News Summary 4",
+        "date": "2021-01-07T00:00:00.000000",
+        "weight": "3",
+        "source": ""
+      },
+      {
+        "name": "Daily News Summary 5",
+        "date": "2021-01-08T00:00:00.000000",
+        "weight": "3",
+        "source": ""
+      },
+      {
+        "name": "Rotman Interactive Trader Simulation Performance 1",
+        "date": "2021-01-04T00:00:00.000000",
+        "weight": "4",
+        "source": ""
+      },
+      {
+        "name": "Rotman Interactive Trader Simulation Performance 2",
+        "date": "2021-01-05T00:00:00.000000",
+        "weight": "4",
+        "source": ""
+      },
+      {
+        "name": "Rotman Interactive Trader Simulation Performance 3",
+        "date": "2021-01-06T00:00:00.000000",
+        "weight": "4",
+        "source": ""
+      },
+      {
+        "name": "Rotman Interactive Trader Simulation Performance 4",
+        "date": "2021-01-07T00:00:00.000000",
+        "weight": "4",
+        "source": ""
+      },
+      {
+        "name": "Rotman Interactive Trader Simulation Performance 5",
+        "date": "2021-01-08T00:00:00.000000",
+        "weight": "4",
+        "source": ""
+      }
+    ]
+  }
+]

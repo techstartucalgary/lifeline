@@ -9,6 +9,8 @@ import {
 } from "tailwind-merge";
 import { ClassNameValue } from "tailwind-merge/dist/lib/tw-join";
 import { Config as TailwindConfig } from "tailwindcss";
+import resolveConfig from "tailwindcss/resolveConfig";
+import { createBreakpoint } from "react-use";
 
 const classnames = (...args: ClassNameValue[]) => {
   const extract = (config: TailwindConfig): TailwindMergeConfig => {
@@ -60,4 +62,13 @@ const classnames = (...args: ClassNameValue[]) => {
   return classnames(...args);
 };
 
-export { classnames };
+const config = resolveConfig(projectConfig);
+
+const screens = JSON.parse(JSON.stringify(config.theme?.screens));
+for (const key in screens) {
+  screens[key] = parseInt(screens[key]);
+}
+
+const useBreakpoint = createBreakpoint(screens);
+
+export { classnames, config, useBreakpoint };
