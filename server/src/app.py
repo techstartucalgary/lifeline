@@ -1,11 +1,15 @@
 """Entry point for the server"""
 
 from os import environ
+from typing import List
 import uvicorn
+
 from fastapi import FastAPI, File, UploadFile, Response
+
 from fastapi.middleware.cors import CORSMiddleware
 from mangum import Mangum
-from handlers import calendar_handler, file_handler
+from handlers import calendar_handler, file_handler, xlsx_handler
+
 
 IS_IN_PROD = "LAMBDA_TASK_ROOT" in dict(environ)
 
@@ -45,6 +49,14 @@ async def show_calendar():
 async def get_deadlines(response: Response, outline_file: UploadFile = File(...)):
     """Returns the extracted dates and info from the uploaded file"""
     return file_handler.handle_file(outline_file, response)
+
+
+@app.post("/xlsx")
+async def get_xlsx(semester: List[dict]):
+    """Takes as input an array of JSON objects, each containing a course code and list
+    of assessments like in ./data/calendar.json.
+    Returns an XLSX file which is a to-do list for the assessments"""
+    return xlsx_handler.get_xlsx_file(semester)
 
 
 if __name__ == "__main__":
