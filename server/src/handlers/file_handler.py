@@ -12,7 +12,8 @@ from fastapi import Response, UploadFile, status
 import pdfplumber
 from dateparser.search import search_dates
 from pdfminer.pdfparser import PDFSyntaxError
-
+import hashlib
+from . import db_handler
 
 # supported course codes taken from
 # https://www.ucalgary.ca/pubs/calendar/current/course-desc-main.html
@@ -95,7 +96,21 @@ def get_course_key(pdf: pdfplumber.pdf.PDF):
     return course_code, course_number
 
 
-def get_course_info(course_key: str) -> Optional[Dict]:
+def get_file_hash(file_path: Path):
+    """Returns sha256 based on the file contents"""
+    contents = b""
+
+    # Reading just the first two pages (about 40kb) of a pdf for getting the sha
+    with open(file_path, "rb") as file:
+        contents = file.read(40000)
+
+    # Getting the hash
+    sha256 = hashlib.sha256(contents).hexdigest()
+
+    return sha256
+
+
+def get_course_info(course_key):
     """Returns the course info for a given course key"""
     return COURSE_INFOS[course_key]
 
@@ -110,6 +125,7 @@ def read_tables(pdf: pdfplumber.pdf.PDF) -> List[List[List[Optional[str]]]]:
 
     print("Found", len(tables), "tables")
     return tables
+
 
 def subtract_text(path):
     """Returns all plain text contained within pdf with the exception of the tables"""
@@ -181,10 +197,19 @@ def extract_assessments(table: List[List[Optional[str]]]) -> List[Dict]:
     return assessments
 
 
-def get_course(tmp_path: Path) -> Dict:
-    """Compiles assessments into the correct format and returns
-    the body of the response"""
+def get_course(tmp_path):
+    """Compiles assessments into the correct format and returns associated
+    course calendar. Takes in file path as the parameters"""
 
+    # Getting file hash and trying to query a cached calendar version for it
+    # Before processing it
+    file_sha = get_file_hash(tmp_path)
+    calendar_str = db_handler.query_calendar(file_sha)
+    if calendar_str:
+        return json.loads(calendar_str)
+
+    print("Processing the calendar for the pdf")
+    print("Before pdfplumber.open", tmp_path)
     with pdfplumber.open(tmp_path) as pdf:
         course = {}
 
@@ -206,6 +231,9 @@ def get_course(tmp_path: Path) -> Dict:
             print("Extracting assessments from table")
             assessments.extend(extract_assessments(table))
         course["assessments"] = assessments
+
+    print("Uploading the calendar JSON for caching")
+    db_handler.insert_calendar(sha=file_sha, calendar_str=json.dumps(course))
     return course
 
 
