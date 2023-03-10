@@ -39,5 +39,5 @@ In just a few clicks, **compile your deadlines** from your **course outlines** :
 2. Click get started
 3. Upload a course syllabus
 4. Edit/Add your deadline information
-5. Go back to step 2 if needed
+5. Go back to step 3 if needed
 6. Export your deadlines to an ICal file or Excel Productivity Tracker
