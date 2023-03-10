@@ -25,17 +25,13 @@ In just a few clicks, **compile your deadlines** from your **course outlines** :
 
 ## Key Features :bulb:
 
--   :calendar: **JSON to ICal** 
-Converts your deadline data into Ical files, which are industry standard for integration into your favourite calendar!
+-   :calendar: **JSON to ICal** <br>Converts your deadline data into Ical files, which are industry standard for integration into your favourite calendar!
 
-- :clock130:  **Saves you time** 
-Lifeline processes your PDFs and creates calendar reminders for each through our in-house algorithm and natural language processing!
+- :clock130:  **Saves you time** <br>Lifeline processes your PDFs and creates calendar reminders for each through our in-house algorithm and natural language processing!
 
-- :white_check_mark: **Less errors** 
-Save your energy for more important tasks! Scan through the automatically generated reminders and edit only the ones that are not right. 
+- :white_check_mark: **Less errors** <br>Save your energy for more important tasks! Scan through the automatically generated reminders and edit only the ones that are not right. 
 
-- :green_book:  **Export deadlines to productivity tools** 
- Lifeline automates the process of data-entry and places them into an excel productivity tool
+- :green_book:  **Export deadlines to productivity tools** <br>Lifeline automates the process of data-entry and places them into an excel productivity tool
 
 ## Getting Started :rocket:
 
