@@ -3,8 +3,8 @@ import { useEffect } from "react";
 
 import { classnames } from "../../Utilities";
 import { Button } from "../../components/Button";
-import NavigationBar from "../../components/NavigationBar";
 import Footer from "../../components/Footer";
+import NavigationBar from "../../components/NavigationBar";
 
 import styles from "./Landing.module.css";
 import blob1 from "./blob1.svg";

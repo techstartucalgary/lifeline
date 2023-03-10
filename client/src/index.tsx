@@ -1,15 +1,15 @@
+import axios from "axios";
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { Routes, Route, BrowserRouter } from "react-router-dom";
-import axios from "axios";
 import "./index.css";
 
+import Disclaimer from "./pages/Disclaimer";
 import Landing from "./pages/Landing";
 import Loading from "./pages/Loading";
-import Review from "./pages/Review";
-import Disclaimer from "./pages/Disclaimer";
 import NotFound from "./pages/NotFound";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
+import Review from "./pages/Review";
 
 const hostname = window.location.hostname;
 const port = window.location.port;

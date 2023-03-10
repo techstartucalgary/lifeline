@@ -1,3 +1,5 @@
+import axios from "axios";
+import { AnimatePresence, motion } from "framer-motion";
 import {
   useState,
   useEffect,
@@ -6,16 +8,13 @@ import {
   useCallback,
 } from "react";
 import { useBeforeUnload, useParams } from "react-router-dom";
-import axios from "axios";
-import { AnimatePresence, motion } from "framer-motion";
 
 import { useBreakpoint } from "../../Utilities";
+import { Dropzone } from "../../components/Dropzone";
 import { Assessment, Course, Courses, parseCourse } from "../../logic/icsGen";
 
 import CoursePanel from "./CoursePanel";
 import NavigationPanel from "./NavigationPanel";
-import { Dropzone } from "../../components/Dropzone";
-
 import { transformTemplate, variants } from "./transitions";
 
 const Review = () => {

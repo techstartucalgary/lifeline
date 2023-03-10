@@ -1,3 +1,4 @@
+import useScrollPosition from "@react-hook/window-scroll";
 import {
   HTMLAttributes,
   ReactElement,
@@ -5,7 +6,8 @@ import {
   useRef,
   useLayoutEffect,
 } from "react";
-import useScrollPosition from "@react-hook/window-scroll";
+
+import { classnames } from "../../Utilities";
 
 import CompactHeadline from "./CompactHeadline";
 import Headline from "./Headline";
@@ -19,7 +21,6 @@ import {
   Subtitle,
   SubtitleProp,
 } from "./Subcomponents";
-import { classnames } from "../../Utilities";
 
 interface AppTopBarProps extends HTMLAttributes<HTMLDivElement> {
   elevation?: boolean;

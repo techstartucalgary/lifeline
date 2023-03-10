@@ -1,6 +1,7 @@
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore-next-line
 import projectConfig from "@tailwind.config";
+import { createBreakpoint } from "react-use";
 import {
   extendTailwindMerge,
   getDefaultConfig,
@@ -10,7 +11,6 @@ import {
 import { ClassNameValue } from "tailwind-merge/dist/lib/tw-join";
 import { Config as TailwindConfig } from "tailwindcss";
 import resolveConfig from "tailwindcss/resolveConfig";
-import { createBreakpoint } from "react-use";
 
 const classnames = (...args: ClassNameValue[]) => {
   const extract = (config: TailwindConfig): TailwindMergeConfig => {
