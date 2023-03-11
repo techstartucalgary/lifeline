@@ -39,6 +39,7 @@ const CoursePanel = ({
     assessment: Assessment;
     index: number;
   } | null>(null);
+
   return (
     <>
       <div className="z-10">

@@ -1,4 +1,4 @@
-import { RefObject, createRef, useEffect, useMemo, useState } from "react";
+import { RefObject, createRef, useEffect } from "react";
 import { useList, useUpdate } from "react-use";
 
 import { classnames } from "../../Utilities";
@@ -37,7 +37,7 @@ const Tabs = ({ tabs, tab, onChangeTab = () => null }: TabsProps) => {
           <Button
             key={index}
             className={classnames(
-              "w-full p-4 justify-center text-on-surface-variant",
+              "w-full p-4 justify-center text-on-surface-variant rounded-none",
               currentTabIndex === index && "text-primary"
             )}
             onClick={() => onChangeTab(item, index)}
@@ -47,10 +47,15 @@ const Tabs = ({ tabs, tab, onChangeTab = () => null }: TabsProps) => {
         ))}
       </div>
       <div
-        className="w-24 h-1 rounded-t-lg bg-primary absolute bottom-0"
+        className={classnames(
+          "w-24 h-1 rounded-t-lg bg-primary absolute bottom-0 will-change-auto",
+          "ease-emphasized duration-[0.6s] transition-transform origin-left"
+        )}
         style={{
           width: refs[currentTabIndex]?.current?.getBoundingClientRect().width,
-          left: refs[currentTabIndex]?.current?.getBoundingClientRect().left,
+          transform: `translateX(${
+            refs[currentTabIndex]?.current?.getBoundingClientRect().left
+          }px)`,
         }}
       />
     </div>
