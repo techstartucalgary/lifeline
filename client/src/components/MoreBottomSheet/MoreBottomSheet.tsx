@@ -13,8 +13,11 @@ const BottomSheet: React.FC<BottomSheetProps> = ({ isOpen, onClose }) => {
 
   useEffect(() => {
     const handleOutsideClick = (event: MouseEvent) => {
-      console.log(containerRef.current);
-      console.log(event.target);
+      event.stopPropagation();
+      event.preventDefault();
+      event.stopImmediatePropagation();
+      event.cancelBubble = true;
+      event.returnValue = false;
 
       if (
         containerRef.current &&
@@ -28,7 +31,6 @@ const BottomSheet: React.FC<BottomSheetProps> = ({ isOpen, onClose }) => {
     };
 
     if (isOpen) {
-      console.log("adding event listener");
       document.addEventListener("click", handleOutsideClick);
     }
 
@@ -71,30 +73,6 @@ const BottomSheet: React.FC<BottomSheetProps> = ({ isOpen, onClose }) => {
         </motion.div>
       )}
     </AnimatePresence>
-  );
-};
-
-const MyComponent = () => {
-  const [isOpen, setIsOpen] = useState(false);
-
-  const openBottomSheet = () => {
-    console.log("opening bottom sheet");
-    setTimeout(() => {
-      setIsOpen(true);
-    }, 10);
-  };
-
-  const closeBottomSheet = () => {
-    setIsOpen(false);
-  };
-
-  return (
-    <div>
-      <button onClick={openBottomSheet} id="open-button">
-        Open Bottom Sheet
-      </button>
-      <BottomSheet isOpen={isOpen} onClose={closeBottomSheet} />
-    </div>
   );
 };
 
