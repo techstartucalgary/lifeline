@@ -1,4 +1,5 @@
-import { RefObject, createRef, useEffect, useState } from "react";
+import { RefObject, createRef, useEffect, useMemo, useState } from "react";
+import { useList, useUpdate } from "react-use";
 
 import { classnames } from "../../Utilities";
 import { Button } from "../Button";
@@ -14,16 +15,20 @@ interface TabsProps {
 }
 
 const Tabs = ({ tabs, tab, onChangeTab = () => null }: TabsProps) => {
+  const update = useUpdate();
   const currentTabIndex = typeof tab === "number" ? tab : tabs.indexOf(tab);
 
-  const [refs, setRefs] = useState<RefObject<HTMLSpanElement>[]>([]);
+  const [refs, { set: setRefs }] = useList<RefObject<HTMLSpanElement>>([]);
   useEffect(() => {
     setRefs((r) =>
       Array(tabs.length)
         .fill(null)
         .map((_, i) => r[i] || createRef())
     );
-  }, [tabs, refs.length]);
+  }, [tabs, refs.length, setRefs]);
+
+  // Force re-render component to align tab indicator position
+  setTimeout(update, 1);
 
   return (
     <div className="md:hidden border-b-[1px] border-b-surface-variant relative">
@@ -33,7 +38,7 @@ const Tabs = ({ tabs, tab, onChangeTab = () => null }: TabsProps) => {
             key={index}
             className={classnames(
               "w-full p-4 justify-center text-on-surface-variant",
-              tab === item && "text-primary"
+              currentTabIndex === index && "text-primary"
             )}
             onClick={() => onChangeTab(item, index)}
           >
@@ -44,8 +49,8 @@ const Tabs = ({ tabs, tab, onChangeTab = () => null }: TabsProps) => {
       <div
         className="w-24 h-1 rounded-t-lg bg-primary absolute bottom-0"
         style={{
-          width: refs[currentTabIndex].current?.getBoundingClientRect().width,
-          left: refs[currentTabIndex].current?.getBoundingClientRect().left,
+          width: refs[currentTabIndex]?.current?.getBoundingClientRect().width,
+          left: refs[currentTabIndex]?.current?.getBoundingClientRect().left,
         }}
       />
     </div>
