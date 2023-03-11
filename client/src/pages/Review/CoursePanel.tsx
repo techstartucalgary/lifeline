@@ -10,6 +10,8 @@ import AppTopBar, {
 import { IconButton } from "../../components/Button";
 import CourseInfo from "../../components/CourseInfo";
 import EditAssessment from "../../components/EditAssessment";
+import MoreBottomSheet from "../../components/MoreBottomSheet/MoreBottomSheet";
+import BottomSheet from "../../components/MoreBottomSheet/MoreBottomSheet";
 import Tabs, { Tab } from "../../components/Tabs";
 import { Assessment, Course } from "../../logic/icsGen";
 
@@ -36,6 +38,7 @@ const CoursePanel = ({
     assessment: Assessment;
     index: number;
   } | null>(null);
+  const [bottomSheetOpen, setBottomSheetOpen] = useState(false);
 
   return (
     <>
@@ -66,6 +69,7 @@ const CoursePanel = ({
             <IconButton
               className="text-on-surface-variant block md:hidden"
               icon="more_vert"
+              onClick={() => setTimeout(() => setBottomSheetOpen(true), 10)}
             />
           </TrailingIcon>
 
@@ -136,6 +140,10 @@ const CoursePanel = ({
             <p>File not found</p>
           )}
         </section>
+        <BottomSheet
+          isOpen={bottomSheetOpen}
+          onClose={() => setBottomSheetOpen(false)}
+        />
       </div>
     </>
   );

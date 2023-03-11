@@ -54,35 +54,19 @@ const BottomSheet: React.FC<BottomSheetProps> = ({ isOpen, onClose }) => {
           transition={{ duration: 0.2 }}
           ref={containerRef}
         >
-          <div className="flex justify-between items-center px-4 py-2">
-            <h2 className="font-medium text-lg">Bottom Sheet</h2>
-            <button onClick={onClose}>
-              <svg
-                className="w-6 h-6 text-gray-600"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M6 18L18 6M6 6l12 12"
-                />
-              </svg>
-            </button>
-          </div>
-          <div className="flex flex-col gap-2 px-4 py-2">
-            <button className="px-4 py-2 bg-gray-200 rounded-md">
-              Button 1
-            </button>
-            <button className="px-4 py-2 bg-gray-200 rounded-md">
-              Button 2
-            </button>
-            <button className="px-4 py-2 bg-gray-200 rounded-md">
-              Button 3
-            </button>
+          <div className="rounded-t-2xl bg-surface-variant flex flex-row justify-center p-4 gap-1">
+            <span className="flex flex-col justify-start w-1/5 items-center text-center">
+              <IconButton icon="add" />
+              <label>Add assessment</label>
+            </span>
+            <span className="flex flex-col justify-start w-1/5 items-center text-center">
+              <IconButton icon="delete" />
+              <label>Delete course</label>
+            </span>
+            <span className="flex flex-col justify-start w-1/5 items-center text-center">
+              <IconButton icon="error" />
+              <label>Report</label>
+            </span>
           </div>
         </motion.div>
       )}
@@ -90,9 +74,7 @@ const BottomSheet: React.FC<BottomSheetProps> = ({ isOpen, onClose }) => {
   );
 };
 
-type MyComponentProps = {};
-
-const MyComponent: React.FC<MyComponentProps> = () => {
+const MyComponent = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   const openBottomSheet = () => {
@@ -116,24 +98,4 @@ const MyComponent: React.FC<MyComponentProps> = () => {
   );
 };
 
-const MoreBottomSheet = () => {
-  return (
-    // Rounded top corners
-    <div className="rounded-t-2xl bg-surface-variant flex flex-row justify-center p-4 gap-1">
-      <span className="flex flex-col justify-start w-1/5 items-center text-center">
-        <IconButton icon="add" />
-        <label>Add assessment</label>
-      </span>
-      <span className="flex flex-col justify-start w-1/5 items-center text-center">
-        <IconButton icon="delete" />
-        <label>Delete course</label>
-      </span>
-      <span className="flex flex-col justify-start w-1/5 items-center text-center">
-        <IconButton icon="error" />
-        <label>Report</label>
-      </span>
-    </div>
-  );
-};
-
-export default MyComponent;
+export default BottomSheet;
