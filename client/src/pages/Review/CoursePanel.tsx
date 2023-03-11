@@ -152,8 +152,16 @@ const CoursePanel = ({
         <SwipeableViews
           index={selectedTab}
           onChangeIndex={(index: number) =>
-            setTimeout(() => setSelectedTab(index), 50)
+            setTimeout(() => setSelectedTab(index), 60)
           }
+          disableLazyLoading={true}
+          hysteresis={0.8}
+          resistance={true}
+          springConfig={{
+            duration: "0.6s",
+            delay: "0s",
+            easeFunction: "cubic-bezier(0.2, 0.0, 0, 1.0)",
+          }}
         >
           <div className="p-4">
             <AssessmentsPanel

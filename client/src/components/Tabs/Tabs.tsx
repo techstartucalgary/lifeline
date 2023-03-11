@@ -52,9 +52,10 @@ const Tabs = ({ tabs, tab, onChangeTab = () => null }: TabsProps) => {
           "ease-emphasized duration-[0.6s] transition-transform origin-left"
         )}
         style={{
-          width: refs[currentTabIndex]?.current?.getBoundingClientRect().width,
+          width:
+            refs[currentTabIndex]?.current?.getBoundingClientRect().width || 0,
           transform: `translateX(${
-            refs[currentTabIndex]?.current?.getBoundingClientRect().left
+            refs[currentTabIndex]?.current?.getBoundingClientRect().left || 0
           }px)`,
         }}
       />
