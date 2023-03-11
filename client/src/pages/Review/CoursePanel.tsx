@@ -144,7 +144,7 @@ const CoursePanel = ({
 
         <Tabs
           tabs={tabs}
-          tab={tabs[selectedTab]}
+          tab={selectedTab}
           onChangeTab={(_, index) => setSelectedTab(index)}
         />
 
