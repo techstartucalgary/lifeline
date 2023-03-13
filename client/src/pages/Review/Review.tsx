@@ -224,9 +224,8 @@ const Review = () => {
         ) : (
           !isMobile() && (
             <div
-              className="max-w-9xl mx-auto"
+              className="max-w-9xl mx-auto h-screen"
               ref={mainRef}
-              style={{ height: "100vh" }}
             >
               <Dropzone
                 onDrop={onOutlineUpload}
