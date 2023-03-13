@@ -25,7 +25,10 @@ const ListItem = ({
       {...args}
       color={color}
       variant="text"
-      className={classnames("px-5.5 py-4.5 text-on-surface-variant", className)}
+      className={classnames(
+        "px-5.5 py-4.5 text-on-surface-variant rounded-none",
+        className
+      )}
       icon={
         <span
           className={classnames(
