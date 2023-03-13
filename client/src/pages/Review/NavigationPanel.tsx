@@ -164,6 +164,7 @@ const NavigationPanel = ({
             color="primary"
             className="rounded-2xl mx-2.5 px-4 py-1 text-center"
             iconClassName="text-on-primary-container text-3xl md:text-3xl"
+            disabled={loading.length > 0}
           />
         </NavigationRail>
       </div>
@@ -177,6 +178,7 @@ const NavigationPanel = ({
               onClick={() => {
                 inputRef.current?.click();
               }}
+              disabled={loading.length > 0}
             />
           </AppTopBar.TrailingIcon>
         </AppTopBar>
