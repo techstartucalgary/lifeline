@@ -158,7 +158,7 @@ const CoursePanel = ({
           hysteresis={0.8}
           resistance={true}
           springConfig={{
-            duration: "0.6s",
+            duration: "0.4s",
             delay: "0s",
             easeFunction: "cubic-bezier(0.2, 0.0, 0, 1.0)",
           }}

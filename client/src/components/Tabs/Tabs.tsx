@@ -49,7 +49,7 @@ const Tabs = ({ tabs, tab, onChangeTab = () => null }: TabsProps) => {
       <div
         className={classnames(
           "w-24 h-1 rounded-t-lg bg-primary absolute bottom-0 will-change-auto",
-          "ease-emphasized duration-[0.6s] transition-transform origin-left"
+          "ease-emphasized duration-[0.4s] transition-transform origin-left"
         )}
         style={{
           width:
