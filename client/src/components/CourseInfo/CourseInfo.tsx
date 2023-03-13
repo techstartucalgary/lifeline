@@ -67,7 +67,9 @@ const Description = ({ text }: { text: string }) => {
     paragraphRef.current.classList.add("line-clamp-3");
     const clampedHeight = paragraphRef.current.clientHeight;
     setClampable(originalHeight !== clampedHeight);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+
+    if (showMore) paragraphRef.current.classList.remove("line-clamp-3");
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [text, paragraphRef.current, width]);
 
   return (
