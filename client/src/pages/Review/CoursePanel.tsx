@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { classnames } from "../../Utilities";
 import AppTopBar, {
@@ -36,6 +36,10 @@ const CoursePanel = ({
     assessment: Assessment;
     index: number;
   } | null>(null);
+
+  useEffect(() => {
+    setEditingAssessment(null);
+  }, [course]);
 
   return (
     <>
