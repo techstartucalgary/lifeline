@@ -12,7 +12,7 @@ export enum Tab {
   Document,
 }
 
-function Tabs({ selectedTab, setSelectedTab }: TabsProps) {
+const Tabs = ({ selectedTab, setSelectedTab }: TabsProps) => {
   return (
     <div className="md:hidden border-b-2">
       <div className="w-full flex flex-row">
@@ -55,6 +55,6 @@ function Tabs({ selectedTab, setSelectedTab }: TabsProps) {
       </div>
     </div>
   );
-}
+};
 
 export default Tabs;

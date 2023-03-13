@@ -22,7 +22,7 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 const base = `
   bg-transparent text-center font-medium tracking-[0.01rem] overflow-hidden
   px-7 py-3 pt-[0.67rem] align-middle rounded-full relative
-  transition-color transition-opacity ease-emphasized before:transition-all before:ease-emphasized
+  transition-all ease-emphasized before:transition-all before:ease-emphasized
 
   before:block before:absolute before:top-0 before:left-0 before:bottom-0 before:right-0
   before:bg-transparent before:user-select-none before:pointer-events-none before:-z-1
@@ -138,7 +138,7 @@ const Button = ({
 
       if (props.onMouseDown) props.onMouseDown(event);
     },
-    [color, props, rippleQueue, variant]
+    [color, props, ripple, rippleQueue, variant]
   );
 
   const onUnpersistRipple = useCallback(() => {
@@ -197,12 +197,7 @@ const Button = ({
         ) : (
           <i className={styles.icon}>{icon}</i>
         ))}
-      {children &&
-        (typeof children === "string" ? (
-          <>{children}</>
-        ) : (
-          <div className="flex flex-row gap-2 w-full">{children}</div>
-        ))}
+      {children && <>{children}</>}
       {/* RIPPLE */}
       <div className="absolute top-0 left-0 overflow-hidden h-full w-full pointer-events-none -z-10">
         {rippleQueue.map(({ x, y, persist, className }, i) => (

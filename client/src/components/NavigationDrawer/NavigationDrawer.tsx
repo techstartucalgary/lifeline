@@ -1,6 +1,8 @@
 import { ReactNode, HTMLAttributes } from "react";
-import NavItem from "./NavItem";
+
 import { classnames } from "../../Utilities";
+
+import NavItem from "./NavItem";
 
 interface NavigationDrawerProps extends Omit<HTMLAttributes<HTMLDivElement>, "title"> {
   title?: ReactNode | string;

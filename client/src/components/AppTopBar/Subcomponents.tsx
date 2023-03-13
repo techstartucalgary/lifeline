@@ -16,7 +16,7 @@ const TrailingIcon = ({ children, className, ...args }: TrailingIconProp) => {
 
 interface TitleProp {
   children?: ReactNode;
-} 
+}
 const Title = ({ children }: TitleProp) => <>{children}</>;
 
 interface SubtitleProp {

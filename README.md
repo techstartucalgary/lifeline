@@ -16,8 +16,42 @@
   </h2>
 </div>
 
-<p>Lifeline is here to ensure you stay organized and on top of your schedule, all through a fast and easy process. Say goodbye to the stress of managing important dates yourself and discover a better way.</p>
+## Description :date:
 
-_Lifeline uses AI to extract and organize deadlines from your course documents for you to download._
+Lifeline takes the stress out of managing important deadlines for your courses. In just a few clicks, **compile your deadlines** from your **course outlines** :page_facing_up:, into **calendar reminders :alarm_clock:** and a **spreadsheet to-do list :chart_with_upwards_trend:.**
 
-# **[Try it out here](https://lifeline.techstartucalgary.com)**
+## Key Features :bulb:
+
+- :calendar: **PDF &rarr; iCal** <br>
+  Converts your deadline data into iCal files, which easily integrates with all major digital calendars.
+
+- :green_book: **PDF &rarr; XLSX** <br>
+  Lifeline automates the process of data-entry and places your deadlines into an Excel productivity tool.
+
+## Advantages 👍
+
+- 🕜 **Saves you time** <br>
+  Lifeline's in-house algorithm takes seconds to scan your course outlines, so you can save your energy for more important tasks!
+
+- ✅ **Less errors** <br>
+  Manually edit any deadlines that we got wrong with an intuitive process.
+
+## Getting Started :rocket:
+
+1. Head over to https://lifeline.techstartucalgary.com/
+2. Click get started
+3. Upload a course syllabus
+4. Edit your deadline information
+5. Go back to step 3 if needed
+6. Export your deadlines to an iCal file and/or Excel Productivity Tracker
+7. Never miss a deadline!
+
+## [Contributors](https://github.com/techstartucalgary/lifeline/graphs/contributors)
+- [Tim Macphail](https://github.com/tim-macphail)
+- [Yunfan Yang](https://github.com/cloudyyoung)
+- [Bradley Li](https://github.com/BradleyLi)
+- [Harsweet Singh](https://github.com/harsweet)
+- [Jaza Khan](https://github.com/jaza-k)
+- [Amrit Mahendrarajah](https://github.com/skilledd007)
+- [Kevin Amado](https://github.com/kamadorueda)
+- [Hilton Luu](https://github.com/HiltonLuu)

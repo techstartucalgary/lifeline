@@ -1,74 +1,35 @@
-import { useRef, useState } from "react";
+import { useRef } from "react";
+
+import { classnames } from "../../Utilities";
+import AppTopBar from "../../components/AppTopBar/AppTopBar";
+import { Button, IconButton } from "../../components/Button";
 import List from "../../components/List";
 import NavigationDrawer from "../../components/NavigationDrawer";
-import jsonToICS, { Course, Courses } from "../../logic/icsGen";
-import axios from "axios";
-import { classnames } from "../../Utilities";
-import ProgressIndicator from "../../components/ProgressIndicator";
-import { Button, IconButton } from "../../components/Button";
-import AppTopBar from "../../components/AppTopBar/AppTopBar";
 import NavigationRail from "../../components/NavigationRail";
+import ProgressIndicator from "../../components/ProgressIndicator";
+import jsonToICS, { Course, Courses } from "../../logic/icsGen";
+
 import symbols from "./symbols";
 
-const generateIcon = (course_key: string) =>
-  symbols[course_key] || symbols["default"];
+const generateIcon = (courseKey: string) =>
+  symbols[courseKey] || symbols["default"];
 
 interface NavigationPanelProps {
   courses: Courses;
   currentCourse: Course | null;
   onCourseClick(course: Course | null): void;
-  onCoursesChanged(course: Course): void;
+  onOutlineUpload(e: React.ChangeEvent<HTMLInputElement>): void;
+  loading: string[];
 }
 
 const NavigationPanel = ({
   courses,
   currentCourse,
   onCourseClick,
-  onCoursesChanged,
+  onOutlineUpload,
+  loading,
 }: NavigationPanelProps) => {
-  const [loading, setLoading] = useState<string[]>([]);
   const inputRef = useRef<HTMLInputElement>(null);
-
-  const handleOutlineUpload = async (
-    e: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    if (!e.target.files) return;
-
-    const files = Array.from(e.target.files);
-    setLoading(Array.from(files).map((f: File) => f.name));
-
-    while (files.length > 0) {
-      const file = files.pop();
-
-      const formData = new FormData();
-      formData.append("outline_file", file as File);
-
-      await axios
-        .post("/files", formData, {
-          headers: { "Content-Type": "multipart/form-data" },
-        })
-        .then((res) => {
-          // convert to Course
-          const course: Course = {
-            ...res.data,
-            assessments: res.data.assessments.map(
-              (a: { name: string; date: string; weight: string }) => ({
-                ...a,
-                date: new Date(a.date),
-                weight: Number(a.weight),
-              })
-            ),
-          };
-          onCoursesChanged(course);
-        })
-        .catch((error) => {
-          console.log(error);
-        })
-        .finally(() => {
-          setLoading((prev) => prev.filter((f) => f !== file?.name));
-        });
-    }
-  };
 
   const handleExport = () => {
     const a = document.createElement("a");
@@ -87,7 +48,7 @@ const NavigationPanel = ({
           type="file"
           accept=".pdf"
           multiple
-          onChange={handleOutlineUpload}
+          onChange={onOutlineUpload}
           className="hidden"
           aria-hidden
         />
