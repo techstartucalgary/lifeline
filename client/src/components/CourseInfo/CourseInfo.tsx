@@ -77,7 +77,7 @@ const Description = ({ text }: { text: string }) => {
       ripple={false}
       className={classnames(
         ...BentoBase,
-        "w-full mb-4",
+        "w-full",
         clampable && "pointer-events-auto"
       )}
       onClick={() => setShowMore(!showMore)}
