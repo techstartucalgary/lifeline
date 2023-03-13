@@ -68,7 +68,7 @@ const CoursePanel = ({
             <IconButton
               className="text-on-surface-variant block md:hidden"
               icon="more_vert"
-              onClick={() => setTimeout(() => setBottomSheetOpen(true), 10)}
+              onClick={() => setBottomSheetOpen(true)}
             />
           </TrailingIcon>
 
