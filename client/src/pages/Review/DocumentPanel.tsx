@@ -10,7 +10,7 @@ export interface DocumentPanelProps {
 
 const DocumentPanel = ({ file }: DocumentPanelProps) => {
   const [numPages, setNumPages] = useState(0);
-  const [myRef, { width }] = useMeasure();
+  const [myRef, { width }] = useMeasure<HTMLDivElement>();
 
   return (
     <div ref={myRef as LegacyRef<HTMLDivElement>}>
