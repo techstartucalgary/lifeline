@@ -4,9 +4,8 @@ import "react-pdf/dist/esm/Page/AnnotationLayer.css";
 import "react-pdf/dist/esm/Page/TextLayer.css";
 
 export interface DocumentPanelProps {
-  file: File;
+  file: string;
 }
-
 const DocumentPanel = ({ file }: DocumentPanelProps) => {
   const [numPages, setNumPages] = useState(0);
 

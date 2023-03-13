@@ -17,7 +17,7 @@ export interface Course {
   description?: string;
   faculty?: { title: string };
   hours?: string;
-  file: File
+  file: string;
 }
 
 // rawCourse is the JSON object from the server or from local storage, so Dates and Numbers are strings
@@ -28,7 +28,7 @@ export const parseCourse = (rawCourse: {
   key: string;
   topic: string;
   assessments: { name: string; date: string; weight: string }[];
-  file: File;
+  file: string;
 }): Course => {
   const course: Course = {
     ...rawCourse,
