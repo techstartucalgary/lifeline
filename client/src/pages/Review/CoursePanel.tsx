@@ -10,7 +10,6 @@ import AppTopBar, {
 import { IconButton } from "../../components/Button";
 import CourseInfo from "../../components/CourseInfo";
 import EditAssessment from "../../components/EditAssessment";
-import MoreBottomSheet from "../../components/MoreBottomSheet/MoreBottomSheet";
 import BottomSheet from "../../components/MoreBottomSheet/MoreBottomSheet";
 import Tabs, { Tab } from "../../components/Tabs";
 import { Assessment, Course } from "../../logic/icsGen";
@@ -81,7 +80,11 @@ const CoursePanel = ({
         </AppTopBar>
       </div>
 
-      <div className="flex flex-col md:flex-row" style={{ paddingLeft: left }}>
+      <div
+        className="flex flex-col md:flex-row"
+        style={{ paddingLeft: left }}
+        id="course-panel"
+      >
         <section className={classnames("w-full md:w-1/2", "p-4")}>
           {(course.hours || course.faculty || course.description) && (
             <CourseInfo
@@ -142,6 +145,18 @@ const CoursePanel = ({
         <BottomSheet
           isOpen={bottomSheetOpen}
           onClose={() => setBottomSheetOpen(false)}
+          onAddAssessment={() => {
+            setEditingAssessment({
+              assessment: {
+                name: "",
+                weight: 0,
+                date: new Date(),
+              },
+              index: course.assessments.length,
+            });
+            setBottomSheetOpen(false);
+          }}
+          onDeleteCourse={onDeleteCourse}
         />
       </div>
     </>
