@@ -80,11 +80,7 @@ const CoursePanel = ({
         </AppTopBar>
       </div>
 
-      <div
-        className="flex flex-col md:flex-row"
-        style={{ paddingLeft: left }}
-        id="course-panel"
-      >
+      <div className="flex flex-col md:flex-row" style={{ paddingLeft: left }}>
         <section className={classnames("w-full md:w-1/2", "p-4")}>
           {(course.hours || course.faculty || course.description) && (
             <CourseInfo
