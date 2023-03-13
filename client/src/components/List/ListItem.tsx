@@ -38,7 +38,12 @@ const ListItem = ({
       }
     >
       <div className="ml-2 truncate text-left">
-        <p className="font-medium text-lg leading-6 text-on-surface truncate">
+        <p
+          className={classnames(
+            "font-medium text-lg leading-6 text-on-surface truncate",
+            args.disabled && "text-sys-on-surface/[.38]"
+          )}
+        >
           {title}
         </p>
         <p className="font-normal truncate">{supportingText}</p>
