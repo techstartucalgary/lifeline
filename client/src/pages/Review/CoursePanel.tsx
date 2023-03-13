@@ -7,10 +7,10 @@ import AppTopBar, {
   Title,
   Subtitle,
 } from "../../components/AppTopBar";
+import BottomSheet from "../../components/BottomSheet/BottomSheet";
 import { IconButton } from "../../components/Button";
 import CourseInfo from "../../components/CourseInfo";
 import EditAssessment from "../../components/EditAssessment";
-import BottomSheet from "../../components/MoreBottomSheet/MoreBottomSheet";
 import Tabs, { Tab } from "../../components/Tabs";
 import { Assessment, Course } from "../../logic/icsGen";
 
