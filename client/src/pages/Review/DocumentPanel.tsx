@@ -1,4 +1,4 @@
-import { SetStateAction, useState, LegacyRef } from "react";
+import { SetStateAction, useState } from "react";
 import { Document, Page } from "react-pdf/dist/esm/entry.vite";
 import "react-pdf/dist/esm/Page/AnnotationLayer.css";
 import "react-pdf/dist/esm/Page/TextLayer.css";
@@ -13,7 +13,7 @@ const DocumentPanel = ({ file }: DocumentPanelProps) => {
   const [myRef, { width }] = useMeasure<HTMLDivElement>();
 
   return (
-    <div ref={myRef as LegacyRef<HTMLDivElement>}>
+    <div ref={myRef}>
       <Document
         file={file}
         onLoadSuccess={(pdfInfo: { numPages: SetStateAction<number> }) =>
