@@ -199,7 +199,7 @@ const Review = () => {
           </motion.nav>
         )}
 
-        {currentCourse ? (
+        {currentCourse && (
           <motion.main
             key={"fty89gft789oijhgy789iuygf"}
             layout="position"
@@ -221,18 +221,11 @@ const Review = () => {
               />
             </main>
           </motion.main>
-        ) : (
-          !isMobile() && (
-            <div
-              className="max-w-9xl mx-auto h-screen"
-              ref={mainRef}
-            >
-              <Dropzone
-                onDrop={onOutlineUpload}
-                isLoading={loading.length > 0}
-              />
-            </div>
-          )
+        )}
+        {!currentCourse && !isMobile() && (
+          <div className="max-w-9xl mx-auto h-screen" ref={mainRef}>
+            <Dropzone onDrop={onOutlineUpload} isLoading={loading.length > 0} />
+          </div>
         )}
       </AnimatePresence>
     </div>
