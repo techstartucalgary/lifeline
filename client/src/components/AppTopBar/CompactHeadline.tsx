@@ -1,10 +1,17 @@
-import { ForwardedRef, HTMLAttributes, ReactElement, forwardRef } from "react";
+import useScrollPosition from "@react-hook/window-scroll";
+import { HTMLAttributes, ReactElement } from "react";
+import { useEffectOnce, useUpdate } from "react-use";
 
 import { classnames } from "../../Utilities";
 
-import { LeadingNavigationProp, TitleProp, TrailingIconProp } from "./Subcomponents";
+import {
+  LeadingNavigationProp,
+  TitleProp,
+  TrailingIconProp,
+} from "./Subcomponents";
 
-interface CompactHeadlineProp extends Omit<HTMLAttributes<HTMLDivElement>, "title"> {
+interface CompactHeadlineProp
+  extends Omit<HTMLAttributes<HTMLDivElement>, "title"> {
   title?: ReactElement<TitleProp>;
   titleClassName?: string | null;
   leadingNavigation?: ReactElement<LeadingNavigationProp>;
@@ -13,16 +20,33 @@ interface CompactHeadlineProp extends Omit<HTMLAttributes<HTMLDivElement>, "titl
   elevationClassName?: string | null;
 }
 
-const CompactHeadline = forwardRef<HTMLDivElement, CompactHeadlineProp>(
-  (
-    { title, titleClassName, leadingNavigation, trailingIcon, elevation = true, elevationClassName, ...args }: CompactHeadlineProp,
-    ref: ForwardedRef<HTMLDivElement>
-  ) => {
-    return (
-      <div
-        className="fixed top-0 left-0 right-0 h-fit z-10 compact-headline"
-        ref={ref}
-      >
+const normalize = (val: number, min: number, max: number) =>
+  (val - min) / (max - min);
+
+const CompactHeadline = ({
+  title,
+  titleClassName,
+  leadingNavigation,
+  trailingIcon,
+  elevation = true,
+  elevationClassName,
+  ...args
+}: CompactHeadlineProp) => {
+  const update = useUpdate();
+
+  useEffectOnce(() => {
+    const render = () => {
+      update();
+    };
+    window.addEventListener("scroll", render);
+    return () => {
+      window.removeEventListener("scroll", render);
+    };
+  });
+
+  return (
+    <>
+      <div className="fixed top-0 left-0 right-0 h-fit z-10 compact-headline">
         <div className="relative">
           <div {...args} className={classnames("bg-surface", args.className)}>
             <div className="flex flex-row px-1 pt-2 pb-1 justify-between">
@@ -33,10 +57,13 @@ const CompactHeadline = forwardRef<HTMLDivElement, CompactHeadlineProp>(
                 </div>
                 <div
                   className={classnames(
-                    "text-on-surface text-lg opacity-0 will-change-auto font-bold",
-                    "transition-opacity duration-300 ease-emphasized-decelerate opacity-0",
+                    "text-on-surface text-lg will-change-auto font-bold",
+                    "transition-opacity duration-300 md:duration-75",
                     titleClassName
                   )}
+                  style={{
+                    opacity: normalize(window.scrollY, 40, 50),
+                  }}
                 >
                   {title}
                 </div>
@@ -50,20 +77,24 @@ const CompactHeadline = forwardRef<HTMLDivElement, CompactHeadlineProp>(
           {elevation && (
             <div
               className={classnames(
-                "opacity-0 bg-primary/8 absolute -top-full left-0 right-0 bottom-0",
-                "transition-all pointer-events-none z-0",
-                "md:ease-emphasized ease-emphasized-decelerate",
-                "duration-1000 md:duration-200",
+                "bg-primary/8 absolute -top-full left-0 right-0 bottom-0",
+                "pointer-events-none z-0",
+                "transition-opacity duration-300 md:duration-75",
                 "will-change-opacity",
                 elevationClassName
               )}
+              style={{
+                opacity: normalize(window.scrollY, 90, 100),
+              }}
             />
           )}
         </div>
       </div>
-    );
-  });
-CompactHeadline.displayName = "CompactHeadline";
+      {/* Placeholder Div */}
+      <div style={{ height: "5.216rem" }} />
+    </>
+  );
+};
 
 export default CompactHeadline;
 export type { CompactHeadlineProp };
