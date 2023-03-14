@@ -201,14 +201,14 @@ def get_course(tmp_path):
     """Compiles assessments into the correct format and returns associated
     course calendar. Takes in file path as the parameters"""
 
-    # Getting file hash and trying to query a cached calendar version for it
+    # Getting file hash and trying to query a cached course version for it
     # Before processing it
     file_sha = get_file_hash(tmp_path)
-    calendar_str = db_handler.query_calendar(file_sha)
-    if calendar_str:
-        return json.loads(calendar_str)
+    course_str = db_handler.query_course(file_sha)
+    if course_str:
+        return json.loads(course_str)
 
-    print("Processing the calendar for the pdf")
+    print("Processing the course calendar for the pdf")
     print("Before pdfplumber.open", tmp_path)
     with pdfplumber.open(tmp_path) as pdf:
         course = {}
@@ -232,8 +232,8 @@ def get_course(tmp_path):
             assessments.extend(extract_assessments(table))
         course["assessments"] = assessments
 
-    print("Uploading the calendar JSON for caching")
-    db_handler.insert_calendar(sha=file_sha, calendar_str=json.dumps(course))
+    print("Uploading the course JSON for caching")
+    db_handler.insert_course(sha=file_sha, course_str=json.dumps(course))
     return course
 
 

@@ -13,20 +13,20 @@ client = MongoClient(connection_string)
 db = client["database1"]
 
 # Referencing the collection
-calendars = db["calendars"]
+courses = db["courses"]
 
 
-def insert_calendar(sha: str, calendar_str: str):
-    calendar = {"sha": sha, "calendar_str": calendar_str}
-    result = calendars.insert_one(calendar)
-    print("Calendar inserted with ID:", result.inserted_id)
+def insert_course(sha: str, course_str: str):
+    course = {"sha": sha, "course_str": course_str}
+    result = courses.insert_one(course)
+    print("Course inserted with ID:", result.inserted_id)
 
 
-def query_calendar(sha: str):
-    calendar = calendars.find_one({"sha": sha})
-    if calendar:
-        print("Found a cached calendar with ID:", calendar["_id"])
-        return calendar["calendar_str"]
+def query_course(sha: str):
+    course = courses.find_one({"sha": sha})
+    if course:
+        print("Found a cached course with ID:", course["_id"])
+        return course["course_str"]
     else:
-        print("Didn't find a cached calendar")
+        print("Didn't find a cached course")
         return None
