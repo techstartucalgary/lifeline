@@ -1,4 +1,5 @@
 import { useState } from "react";
+import Sticky from "react-stickynode";
 import SwipeableViews from "react-swipeable-views";
 
 import { classnames } from "../../Utilities";
@@ -143,11 +144,13 @@ const CoursePanel = ({
           </div>
         )}
 
-        <Tabs
-          tabs={tabs}
-          tab={selectedTab}
-          onChangeTab={(_, index) => setSelectedTab(index)}
-        />
+        <Sticky enabled={true} top="#compact-headline" bottomBoundary={1200}>
+          <Tabs
+            tabs={tabs}
+            tab={selectedTab}
+            onChangeTab={(_, index) => setSelectedTab(index)}
+          />
+        </Sticky>
 
         <SwipeableViews
           index={selectedTab}

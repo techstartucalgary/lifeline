@@ -19,7 +19,11 @@ const CompactHeadline = forwardRef<HTMLDivElement, CompactHeadlineProp>(
     ref: ForwardedRef<HTMLDivElement>
   ) => {
     return (
-      <div className="fixed top-0 left-0 right-0 h-fit z-10" ref={ref}>
+      <div
+        className="fixed top-0 left-0 right-0 h-fit z-10"
+        id="compact-headline"
+        ref={ref}
+      >
         <div className="relative">
           <div {...args} className={classnames("bg-surface", args.className)}>
             <div className="flex flex-row px-1 pt-2 pb-1 justify-between">
@@ -32,7 +36,7 @@ const CompactHeadline = forwardRef<HTMLDivElement, CompactHeadlineProp>(
                   className={classnames(
                     "text-on-surface text-lg opacity-0 will-change-auto font-bold",
                     "transition-opacity duration-300 ease-emphasized-decelerate opacity-0",
-                    titleClassName,
+                    titleClassName
                   )}
                 >
                   {title}
@@ -40,13 +44,11 @@ const CompactHeadline = forwardRef<HTMLDivElement, CompactHeadlineProp>(
               </div>
 
               {/* Trailing Icon */}
-              <div className="p-1 text-on-surface-variant">
-                {trailingIcon}
-              </div>
+              <div className="p-1 text-on-surface-variant">{trailingIcon}</div>
             </div>
           </div>
 
-          {elevation &&
+          {elevation && (
             <div
               className={classnames(
                 "opacity-0 bg-primary/8 absolute -top-full left-0 right-0 bottom-0",
@@ -54,10 +56,10 @@ const CompactHeadline = forwardRef<HTMLDivElement, CompactHeadlineProp>(
                 "md:ease-emphasized ease-emphasized-decelerate",
                 "duration-1000 md:duration-200",
                 "will-change-opacity",
-                elevationClassName,
+                elevationClassName
               )}
             />
-          }
+          )}
         </div>
       </div>
     );
