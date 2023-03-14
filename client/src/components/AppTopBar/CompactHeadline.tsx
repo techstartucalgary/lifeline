@@ -20,8 +20,7 @@ const CompactHeadline = forwardRef<HTMLDivElement, CompactHeadlineProp>(
   ) => {
     return (
       <div
-        className="fixed top-0 left-0 right-0 h-fit z-10"
-        id="compact-headline"
+        className="fixed top-0 left-0 right-0 h-fit z-10 compact-headline"
         ref={ref}
       >
         <div className="relative">

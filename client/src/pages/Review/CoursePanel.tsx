@@ -144,7 +144,7 @@ const CoursePanel = ({
           </div>
         )}
 
-        <Sticky enabled={true} top="#compact-headline" bottomBoundary={1200}>
+        <Sticky enabled={true} top=".compact-headline" bottomBoundary={1200}>
           <Tabs
             tabs={tabs}
             tab={selectedTab}
