@@ -96,14 +96,14 @@ const Review = () => {
       const navWidth = navRef.current?.offsetWidth || 0;
       setMainMarginLeft(Math.max(navWidth - marginLeft, 0));
 
-      if (["xs", "sm"].includes(breakpoint)) {
+      if (isMobile()) {
         setMainMarginLeft(0);
       }
     };
     onMainMarginLeft();
     window.addEventListener("resize", onMainMarginLeft);
     return () => window.removeEventListener("resize", onMainMarginLeft);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [navRef.current, mainRef.current, currentCourse, breakpoint]);
 
   useEffect(() => {
@@ -163,15 +163,16 @@ const Review = () => {
     );
   };
 
+  const isMobile = () => ["xs", "sm"].includes(breakpoint);
+
   return (
     <div className="overflow-hidden min-h-screen">
       <AnimatePresence mode="popLayout">
-        {((["xs", "sm"].includes(breakpoint) && !currentCourse) ||
-          !["xs", "sm"].includes(breakpoint)) && (
+        {((isMobile() && !currentCourse) || !isMobile()) && (
           <motion.nav
             layout="position"
             key="navigation-panel"
-            variants={["xs", "sm"].includes(breakpoint) ? variants : undefined}
+            variants={isMobile() ? variants : undefined}
             custom={"-4rem"}
             initial="initial"
             animate="enter"
@@ -198,11 +199,11 @@ const Review = () => {
           </motion.nav>
         )}
 
-        {currentCourse ? (
+        {currentCourse && (
           <motion.main
             key={"fty89gft789oijhgy789iuygf"}
             layout="position"
-            variants={["xs", "sm"].includes(breakpoint) ? variants : undefined}
+            variants={isMobile() ? variants : undefined}
             custom={"4rem"}
             initial="initial"
             animate="enter"
@@ -220,16 +221,10 @@ const Review = () => {
               />
             </main>
           </motion.main>
-        ) : (
-          <div
-            className="max-w-9xl mx-auto"
-            ref={mainRef}
-            style={{ height: "100vh" }}
-          >
-            <Dropzone
-              onDrop={onOutlineUpload}
-              isLoading={loading.length > 0}
-            />
+        )}
+        {!currentCourse && !isMobile() && (
+          <div className="max-w-9xl mx-auto h-screen" ref={mainRef}>
+            <Dropzone onDrop={onOutlineUpload} isLoading={loading.length > 0} />
           </div>
         )}
       </AnimatePresence>

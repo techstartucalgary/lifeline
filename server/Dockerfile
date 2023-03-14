@@ -6,4 +6,4 @@ RUN  pip3 install -r requirements.txt --target "${LAMBDA_TASK_ROOT}" -U --no-cac
 
 COPY ./src ${LAMBDA_TASK_ROOT}
 
-CMD [ "app.handler" ]
+CMD [ "main.handler" ]

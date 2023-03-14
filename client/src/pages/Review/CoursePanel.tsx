@@ -115,9 +115,9 @@ const CoursePanel = ({
 
         <section
           className={classnames(
-            "p-4 mr-2",
+            "p-4 mt-2 mr-2",
             "w-full md:w-1/2",
-            "h-screen",
+            "md:h-screen",
             "overflow-y-auto",
             "overflow-x-hidden",
             "border-x border-y border-dashed border-gray-400 rounded-3xl w-full mt-2"
