@@ -1,18 +1,20 @@
 """Handles the file upload and extraction of assessments from the file"""
 
+import hashlib
+import json
+import pickle
+import shutil
 from collections import defaultdict
 from datetime import datetime
-import json
-import shutil
 from pathlib import Path
-import pickle
 from tempfile import NamedTemporaryFile
-from typing import List, Optional, Set, Dict
-from fastapi import Response, UploadFile, status
+from typing import Dict, List, Optional, Set
+
 import pdfplumber
 from dateparser.search import search_dates
+from fastapi import Response, UploadFile, status
 from pdfminer.pdfparser import PDFSyntaxError
-import hashlib
+
 from . import db_handler
 
 # supported course codes taken from
