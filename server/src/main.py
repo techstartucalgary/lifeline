@@ -1,13 +1,13 @@
-"""Entry point for the server"""
+"""Entry point for the server. You can run this file directly to start the server locally."""
 
 from os import environ
 from typing import List
+
 import uvicorn
-
 from fastapi import FastAPI, File, UploadFile, Response
-
 from fastapi.middleware.cors import CORSMiddleware
 from mangum import Mangum
+
 from handlers import calendar_handler, file_handler, xlsx_handler
 
 
@@ -20,7 +20,7 @@ app = FastAPI(
     docs_url="/docs" if not IS_IN_PROD else None,
     redoc_url="/redoc" if not IS_IN_PROD else None,
 )
-handler = Mangum(app)
+handler = Mangum(app)  # required for AWS Lambda
 
 
 origins = (
@@ -60,4 +60,4 @@ async def get_xlsx(semester: List[dict]):
 
 
 if __name__ == "__main__":
-    uvicorn.run("app:app", host="127.0.0.1", port=8000)
+    uvicorn.run("main:app", host="0.0.0.0", port=8000, reload=True)

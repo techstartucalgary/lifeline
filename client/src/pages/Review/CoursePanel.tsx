@@ -1,20 +1,36 @@
 import { useState } from "react";
 
 import { classnames } from "../../Utilities";
+import AppTopBar, {
+  LeadingNavigation,
+  TrailingIcon,
+  Title,
+  Subtitle,
+} from "../../components/AppTopBar";
+import { IconButton } from "../../components/Button";
 import CourseInfo from "../../components/CourseInfo";
+import EditAssessment from "../../components/EditAssessment";
 import Tabs, { Tab } from "../../components/Tabs";
 import { Assessment, Course } from "../../logic/icsGen";
-import EditAssessment from "../../components/EditAssessment";
 
 import AssessmentsPanel from "./AssessmentsPanel";
 import DocumentPanel from "./DocumentPanel";
 
 interface CoursePanelProp {
   course: Course;
+  left: number;
   onChangeAssessment(assessment: Assessment, index: number): void;
+  onClickBack(): void;
+  onDeleteCourse(): void;
 }
 
-const CoursePanel = ({ course, onChangeAssessment }: CoursePanelProp) => {
+const CoursePanel = ({
+  course,
+  left,
+  onChangeAssessment,
+  onClickBack,
+  onDeleteCourse,
+}: CoursePanelProp) => {
   const [selectedTab, setSelectedTab] = useState<Tab>(Tab.Assessments);
   const [editingAssessment, setEditingAssessment] = useState<{
     assessment: Assessment;
@@ -23,7 +39,45 @@ const CoursePanel = ({ course, onChangeAssessment }: CoursePanelProp) => {
 
   return (
     <>
-      <div className="flex flex-col md:flex-row">
+      <div className="z-10">
+        <AppTopBar
+          className="max-w-9xl mx-auto"
+          style={{ paddingLeft: left }}
+          variant="large"
+        >
+          {/* Icons */}
+          <LeadingNavigation className="block md:hidden">
+            <IconButton
+              className="text-on-surface"
+              icon="arrow_back"
+              onClick={onClickBack}
+            />
+          </LeadingNavigation>
+          <TrailingIcon>
+            <IconButton
+              className="text-on-surface-variant hidden md:block"
+              icon="error"
+            />
+            <IconButton
+              className="text-on-surface-variant hidden md:block"
+              icon="delete"
+              onClick={onDeleteCourse}
+            />
+            <IconButton
+              className="text-on-surface-variant block md:hidden"
+              icon="more_vert"
+            />
+          </TrailingIcon>
+
+          {/* Titles */}
+          <Title>
+            {course.title} {course.number}
+          </Title>
+          <Subtitle>{course.topic}</Subtitle>
+        </AppTopBar>
+      </div>
+
+      <div className="flex flex-col md:flex-row" style={{ paddingLeft: left }}>
         <section className={classnames("w-full md:w-1/2", "p-4")}>
           {(course.hours || course.faculty || course.description) && (
             <CourseInfo
@@ -67,12 +121,19 @@ const CoursePanel = ({ course, onChangeAssessment }: CoursePanelProp) => {
 
         <section
           className={classnames(
-            "p-4",
+            "p-4 mt-2 mr-2",
             "w-full md:w-1/2",
+            "md:h-screen",
+            "overflow-y-auto",
+            "border-x border-y border-dashed border-gray-400 rounded-3xl",
             selectedTab === Tab.Assessments && "hidden md:block"
           )}
         >
-          <DocumentPanel />
+          {course.file ? (
+            <DocumentPanel file={course.file} />
+          ) : (
+            <p>File not found</p>
+          )}
         </section>
       </div>
     </>
