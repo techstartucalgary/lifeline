@@ -4,6 +4,7 @@
     "source.fixAll.tslint": true,
     "source.fixAll.eslint": true,
     "source.fixAll": true,
+    "source.organizeImports": true
   },
   "editor.tabSize": 2,
   "editor.insertSpaces": true,
@@ -15,7 +16,7 @@
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "[python]": {
-    "editor.defaultFormatter": "ms-python.python",
+    "editor.defaultFormatter": "ms-python.python"
   },
   "python.formatting.provider": "black",
   "python.formatting.blackArgs": ["--line-length", "100"],
@@ -26,6 +27,6 @@
   "search.exclude": {
     "**/node_modules": true,
     "**/build": true,
-    "**/.venv*": true,
+    "**/.venv*": true
   }
 }
