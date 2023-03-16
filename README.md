@@ -50,7 +50,7 @@ Lifeline takes the stress out of managing important deadlines for your courses. 
 
 :+1::tada: Thanks for taking the time to contribute! :+1::tada:
 
-Instructions for contributing to Lifeline can be found for [frontend]() and [backend]().
+Instructions for contributing to the Lifeline client and server code can be found in their respective directories.
 
 
 ## [Contributors](https://github.com/techstartucalgary/lifeline/graphs/contributors)

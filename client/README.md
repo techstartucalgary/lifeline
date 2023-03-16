@@ -2,7 +2,7 @@
 
 :+1::tada: Thanks for taking the time to contribute! :+1::tada:
 
-The following is a set of guidelines/instructions for contributing to Lifeline.
+The following is a set of guidelines/instructions for contributing to Lifeline frontend code.
 
 
 ### Running :airplane:
