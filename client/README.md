@@ -1,11 +1,9 @@
-# Contributing to Lifeline
+# Contributing to the frontend
 
 :+1::tada: Thanks for taking the time to contribute! :+1::tada:
 
 The following is a set of guidelines/instructions for contributing to Lifeline.
 
-
-## Frontend Development
 
 ### Running :airplane:
 To run the frontend locally, use the following commands:
@@ -78,17 +76,3 @@ A few more examples:
 ### React Hooks
 
 This library imports [React Hooks](https://github.com/streamich/react-use) for more convenient frontend development. You can find so many useful hooks in this library, so please utilize these hooks over native js approaches. 
-
-
-## Backend Development 
-
-### Steps for Running the backend code
- 
-- Git clone the repo and cd into the server directory
-- After this activate Python's virtual environment (More on this **[here](https://towardsdatascience.com/virtual-environments-104c62d48c54)**
--- If you don't already have virtual environment for the project, run this command in terminal - ```python -m venv .venv```
--- Now to activate the environment, run  ```source .venv/bin/activate```
-- To install all the required pip packages, run ```python -m pip install -r requirements.txt```
-- Now to run the server cd into the `src` directory and run  ```uvicorn app:app --host 0.0.0.0 --port 80```
-- Go to *http://0.0.0.0:80/docs* to see and try all the endpoints
-
