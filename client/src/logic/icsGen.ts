@@ -1,4 +1,4 @@
-import { createEvents, EventAttributes } from "ics";
+import iCal from "ical-generator";
 
 export interface Assessment {
   name: string;
@@ -17,7 +17,7 @@ export interface Course {
   description?: string;
   faculty?: { title: string };
   hours?: string;
-  file: File
+  file: File;
 }
 
 // rawCourse is the JSON object from the server or from local storage, so Dates and Numbers are strings
@@ -52,32 +52,23 @@ export interface Courses extends Array<Course> {
 }
 
 const jsonToICS = (courses: Courses): string => {
-  const events: EventAttributes[] = [];
+  const cal = iCal({
+    name: "My Deadlines",
+    timezone: "America/Edmonton",
+  });
 
   for (const course of courses) {
     for (const assessment of course.assessments) {
-      if (!assessment.date) {
-        continue;
-      }
-      const year = assessment.date.getFullYear();
-      const month = assessment.date.getMonth();
-      const day = assessment.date.getDate();
-      const hours = assessment.date.getHours();
-      const minutes = assessment.date.getMinutes();
-
-      events.push({
-        title: `${course.code} ${course.number} - ${assessment.name} (${assessment.weight}%)`,
-        start: [year, month, day, hours, minutes],
-        duration: { hours: 0, minutes: 0, seconds: 0 },
+      cal.createEvent({
+        start: assessment.date,
+        end: assessment.date,
+        summary: `${course.code} ${course.number} ${assessment.name}`,
+        description: assessment.notes,
       });
     }
   }
 
-  const { value } = createEvents(events);
-  if (value) {
-    return value;
-  }
-  return "error";
+  return cal.toString();
 };
 
 export default jsonToICS;
