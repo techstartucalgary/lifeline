@@ -46,7 +46,7 @@ async def show_calendar():
 
 
 @app.post("/files", status_code=200)
-async def get_deadlines(response: Response, outline_file: UploadFile = File(...)):
+async def get_deadlines(response: Response, outline_file: UploadFile = File(...,max_length=2_000_000)):
     """Returns the extracted dates and info from the uploaded file"""
     return file_handler.handle_file(outline_file, response)
 
