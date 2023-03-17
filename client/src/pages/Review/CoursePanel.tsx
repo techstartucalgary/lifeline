@@ -155,7 +155,7 @@ const CoursePanel = ({
         <SwipeableViews
           index={selectedTab}
           onChangeIndex={(index: number) =>
-            setTimeout(() => setSelectedTab(index), 60)
+            setTimeout(() => setSelectedTab(index), 0)
           }
           disableLazyLoading={true}
           hysteresis={0.8}

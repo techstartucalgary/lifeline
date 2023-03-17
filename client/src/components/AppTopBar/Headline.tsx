@@ -12,6 +12,12 @@ interface HeadlineProp extends Omit<HTMLAttributes<HTMLDivElement>, "title"> {
   subtitleClassName?: string | null;
 }
 
+const normalize = (val: number, min: number, max: number) =>
+  (val - min) / (max - min);
+
+const limit = (val: number, min: number, max: number) =>
+  Math.min(Math.max(val, min), max);
+
 const Headline = forwardRef<HTMLDivElement, HeadlineProp>(
   (
     {
@@ -35,7 +41,8 @@ const Headline = forwardRef<HTMLDivElement, HeadlineProp>(
       };
     });
 
-    console.log(ref);
+    console.log(Math.abs(normalize(window.scrollY, 0, 100)));
+
     return (
       <div
         {...args}
@@ -53,9 +60,16 @@ const Headline = forwardRef<HTMLDivElement, HeadlineProp>(
               className={classnames(
                 "text-on-surface font-headline font-bold",
                 "text-3xl md:text-4xl",
-                "transition-opacity duration-100 ease-emphasized-accelerate",
+                "transition-all duration-200 ease-emphasized origin-bottom-left will-change-transform",
                 titleClassName
               )}
+              style={{
+                transform: `scale(${limit(
+                  1 + normalize(window.scrollY, 0, -window.innerHeight * 5),
+                  1,
+                  1.05
+                )})`,
+              }}
             >
               {title}
             </h1>
