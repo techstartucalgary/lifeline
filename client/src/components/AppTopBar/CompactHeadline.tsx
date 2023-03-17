@@ -58,7 +58,7 @@ const CompactHeadline = ({
                 <div
                   className={classnames(
                     "text-on-surface text-lg will-change-auto font-bold",
-                    "transition-opacity duration-300 md:duration-75",
+                    "transition-opacity duration-200 md:duration-75",
                     titleClassName
                   )}
                   style={{
@@ -79,7 +79,7 @@ const CompactHeadline = ({
               className={classnames(
                 "bg-primary/8 absolute -top-full left-0 right-0 bottom-0",
                 "pointer-events-none z-0",
-                "transition-opacity duration-300 md:duration-75",
+                "transition-opacity duration-200 md:duration-75",
                 "will-change-opacity",
                 elevationClassName
               )}
@@ -91,7 +91,7 @@ const CompactHeadline = ({
         </div>
       </div>
       {/* Placeholder Div */}
-      <div style={{ height: "5.216rem" }} />
+      <div className="opacity-0" style={{ height: "5.216rem" }} />
     </>
   );
 };
