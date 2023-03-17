@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Sticky from "react-stickynode";
 import SwipeableViews from "react-swipeable-views";
+import { useEffectOnce, useUpdate } from "react-use";
 
 import { classnames } from "../../Utilities";
 import AppTopBar, {
@@ -17,6 +18,7 @@ import { Assessment, Course } from "../../logic/icsGen";
 
 import AssessmentsPanel from "./AssessmentsPanel";
 import DocumentPanel from "./DocumentPanel";
+import emojis from "./emojis";
 
 interface CoursePanelProp {
   course: Course;
@@ -25,6 +27,30 @@ interface CoursePanelProp {
   onClickBack(): void;
   onDeleteCourse(): void;
 }
+
+const EmojiEasternEgg = () => {
+  const update = useUpdate();
+
+  useEffectOnce(() => {
+    const render = () => {
+      if (window.scrollY === 0) {
+        update();
+      }
+    };
+    window.addEventListener("scroll", render);
+    return () => {
+      window.removeEventListener("scroll", render);
+    };
+  });
+
+  return (
+    <div className="absolute top-0 left-0 w-full flex flex-row justify-center">
+      <div className="text-3xl">
+        {emojis[Math.floor(Math.random() * emojis.length)]}
+      </div>
+    </div>
+  );
+};
 
 const CoursePanel = ({
   course,
@@ -77,7 +103,11 @@ const CoursePanel = ({
           <Title>
             {course.title} {course.number}
           </Title>
-          <Subtitle>{course.topic}</Subtitle>
+
+          <Subtitle>
+            {course.topic}
+            <EmojiEasternEgg />
+          </Subtitle>
         </AppTopBar>
       </div>
 
