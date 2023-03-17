@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import Sticky from "react-stickynode";
 import SwipeableViews from "react-swipeable-views";
 import { useEffectOnce, useUpdate } from "react-use";
@@ -59,9 +59,6 @@ const CoursePanel = ({
   onClickBack,
   onDeleteCourse,
 }: CoursePanelProp) => {
-  const tabs: Tab[] = [{ name: "Assessments" }, { name: "Document" }];
-
-  const [selectedTab, setSelectedTab] = useState<number>(0);
   const [editingAssessment, setEditingAssessment] = useState<{
     assessment: Assessment;
     index: number;
@@ -174,41 +171,56 @@ const CoursePanel = ({
           </div>
         )}
 
-        <Sticky enabled={true} top=".compact-headline" bottomBoundary={1200}>
-          <Tabs
-            tabs={tabs}
-            tab={selectedTab}
-            onChangeTab={(_, index) => setSelectedTab(index)}
-          />
-        </Sticky>
-
-        <SwipeableViews
-          index={selectedTab}
-          onChangeIndex={(index: number) =>
-            setTimeout(() => setSelectedTab(index), 0)
-          }
-          disableLazyLoading={true}
-          hysteresis={0.8}
-          resistance={true}
-          springConfig={{
-            duration: "0.4s",
-            delay: "0s",
-            easeFunction: "cubic-bezier(0.2, 0.0, 0, 1.0)",
-          }}
-        >
-          <div className="p-4">
-            <AssessmentsPanel
-              assessments={course.assessments}
-              onAssessmentClick={(assessment: Assessment, index: number) => {
-                setEditingAssessment({ assessment, index });
-              }}
-            />
-          </div>
-          <div className="p-4">
-            <DocumentPanel file={course.file} />
-          </div>
-        </SwipeableViews>
+        <AssessmentTabs course={course} />
       </div>
+    </>
+  );
+};
+
+const AssessmentTabs = ({ course }: { course: Course }) => {
+  const tabs: Tab[] = [{ name: "Assessments" }, { name: "Document" }];
+  const [selectedTab, setSelectedTab] = useState<number>(0);
+
+  const AssessmentsPanelMemo = useMemo(() => {
+    return (
+      <AssessmentsPanel
+        assessments={course.assessments}
+        onAssessmentClick={(assessment: Assessment, index: number) => {
+          // setEditingAssessment({ assessment, index });
+        }}
+      />
+    );
+  }, [course.assessments]);
+
+  const DocumentPanelMemo = useMemo(() => {
+    return <DocumentPanel file={course.file} />;
+  }, [course.file]);
+
+  return (
+    <>
+      <Sticky enabled={true} top=".compact-headline" bottomBoundary={1200}>
+        <Tabs
+          tabs={tabs}
+          tab={selectedTab}
+          onChangeTab={(_, index) => setSelectedTab(index)}
+        />
+      </Sticky>
+
+      <SwipeableViews
+        index={selectedTab}
+        onChangeIndex={setSelectedTab}
+        disableLazyLoading={true}
+        hysteresis={0.8}
+        resistance={true}
+        // springConfig={{
+        //   duration: "0.4s",
+        //   delay: "0s",
+        //   easeFunction: "cubic-bezier(0.2, 0.0, 0, 1.0)",
+        // }}
+      >
+        <div className="p-4">{AssessmentsPanelMemo}</div>
+        <div className="p-4">{DocumentPanelMemo}</div>
+      </SwipeableViews>
     </>
   );
 };
