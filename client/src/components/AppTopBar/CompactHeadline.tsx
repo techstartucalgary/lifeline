@@ -1,4 +1,3 @@
-import useScrollPosition from "@react-hook/window-scroll";
 import { HTMLAttributes, ReactElement } from "react";
 import { useEffectOnce, useUpdate } from "react-use";
 
