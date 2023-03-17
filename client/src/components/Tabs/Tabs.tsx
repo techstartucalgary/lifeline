@@ -44,7 +44,7 @@ const Tabs = ({
             <Button
               key={index}
               className={classnames(
-                "w-full p-5 justify-center text-on-surface-variant rounded-none",
+                "w-full p-4.5 justify-center text-on-surface-variant rounded-none",
                 currentTabIndex === index && "text-primary"
               )}
               onClick={() => onChangeTab(item, index)}
