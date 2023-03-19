@@ -1,4 +1,3 @@
-import { classnames } from "../../Utilities";
 import { Assessment } from "../../logic/icsGen";
 import { Button } from "../Button";
 
@@ -19,73 +18,49 @@ const formatDate = (date: Date): string =>
     hour12: false,
   });
 
+const getIcon = (name: string): string => {
+  // If assessment name contains any of the keywords, use the star icon, otherwise use the event icon
+  return name
+    .toLowerCase()
+    .split(" ")
+    .some((word) =>
+      [
+        // Star icon keywords
+        "test",
+        "quiz",
+        "final",
+        "midterm",
+        "exam",
+        "examination",
+        "evaluation",
+        "presentation",
+        "project",
+      ].includes(word)
+    )
+    ? "star"
+    : "event";
+};
+
 const AssessmentCard = ({
   assessment,
   onAssessmentClick,
 }: AssessmentCardProps) => {
   return (
     <Button
-      className={classnames(
-        "w-full",
-        "p-4",
-        "my-1",
-        "rounded-3xl",
-        "bg-primary-95",
-        "hover:bg-primary-90",
-        "transition-all"
-      )}
+      className="w-full p-4 rounded-3xl bg-primary-95 hover:bg-primary-90"
       onClick={() => onAssessmentClick(assessment)}
     >
-      <div className="relative h-[4rem] w-[4rem] flex-shrink-0">
+      <div className="relative h-12 w-12 flex justify-center items-center">
         <img
           src={blob}
+          className="absolute -z-10"
           alt="assessment icon background"
-          className={classnames(
-            "absolute",
-            "top-0",
-            "left-0",
-            "w-full",
-            "h-full"
-          )}
         />
-        <span
-          className={classnames(
-            "material-symbols-outlined",
-            "absolute",
-            "top-1/2",
-            "left-1/2",
-            "transform",
-            "-translate-x-1/2",
-            "-translate-y-1/2",
-            "text-white",
-            "text-3xl"
-          )}
-        >
-          {/* If assessment name contains any of the keywords, use the star icon, otherwise use the event icon */}
-          {assessment.name
-            .toLowerCase()
-            .split(" ")
-            .some((word) =>
-              [
-                // Star icon keywords
-                "test",
-                "quiz",
-                "final",
-                "midterm",
-                "exam",
-                "examination",
-                "evaluation",
-                "presentation",
-                "project",
-              ].includes(word)
-            )
-            ? "star"
-            : "event"}
+        <span className="material-symbols-outlined text-white text-xl">
+          {getIcon(assessment.name)}
         </span>
       </div>
-      <div
-        className={classnames("flex", "flex-col", "items-start", "text-left")}
-      >
+      <div className="flex flex-col items-start text-left">
         <h1 className="font-bold text-sys-on-primary-container">
           {assessment.name}
         </h1>

@@ -63,7 +63,7 @@ const AssessmentsPanel = ({
           </span>
         </Button>
       </div>
-      <ul className="flex flex-col">
+      <ul className="flex flex-col space-y-2">
         <FlatList
           list={assessments}
           renderItem={renderAssessment}
