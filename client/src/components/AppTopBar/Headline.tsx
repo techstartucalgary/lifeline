@@ -1,9 +1,39 @@
+import useScrollPosition from "@react-hook/window-scroll";
 import { ForwardedRef, HTMLAttributes, ReactElement, forwardRef } from "react";
 
 import { classnames } from "../../Utilities";
 
 import { SubtitleProp, TitleProp } from "./Subcomponents";
 
+const normalize = (val: number, min: number, max: number) =>
+  (val - min) / (max - min);
+
+const limit = (val: number, min: number, max: number) =>
+  Math.min(Math.max(val, min), max);
+
+const ReactiveTitle = ({ title, titleClassName }: HeadlineProp) => {
+  const scrollY = useScrollPosition(20);
+
+  return (
+    <h1
+      className={classnames(
+        "text-on-surface font-headline font-bold",
+        "text-3xl md:text-4xl",
+        "transition-all duration-200 ease-emphasized origin-bottom-left will-change-transform",
+        titleClassName
+      )}
+      style={{
+        transform: `scale(${limit(
+          1 + normalize(scrollY, 0, -window.innerHeight * 4),
+          1,
+          1.1
+        )})`,
+      }}
+    >
+      {title}
+    </h1>
+  );
+};
 
 interface HeadlineProp extends Omit<HTMLAttributes<HTMLDivElement>, "title"> {
   title?: ReactElement<TitleProp>;
@@ -14,37 +44,45 @@ interface HeadlineProp extends Omit<HTMLAttributes<HTMLDivElement>, "title"> {
 
 const Headline = forwardRef<HTMLDivElement, HeadlineProp>(
   (
-    { title, titleClassName, subtitle, subtitleClassName, ...args }: HeadlineProp,
+    {
+      title,
+      titleClassName,
+      subtitle,
+      subtitleClassName,
+      ...args
+    }: HeadlineProp,
     ref: ForwardedRef<HTMLDivElement>
   ) => {
     return (
-      <div {...args} className={classnames("overflow-hidden", args.className)} ref={ref}>
+      <div
+        {...args}
+        className={classnames("overflow-hidden", args.className)}
+        ref={ref}
+      >
         <div
           className={classnames(
             "flex flex-row items-center pb-2 bg-surface",
-            "px-4.5 md:px-4",
+            "px-4.5 md:px-4"
           )}
         >
           <div className="grow space-y-1">
-            <h1 className={classnames(
-              "text-on-surface font-headline font-bold", "text-3xl md:text-4xl",
-              "transition-opacity duration-100 ease-emphasized-accelerate opacity-0",
-              titleClassName
-            )}>
-              {title}
-            </h1>
-            <h2 className={classnames(
-              "text-outline font-medium", "text-lg md:text-xl",
-              "transition-opacity duration-100 ease-emphasized-accelerate opacity-0",
-              subtitleClassName
-            )}>
+            <ReactiveTitle title={title} titleClassName={titleClassName} />
+            <h2
+              className={classnames(
+                "text-outline font-medium",
+                "text-lg md:text-xl",
+                "transition-opacity duration-100 ease-emphasized-accelerate",
+                subtitleClassName
+              )}
+            >
               {subtitle}
             </h2>
           </div>
         </div>
       </div>
     );
-  });
+  }
+);
 Headline.displayName = "Headline";
 
 export default Headline;
