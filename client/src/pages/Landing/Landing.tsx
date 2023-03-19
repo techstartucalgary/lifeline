@@ -35,7 +35,7 @@ const FlowStep = ({
       <div className="space-y-1">
         <div
           className={classnames(
-            "font-semibold text-on-surface",
+            "font-semibold text-on-primary-container",
             "text-[1.18rem] sm:text-[1.32rem] md:text-[1.38rem] lg:text-[1.4rem]"
           )}
         >
@@ -43,7 +43,7 @@ const FlowStep = ({
         </div>
         <div
           className={classnames(
-            "text-sys-on-surface/87 leading-6 text-on-surface-variant",
+            "text-sys-on-surface/87 leading-6 text-on-background",
             landingText
           )}
         >
@@ -69,7 +69,7 @@ export default function Landing() {
         <div
           className={classnames(
             "gap-3 grid",
-            "mt-32 sm:mt-20 md:mt-24 lg:mt-28",
+            "mt-32 sm:mt-20 md:mt-24 lg:mt-20",
             "grid-cols-4 sm:grid-cols-8 md:grid-cols-8 lg:grid-cols-12"
           )}
         >
@@ -124,7 +124,7 @@ export default function Landing() {
               <div
                 className={classnames(
                   "text-on-surface-variant mt-4",
-                  "mr-8 sm:mr-0 lg:mr-20",
+                  "mr-8 sm:mr-0 lg:mr-6",
                   landingText
                 )}
               >
