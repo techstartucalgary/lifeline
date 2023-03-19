@@ -32,12 +32,14 @@ const NavigationPanel = ({
   const inputRef = useRef<HTMLInputElement>(null);
 
   const handleExport = () => {
-    const a = document.createElement("a");
-    a.href = `data:text/plain;charset=utf-8,${encodeURIComponent(
-      jsonToICS(courses)
-    )}`;
-    a.download = "deadlines.ics";
-    a.click();
+    const ics = jsonToICS(courses);
+    const blob = new Blob([ics], { type: "text/calendar" });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+
+    link.href = url;
+    link.download = "deadlines.ics";
+    link.click();
   };
 
   return (
