@@ -14,7 +14,7 @@ export enum Tab {
 
 const Tabs = ({ selectedTab, setSelectedTab }: TabsProps) => {
   return (
-    <div className="md:hidden border-b-2">
+    <>
       <div className="w-full flex flex-row">
         <Button
           className={classnames(
@@ -53,7 +53,7 @@ const Tabs = ({ selectedTab, setSelectedTab }: TabsProps) => {
           )}
         />
       </div>
-    </div>
+    </>
   );
 };
 
