@@ -1,4 +1,7 @@
-import { Config as TailwindConfig } from "tailwindcss";
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore-next-line
+import projectConfig from "@tailwind.config";
+import { createBreakpoint } from "react-use";
 import {
   extendTailwindMerge,
   getDefaultConfig,
@@ -6,10 +9,8 @@ import {
   mergeConfigs,
 } from "tailwind-merge";
 import { ClassNameValue } from "tailwind-merge/dist/lib/tw-join";
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore-next-line
-import projectConfig from "@tailwind.config";
-
+import { Config as TailwindConfig } from "tailwindcss";
+import resolveConfig from "tailwindcss/resolveConfig";
 
 const classnames = (...args: ClassNameValue[]) => {
   const extract = (config: TailwindConfig): TailwindMergeConfig => {
@@ -61,4 +62,13 @@ const classnames = (...args: ClassNameValue[]) => {
   return classnames(...args);
 };
 
-export { classnames };
+const config = resolveConfig(projectConfig);
+
+const screens = JSON.parse(JSON.stringify(config.theme?.screens));
+for (const key in screens) {
+  screens[key] = parseInt(screens[key]);
+}
+
+const useBreakpoint = createBreakpoint(screens);
+
+export { classnames, config, useBreakpoint };

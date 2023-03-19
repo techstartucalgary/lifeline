@@ -1,6 +1,7 @@
 import { ForwardedRef, HTMLAttributes, ReactElement, forwardRef } from "react";
 
 import { classnames } from "../../Utilities";
+
 import { SubtitleProp, TitleProp } from "./Subcomponents";
 
 
@@ -20,9 +21,8 @@ const Headline = forwardRef<HTMLDivElement, HeadlineProp>(
       <div {...args} className={classnames("overflow-hidden", args.className)} ref={ref}>
         <div
           className={classnames(
-            "flex flex-row items-center pb-0 bg-surface",
-            "pt-6 md:pt-6",
-            "px-6 md:px-4",
+            "flex flex-row items-center pb-2 bg-surface",
+            "px-4.5 md:px-4",
           )}
         >
           <div className="grow space-y-1">

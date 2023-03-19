@@ -1,11 +1,15 @@
-"""Entry point for the server"""
+"""Entry point for the server. You can run this file directly to start the server locally."""
 
 from os import environ
+from typing import List
+
 import uvicorn
 from fastapi import FastAPI, File, UploadFile, Response
 from fastapi.middleware.cors import CORSMiddleware
 from mangum import Mangum
-from handlers import calendar_handler, file_handler
+
+from handlers import calendar_handler, file_handler, xlsx_handler
+
 
 IS_IN_PROD = "LAMBDA_TASK_ROOT" in dict(environ)
 
@@ -16,7 +20,7 @@ app = FastAPI(
     docs_url="/docs" if not IS_IN_PROD else None,
     redoc_url="/redoc" if not IS_IN_PROD else None,
 )
-handler = Mangum(app)
+handler = Mangum(app)  # required for AWS Lambda
 
 
 origins = (
@@ -47,5 +51,13 @@ async def get_deadlines(response: Response, outline_file: UploadFile = File(...)
     return file_handler.handle_file(outline_file, response)
 
 
+@app.post("/xlsx")
+async def get_xlsx(semester: List[dict]):
+    """Takes as input an array of JSON objects, each containing a course code and list
+    of assessments like in ./data/calendar.json.
+    Returns an XLSX file which is a to-do list for the assessments"""
+    return xlsx_handler.get_xlsx_file(semester)
+
+
 if __name__ == "__main__":
-    uvicorn.run("app:app", host="127.0.0.1", port=8000)
+    uvicorn.run("main:app", host="0.0.0.0", port=8000, reload=True)
