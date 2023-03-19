@@ -1,11 +1,9 @@
-# Contributing to Lifeline
+# Contributing to the frontend
 
 :+1::tada: Thanks for taking the time to contribute! :+1::tada:
 
-The following is a set of guidelines/instructions for contributing to Lifeline.
+The following is a set of guidelines/instructions for contributing to Lifeline frontend code.
 
-
-## Frontend Development
 
 ### Running :airplane:
 To run the frontend locally, use the following commands:
