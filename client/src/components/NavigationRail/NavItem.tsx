@@ -3,19 +3,26 @@ import { ReactNode } from "react";
 import { classnames } from "../../Utilities";
 import { ButtonProps } from "../Button";
 
-interface NavItemProps extends Omit<ButtonProps, "variant" | "color" | "title"> {
+interface NavItemProps
+  extends Omit<ButtonProps, "variant" | "color" | "title"> {
   title?: ReactNode | string;
   icon?: ReactNode | string;
   selected?: boolean;
 }
 
-const NavItem = ({ title, icon, selected = false, onClick, ...args }: NavItemProps) => {
+const NavItem = ({
+  title,
+  icon,
+  selected = false,
+  onClick,
+  ...args
+}: NavItemProps) => {
   return (
     <button
       {...args}
       className={classnames(
         "flex flex-col justify-center items-center group duration-200",
-        args.disabled && "pointer-events-none",
+        args.disabled && "pointer-events-none text-sys-on-surface/[.38]",
         args.className
       )}
       onClick={onClick}
@@ -40,7 +47,8 @@ const NavItem = ({ title, icon, selected = false, onClick, ...args }: NavItemPro
           "text-sm align-middle text-center w-full transition-all",
           "ease-emphasized duration-50 truncate",
           selected && "font-medium"
-        )}>
+        )}
+      >
         {title}
       </p>
     </button>

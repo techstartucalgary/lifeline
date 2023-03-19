@@ -5,9 +5,8 @@ import "react-pdf/dist/esm/Page/TextLayer.css";
 import { useMeasure } from "react-use";
 
 export interface DocumentPanelProps {
-  file: File;
+  file: string;
 }
-
 const DocumentPanel = ({ file }: DocumentPanelProps) => {
   const [numPages, setNumPages] = useState(0);
   const [myRef, { width }] = useMeasure<HTMLDivElement>();
