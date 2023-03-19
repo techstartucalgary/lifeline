@@ -2,11 +2,11 @@
 import axios from "axios";
 import { AnimatePresence, motion } from "framer-motion";
 import {
-  useState,
-  useEffect,
-  useRef,
-  useLayoutEffect,
   useCallback,
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState,
 } from "react";
 import { useBeforeUnload, useParams } from "react-router-dom";
 
@@ -50,6 +50,30 @@ const Review = () => {
     coursesRef.current = newCourses;
   };
 
+  const base64encode = (file: File): Promise<string> => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+
+      reader.onload = () => {
+        const base64String = reader.result?.toString();
+        if (base64String) {
+          resolve(base64String);
+        } else {
+          reject("Error converting file to base64");
+        }
+      };
+      reader.onerror = () => {
+        reject("Error reading file");
+      };
+
+      reader.readAsDataURL(file);
+    });
+  };
+
+  const cacheCourses = () => {
+    localStorage.setItem("courses", JSON.stringify(courses));
+  };
+
   const onOutlineUpload = async (files: File[]) => {
     setLoading(files.map((f: File) => f.name));
 
@@ -57,6 +81,7 @@ const Review = () => {
       const file = files.pop();
       if (!file) continue;
 
+      const fileString = await base64encode(file as File);
       const formData = new FormData();
       formData.append("outline_file", file as File);
 
@@ -71,7 +96,7 @@ const Review = () => {
           course.number = course.number || courses.length + 1;
           course.title = course.title || course.code;
           course.key = `${course.code.toLowerCase()}-${course.number}`;
-          course.file = file;
+          course.file = fileString;
 
           onCoursesChanged(course);
           setCurrentCourse(course);
@@ -127,11 +152,7 @@ const Review = () => {
     }
   }, [courseKeyURLParam]);
 
-  useBeforeUnload(
-    useCallback(() => {
-      localStorage.setItem("courses", JSON.stringify(courses));
-    }, [courses])
-  );
+  useBeforeUnload(useCallback(cacheCourses, [courses]));
 
   useEffect(() => {
     // Update history when current course changes
@@ -145,11 +166,6 @@ const Review = () => {
   // Callback for select course in navigation drawer
   const onCourseClick = (course: Course) => {
     setCurrentCourse(course);
-  };
-
-  // Callback for back arrow in top bar
-  const onClickBack = () => {
-    setCurrentCourse(null);
   };
 
   const onChangeAssessment = (assessment: Assessment, index: number) => {
@@ -216,7 +232,7 @@ const Review = () => {
                 course={currentCourse}
                 left={mainMarginLeft}
                 onChangeAssessment={onChangeAssessment}
-                onClickBack={onClickBack}
+                onClickBack={() => setCurrentCourse(null)}
                 onDeleteCourse={deleteCurrentCourse}
               />
             </main>
