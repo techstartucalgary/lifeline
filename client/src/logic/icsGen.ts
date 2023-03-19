@@ -52,9 +52,18 @@ export interface Courses extends Array<Course> {
 }
 
 const jsonToICS = (courses: Courses): string => {
+  const semester = (() => {
+    const month = new Date().getMonth();
+    if (month >= 8) return "Fall";
+    if (month >= 4) return "Spring/Summer";
+    return "Winter";
+  })();
+
+  const year = new Date().getFullYear();
+
   const cal = iCal({
-    name: "My Deadlines",
-    timezone: "America/Edmonton",
+    name: `${semester} ${year} Deadlines`,
+    timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
   });
 
   for (const course of courses) {
