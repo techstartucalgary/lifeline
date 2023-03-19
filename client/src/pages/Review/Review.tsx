@@ -2,11 +2,11 @@
 import axios from "axios";
 import { AnimatePresence, motion } from "framer-motion";
 import {
-  useState,
-  useEffect,
-  useRef,
-  useLayoutEffect,
   useCallback,
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState,
 } from "react";
 import { useBeforeUnload, useParams } from "react-router-dom";
 
@@ -168,11 +168,6 @@ const Review = () => {
     setCurrentCourse(course);
   };
 
-  // Callback for back arrow in top bar
-  const onClickBack = () => {
-    setCurrentCourse(null);
-  };
-
   const onChangeAssessment = (assessment: Assessment, index: number) => {
     setCourses(
       courses.map((course) => {
@@ -237,7 +232,7 @@ const Review = () => {
                 course={currentCourse}
                 left={mainMarginLeft}
                 onChangeAssessment={onChangeAssessment}
-                onClickBack={onClickBack}
+                onClickBack={() => setCurrentCourse(null)}
                 onDeleteCourse={deleteCurrentCourse}
               />
             </main>
