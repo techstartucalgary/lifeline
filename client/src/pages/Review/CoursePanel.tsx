@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { classnames } from "../../Utilities";
 import AppTopBar, {
@@ -36,6 +36,10 @@ const CoursePanel = ({
     assessment: Assessment;
     index: number;
   } | null>(null);
+
+  useEffect(() => {
+    setEditingAssessment(null);
+  }, [course]);
 
   return (
     <>
@@ -79,54 +83,57 @@ const CoursePanel = ({
 
       <div className="flex flex-col md:flex-row" style={{ paddingLeft: left }}>
         <section className={classnames("w-full md:w-1/2", "p-4")}>
-          {(course.hours || course.faculty || course.description) && (
-            <CourseInfo
-              hours={course.hours}
-              faculty={course.faculty?.title}
-              description={course.description}
+          {editingAssessment ? (
+            <EditAssessment
+              assessment={editingAssessment.assessment}
+              onClose={() => setEditingAssessment(null)}
+              onSave={(assessment: Assessment) => {
+                onChangeAssessment(assessment, editingAssessment.index);
+                setEditingAssessment(null);
+              }}
             />
-          )}
-          <Tabs selectedTab={selectedTab} setSelectedTab={setSelectedTab} />
-          {editingAssessment === null ? (
-            <div
-              className={classnames(
-                "w-full",
-                selectedTab === Tab.Document && "hidden md:block"
-              )}
-            >
-              <AssessmentsPanel
-                assessments={course.assessments}
-                onAssessmentClick={(assessment: Assessment, index: number) => {
-                  setEditingAssessment({ assessment, index });
-                }}
-              />
-            </div>
           ) : (
-            <div
-              className={classnames(
-                selectedTab === Tab.Document && "hidden md:block"
+            <>
+              {(course.hours || course.faculty || course.description) && (
+                <CourseInfo
+                  hours={course.hours}
+                  faculty={course.faculty?.title}
+                  description={course.description}
+                />
               )}
-            >
-              <EditAssessment
-                assessment={editingAssessment.assessment}
-                onClose={() => setEditingAssessment(null)}
-                onSave={(assessment: Assessment) => {
-                  onChangeAssessment(assessment, editingAssessment.index);
-                  setEditingAssessment(null);
-                }}
-              />
-            </div>
+              <div className="md:hidden border-b-2">
+                <Tabs
+                  selectedTab={selectedTab}
+                  setSelectedTab={setSelectedTab}
+                />
+              </div>
+              <div
+                className={classnames(
+                  "w-full",
+                  selectedTab === Tab.Document && "hidden md:block"
+                )}
+              >
+                <AssessmentsPanel
+                  assessments={course.assessments}
+                  onAssessmentClick={(
+                    assessment: Assessment,
+                    index: number
+                  ) => {
+                    setEditingAssessment({ assessment, index });
+                  }}
+                />
+              </div>
+            </>
           )}
         </section>
 
         <section
           className={classnames(
-            "p-4 mr-2",
+            "p-4 mt-2 mr-2",
             "w-full md:w-1/2",
-            "h-screen",
+            "md:h-screen",
             "overflow-y-auto",
-            "overflow-x-hidden",
-            "border-x border-y border-dashed border-gray-400 rounded-3xl w-full mt-2",
+            "border-x border-y border-dashed border-gray-400 rounded-3xl",
             selectedTab === Tab.Assessments && "hidden md:block"
           )}
         >
