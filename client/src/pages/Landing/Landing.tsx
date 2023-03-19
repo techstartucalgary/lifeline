@@ -4,10 +4,8 @@ import { useEffect } from "react";
 import { classnames } from "../../Utilities";
 import { Button } from "../../components/Button";
 import Footer from "../../components/Footer";
-import NavigationBar from "../../components/NavigationBar";
 
 import styles from "./Landing.module.css";
-import blob1 from "./blob1.svg";
 import blob2 from "./blob2.svg";
 import blob3 from "./blob3.svg";
 import blob4 from "./blob4.svg";
@@ -16,16 +14,15 @@ import wfh1 from "./wfh_1.svg";
 import wfh7 from "./wfh_7.svg";
 import wfh8 from "./wfh_8.svg";
 
-const FlowStep = (
-  {
-    title,
-    description,
-    icon
-  }: {
-    title: string;
-    description: string;
-    icon: string;
-  }) => {
+const FlowStep = ({
+  title,
+  description,
+  icon,
+}: {
+  title: string;
+  description: string;
+  icon: string;
+}) => {
   return (
     <div className="flex flex-row space-x-5">
       <div className="grow-0">
@@ -36,15 +33,29 @@ const FlowStep = (
         </div>
       </div>
       <div className="space-y-1">
-        <div className={classnames("font-semibold text-on-surface", "text-[1.18rem] sm:text-[1.32rem] md:text-[1.38rem] lg:text-[1.4rem]")}>{title}</div>
-        <div className={classnames("text-sys-on-surface/87 leading-6 text-on-surface-variant", landingText)}>{description}</div>
+        <div
+          className={classnames(
+            "font-semibold text-on-surface",
+            "text-[1.18rem] sm:text-[1.32rem] md:text-[1.38rem] lg:text-[1.4rem]"
+          )}
+        >
+          {title}
+        </div>
+        <div
+          className={classnames(
+            "text-sys-on-surface/87 leading-6 text-on-surface-variant",
+            landingText
+          )}
+        >
+          {description}
+        </div>
       </div>
     </div>
   );
 };
 
-const landingText = "text-[1.16rem] sm:text-[1.3rem] md:text-[1.36rem] lg:text-1.5xl";
-
+const landingText =
+  "text-[1.16rem] sm:text-[1.3rem] md:text-[1.36rem] lg:text-1.5xl";
 
 export default function Landing() {
   useEffect(() => {
@@ -62,22 +73,35 @@ export default function Landing() {
             "grid-cols-4 sm:grid-cols-8 md:grid-cols-8 lg:grid-cols-12"
           )}
         >
-          <img src={blob2} alt="" className={classnames(styles.blob, "absolute w-[11rem] left-0 top-[28rem] translate-x-[-50%] sm:translate-x-[-50%] lg:translate-x-[-10%] translate-y-[0%]")} aria-hidden={true} />
+          <img
+            src={blob2}
+            alt=""
+            className={classnames(
+              styles.blob,
+              "absolute w-[11rem] left-0 top-[28rem] translate-x-[-50%] sm:translate-x-[-50%] lg:translate-x-[-10%] translate-y-[0%]"
+            )}
+            aria-hidden={true}
+          />
 
           {/* Left section */}
           <div
             className={classnames(
               "flex items-center",
               "col-span-4 sm:col-span-8 md:col-span-8 lg:col-span-7",
-              "text-left sm:text-center lg:text-left",
+              "text-left sm:text-center lg:text-left"
             )}
           >
             <div className="flex flex-col">
-              <div className={classnames("font-semibold tracking-[-0.075rem] sm:tracking-[-0.1rem]", "flex flex-col sm:items-center lg:items-start")}>
+              <div
+                className={classnames(
+                  "font-semibold tracking-[-0.075rem] sm:tracking-[-0.1rem]",
+                  "flex flex-col sm:items-center lg:items-start"
+                )}
+              >
                 <div
                   className={classnames(
                     "font-headline whitespace-nowrap text-primary bg-surface-variant text-xl md:text-2xl",
-                    "py-4 px-6 rounded-full w-fit -rotate-6 text-center",
+                    "py-4 px-6 rounded-full w-fit -rotate-6 text-center"
                   )}
                 >
                   A better way to
@@ -91,15 +115,25 @@ export default function Landing() {
                     styles.shadow
                   )}
                 >
-                  organize<br />deadlines
+                  organize
+                  <br />
+                  deadlines
                 </div>
               </div>
 
-              <div className={classnames("text-on-surface-variant mt-4", "mr-8 sm:mr-0 lg:mr-20", landingText)}>
-                Lifeline takes the stress out of managing important dates and tasks for your courses.
-                In just a few clicks, compile your deadlines from your course outlines,
-                as well as other related tasks into calendar reminders and productivity trackers.
-                Throw yourself a free lifeline today, to save yourself from drowning in deadlines.
+              <div
+                className={classnames(
+                  "text-on-surface-variant mt-4",
+                  "mr-8 sm:mr-0 lg:mr-20",
+                  landingText
+                )}
+              >
+                Lifeline takes the stress out of managing important dates and
+                tasks for your courses. In just a few clicks, compile your
+                deadlines from your course outlines, as well as other related
+                tasks into calendar reminders and productivity trackers. Throw
+                yourself a free lifeline today, to save yourself from drowning
+                in deadlines.
               </div>
 
               <div
@@ -109,8 +143,20 @@ export default function Landing() {
                   "sm:justify-center lg:justify-start"
                 )}
               >
-                <Button to="/app" variant="filled" className="py-5 px-7 hidden sm:block mr-2">Get Started</Button>
-                <Button to="/workflow" variant="text" className="py-5 px-4 -ml-4 -mt-6 sm:ml-0 sm:mt-0">Learn more</Button>
+                <Button
+                  to="/app"
+                  variant="filled"
+                  className="py-5 px-7 hidden sm:block mr-2"
+                >
+                  Get Started
+                </Button>
+                <Button
+                  to="/workflow"
+                  variant="text"
+                  className="py-5 px-4 -ml-4 -mt-6 sm:ml-0 sm:mt-0"
+                >
+                  Learn more
+                </Button>
               </div>
             </div>
           </div>
@@ -120,10 +166,14 @@ export default function Landing() {
             className={classnames(
               "mt-4 sm:mt-12 md:mt-12 lg:mt-0",
               "col-span-4 sm:col-span-8 lg:col-span-5",
-              "flex justify-center lg:justify-start",
+              "flex justify-center lg:justify-start"
             )}
           >
-            <img src={wfh1} className="w-10/12 max-w-sm md:w-8/12 md:max-w-lg lg:scale-110 lg:w-full lg:max-w-full" alt="a girl using laptop and concentrating in work on her desk" />
+            <img
+              src={wfh1}
+              className="w-10/12 max-w-sm md:w-8/12 md:max-w-lg lg:scale-110 lg:w-full lg:max-w-full"
+              alt="a girl using laptop and concentrating in work on her desk"
+            />
           </div>
         </div>
 
@@ -132,10 +182,18 @@ export default function Landing() {
           className={classnames(
             "gap-3 grid",
             "mt-16 sm:mt-20 md:mt-24 lg:mt-48",
-            "grid-cols-4 sm:grid-cols-8 md:grid-cols-8 lg:grid-cols-12",
+            "grid-cols-4 sm:grid-cols-8 md:grid-cols-8 lg:grid-cols-12"
           )}
         >
-          <img src={blob4} alt="" className={classnames(styles.blob, "absolute w-[28rem] right-0 top-[50%] translate-x-[50%] sm:translate-x-[40%] lg:translate-x-[90%] translate-y-[-40%]")} aria-hidden={true} />
+          <img
+            src={blob4}
+            alt=""
+            className={classnames(
+              styles.blob,
+              "absolute w-[28rem] right-0 top-[50%] translate-x-[50%] sm:translate-x-[40%] lg:translate-x-[90%] translate-y-[-40%]"
+            )}
+            aria-hidden={true}
+          />
 
           {/* Left section */}
           <div
@@ -145,10 +203,14 @@ export default function Landing() {
               "mt-12 sm:mt-16 md:mt-20 lg:mt-0",
               "mr-0 sm:mr-0 md:mr-0 lg:mr-10",
               "col-span-4 sm:col-span-8 md:col-span-8 lg:col-span-6",
-              "flex justify-center lg:justify-start",
+              "flex justify-center lg:justify-start"
             )}
           >
-            <img src={wfh7} className="w-10/12 max-w-sm md:w-8/12 md:max-w-lg lg:w-full lg:scale-110 lg:max-w-full" alt="two friends solving puzzle" />
+            <img
+              src={wfh7}
+              className="w-10/12 max-w-sm md:w-8/12 md:max-w-lg lg:w-full lg:scale-110 lg:max-w-full"
+              alt="two friends solving puzzle"
+            />
           </div>
 
           {/* Right section */}
@@ -161,9 +223,21 @@ export default function Landing() {
             )}
           >
             <div className="flex flex-col space-y-9">
-              <FlowStep title="Upload your course syllabus" description="Select all your syllabus in pdf and upload to process" icon="upload_file" />
-              <FlowStep title="Preview and edit" description="Lifeline extracts important information and generate your schedule, and get the chance to preview and make changes" icon="edit" />
-              <FlowStep title="Export your schedule" description="Download your schedule in a variety of formats, including PDF, iCal, and Google Calendar" icon="download" />
+              <FlowStep
+                title="Upload your course syllabus"
+                description="Select all your syllabus in pdf and upload to process"
+                icon="upload_file"
+              />
+              <FlowStep
+                title="Preview and edit"
+                description="Lifeline extracts important information and generate your schedule, and get the chance to preview and make changes"
+                icon="edit"
+              />
+              <FlowStep
+                title="Export your schedule"
+                description="Download your schedule in a variety of formats, including PDF, iCal, and Google Calendar"
+                icon="download"
+              />
             </div>
           </div>
         </div>
@@ -176,48 +250,71 @@ export default function Landing() {
             landingText
           )}
         >
-          <img src={blob3} alt="" className={classnames(styles.blob, "absolute w-[32rem] left-0 top-[50%] translate-x-[-50%] sm:translate-x-[-40%] lg:translate-x-[-90%] translate-y-[-10%]")} aria-hidden={true} />
+          <img
+            src={blob3}
+            alt=""
+            className={classnames(
+              styles.blob,
+              "absolute w-[32rem] left-0 top-[50%] translate-x-[-50%] sm:translate-x-[-40%] lg:translate-x-[-90%] translate-y-[-10%]"
+            )}
+            aria-hidden={true}
+          />
 
           <div className="space-y-2">
             <div className="flex flex-col justify-center items-center">
-              <p className="font-headline font-bold whitespace-nowrap text-primary bg-surface-variant text-2xl py-4 px-6 rounded-full w-fit -rotate-6">Easily integrated into</p>
-              <p className={classnames("text-on-surface font-display uppercase mt-6", "text-1.5xl sm:text-3xl md:text-3xl lg:text-3xl")}>
-              your favourite calendar
+              <p className="font-headline font-bold whitespace-nowrap text-primary bg-surface-variant text-2xl py-4 px-6 rounded-full w-fit -rotate-6">
+                Easily integrated into
+              </p>
+              <p
+                className={classnames(
+                  "text-on-surface font-display uppercase mt-6",
+                  "text-1.5xl sm:text-3xl md:text-3xl lg:text-3xl"
+                )}
+              >
+                your favourite calendar
               </p>
             </div>
             <div className="text-on-surface-variant flex justify-center">
               <p className="lg:w-8/12">
-                Lifeline generates your schedule in a convenient format, allowing you
-                to comfortably share calendar information. Import your schedule
-                details into a digital calendar such as Microsoft Outlook, Google
-                Calendar, or Apple Calendar.
+                Lifeline generates your schedule in a convenient format,
+                allowing you to comfortably share calendar information. Import
+                your schedule details into a digital calendar such as Microsoft
+                Outlook, Google Calendar, or Apple Calendar.
               </p>
             </div>
           </div>
 
           <div className="flex justify-center mt-12">
-            <img src={wfh8} className="w-10/12 max-w-sm md:w-8/12 md:max-w-lg lg:w-6/12 lg:max-w-full" alt="a girl sitting on a stool and working in her laptop by the window" />
+            <img
+              src={wfh8}
+              className="w-10/12 max-w-sm md:w-8/12 md:max-w-lg lg:w-6/12 lg:max-w-full"
+              alt="a girl sitting on a stool and working in her laptop by the window"
+            />
           </div>
         </div>
 
-
         {/* Get Started section */}
         <>
-          <div
-            className={classnames(
-              "text-center",
-              landingText
-            )}
-          >
-            <img src={divider} alt="" aria-hidden={true} className="w-full my-16 sm:my-20 md:my-24 lg:my-28" />
+          <div className={classnames("text-center", landingText)}>
+            <img
+              src={divider}
+              alt=""
+              aria-hidden={true}
+              className="w-full my-16 sm:my-20 md:my-24 lg:my-28"
+            />
             <div className="space-y-2">
-              <p className={classnames("text-on-surface leading-6 font-semibold", "text-1.5xl sm:text-3xl md:text-3xl lg:text-3xl")}>
+              <p
+                className={classnames(
+                  "text-on-surface leading-6 font-semibold",
+                  "text-1.5xl sm:text-3xl md:text-3xl lg:text-3xl"
+                )}
+              >
                 Ready to schedule with ease?
               </p>
               <div className="text-on-surface-variant flex justify-center">
                 <p className="lg:w-8/12">
-                  Start using Lifeline today to take control of your time and never
-                  worry about handling deadlines anymore.
+                  Start using Lifeline today to take control of your time and
+                  never worry about handling deadlines anymore.
                 </p>
               </div>
             </div>
@@ -228,10 +325,8 @@ export default function Landing() {
               <Button
                 to="/app"
                 variant="filled"
-                className={classnames(
-                  "py-5 px-8",
-                  "text-lg sm:text-xl",
-                )}>
+                className={classnames("py-5 px-8", "text-lg sm:text-xl")}
+              >
                 Get Started
               </Button>
             </div>
