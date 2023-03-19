@@ -109,7 +109,7 @@ export default function Landing() {
                 <div
                   className={classnames(
                     "font-display uppercase mt-6",
-                    "text-on-background",
+                    "text-on-primary-container",
                     "text-5xl sm:text-6xl md:text-7xl xl:text-7xl",
                     "pb-2",
                     styles.shadow
@@ -266,7 +266,7 @@ export default function Landing() {
               </p>
               <p
                 className={classnames(
-                  "text-on-surface font-display uppercase mt-6",
+                  "text-on-primary-container font-display uppercase mt-6",
                   "text-1.5xl sm:text-3xl md:text-3xl lg:text-3xl"
                 )}
               >
@@ -303,7 +303,7 @@ export default function Landing() {
             <div className="space-y-2">
               <p
                 className={classnames(
-                  "text-on-surface leading-6 font-semibold",
+                  "text-on-primary-container leading-6 font-semibold font-display",
                   "text-1.5xl sm:text-3xl md:text-3xl lg:text-3xl"
                 )}
               >
