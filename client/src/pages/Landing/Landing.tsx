@@ -128,12 +128,11 @@ export default function Landing() {
                   landingText
                 )}
               >
-                Lifeline takes the stress out of managing important dates and
-                tasks for your courses. In just a few clicks, compile your
-                deadlines from your course outlines, as well as other related
-                tasks into calendar reminders and productivity trackers. Throw
-                yourself a free lifeline today, to save yourself from drowning
-                in deadlines.
+                Lifeline takes the stress out of managing important dates for
+                your courses. In just a few clicks, compile your deadlines from
+                your course outlines into calendar reminders and a handy to-do
+                list. Throw yourself a lifeline today, and never miss a deadline
+                again.
               </div>
 
               <div
@@ -224,18 +223,18 @@ export default function Landing() {
           >
             <div className="flex flex-col space-y-9">
               <FlowStep
-                title="Upload your course syllabus"
-                description="Select all your syllabus in pdf and upload to process"
+                title="Upload your course outlines"
+                description="Upload all your course outlines or syllabuses as PDFs and we'll automatically extract the important dates"
                 icon="upload_file"
               />
               <FlowStep
                 title="Preview and edit"
-                description="Lifeline extracts important information and generate your schedule, and get the chance to preview and make changes"
+                description="Manually edit the extracted dates or add your own custom dates to your schedule"
                 icon="edit"
               />
               <FlowStep
                 title="Export your schedule"
-                description="Download your schedule in a variety of formats, including PDF, iCal, and Google Calendar"
+                description="Once you're satisfied, download your deadlines as an iCal or Excel spreadsheet file"
                 icon="download"
               />
             </div>
@@ -276,10 +275,9 @@ export default function Landing() {
             </div>
             <div className="text-on-surface-variant flex justify-center">
               <p className="lg:w-8/12">
-                Lifeline generates your schedule in a convenient format,
-                allowing you to comfortably share calendar information. Import
-                your schedule details into a digital calendar such as Microsoft
-                Outlook, Google Calendar, or Apple Calendar.
+                Lifeline generates your schedule as an iCal file, which you can
+                easily import into your favourite calendar app. We currently
+                support Google Calendar, Apple Calendar, Outlook, and more.
               </p>
             </div>
           </div>
@@ -313,8 +311,7 @@ export default function Landing() {
               </p>
               <div className="text-on-surface-variant flex justify-center">
                 <p className="lg:w-8/12">
-                  Start using Lifeline today to take control of your time and
-                  never worry about handling deadlines anymore.
+                  Click the link below to get started right now, for free.
                 </p>
               </div>
             </div>
