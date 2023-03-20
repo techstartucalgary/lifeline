@@ -174,7 +174,7 @@ const NavigationPanel = ({
         <AppTopBar variant="medium">
           <AppTopBar.Title>Courses</AppTopBar.Title>
           <AppTopBar.TrailingIcon>
-            <IconButton
+            <AppTopBar.IconButton
               icon="add"
               className="text-on-surface"
               onClick={() => {

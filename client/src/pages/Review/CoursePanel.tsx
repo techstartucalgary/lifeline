@@ -6,8 +6,8 @@ import AppTopBar, {
   TrailingIcon,
   Title,
   Subtitle,
+  IconButton,
 } from "../../components/AppTopBar";
-import { IconButton } from "../../components/Button";
 import CourseInfo from "../../components/CourseInfo";
 import EditAssessment from "../../components/EditAssessment";
 import Tabs, { Tab } from "../../components/Tabs";
