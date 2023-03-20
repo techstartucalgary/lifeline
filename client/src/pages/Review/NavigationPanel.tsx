@@ -91,8 +91,8 @@ const NavigationPanel = ({
 
           <Button
             variant="text"
-            color="primary"
-            className="rounded-[20px] py-4.5 px-5.5 text-primary font-normal"
+            color="secondary"
+            className="rounded-[20px] p-4 text-secondary font-normal"
             onClick={() => {
               inputRef.current?.click();
             }}
@@ -107,7 +107,7 @@ const NavigationPanel = ({
           <Button
             variant="filled"
             color="primary"
-            className="rounded-[20px] py-5 px-5.5"
+            className="rounded-[20px] p-4"
             onClick={handleExport}
             disabled={courses.length === 0 || loading.length > 0}
             icon="save_alt"
