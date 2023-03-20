@@ -23,6 +23,7 @@ const getIcon = (name: string): string => {
   // If assessment name contains any of the keywords, use the star icon, otherwise use the event icon
   return name
     .toLowerCase()
+    .replace(/[^a-z0-9 ]/g, "")
     .split(" ")
     .some((word) =>
       [
@@ -73,10 +74,9 @@ const AssessmentCard = ({
         </div>
       </div>
 
-      <p className="text-on-primary-container">
-        Weight: {assessment.weight}%
-        <br />
-        {assessment.notes}
+      <p className="text-on-primary-container flex flex-col items-start">
+        <p>Weight: {assessment.weight}%</p>
+        <p>{assessment.notes}</p>
       </p>
     </Button>
   );
