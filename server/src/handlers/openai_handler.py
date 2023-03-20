@@ -5,16 +5,15 @@ import os
 
 import openai
 import pdfplumber
-import transformers
 from fastapi import Response, UploadFile, status
 from pdfminer.pdfparser import PDFSyntaxError
+from transformers import GPT2Tokenizer
 
 from .file_handler import get_course_info, get_course_key, save_upload_file_tmp
 
 MAX_TOKENS = 4096
 
-openai.api_key = os.environ.get("OPENAI_API_KEY")
-transformers.logging.set_verbosity_error()  # tokenizer will complain that there are too many tokens
+openai.api_key = os.getenv("OPENAI_API_KEY")
 
 
 def process_file(file: UploadFile, response: Response):
@@ -59,7 +58,7 @@ def process_file(file: UploadFile, response: Response):
 
 def split(text):
     """Divides the text into chunks of at most MAX_TOKENS tokens"""
-    tokenizer = transformers.GPT2Tokenizer.from_pretrained("gpt2")
+    tokenizer = GPT2Tokenizer.from_pretrained("gpt2")
     tokens = tokenizer.encode(text)
     chunks = []
     for i in range(0, len(tokens), MAX_TOKENS):
