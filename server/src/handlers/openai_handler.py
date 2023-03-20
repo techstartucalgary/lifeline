@@ -73,7 +73,7 @@ def get_assessments(text):
     with open("handlers/system-prompt.txt", "r", encoding="utf-8") as file:
         system_prompt = file.read()
 
-    print("Sending request to openai api")
+    print(f"\n\nSending request to openai api: \n\n{text[:100]}...\n\n")
 
     completion = openai.ChatCompletion.create(
         model="gpt-3.5-turbo",
@@ -114,5 +114,11 @@ def get_assessments(text):
             },
         ],
     )
-    assessments = json.loads(completion.choices[0].message.content)
+    try:
+        assessments = json.loads(completion.choices[0].message.content)
+        print(f"Openai api response: \n\n{json.dumps(assessments, indent=2)}\n\n")
+    except json.JSONDecodeError:  # this will catch any unexpected response from the openai api
+        print(f"Bad api response: {completion}")
+        assessments = []
+
     return assessments
