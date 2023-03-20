@@ -1,3 +1,5 @@
+import FlatList from "flatlist-react";
+
 import { classnames } from "../../Utilities";
 import AssessmentCard from "../../components/AssessmentCard";
 import { Button } from "../../components/Button";
@@ -14,6 +16,20 @@ const AssessmentsPanel = ({
   assessments,
   onAssessmentClick,
 }: AssessmentPanelProp) => {
+  const renderAssessment = (assessment: Assessment, index: string) => {
+    return (
+      <li>
+        <AssessmentCard
+          key={index}
+          assessment={assessment}
+          onAssessmentClick={() =>
+            onAssessmentClick(assessment, parseInt(index))
+          }
+        />
+      </li>
+    );
+  };
+
   return (
     <div className="group">
       <div
@@ -47,17 +63,13 @@ const AssessmentsPanel = ({
           </span>
         </Button>
       </div>
-      <ul className="flex flex-col">
-        {assessments
-          .sort((a: Assessment, b: Assessment) => (a.date > b.date ? 1 : -1))
-          .map((assessment, index) => (
-            <li key={index}>
-              <AssessmentCard
-                assessment={assessment}
-                onAssessmentClick={() => onAssessmentClick(assessment, index)}
-              />
-            </li>
-          ))}
+      <ul className="flex flex-col space-y-2">
+        <FlatList
+          list={assessments}
+          renderItem={renderAssessment}
+          renderOnScroll
+          sortBy="assessment.date"
+        />
       </ul>
     </div>
   );
