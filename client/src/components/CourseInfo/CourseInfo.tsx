@@ -13,7 +13,7 @@ interface CourseInfoProps {
 const BentoBase = [
   "flex flex-col items-start gap-0",
   "p-4 my-2 text-left font-normal",
-  "rounded-3xl",
+  "rounded-[20px]",
   "bg-tertiary-95 hover:before:bg-state-layers-on-primary-container/5 focus:before:bg-transparent",
   "transition-all pointer-events-none",
 ];
