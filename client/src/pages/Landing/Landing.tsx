@@ -6,7 +6,6 @@ import { Button } from "../../components/Button";
 import Footer from "../../components/Footer";
 
 import styles from "./Landing.module.css";
-import blob2 from "./blob2.svg";
 import blob3 from "./blob3.svg";
 import blob4 from "./blob4.svg";
 import divider from "./divider.svg";
@@ -35,8 +34,8 @@ const FlowStep = ({
       <div className="space-y-1">
         <div
           className={classnames(
-            "font-semibold text-on-primary-container",
-            "text-[1.18rem] sm:text-[1.32rem] md:text-[1.38rem] lg:text-[1.4rem]"
+            "font-semibold text-on-primary-container font-headline",
+            landingText
           )}
         >
           {title}
@@ -54,8 +53,17 @@ const FlowStep = ({
   );
 };
 
-const landingText =
-  "text-[1.16rem] sm:text-[1.3rem] md:text-[1.36rem] lg:text-1.5xl";
+const landingText = "text-lg sm:text-xl md:text-xl xl:text-xl";
+
+const GetStartedButton = () => (
+  <Button
+    to="/app"
+    variant="filled"
+    className="py-4.5 px-6 hidden sm:block mr-2 text-lg"
+  >
+    Get Started
+  </Button>
+);
 
 export default function Landing() {
   useEffect(() => {
@@ -64,38 +72,28 @@ export default function Landing() {
 
   return (
     <>
-      <div className="max-w-8xl mx-auto px-5 sm:px-14 md:px-16 lg:px-20 relative">
+      <div className="max-w-8xl mx-auto px-5 sm:px-14 md:px-16 xl:px-20 relative">
         {/* Hero section */}
         <div
           className={classnames(
             "gap-3 grid",
-            "mt-32 sm:mt-20 md:mt-24 lg:mt-20",
-            "grid-cols-4 sm:grid-cols-8 md:grid-cols-8 lg:grid-cols-12"
+            "mt-32 sm:mt-20 md:mt-24 xl:mt-20",
+            "grid-cols-4 sm:grid-cols-8 md:grid-cols-8 xl:grid-cols-12"
           )}
         >
-          <img
-            src={blob2}
-            alt=""
-            className={classnames(
-              styles.blob,
-              "absolute w-[11rem] left-0 top-[28rem] translate-x-[-50%] sm:translate-x-[-50%] lg:translate-x-[-10%] translate-y-[0%]"
-            )}
-            aria-hidden={true}
-          />
-
           {/* Left section */}
           <div
             className={classnames(
               "flex items-center",
-              "col-span-4 sm:col-span-8 md:col-span-8 lg:col-span-7",
-              "text-left sm:text-center lg:text-left"
+              "col-span-4 sm:col-span-8 md:col-span-8 xl:col-span-5",
+              "text-left sm:text-center xl:text-left"
             )}
           >
             <div className="flex flex-col">
               <div
                 className={classnames(
                   "font-semibold tracking-[-0.075rem] sm:tracking-[-0.1rem]",
-                  "flex flex-col sm:items-center lg:items-start"
+                  "flex flex-col sm:items-center xl:items-start"
                 )}
               >
                 <div
@@ -110,7 +108,7 @@ export default function Landing() {
                   className={classnames(
                     "font-display uppercase mt-6",
                     "text-on-primary-container",
-                    "text-5xl sm:text-6xl md:text-7xl xl:text-7xl",
+                    "text-4xl sm:text-4xl md:text-5xl xl:text-6xl",
                     "pb-2",
                     styles.shadow
                   )}
@@ -124,7 +122,7 @@ export default function Landing() {
               <div
                 className={classnames(
                   "text-on-surface-variant mt-4",
-                  "mr-8 sm:mr-0 lg:mr-6",
+                  "mr-8 sm:mr-0",
                   landingText
                 )}
               >
@@ -137,22 +135,15 @@ export default function Landing() {
 
               <div
                 className={classnames(
-                  "flex justify-start mt-10",
-                  "text-md sm:text-xl",
-                  "sm:justify-center lg:justify-start"
+                  "flex justify-start mt-10 text-lg",
+                  "sm:justify-center xl:justify-start"
                 )}
               >
-                <Button
-                  to="/app"
-                  variant="filled"
-                  className="py-5 px-7 hidden sm:block mr-2"
-                >
-                  Get Started
-                </Button>
+                <GetStartedButton />
                 <Button
                   to="/workflow"
                   variant="text"
-                  className="py-5 px-4 -ml-4 -mt-6 sm:ml-0 sm:mt-0"
+                  className="py-4.5 px-4 -ml-4 -mt-6 sm:ml-0 sm:mt-0"
                 >
                   Learn more
                 </Button>
@@ -163,14 +154,14 @@ export default function Landing() {
           {/* Right section */}
           <div
             className={classnames(
-              "mt-4 sm:mt-12 md:mt-12 lg:mt-0",
-              "col-span-4 sm:col-span-8 lg:col-span-5",
-              "flex justify-center lg:justify-start"
+              "mt-4 sm:mt-12 md:mt-12 xl:mt-0",
+              "col-span-4 sm:col-span-8 xl:col-span-7",
+              "flex justify-center xl:justify-end"
             )}
           >
             <img
               src={wfh1}
-              className="w-10/12 max-w-sm md:w-8/12 md:max-w-lg lg:scale-110 lg:w-full lg:max-w-full"
+              className="max-w-xl w-full md:w-8/12 xl:w-full"
               alt="a girl using laptop and concentrating in work on her desk"
             />
           </div>
@@ -180,8 +171,8 @@ export default function Landing() {
         <div
           className={classnames(
             "gap-3 grid",
-            "mt-16 sm:mt-20 md:mt-24 lg:mt-48",
-            "grid-cols-4 sm:grid-cols-8 md:grid-cols-8 lg:grid-cols-12"
+            "mt-16 sm:mt-20 md:mt-24 xl:mt-32",
+            "grid-cols-4 sm:grid-cols-8 md:grid-cols-8 xl:grid-cols-12"
           )}
         >
           <img
@@ -189,7 +180,7 @@ export default function Landing() {
             alt=""
             className={classnames(
               styles.blob,
-              "absolute w-[28rem] right-0 top-[50%] translate-x-[50%] sm:translate-x-[40%] lg:translate-x-[90%] translate-y-[-40%]"
+              "absolute w-[28rem] right-0 top-[50%] translate-x-[50%] sm:translate-x-[40%] xl:translate-x-[90%] translate-y-[-40%]"
             )}
             aria-hidden={true}
           />
@@ -198,16 +189,16 @@ export default function Landing() {
           <div
             className={classnames(
               "flex items-center",
-              "order-2 lg:order-1",
-              "mt-12 sm:mt-16 md:mt-20 lg:mt-0",
-              "mr-0 sm:mr-0 md:mr-0 lg:mr-10",
-              "col-span-4 sm:col-span-8 md:col-span-8 lg:col-span-6",
-              "flex justify-center lg:justify-start"
+              "order-2 xl:order-1",
+              "mt-12 sm:mt-16 md:mt-20 xl:mt-0",
+              "mr-0 sm:mr-0 md:mr-0 xl:mr-10",
+              "col-span-4 sm:col-span-8 md:col-span-8 xl:col-span-6",
+              "flex justify-center xl:justify-start"
             )}
           >
             <img
               src={wfh7}
-              className="w-10/12 max-w-sm md:w-8/12 md:max-w-lg lg:w-full lg:scale-110 lg:max-w-full"
+              className="w-10/12 max-w-sm md:w-8/12 md:max-w-lg xl:w-full xl:scale-110 xl:max-w-full"
               alt="two friends solving puzzle"
             />
           </div>
@@ -216,9 +207,9 @@ export default function Landing() {
           <div
             className={classnames(
               "flex items-center",
-              "order-1 lg:order-2",
-              "col-span-4 sm:col-span-8 md:col-span-8 lg:col-span-6",
-              "mx-0 sm:mx-16 md:mx-16 lg:mx-0"
+              "order-1 xl:order-2",
+              "col-span-4 sm:col-span-8 md:col-span-8 xl:col-span-6",
+              "mx-0 sm:mx-16 md:mx-16 xl:mx-0"
             )}
           >
             <div className="flex flex-col space-y-9">
@@ -245,7 +236,7 @@ export default function Landing() {
         <div
           className={classnames(
             "text-center relative",
-            "mt-16 sm:mt-20 md:mt-24 lg:mt-48",
+            "mt-16 sm:mt-20 md:mt-24 xl:mt-32",
             landingText
           )}
         >
@@ -254,7 +245,7 @@ export default function Landing() {
             alt=""
             className={classnames(
               styles.blob,
-              "absolute w-[32rem] left-0 top-[50%] translate-x-[-50%] sm:translate-x-[-40%] lg:translate-x-[-90%] translate-y-[-10%]"
+              "absolute w-[32rem] left-0 top-[50%] translate-x-[-50%] sm:translate-x-[-40%] xl:translate-x-[-90%] translate-y-[-10%]"
             )}
             aria-hidden={true}
           />
@@ -267,14 +258,14 @@ export default function Landing() {
               <p
                 className={classnames(
                   "text-on-primary-container font-display uppercase mt-6",
-                  "text-1.5xl sm:text-3xl md:text-3xl lg:text-3xl"
+                  "text-1.5xl sm:text-3xl md:text-3xl xl:text-3xl"
                 )}
               >
                 your favourite calendar
               </p>
             </div>
             <div className="text-on-surface-variant flex justify-center">
-              <p className="lg:w-8/12">
+              <p className="xl:w-8/12">
                 Lifeline generates your schedule as an iCal file, which you can
                 easily import into your favourite calendar app. We currently
                 support Google Calendar, Apple Calendar, Outlook, and more.
@@ -285,7 +276,7 @@ export default function Landing() {
           <div className="flex justify-center mt-12">
             <img
               src={wfh8}
-              className="w-10/12 max-w-sm md:w-8/12 md:max-w-lg lg:w-6/12 lg:max-w-full"
+              className="w-10/12 max-w-sm md:w-8/12 md:max-w-lg xl:w-6/12 xl:max-w-full"
               alt="a girl sitting on a stool and working in her laptop by the window"
             />
           </div>
@@ -298,34 +289,26 @@ export default function Landing() {
               src={divider}
               alt=""
               aria-hidden={true}
-              className="w-full my-16 sm:my-20 md:my-24 lg:my-28"
+              className="w-full my-10 sm:my-12 md:my-16 xl:my-20"
             />
             <div className="space-y-2">
               <p
                 className={classnames(
-                  "text-on-primary-container leading-6 font-semibold font-display",
-                  "text-1.5xl sm:text-3xl md:text-3xl lg:text-3xl"
+                  "text-on-primary-container leading-6 font-semibold font-display uppercase",
+                  "text-xl sm:text-2.5xl md:text-2.5xl xl:text-2.5xl"
                 )}
               >
                 Ready to schedule with ease?
               </p>
               <div className="text-on-surface-variant flex justify-center">
-                <p className="lg:w-8/12">
-                  Click the link below to get started right now, for free.
-                </p>
+                Click the link below to get started right now, for free.
               </div>
             </div>
           </div>
 
           <div className="sticky bottom-0 sm:relative">
             <div className="flex justify-center pt-8 pb-4">
-              <Button
-                to="/app"
-                variant="filled"
-                className={classnames("py-5 px-8", "text-lg sm:text-xl")}
-              >
-                Get Started
-              </Button>
+              <GetStartedButton />
             </div>
           </div>
         </>
