@@ -32,5 +32,6 @@ button, input[type=text], input[type=button] {
 }
 
 body {
+  font-size: 0.875rem;
   overflow-x: hidden;
 }
