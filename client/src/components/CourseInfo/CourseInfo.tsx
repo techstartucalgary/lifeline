@@ -12,7 +12,7 @@ interface CourseInfoProps {
 
 const base = [
   "flex flex-col items-start gap-0",
-  "px-4 py-4.5 text-left font-normal rounded-[1.375rem]",
+  "p-4 text-left font-normal rounded-[1.375rem]",
   "bg-tertiary-95 hover:before:bg-state-layers-on-primary-container/5 focus:before:bg-transparent",
   "transition-all pointer-events-none",
 ];
