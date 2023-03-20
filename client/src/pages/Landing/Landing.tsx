@@ -25,7 +25,7 @@ const FlowStep = ({
   return (
     <div className="flex flex-row space-x-5">
       <div className="grow-0">
-        <div className="bg-ref-primary-95 rounded-2xl p-5 md:p-6">
+        <div className="bg-ref-primary-95 rounded-2xl h-[4.375rem] w-[4.375rem] flex justify-center items-center">
           <span className="material-symbols-outlined text-3xl font-bold text-on-surface">
             {icon}
           </span>
