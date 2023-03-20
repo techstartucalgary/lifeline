@@ -9,3 +9,4 @@ interface Assessment {
 }
 Date is a string in the format YYYY-MM-DDTHH:MM:SS.000Z.
 The response MUST follow this format: Assessment[]. Trailing commas are not allowed.
+If there are no deadlines, simply respond '[]'.
