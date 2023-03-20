@@ -35,7 +35,7 @@ const CompactHeadline = ({
 
   return (
     <>
-      <div className="fixed top-0 left-0 right-0 h-fit z-10 compact-headline">
+      <div className="fixed top-0 left-0 right-0 z-10 compact-headline h-16">
         <div className="relative">
           <div {...args} className={classnames("bg-surface", args.className)}>
             <div className="flex flex-row px-1 pt-2 pb-1 justify-between">
@@ -80,7 +80,7 @@ const CompactHeadline = ({
         </div>
       </div>
       {/* Placeholder Div */}
-      <div className="opacity-0" style={{ height: "5.216rem" }} />
+      <div className="opacity-0 h-16" />
     </>
   );
 };
