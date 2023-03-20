@@ -52,7 +52,7 @@ async def get_deadlines(response: Response, outline_file: UploadFile = File(...)
 @app.post("/premium-files", status_code=200)
 async def premium_get_deadlines(response: Response, outline_file: UploadFile = File(...)):
     """Returns the extracted dates and info from the uploaded file, uses the openai api"""
-    return openai_handler.get_deadlines(outline_file, response)
+    return openai_handler.process_file(outline_file, response)
 
 
 @app.post("/xlsx")
