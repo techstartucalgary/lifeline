@@ -86,7 +86,7 @@ const Review = () => {
       formData.append("outline_file", file as File);
 
       await axios
-        .post("/files", formData, {
+        .post("/premium-files", formData, {
           headers: { "Content-Type": "multipart/form-data" },
         })
         .then((res) => res.data)
