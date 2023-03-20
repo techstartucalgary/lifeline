@@ -53,7 +53,7 @@ interface Assessment {
     notes?: string;`
 }
 Date is a string in the format YYYY-MM-DDTHH:MM:SS.000Z.
-The response MUST follow this format: Assessment[].
+The response MUST follow this format: Assessment[]. Trailing commas are not allowed.
 """,
                 },
                 {
@@ -71,13 +71,13 @@ The response MUST follow this format: Assessment[].
     {
         "name": "Assignment 2",
         "date": "2020-10-30T23:59:00.000Z",
-        "weight": "10",
+        "weight": "10"
     },
     {
         "name": "Assignment 3",
         "date": "2020-11-06T23:59:00.000Z",
         "weight": "10",
-        "notes": "Late submissions will receive a full letter grade penalty",
+        "notes": "Late submissions will receive a full letter grade penalty"
     }      
 ]
 """,
