@@ -192,7 +192,7 @@ const NavigationPanel = ({
                 title={`${course.code} ${course.number}`}
                 supportingText={course.topic}
                 metadata={
-                  <p className="rounded-full bg-tertiary-95 py-2 w-8">
+                  <p className="rounded-full bg-tertiary-95 py-1.5 w-7">
                     {course.assessments.length}
                   </p>
                 }
