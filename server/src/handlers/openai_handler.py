@@ -36,25 +36,19 @@ def get_deadlines(file: UploadFile, response: Response):
             full_text = ""
             for page in pdf.pages:
                 full_text += page.extract_text()
-            print(full_text)
+            print("Text extracted from pdf")
+
+        with open("handlers/system-prompt.txt", "r", encoding="utf-8") as file:
+            system_prompt = file.read()
+
+        print("Sending request to openai api")
 
         completion = openai.ChatCompletion.create(
             model="gpt-3.5-turbo",
             messages=[
                 {
                     "role": "system",
-                    "content": """You are an algorithm designed to extract deadlines from text.
-The input text is scraped from a pdf, so it is possible that the format will be strange.
-Your responses will be parsed into an array of Typescript objects implementing the following interface:
-interface Assessment {
-    name: string;
-    date: Date;
-    weight?: number;`
-    notes?: string;`
-}
-Date is a string in the format YYYY-MM-DDTHH:MM:SS.000Z.
-The response MUST follow this format: Assessment[]. Trailing commas are not allowed.
-""",
+                    "content": system_prompt,
                 },
                 {
                     "role": "user",
