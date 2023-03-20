@@ -4,12 +4,15 @@ from os import environ
 from typing import List
 
 import uvicorn
+from dotenv.main import load_dotenv
 from fastapi import FastAPI, File, Response, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
 from handlers import calendar_handler, file_handler, openai_handler, xlsx_handler
 from mangum import Mangum
 
 IS_IN_PROD = "LAMBDA_TASK_ROOT" in dict(environ)
+
+load_dotenv()
 
 app = FastAPI(
     title="Lifeline Server",

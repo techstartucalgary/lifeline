@@ -5,7 +5,6 @@ import os
 
 import openai
 import pdfplumber
-from dotenv.main import load_dotenv
 from fastapi import Response, UploadFile, status
 from pdfminer.pdfparser import PDFSyntaxError
 from transformers import GPT2Tokenizer
@@ -13,7 +12,6 @@ from transformers import GPT2Tokenizer
 from .file_handler import get_course_info, get_course_key, save_upload_file_tmp
 
 MAX_TOKENS = 4096
-load_dotenv()
 
 openai.api_key = os.environ.get("OPENAI_API_KEY")
 
