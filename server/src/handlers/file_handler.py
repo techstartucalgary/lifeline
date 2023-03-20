@@ -1,24 +1,24 @@
 """Handles the file upload and extraction of assessments from the file"""
 
+import json
+import pickle
+import shutil
 from collections import defaultdict
 from datetime import datetime
-import json
-import shutil
 from pathlib import Path
-import pickle
 from tempfile import NamedTemporaryFile
-from typing import List, Optional, Set, Dict
-from fastapi import Response, UploadFile, status
+from typing import Dict, List, Optional, Set
+
 import pdfplumber
 from dateparser.search import search_dates
+from fastapi import Response, UploadFile, status
 from pdfminer.pdfparser import PDFSyntaxError
-
 
 # supported course codes taken from
 # https://www.ucalgary.ca/pubs/calendar/current/course-desc-main.html
 
 
-def cache_course_codes() -> Set[str]:
+def load_course_codes() -> Set[str]:
     """
     Returns a set of all course codes
     """
@@ -27,10 +27,10 @@ def cache_course_codes() -> Set[str]:
     return course_codes
 
 
-COURSE_CODES = cache_course_codes()
+COURSE_CODES = load_course_codes()
 
 
-def cache_course_info() -> defaultdict:
+def load_course_info() -> defaultdict:
     """
     Returns a dictionary of course info for all courses
     """
@@ -71,7 +71,7 @@ def cache_course_info() -> defaultdict:
     return course_infos
 
 
-COURSE_INFOS = cache_course_info()
+COURSE_INFOS = load_course_info()
 
 
 def get_course_key(pdf: pdfplumber.pdf.PDF):
@@ -95,9 +95,18 @@ def get_course_key(pdf: pdfplumber.pdf.PDF):
     return course_code, course_number
 
 
-def get_course_info(course_key: str) -> Optional[Dict]:
-    """Returns the course info for a given course key"""
-    return COURSE_INFOS[course_key]
+def course_metadata(course, pdf):
+    """Retrieves data other than assessments from the pdf and adds it to the course"""
+    course_code, course_number = get_course_key(pdf)
+    course["code"] = course_code
+    course["number"] = course_number
+
+    if course_code and course_number:
+        course_key = f"{course_code} {course_number}"
+        course_info = COURSE_INFOS[course_key]
+        if course_info is not None:
+            course = {**course, **course_info}
+    return course
 
 
 def read_tables(pdf: pdfplumber.pdf.PDF) -> List[List[List[Optional[str]]]]:
@@ -110,6 +119,7 @@ def read_tables(pdf: pdfplumber.pdf.PDF) -> List[List[List[Optional[str]]]]:
 
     print("Found", len(tables), "tables")
     return tables
+
 
 def subtract_text(path):
     """Returns all plain text contained within pdf with the exception of the tables"""
@@ -188,16 +198,7 @@ def get_course(tmp_path: Path) -> Dict:
     with pdfplumber.open(tmp_path) as pdf:
         course = {}
 
-        # Extract course code and number from the first page
-        course_code, course_number = get_course_key(pdf)
-        course["code"] = course_code
-        course["number"] = course_number
-
-        if course_code and course_number:
-            course_key = f"{course_code} {course_number}"
-            course_info = get_course_info(course_key)
-            if course_info is not None:
-                course = {**course, **course_info}
+        course = course_metadata(course, pdf)
 
         # Extract assessments from all tables
         assessments = []

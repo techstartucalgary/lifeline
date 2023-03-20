@@ -9,7 +9,7 @@ from fastapi import Response, UploadFile, status
 from pdfminer.pdfparser import PDFSyntaxError
 from transformers import GPT2Tokenizer
 
-from .file_handler import get_course_info, get_course_key, save_upload_file_tmp
+from .file_handler import save_upload_file_tmp, course_metadata
 
 MAX_TOKENS = 4096
 
@@ -23,15 +23,7 @@ def process_file(file: UploadFile, response: Response):
         tmp_path = save_upload_file_tmp(file)
         print(f"Processing file: {tmp_path}")
         with pdfplumber.open(tmp_path) as pdf:
-            course_code, course_number = get_course_key(pdf)
-            course["code"] = course_code
-            course["number"] = course_number
-
-            if course_code and course_number:
-                course_key = f"{course_code} {course_number}"
-                course_info = get_course_info(course_key)
-                if course_info is not None:
-                    course = {**course, **course_info}
+            course = course_metadata(course, pdf)
 
             full_text = ""
             for page in pdf.pages:
