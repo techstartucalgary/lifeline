@@ -14,13 +14,52 @@ from dateparser.search import search_dates
 from fastapi import Response, UploadFile, status
 from pdfminer.pdfparser import PDFSyntaxError
 
-# supported course codes taken from
-# https://www.ucalgary.ca/pubs/calendar/current/course-desc-main.html
+from .openai_api_handler import get_assessments_from_text
+
+
+def handle_file(file: UploadFile, response: Response, premium: bool = False):
+    """Handles one file"""
+    try:
+        tmp_path = save_temp_file(file)
+        print(f"Processing file: {tmp_path}")
+        with pdfplumber.open(tmp_path) as pdf:
+            course = get_course_info(pdf)
+
+            if premium:
+                assessments = get_assessments_from_text(pdf)
+            else:
+                assessments = get_assessments_from_tables(pdf)
+
+            course["assessments"] = assessments
+        print(f"Finished processing file: {tmp_path}")
+    except PDFSyntaxError as ex:
+        print(f"Error processing file: {ex}")
+        response.status_code = status.HTTP_422_UNPROCESSABLE_ENTITY
+        return {"Error processing file": ex.args}
+    finally:
+        if tmp_path:
+            tmp_path.unlink()
+
+    return course
+
+
+def save_temp_file(upload_file: UploadFile):
+    """Handles creating a temp and returns the temporary path for it"""
+    try:
+        suffix = Path(upload_file.filename).suffix
+        with NamedTemporaryFile(delete=False, suffix=suffix) as tmp:
+            shutil.copyfileobj(upload_file.file, tmp)
+            tmp_path = Path(tmp.name)
+    finally:
+        upload_file.file.close()
+    return tmp_path
 
 
 def load_course_codes() -> Set[str]:
     """
     Returns a set of all course codes
+    supported course codes taken from
+    https://www.ucalgary.ca/pubs/calendar/current/course-desc-main.html
     """
     with open("./data/course_codes.pkl", "rb") as file:
         course_codes = pickle.load(file)
@@ -95,8 +134,10 @@ def get_course_key(pdf: pdfplumber.pdf.PDF):
     return course_code, course_number
 
 
-def course_metadata(course, pdf):
+def get_course_info(pdf: pdfplumber.pdf.PDF):
     """Retrieves data other than assessments from the pdf and adds it to the course"""
+    course = {}
+
     course_code, course_number = get_course_key(pdf)
     course["code"] = course_code
     course["number"] = course_number
@@ -109,40 +150,26 @@ def course_metadata(course, pdf):
     return course
 
 
-def read_tables(pdf: pdfplumber.pdf.PDF) -> List[List[List[Optional[str]]]]:
+def get_assessments_from_tables(pdf: pdfplumber.pdf.PDF):
+    """Extracts assessments from all tables in a pdf"""
+    assessments = []
+    tables = get_all_tables(pdf)
+    for table in tables:
+        print("Extracting assessments from table")
+        assessments.extend(extract_assessments(table))
+    return assessments
+
+
+def get_all_tables(pdf: pdfplumber.pdf.PDF) -> List[List[List[Optional[str]]]]:
     """Returns all tables in a pdf as a list of 2d lists"""
     tables = []
     print("pdf.pages", pdf.pages)
     for page in pdf.pages:
         print("Extracting tables from page", page.page_number)
-        tables.extend(page.extract_tables())
+        tables += page.extract_tables()
 
     print("Found", len(tables), "tables")
     return tables
-
-
-def subtract_text(path):
-    """Returns all plain text contained within pdf with the exception of the tables"""
-    # Extract the text on the page
-    with pdfplumber.open(path) as pdf:
-        full_text = ""
-        for page in pdf.pages:
-            page_text = page.extract_text()
-            if not page_text:
-                continue
-            full_text += page_text + "\n"
-            # Extract the table boundaries
-            table_bboxes = [table.bbox for table in page.find_tables()]
-            # Remove the text within the table boundaries
-            print("The table bbox length of list is", len(table_bboxes))
-            # While there are still table coordinates, continue to crop
-            if table_bboxes:
-                cropped_text_blocks = []
-                for bbox in table_bboxes:
-                    cropped_text_blocks.append(page.crop(bbox).extract_text() + "\n")
-                    for text_block in cropped_text_blocks:
-                        full_text = full_text.replace(text_block, "")
-    return full_text
 
 
 def extract_assessments(table: List[List[Optional[str]]]) -> List[Dict]:
@@ -191,51 +218,24 @@ def extract_assessments(table: List[List[Optional[str]]]) -> List[Dict]:
     return assessments
 
 
-def get_course(tmp_path: Path) -> Dict:
-    """Compiles assessments into the correct format and returns
-    the body of the response"""
-
-    with pdfplumber.open(tmp_path) as pdf:
-        course = {}
-
-        course = course_metadata(course, pdf)
-
-        # Extract assessments from all tables
-        assessments = []
-        tables = read_tables(pdf)
-        for table in tables:
-            print("Extracting assessments from table")
-            assessments.extend(extract_assessments(table))
-        course["assessments"] = assessments
-    return course
-
-
-def save_upload_file_tmp(upload_file: UploadFile):
-    """Handles creating a temp and returns the temporary path for it"""
-    try:
-        suffix = Path(upload_file.filename).suffix
-        with NamedTemporaryFile(delete=False, suffix=suffix) as tmp:
-            shutil.copyfileobj(upload_file.file, tmp)
-            tmp_path = Path(tmp.name)
-    finally:
-        upload_file.file.close()
-    return tmp_path
-
-
-def handle_file(file: UploadFile, response: Response):
-    """Handles one file"""
-    tmp_path = None
-    try:
-        tmp_path = save_upload_file_tmp(file)
-        print(f"Processing file: {tmp_path}")
-        course = get_course(tmp_path)
-        print(f"Finished processing file: {tmp_path}")
-    except PDFSyntaxError as ex:
-        print(f"Error processing file: {ex}")
-        response.status_code = status.HTTP_422_UNPROCESSABLE_ENTITY
-        return {"Error processing file": ex.args}
-    finally:
-        if tmp_path:
-            tmp_path.unlink()
-
-    return course
+def subtract_text(pdf: pdfplumber.pdf.PDF):
+    """Returns all plain text contained within pdf with the exception of the tables"""
+    # Extract the text on the page
+    full_text = ""
+    for page in pdf.pages:
+        page_text = page.extract_text()
+        if not page_text:
+            continue
+        full_text += page_text + "\n"
+        # Extract the table boundaries
+        table_bboxes = [table.bbox for table in page.find_tables()]
+        # Remove the text within the table boundaries
+        print("The table bbox length of list is", len(table_bboxes))
+        # While there are still table coordinates, continue to crop
+        if table_bboxes:
+            cropped_text_blocks = []
+            for bbox in table_bboxes:
+                cropped_text_blocks.append(page.crop(bbox).extract_text() + "\n")
+                for text_block in cropped_text_blocks:
+                    full_text = full_text.replace(text_block, "")
+    return full_text

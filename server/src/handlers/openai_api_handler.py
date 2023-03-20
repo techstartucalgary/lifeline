@@ -4,48 +4,11 @@ import json
 import os
 
 import openai
-import pdfplumber
-from fastapi import Response, UploadFile, status
-from pdfminer.pdfparser import PDFSyntaxError
 from transformers import GPT2Tokenizer
-
-from .file_handler import save_upload_file_tmp, course_metadata
 
 MAX_TOKENS = 4096
 
 openai.api_key = os.getenv("OPENAI_API_KEY")
-
-
-def process_file(file: UploadFile, response: Response):
-    """Extracts deadlines from uploaded file using the openai api"""
-    course = {}
-    try:
-        tmp_path = save_upload_file_tmp(file)
-        print(f"Processing file: {tmp_path}")
-        with pdfplumber.open(tmp_path) as pdf:
-            course = course_metadata(course, pdf)
-
-            full_text = ""
-            for page in pdf.pages:
-                full_text += page.extract_text()
-            print("Text extracted from pdf")
-
-        chunks = split(full_text)
-        print(f"Split text into {len(chunks)} chunks")
-
-        assessments = []
-        for chunk in chunks:
-            assessments += get_assessments(chunk)
-
-        course["assessments"] = assessments
-
-        return course
-    except PDFSyntaxError:
-        response.status_code = status.HTTP_415_UNSUPPORTED_MEDIA_TYPE
-        return {"detail": "Unsupported file type"}
-    finally:
-        if tmp_path:
-            tmp_path.unlink()
 
 
 def split(text):
@@ -110,5 +73,22 @@ def get_assessments(text):
     except json.JSONDecodeError:  # this will catch any unexpected response from the openai api
         print(f"Bad api response: {completion}")
         assessments = []
+
+    return assessments
+
+
+def get_assessments_from_text(pdf):
+    """Processes a pdf and returns the assessments found in it"""
+    full_text = ""
+    for page in pdf.pages:
+        full_text += page.extract_text()
+    print("Text extracted from pdf")
+
+    chunks = split(full_text)
+    print(f"Split text into {len(chunks)} chunks")
+
+    assessments = []
+    for chunk in chunks:
+        assessments += get_assessments(chunk)
 
     return assessments
