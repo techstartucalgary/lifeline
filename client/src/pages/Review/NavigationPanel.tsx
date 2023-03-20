@@ -122,7 +122,7 @@ const NavigationPanel = ({
             icon="save_alt"
             variant="filled"
             color="primary"
-            className="rounded-2xl text-center px-0 mt-4 mb-6 w-16 h-16 mx-auto"
+            className="rounded-2xl text-center px-0 mt-4 mb-7 w-14 h-14 mx-auto"
             onClick={handleExport}
           />
 
@@ -164,7 +164,7 @@ const NavigationPanel = ({
             icon="add"
             variant="text"
             color="primary"
-            className="rounded-2xl mx-2.5 px-4 py-1 text-center"
+            className="rounded-2xl mx-auto px-4 py-1 text-center"
             iconClassName="text-on-primary-container text-3xl md:text-3xl"
             disabled={loading.length > 0}
           />

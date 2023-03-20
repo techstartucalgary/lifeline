@@ -29,8 +29,9 @@ const NavItem = ({
     >
       <div
         className={classnames(
-          "text-on-primary-container flex flex-col px-5.5 py-1 h-9 font-norma relative overflow-hidden",
-          "material-symbols-outlined text-xl rounded-full mb-1",
+          "text-on-primary-container flex flex-col h-8 w-14 font-norma relative overflow-hidden",
+          "material-symbols-outlined text-lg rounded-full mb-1",
+          "flex justify-center items-center",
 
           "before:absolute before:top-0 before:bottom-0 before:left-0 before:right-0",
           "before:group-hover:bg-state-layers-on-surface/8 before:transition-all",
@@ -44,7 +45,7 @@ const NavItem = ({
       </div>
       <p
         className={classnames(
-          "text-sm align-middle text-center w-full transition-all",
+          "text-xs align-middle text-center w-full transition-all truncate",
           "ease-emphasized duration-50 truncate",
           selected && "font-medium"
         )}
