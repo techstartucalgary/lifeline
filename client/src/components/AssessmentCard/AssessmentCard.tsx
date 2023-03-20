@@ -74,10 +74,10 @@ const AssessmentCard = ({
         </div>
       </div>
 
-      <p className="text-on-primary-container flex flex-col items-start">
+      <div className="text-on-primary-container flex flex-col items-start">
         <p>Weight: {assessment.weight}%</p>
         <p>{assessment.notes}</p>
-      </p>
+      </div>
     </Button>
   );
 };

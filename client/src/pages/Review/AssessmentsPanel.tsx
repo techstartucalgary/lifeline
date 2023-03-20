@@ -18,9 +18,8 @@ const AssessmentsPanel = ({
 }: AssessmentPanelProp) => {
   const renderAssessment = (assessment: Assessment, index: string) => {
     return (
-      <li>
+      <li key={index}>
         <AssessmentCard
-          key={index}
           assessment={assessment}
           onAssessmentClick={() =>
             onAssessmentClick(assessment, parseInt(index))
@@ -68,7 +67,7 @@ const AssessmentsPanel = ({
           list={assessments}
           renderItem={renderAssessment}
           renderOnScroll
-          sortBy="assessment.date"
+          sortBy="date"
         />
       </ul>
     </div>
