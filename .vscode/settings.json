@@ -22,7 +22,7 @@
   "python.formatting.blackArgs": ["--line-length", "100"],
   "python.linting.enabled": true,
   "python.linting.pylintEnabled": true,
-  "python.analysis.typeCheckingMode": "basic",
+  "python.analysis.typeCheckingMode": "off",
   "git.alwaysSignOff": true,
   "search.exclude": {
     "**/node_modules": true,
