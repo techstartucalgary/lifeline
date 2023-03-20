@@ -60,21 +60,21 @@ def get_deadlines(file: UploadFile, response: Response):
                 },
                 {
                     "role": "assistant",
-                    "content": """
-[
-    {
-        "name": "Assignment 2",
-        "date": "2020-10-30T23:59:00.000Z",
-        "weight": "10"
-    },
-    {
-        "name": "Assignment 3",
-        "date": "2020-11-06T23:59:00.000Z",
-        "weight": "10",
-        "notes": "Late submissions will receive a full letter grade penalty"
-    }      
-]
-""",
+                    "content": json.dumps(
+                        [
+                            {
+                                "name": "Assignment 2",
+                                "date": "2020-10-30T23:59:00.000Z",
+                                "weight": "10",
+                            },
+                            {
+                                "name": "Assignment 3",
+                                "date": "2020-11-06T23:59:00.000Z",
+                                "weight": "10",
+                                "notes": "Late submission will receive a full letter grade penalty",
+                            },
+                        ]
+                    ),
                 },
                 {
                     "role": "user",
