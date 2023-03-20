@@ -52,7 +52,7 @@ const CoursePanel = ({
           {/* Icons */}
           <LeadingNavigation className="block md:hidden">
             <IconButton
-              className="text-on-surface"
+              className="text-on-surface mr-1.5"
               icon="arrow_back"
               onClick={onClickBack}
             />
