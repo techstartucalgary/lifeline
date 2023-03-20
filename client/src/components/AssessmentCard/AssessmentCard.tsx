@@ -74,7 +74,7 @@ const AssessmentCard = ({
       </div>
 
       <p className="text-on-primary-container">
-        Weight: {assessment.weight}
+        Weight: {assessment.weight}%
         <br />
         {assessment.notes}
       </p>
