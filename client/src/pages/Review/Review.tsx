@@ -22,13 +22,17 @@ import { transformTemplate, variants } from "./transitions";
 const Review = () => {
   const [loading, setLoading] = useState<string[]>([]);
   const breakpoint = useBreakpoint();
+  const navigate = useNavigate();
 
   const [courses, setCourses] = useState<Courses>([]);
-  const [currentCourse, setCurrentCourse] = useState<Course | null>(null);
   const coursesRef = useRef(courses);
   const { courseKey: courseKeyURLParam } = useParams<{
     courseKey: string | undefined;
   }>();
+
+  const currentCourse = courses.find(
+    (course) => course.key === courseKeyURLParam
+  );
 
   const deleteCurrentCourse = () => {
     setCourses(
@@ -36,8 +40,8 @@ const Review = () => {
     );
     coursesRef.current = coursesRef.current.filter(
       (course) => course.key !== currentCourse?.key
-    );
-    setCurrentCourse(null);
+    ) || null;
+    navigate("/app");
   };
 
   const onCoursesChanged = (newCourse: Course) => {
@@ -100,7 +104,6 @@ const Review = () => {
           course.file = fileString;
 
           onCoursesChanged(course);
-          setCurrentCourse(course);
         })
         .catch((error) => {
           console.log(error);
@@ -140,22 +143,9 @@ const Review = () => {
     const parsedCourses: Courses = JSON.parse(foundCourses).map(parseCourse);
     setCourses(parsedCourses);
     coursesRef.current = parsedCourses;
-
-    // Set current course based on URL
-    if (courseKeyURLParam) {
-      const course = parsedCourses.find(
-        (course) => course.key === courseKeyURLParam
-      );
-
-      if (course) {
-        setCurrentCourse(course);
-      }
-    }
   }, [courseKeyURLParam]);
 
   useBeforeUnload(useCallback(cacheCourses, [courses]));
-
-  const navigate = useNavigate();
 
   // Callback for select course in navigation drawer
   const onCourseClick = (course: Course) => {
@@ -226,7 +216,8 @@ const Review = () => {
                 course={currentCourse}
                 left={mainMarginLeft}
                 onChangeAssessment={onChangeAssessment}
-                onClickBack={() => setCurrentCourse(null)}
+                // onClickBack={() => setCurrentCourse(null)}
+                onClickBack={() => navigate("/app")}
                 onDeleteCourse={deleteCurrentCourse}
               />
             </main>
