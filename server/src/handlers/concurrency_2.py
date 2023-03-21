@@ -1,14 +1,14 @@
 """Handles the 'premium-files' route which uses the openai api"""
 
-import asyncio
 import json
 import os
 from concurrent.futures import ThreadPoolExecutor
 
 import openai
+import pdfplumber
 from transformers import GPT2Tokenizer
 
-MAX_TOKENS = 3  # needs to account for the system prompt
+MAX_TOKENS = 2100  # needs to account for the system prompt
 
 openai.api_key = "sk-"
 
@@ -19,7 +19,6 @@ def split(text):
     """Divides the text into chunks of at most MAX_TOKENS tokens"""
     tokenizer = GPT2Tokenizer.from_pretrained("gpt2")
     tokens = tokenizer.encode(text)
-    print(f"tokens: {tokens}")
     chunks = []
     for i in range(0, len(tokens), MAX_TOKENS):
         chunks.append(tokenizer.decode(tokens[i : i + MAX_TOKENS]))
@@ -100,24 +99,21 @@ Extract deadlines from the following text:
     return assessments
 
 
-async def get_assessments_from_text(text):
+def get_assessments_from_text(pdf):
     """Returns the extracted deadlines from the text using the openai api"""
-    chunks = split(text)
+    full_text = ""
+    for page in pdf.pages:
+        full_text += page.extract_text()
+    print("Extracted text from pdf")
+
+    chunks = split(full_text)
     print(f"Split text into {len(chunks)} chunks")
 
-    # process 2 chunks at a time
-    tasks = []
-    tasks.append(executor.submit(get_assessments, "Assignment 2 due on 2020-10-30 at 11:59pm"))
-    tasks.append(
-        executor.submit(
-            get_assessments,
-            "Assignment 3 is due a week after Assignment 2 and late submissions will receive a full letter grade penalty",
-        )
-    )
+    tasks = [executor.submit(get_assessments, chunk) for chunk in chunks]
 
     assessments = []
     for task in tasks:
-        assessments.append(task.result())
+        assessments += task.result()
 
     print(json.dumps(assessments, indent=4))
     return assessments
@@ -125,5 +121,6 @@ async def get_assessments_from_text(text):
 
 # call the get_assessments_from_text function to test it
 if __name__ == "__main__":
-    FULL_TEXT = "Hello world how are you"
-    asyncio.run(get_assessments_from_text(FULL_TEXT))
+    FULL_TEXT = "Assignment 2 due on 2020-10-30 at 11:59pm and Assignment 3 is due on Jan 1, 2021"
+    with pdfplumber.open("../../test-data/CPSC331/CPSC331.pdf") as pdf:
+        get_assessments_from_text(pdf)
