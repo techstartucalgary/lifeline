@@ -1,5 +1,3 @@
-/* eslint-disable max-statements */
-/* eslint-disable no-restricted-globals */
 import axios from "axios";
 import { AnimatePresence, motion } from "framer-motion";
 import {
@@ -32,7 +30,7 @@ const Review = () => {
 
   const currentCourse = courses.find(
     (course) => course.key === courseKeyURLParam
-  );
+  ) || null;
 
   const deleteCurrentCourse = () => {
     setCourses(
@@ -216,7 +214,6 @@ const Review = () => {
                 course={currentCourse}
                 left={mainMarginLeft}
                 onChangeAssessment={onChangeAssessment}
-                // onClickBack={() => setCurrentCourse(null)}
                 onClickBack={() => navigate("/app")}
                 onDeleteCourse={deleteCurrentCourse}
               />
