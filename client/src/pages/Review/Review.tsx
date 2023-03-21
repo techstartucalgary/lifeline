@@ -1,3 +1,4 @@
+/* eslint-disable max-statements */
 /* eslint-disable no-restricted-globals */
 import axios from "axios";
 import { AnimatePresence, motion } from "framer-motion";
@@ -8,7 +9,7 @@ import {
   useRef,
   useState,
 } from "react";
-import { useBeforeUnload, useParams } from "react-router-dom";
+import { useBeforeUnload, useNavigate, useParams } from "react-router-dom";
 
 import { useBreakpoint } from "../../Utilities";
 import { Dropzone } from "../../components/Dropzone";
@@ -154,18 +155,11 @@ const Review = () => {
 
   useBeforeUnload(useCallback(cacheCourses, [courses]));
 
-  useEffect(() => {
-    // Update history when current course changes
-    if (currentCourse === null) {
-      history.pushState(null, "", "/app");
-    } else {
-      history.pushState(null, "", `/app/${currentCourse.key}`);
-    }
-  }, [currentCourse]);
+  const navigate = useNavigate();
 
   // Callback for select course in navigation drawer
   const onCourseClick = (course: Course) => {
-    setCurrentCourse(course);
+    navigate(`/app/${course.key}`);
   };
 
   const onChangeAssessment = (assessment: Assessment, index: number) => {
