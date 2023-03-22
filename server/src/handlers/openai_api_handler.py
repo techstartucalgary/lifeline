@@ -2,6 +2,7 @@
 
 import json
 import os
+from concurrent.futures import ThreadPoolExecutor
 
 import openai
 from transformers import GPT2Tokenizer
@@ -9,6 +10,7 @@ from transformers import GPT2Tokenizer
 MAX_TOKENS = 3000  # needs to account for the system prompt
 
 openai.api_key = os.getenv("OPENAI_API_KEY")
+executor = ThreadPoolExecutor(max_workers=4)
 
 
 def split(text):
@@ -23,7 +25,7 @@ def split(text):
 
 def get_assessments(text):
     """Returns the extracted deadlines from the text using the openai api"""
-    print(f"\n\nSending request to openai api: \n\n{text[:100]}...\n\n")
+    print(f"\n\nSending request to openai api: \n{text[:100]}...\n")
 
     completion = openai.ChatCompletion.create(
         model="gpt-3.5-turbo",
@@ -38,8 +40,7 @@ The input text is scraped from a pdf, so use common sense to correct potential e
                 "role": "user",
                 "content": """Extract the deadlines from the following text:
 All assignments are worth 10 percent of your final grade
-Assignment 2 due on 2020-10-30 at 11:59pm
-Assignment 3 is due a week after Assignment 2 and late submissions
+Assignment 2 due on 2020-10-30 at 11:59pm and late submissions
 will receive a full letter grade penalty""",
             },
             {
@@ -50,63 +51,57 @@ will receive a full letter grade penalty""",
                             "name": "Assignment 2",
                             "date": "2020-10-30T23:59:00.000Z",
                             "weight": 10,
-                            "source": "Assignment 2 due on 2020-10-30 at 11:59pm",
-                        },
-                        {
-                            "name": "Assignment 3",
-                            "date": "2020-11-06T23:59:00.000Z",
-                            "weight": 10,
-                            "source": "Assignment 3 is due a week after Assignment 2",
-                            "notes": "Late submission will receive a full letter grade penalty",
-                        },
+                        }
                     ]
                 ),
             },
             {
                 "role": "user",
                 "content": """
-Your responses will be parsed into an array of Typescript objects implementing the following interface:
-interface Assessment {
+Extract deadlines from the following text.
+Your response must be in this format:
+{
     name: string; // the name of the assessment
     date: Date; // the date of the assessment YYYY-MM-DDTHH:MM:SS.000Z
-    source: string; // the verbatim string that was used to extract the deadline
     weight?: number; // the weight of the assessment (optional)
-    notes?: string; // any additional notes (optional)
-}
+}[]
 If there are no deadlines, simply respond '[]'.
-Extract deadlines from the following text:
+Text:
 """
                 + text,
             },
         ],
     )
+    print(f"Openai api response finish reason: {completion.choices[0].finish_reason}\n")
+
     if completion.choices[0].finish_reason != "stop":
-        print("Openai api did not finish")  # TODO: upgrade to log level warning
+        print("Openai api did not finish")
         print(completion)
         return []
     try:
         assessments = json.loads(completion.choices[0].message.content)
-        print(f"Openai api response: \n\n{json.dumps(assessments, indent=2)}\n\n")
+        # print(f"Openai api response: \n\n{json.dumps(assessments, indent=2)}\n\n")
     except json.JSONDecodeError:  # this will catch any unexpected response from the openai api
         print(f"Bad api response: {completion}")
         assessments = []
-
     return assessments
 
 
 def get_assessments_from_text(pdf):
-    """Processes a pdf and returns the assessments found in it"""
+    """Returns the extracted deadlines from the text using the openai api"""
     full_text = ""
     for page in pdf.pages:
         full_text += page.extract_text()
-    print("Text extracted from pdf")
+    print("Extracted text from pdf")
 
     chunks = split(full_text)
     print(f"Split text into {len(chunks)} chunks")
 
-    assessments = []
-    for chunk in chunks:
-        assessments += get_assessments(chunk)
+    tasks = [executor.submit(get_assessments, chunk) for chunk in chunks]
 
-    print(f"Found {len(assessments)} assessments")
+    assessments = []
+    for task in tasks:
+        assessments += task.result()
+
+    print(json.dumps(assessments, indent=4))
     return assessments
