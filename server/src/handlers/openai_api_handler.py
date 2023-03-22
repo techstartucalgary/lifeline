@@ -25,7 +25,7 @@ def split(text):
 
 def get_assessments(text):
     """Returns the extracted deadlines from the text using the openai api"""
-    print(f"\n\nSending request to openai api: \n{text[:100]}...\n")
+    print(f"\nSending request to openai api: \n{text[:100]}...\n")
 
     completion = openai.ChatCompletion.create(
         model="gpt-3.5-turbo",
