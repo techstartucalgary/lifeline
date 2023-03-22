@@ -27,7 +27,7 @@ const NavItem = ({ title, metadata, className, icon, selected, ...args }: NavIte
       }
     >
       <div className="flex flex-col min-w-0">
-        <p className="font-medium text-base align-middle leading-7">
+        <p className="font-medium text-base align-middle leading-7 truncate">
           {title}
         </p>
       </div>
