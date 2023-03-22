@@ -4,14 +4,15 @@ from os import environ
 from typing import List
 
 import uvicorn
-from fastapi import FastAPI, File, UploadFile, Response
+from dotenv.main import load_dotenv
+from fastapi import FastAPI, File, Response, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
 from mangum import Mangum
-
 from handlers import calendar_handler, file_handler, xlsx_handler
 
-
 IS_IN_PROD = "LAMBDA_TASK_ROOT" in dict(environ)
+
+load_dotenv()
 
 app = FastAPI(
     title="Lifeline Server",
@@ -49,6 +50,12 @@ async def show_calendar():
 async def get_deadlines(response: Response, outline_file: UploadFile = File(...)):
     """Returns the extracted dates and info from the uploaded file"""
     return file_handler.handle_file(outline_file, response)
+
+
+@app.post("/premium-files", status_code=200)
+async def premium_get_deadlines(response: Response, outline_file: UploadFile = File(...)):
+    """Returns the extracted dates and info from the uploaded file, uses the openai api"""
+    return file_handler.handle_file(outline_file, response, premium=True)
 
 
 @app.post("/xlsx")

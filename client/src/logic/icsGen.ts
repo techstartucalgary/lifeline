@@ -38,7 +38,7 @@ export const parseCourse = (rawCourse: {
         return {
           name: a.name,
           date: new Date(a.date),
-          weight: Number(a.weight),
+          weight: Number(a.weight) || 0,
         } as Assessment;
       }
     ),
