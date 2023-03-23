@@ -53,16 +53,17 @@ const AssessmentCard = ({
         "w-full p-4 rounded-[1.375rem] flex-col justify-center items-start font-normal",
         "bg-primary-95 hover:bg-primary-90"
       )}
+      ripple={false}
       onClick={() => onAssessmentClick(assessment)}
     >
       <div className="flex flex-row space-x-2.5 justify-center items-center">
-        <div className="relative h-12 w-12 flex flex-row justify-center items-center">
+        <div className="relative h-10 w-10 flex flex-row justify-center items-center">
           <img
             src={blob}
             className="absolute -z-10"
             alt="assessment icon background"
           />
-          <span className="material-symbols-outlined text-white text-xl">
+          <span className="material-symbols-outlined text-white text-base">
             {getIcon(assessment.name)}
           </span>
         </div>
