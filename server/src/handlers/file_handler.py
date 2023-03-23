@@ -197,8 +197,9 @@ def extract_assessments(table: List[List[Optional[str]]]) -> List[Dict]:
             # Checks for "YYYY(/,-, )MM(/,-, )DD" in any ordering 
             # Weaknesses: Allows YYYY/MM or YYYY/DD which realistically is a not real due date
             pattern = r"^(?:(?P<year>\d{4}|\w+)?[-/\s])?(?P<month>\d{1,2}|\w+)[-/,\s](?P<day>\d{1,2}|\w+)$"
-            
-            # Use escape to ensure special characters or leading/trailing whitespaces are ignored
+
+
+            # Use strip to ensure leading/trailing whitespaces are ignored
             if re.match(pattern, source.strip()):
                 continue
         
