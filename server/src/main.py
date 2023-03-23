@@ -5,9 +5,11 @@ from typing import List
 
 import uvicorn
 from dotenv.main import load_dotenv
-from fastapi import FastAPI, File, Response, UploadFile
+from fastapi import FastAPI, File, Response, UploadFile, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from mangum import Mangum
+import os
+
 from handlers import calendar_handler, file_handler, xlsx_handler
 
 IS_IN_PROD = "LAMBDA_TASK_ROOT" in dict(environ)
@@ -48,8 +50,11 @@ async def show_calendar():
 
 
 @app.post("/files", status_code=200)
-async def get_deadlines(response: Response, outline_file: UploadFile = File(...,max_length=2_000_000)):
+async def get_deadlines(response: Response, outline_file: UploadFile = File(...)):
     """Returns the extracted dates and info from the uploaded file"""
+    file_size = os.fstat(outline_file.file.fileno()).st_size
+    if file_size > 150_000:
+        raise HTTPException(status_code=413, detail="File size exceeds 150kb")
     return file_handler.handle_file(outline_file, response)
 
 
