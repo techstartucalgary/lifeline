@@ -8,6 +8,7 @@ from datetime import datetime
 from pathlib import Path
 from tempfile import NamedTemporaryFile
 from typing import Dict, List, Optional, Set
+import re;
 
 import pdfplumber
 from dateparser.search import search_dates
@@ -188,6 +189,10 @@ def extract_assessments(table: List[List[Optional[str]]]) -> List[Dict]:
             if not dates:
                 continue
             source, date = dates[0]
+
+            # If the identified date is a single number or has a number before it, skip it
+            if re.match(r"\d+\D+" + re.escape(source.strip()), cell):
+                continue
 
             if len(source) < 5:
                 # Ignore dates that are too short to avoid false positives.
