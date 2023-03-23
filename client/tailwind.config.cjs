@@ -198,6 +198,10 @@ const config = {
         "headline": ["Arvo", "ui-serif", "Georgia"],
         "body": ["Rubik", "system-ui"],
       },
+      fontSize: {
+        "1.5xl": "1.36rem",
+        "2.5xl": "1.6875rem",
+      },
       opacity: {
         8: "0.08",
         12: "0.12",
@@ -209,10 +213,6 @@ const config = {
         "sys": sys,
         "ref": ref,
         "state-layers": stateLayers,
-      },
-      fontSize: {
-        "1.5xl": "1.36rem",
-        "2.5xl": "1.6875rem",
       },
       transitionTimingFunction: {
         "standard": "cubic-bezier(0.2, 0.0, 0, 1.0)",

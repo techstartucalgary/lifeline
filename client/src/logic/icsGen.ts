@@ -1,4 +1,4 @@
-import { createEvents, EventAttributes } from "ics";
+import iCal from "ical-generator";
 
 export interface Assessment {
   name: string;
@@ -17,7 +17,7 @@ export interface Course {
   description?: string;
   faculty?: { title: string };
   hours?: string;
-  file: File
+  file: string;
 }
 
 // rawCourse is the JSON object from the server or from local storage, so Dates and Numbers are strings
@@ -28,7 +28,7 @@ export const parseCourse = (rawCourse: {
   key: string;
   topic: string;
   assessments: { name: string; date: string; weight: string }[];
-  file: File;
+  file: string;
 }): Course => {
   const course: Course = {
     ...rawCourse,
@@ -38,7 +38,7 @@ export const parseCourse = (rawCourse: {
         return {
           name: a.name,
           date: new Date(a.date),
-          weight: Number(a.weight),
+          weight: Number(a.weight) || 0,
         } as Assessment;
       }
     ),
@@ -52,32 +52,32 @@ export interface Courses extends Array<Course> {
 }
 
 const jsonToICS = (courses: Courses): string => {
-  const events: EventAttributes[] = [];
+  const semester = (() => {
+    const month = new Date().getMonth();
+    if (month >= 8) return "Fall";
+    if (month >= 4) return "Spring/Summer";
+    return "Winter";
+  })();
+
+  const year = new Date().getFullYear();
+
+  const cal = iCal({
+    name: `${semester} ${year} Deadlines`,
+    timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+  });
 
   for (const course of courses) {
     for (const assessment of course.assessments) {
-      if (!assessment.date) {
-        continue;
-      }
-      const year = assessment.date.getFullYear();
-      const month = assessment.date.getMonth();
-      const day = assessment.date.getDate();
-      const hours = assessment.date.getHours();
-      const minutes = assessment.date.getMinutes();
-
-      events.push({
-        title: `${course.code} ${course.number} - ${assessment.name} (${assessment.weight}%)`,
-        start: [year, month, day, hours, minutes],
-        duration: { hours: 0, minutes: 0, seconds: 0 },
+      cal.createEvent({
+        start: assessment.date,
+        end: assessment.date,
+        summary: `${course.code} ${course.number} ${assessment.name}`,
+        description: assessment.notes,
       });
     }
   }
 
-  const { value } = createEvents(events);
-  if (value) {
-    return value;
-  }
-  return "error";
+  return cal.toString();
 };
 
 export default jsonToICS;

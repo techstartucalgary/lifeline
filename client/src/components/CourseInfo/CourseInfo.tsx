@@ -10,44 +10,36 @@ interface CourseInfoProps {
   description?: string;
 }
 
-const BentoBase = [
+const base = [
   "flex flex-col items-start gap-0",
-  "p-4 my-2 text-left font-normal",
-  "rounded-3xl",
+  "p-4 text-left font-normal rounded-[1.375rem]",
   "bg-tertiary-95 hover:before:bg-state-layers-on-primary-container/5 focus:before:bg-transparent",
   "transition-all pointer-events-none",
 ];
 
 const CourseInfo = ({ hours, faculty, description }: CourseInfoProps) => {
   return (
-    <>
-      <div
-        className={classnames(
-          "flex",
-          "flex-row",
-          "gap-3.5", // visual correction
-          "text-sys-on-tertiary-container"
-        )}
-      >
+    <div className="flex flex-col gap-3 text-sys-on-tertiary-container mx-4 md:mx-0">
+      <div className="flex flex-row gap-3">
         <Button
           variant="tonal"
           color="tertiary"
-          className={classnames(...BentoBase, "md:w-1/2")}
+          className={classnames(...base, "w-1/3 md:w-1/2")}
         >
-          <h1 className={classnames("text-lg", "font-medium")}>Hours</h1>
-          <p>{hours}</p>
+          <h1 className="font-medium">Hours</h1>
+          <p>H({hours})</p>
         </Button>
         <Button
           variant="tonal"
           color="tertiary"
-          className={classnames(...BentoBase, "md:w-1/2 flex-grow")}
+          className={classnames(...base, "md:w-1/2 flex-grow")}
         >
-          <h1 className={classnames("text-lg", "font-medium")}>Faculty</h1>
+          <h1 className="font-medium">Faculty</h1>
           <p>{faculty}</p>
         </Button>
       </div>
       {description && <Description text={description} />}
-    </>
+    </div>
   );
 };
 
@@ -67,7 +59,9 @@ const Description = ({ text }: { text: string }) => {
     paragraphRef.current.classList.add("line-clamp-3");
     const clampedHeight = paragraphRef.current.clientHeight;
     setClampable(originalHeight !== clampedHeight);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+
+    if (showMore) paragraphRef.current.classList.remove("line-clamp-3");
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [text, paragraphRef.current, width]);
 
   return (
@@ -76,7 +70,7 @@ const Description = ({ text }: { text: string }) => {
       color="tertiary"
       ripple={false}
       className={classnames(
-        ...BentoBase,
+        ...base,
         "w-full mb-4",
         clampable && "pointer-events-auto"
       )}

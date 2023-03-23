@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { classnames } from "../../Utilities";
 import AppTopBar, {
@@ -6,8 +6,8 @@ import AppTopBar, {
   TrailingIcon,
   Title,
   Subtitle,
+  IconButton,
 } from "../../components/AppTopBar";
-import { IconButton } from "../../components/Button";
 import CourseInfo from "../../components/CourseInfo";
 import EditAssessment from "../../components/EditAssessment";
 import Tabs, { Tab } from "../../components/Tabs";
@@ -37,6 +37,10 @@ const CoursePanel = ({
     index: number;
   } | null>(null);
 
+  useEffect(() => {
+    setEditingAssessment(null);
+  }, [course]);
+
   return (
     <>
       <div className="z-10">
@@ -48,7 +52,7 @@ const CoursePanel = ({
           {/* Icons */}
           <LeadingNavigation className="block md:hidden">
             <IconButton
-              className="text-on-surface"
+              className="text-on-surface mr-1.5"
               icon="arrow_back"
               onClick={onClickBack}
             />
@@ -77,45 +81,49 @@ const CoursePanel = ({
         </AppTopBar>
       </div>
 
-      <div className="flex flex-col md:flex-row" style={{ paddingLeft: left }}>
-        <section className={classnames("w-full md:w-1/2", "p-4")}>
-          {(course.hours || course.faculty || course.description) && (
-            <CourseInfo
-              hours={course.hours}
-              faculty={course.faculty?.title}
-              description={course.description}
+      <div className="flex flex-col md:flex-row gap-4 lg:gap-6" style={{ paddingLeft: left }}>
+        <section className={classnames("w-full md:w-1/2")}>
+          {editingAssessment ? (
+            <EditAssessment
+              assessment={editingAssessment.assessment}
+              onClose={() => setEditingAssessment(null)}
+              onSave={(assessment: Assessment) => {
+                onChangeAssessment(assessment, editingAssessment.index);
+                setEditingAssessment(null);
+              }}
             />
-          )}
-          <Tabs selectedTab={selectedTab} setSelectedTab={setSelectedTab} />
-          {editingAssessment === null ? (
-            <div
-              className={classnames(
-                "w-full",
-                selectedTab === Tab.Document && "hidden md:block"
-              )}
-            >
-              <AssessmentsPanel
-                assessments={course.assessments}
-                onAssessmentClick={(assessment: Assessment, index: number) => {
-                  setEditingAssessment({ assessment, index });
-                }}
-              />
-            </div>
           ) : (
-            <div
-              className={classnames(
-                selectedTab === Tab.Document && "hidden md:block"
+            <>
+              {(course.hours || course.faculty || course.description) && (
+                <CourseInfo
+                  hours={course.hours}
+                  faculty={course.faculty?.title}
+                  description={course.description}
+                />
               )}
-            >
-              <EditAssessment
-                assessment={editingAssessment.assessment}
-                onClose={() => setEditingAssessment(null)}
-                onSave={(assessment: Assessment) => {
-                  onChangeAssessment(assessment, editingAssessment.index);
-                  setEditingAssessment(null);
-                }}
-              />
-            </div>
+              <div className="md:hidden border-b-2">
+                <Tabs
+                  selectedTab={selectedTab}
+                  setSelectedTab={setSelectedTab}
+                />
+              </div>
+              <div
+                className={classnames(
+                  "w-full",
+                  selectedTab === Tab.Document && "hidden md:block"
+                )}
+              >
+                <AssessmentsPanel
+                  assessments={course.assessments}
+                  onAssessmentClick={(
+                    assessment: Assessment,
+                    index: number
+                  ) => {
+                    setEditingAssessment({ assessment, index });
+                  }}
+                />
+              </div>
+            </>
           )}
         </section>
 
