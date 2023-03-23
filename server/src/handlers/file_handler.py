@@ -191,10 +191,18 @@ def extract_assessments(table: List[List[Optional[str]]]) -> List[Dict]:
             source, date = dates[0]
 
             # If the identified date is a single number or has a number before it, skip it
-            if re.match(r"\d+\D+" + re.escape(source.strip()), cell):
-                continue
+            # if re.match(r"\d+\D+" + re.escape(source.strip()), cell):
+            #     continue
 
-            if len(source) < 5:
+            # Checks for "YYYY(/,-, )MM(/,-, )DD" in any ordering 
+            # Weaknesses: Allows YYYY/MM or YYYY/DD which realistically is a not real due date
+            pattern = r"^(?:(?P<year>\d{4}|\w+)?[-/\s])?(?P<month>\d{1,2}|\w+)[-/,\s](?P<day>\d{1,2}|\w+)$"
+            
+            # Use escape to ensure special characters or leading/trailing whitespaces are ignored
+            if re.match(pattern, source.strip()):
+                continue
+        
+            if len(source) < 5 :
                 # Ignore dates that are too short to avoid false positives.
                 # The shortest a date can realistically be is 5 characters. e.g. Dec 1
                 continue
