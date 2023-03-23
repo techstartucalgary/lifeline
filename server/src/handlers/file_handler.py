@@ -2,13 +2,13 @@
 
 import json
 import pickle
+import re
 import shutil
 from collections import defaultdict
 from datetime import datetime
 from pathlib import Path
 from tempfile import NamedTemporaryFile
 from typing import Dict, List, Optional, Set
-import re;
 
 import pdfplumber
 from dateparser.search import search_dates
@@ -189,6 +189,7 @@ def extract_assessments(table: List[List[Optional[str]]]) -> List[Dict]:
             if not dates:
                 continue
             source, date = dates[0]
+            print("The source is " + source)
 
             # If the identified date is a single number or has a number before it, skip it
             # if re.match(r"\d+\D+" + re.escape(source.strip()), cell):
@@ -201,6 +202,7 @@ def extract_assessments(table: List[List[Optional[str]]]) -> List[Dict]:
 
             # Use strip to ensure leading/trailing whitespaces are ignored
             if re.match(pattern, source.strip()):
+                print("The source above matches!")
                 continue
         
             if len(source) < 5 :
