@@ -53,7 +53,20 @@ async def show_calendar():
 async def get_deadlines(response: Response, outline_file: UploadFile = File(...)):
     """Returns the extracted dates and info from the uploaded file"""
     file_size = os.fstat(outline_file.file.fileno()).st_size
-    if file_size > 150_000:
+    if file_size > 150000:
+        raise HTTPException(status_code=413, detail="File size exceeds 150kb")
+    # outline_file.file.seek(0, os.SEEK_END)
+    # file_size = outline_file.file.tell()
+    # outline_file.file.seek(0)
+    # file_size = outline_file.content_length
+    # file_size = 0
+    # while True:
+    #     data = await outline_file.read(1024)
+    #     if not data:
+    #         break
+    # file_size += len(data)
+
+    if file_size > 150000:
         raise HTTPException(status_code=413, detail="File size exceeds 150kb")
     return file_handler.handle_file(outline_file, response)
 
