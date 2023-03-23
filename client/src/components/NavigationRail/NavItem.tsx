@@ -14,7 +14,6 @@ const NavItem = ({
   title,
   icon,
   selected = false,
-  onClick,
   ...args
 }: NavItemProps) => {
   return (
@@ -25,7 +24,6 @@ const NavItem = ({
         args.disabled && "pointer-events-none text-sys-on-surface/[.38]",
         args.className
       )}
-      onClick={onClick}
     >
       <div
         className={classnames(

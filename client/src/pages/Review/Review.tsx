@@ -1,4 +1,3 @@
-/* eslint-disable no-restricted-globals */
 import axios from "axios";
 import { AnimatePresence, motion } from "framer-motion";
 import {
@@ -8,7 +7,7 @@ import {
   useRef,
   useState,
 } from "react";
-import { useBeforeUnload, useParams } from "react-router-dom";
+import { useBeforeUnload, useNavigate, useParams } from "react-router-dom";
 
 import { useBreakpoint } from "../../Utilities";
 import { Dropzone } from "../../components/Dropzone";
@@ -21,13 +20,17 @@ import { transformTemplate, variants } from "./transitions";
 const Review = () => {
   const [loading, setLoading] = useState<string[]>([]);
   const breakpoint = useBreakpoint();
+  const navigate = useNavigate();
 
   const [courses, setCourses] = useState<Courses>([]);
-  const [currentCourse, setCurrentCourse] = useState<Course | null>(null);
   const coursesRef = useRef(courses);
   const { courseKey: courseKeyURLParam } = useParams<{
     courseKey: string | undefined;
   }>();
+
+  const currentCourse = courses.find(
+    (course) => course.key === courseKeyURLParam
+  ) || null;
 
   const deleteCurrentCourse = () => {
     setCourses(
@@ -35,8 +38,8 @@ const Review = () => {
     );
     coursesRef.current = coursesRef.current.filter(
       (course) => course.key !== currentCourse?.key
-    );
-    setCurrentCourse(null);
+    ) || null;
+    navigate("/app");
   };
 
   const onCoursesChanged = (newCourse: Course) => {
@@ -99,7 +102,6 @@ const Review = () => {
           course.file = fileString;
 
           onCoursesChanged(course);
-          setCurrentCourse(course);
         })
         .catch((error) => {
           console.log(error);
@@ -139,33 +141,13 @@ const Review = () => {
     const parsedCourses: Courses = JSON.parse(foundCourses).map(parseCourse);
     setCourses(parsedCourses);
     coursesRef.current = parsedCourses;
-
-    // Set current course based on URL
-    if (courseKeyURLParam) {
-      const course = parsedCourses.find(
-        (course) => course.key === courseKeyURLParam
-      );
-
-      if (course) {
-        setCurrentCourse(course);
-      }
-    }
   }, [courseKeyURLParam]);
 
   useBeforeUnload(useCallback(cacheCourses, [courses]));
 
-  useEffect(() => {
-    // Update history when current course changes
-    if (currentCourse === null) {
-      history.pushState(null, "", "/app");
-    } else {
-      history.pushState(null, "", `/app/${currentCourse.key}`);
-    }
-  }, [currentCourse]);
-
   // Callback for select course in navigation drawer
   const onCourseClick = (course: Course) => {
-    setCurrentCourse(course);
+    navigate(`/app/${course.key}`);
   };
 
   const onChangeAssessment = (assessment: Assessment, index: number) => {
@@ -232,7 +214,7 @@ const Review = () => {
                 course={currentCourse}
                 left={mainMarginLeft}
                 onChangeAssessment={onChangeAssessment}
-                onClickBack={() => setCurrentCourse(null)}
+                onClickBack={() => navigate("/app")}
                 onDeleteCourse={deleteCurrentCourse}
               />
             </main>
