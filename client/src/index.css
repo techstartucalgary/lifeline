@@ -26,11 +26,12 @@ button, input[type=text], input[type=button] {
 }
 
 :root {
-  font-size: 14px;
+  font-size: 16px;
   line-height: 1.43;
   overflow-x: hidden;
 }
 
 body {
+  font-size: 0.875rem;
   overflow-x: hidden;
 }

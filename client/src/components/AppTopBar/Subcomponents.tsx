@@ -1,9 +1,15 @@
 import { HTMLAttributes, ReactNode } from "react";
 
 import { classnames } from "../../Utilities";
+import {
+  IconButton as RawIconButton,
+  IconButtonProps as RawIconButtonProps,
+} from "../Button";
 
 type LeadingNavigationProp = HTMLAttributes<HTMLDivElement>;
-const LeadingNavigation = ({ children, ...args }: LeadingNavigationProp) => <div {...args}>{children}</div>;
+const LeadingNavigation = ({ children, ...args }: LeadingNavigationProp) => (
+  <div {...args}>{children}</div>
+);
 
 type TrailingIconProp = HTMLAttributes<HTMLDivElement>;
 const TrailingIcon = ({ children, className, ...args }: TrailingIconProp) => {
@@ -13,6 +19,16 @@ const TrailingIcon = ({ children, className, ...args }: TrailingIconProp) => {
     </div>
   );
 };
+
+type IconButtonProps = RawIconButtonProps;
+const IconButton = ({ children, ...args }: IconButtonProps) => (
+  <RawIconButton
+    {...args}
+    className={classnames("p-0 md:p-0 w-10 md:w-12 h-12 text-xl justify-center items-center", args.className)}
+  >
+    {children}
+  </RawIconButton>
+);
 
 interface TitleProp {
   children?: ReactNode;
@@ -24,5 +40,11 @@ interface SubtitleProp {
 }
 const Subtitle = ({ children }: SubtitleProp) => <>{children}</>;
 
-export { LeadingNavigation, TrailingIcon, Title, Subtitle };
-export type { LeadingNavigationProp, TrailingIconProp, TitleProp, SubtitleProp };
+export { IconButton, LeadingNavigation, Subtitle, Title, TrailingIcon };
+export type {
+  IconButtonProps,
+  LeadingNavigationProp,
+  SubtitleProp,
+  TitleProp,
+  TrailingIconProp,
+};

@@ -17,8 +17,7 @@ const ReactiveTitle = ({ title, titleClassName }: HeadlineProp) => {
   return (
     <h1
       className={classnames(
-        "text-on-surface font-headline font-bold",
-        "text-3xl md:text-4xl",
+        "text-on-surface font-headline font-bold text-[1.75rem] leading-9",
         "transition-all duration-200 ease-emphasized origin-bottom-left will-change-transform",
         titleClassName
       )}
@@ -59,18 +58,12 @@ const Headline = forwardRef<HTMLDivElement, HeadlineProp>(
         className={classnames("overflow-hidden", args.className)}
         ref={ref}
       >
-        <div
-          className={classnames(
-            "flex flex-row items-center pb-2 bg-surface",
-            "px-4.5 md:px-4"
-          )}
-        >
-          <div className="grow space-y-1">
+        <div className="flex flex-row items-center pb-5 space-y-1 bg-surface">
+          <div className="grow px-4">
             <ReactiveTitle title={title} titleClassName={titleClassName} />
             <h2
               className={classnames(
-                "text-outline font-medium",
-                "text-lg md:text-xl",
+                "text-outline font-medium text-lg",
                 "transition-opacity duration-100 ease-emphasized-accelerate",
                 subtitleClassName
               )}

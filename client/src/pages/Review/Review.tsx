@@ -179,7 +179,7 @@ const Review = () => {
             className="will-change-auto z-20 ease-emphasized"
           >
             <nav
-              className="fixed top-0 left-0 w-full md:w-24 xl:w-[17rem] h-full bg-surface z-20"
+              className="fixed top-0 left-0 w-full md:w-20 xl:w-64 h-full bg-surface z-20"
               ref={navRef}
             >
               <NavigationPanel

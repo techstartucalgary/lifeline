@@ -14,8 +14,8 @@ const NavigationDrawer = ({
   ...args
 }: NavigationDrawerProps) => {
   return (
-    <div {...args} className={classnames("flex flex-col w-full space-y-0.5", args.className)}>
-      <p className="m-5 ml-5.5 font-bold">{title}</p>
+    <div {...args} className={classnames("flex flex-col w-full", args.className)}>
+      <p className="m-5 font-medium font-on-surface-variant">{title}</p>
       {children}
     </div>
   );

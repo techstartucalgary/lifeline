@@ -6,8 +6,8 @@ import AppTopBar, {
   TrailingIcon,
   Title,
   Subtitle,
+  IconButton,
 } from "../../components/AppTopBar";
-import { IconButton } from "../../components/Button";
 import CourseInfo from "../../components/CourseInfo";
 import EditAssessment from "../../components/EditAssessment";
 import Tabs, { Tab } from "../../components/Tabs";
@@ -52,7 +52,7 @@ const CoursePanel = ({
           {/* Icons */}
           <LeadingNavigation className="block md:hidden">
             <IconButton
-              className="text-on-surface"
+              className="text-on-surface mr-1.5"
               icon="arrow_back"
               onClick={onClickBack}
             />
@@ -81,8 +81,8 @@ const CoursePanel = ({
         </AppTopBar>
       </div>
 
-      <div className="flex flex-col md:flex-row" style={{ paddingLeft: left }}>
-        <section className={classnames("w-full md:w-1/2", "p-4")}>
+      <div className="flex flex-col md:flex-row gap-4 lg:gap-6" style={{ paddingLeft: left }}>
+        <section className={classnames("w-full md:w-1/2")}>
           {editingAssessment ? (
             <EditAssessment
               assessment={editingAssessment.assessment}

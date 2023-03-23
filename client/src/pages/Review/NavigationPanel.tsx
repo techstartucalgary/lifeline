@@ -91,8 +91,8 @@ const NavigationPanel = ({
 
           <Button
             variant="text"
-            color="primary"
-            className="rounded-[20px] py-4.5 px-5.5 text-primary font-normal"
+            color="secondary"
+            className="rounded-[20px] p-4 text-secondary font-normal"
             onClick={() => {
               inputRef.current?.click();
             }}
@@ -107,7 +107,7 @@ const NavigationPanel = ({
           <Button
             variant="filled"
             color="primary"
-            className="rounded-[20px] py-5 px-5.5"
+            className="rounded-[20px] p-4"
             onClick={handleExport}
             disabled={courses.length === 0 || loading.length > 0}
             icon="save_alt"
@@ -122,7 +122,7 @@ const NavigationPanel = ({
             icon="save_alt"
             variant="filled"
             color="primary"
-            className="rounded-2xl text-center px-0 mt-4 mb-6 w-16 h-16 mx-auto"
+            className="rounded-2xl text-center px-0 mt-4 mb-7 w-14 h-14 mx-auto"
             onClick={handleExport}
           />
 
@@ -164,7 +164,7 @@ const NavigationPanel = ({
             icon="add"
             variant="text"
             color="primary"
-            className="rounded-2xl mx-2.5 px-4 py-1 text-center"
+            className="rounded-2xl mx-auto px-4 py-1 text-center"
             iconClassName="text-on-primary-container text-3xl md:text-3xl"
             disabled={loading.length > 0}
           />
@@ -174,7 +174,7 @@ const NavigationPanel = ({
         <AppTopBar variant="medium">
           <AppTopBar.Title>Courses</AppTopBar.Title>
           <AppTopBar.TrailingIcon>
-            <IconButton
+            <AppTopBar.IconButton
               icon="add"
               className="text-on-surface"
               onClick={() => {
@@ -192,7 +192,7 @@ const NavigationPanel = ({
                 title={`${course.code} ${course.number}`}
                 supportingText={course.topic}
                 metadata={
-                  <p className="rounded-full bg-tertiary-95 py-2 w-8">
+                  <p className="rounded-full bg-tertiary-95 py-1.5 w-7">
                     {course.assessments.length}
                   </p>
                 }

@@ -26,13 +26,13 @@ const ListItem = ({
       color={color}
       variant="text"
       className={classnames(
-        "px-5.5 py-4.5 text-on-surface-variant rounded-none",
+        "px-4 py-2 text-on-surface-variant rounded-none font-normal h-[4.5rem]",
         className
       )}
       icon={
         <span
           className={classnames(
-            "material-symbols-outlined text-3xl",
+            "material-symbols-outlined h-6 w-6 p-4 text-2xl",
             "flex justify-center items-center"
           )}
         >
@@ -40,16 +40,16 @@ const ListItem = ({
         </span>
       }
     >
-      <div className="ml-2 truncate text-left">
+      <div className="ml-1 truncate text-left">
         <p
           className={classnames(
-            "font-medium text-lg leading-6 text-on-surface truncate",
+            "font-medium text-base leading-6 text-on-surface truncate",
             args.disabled && "text-sys-on-surface/[.38]"
           )}
         >
           {title}
         </p>
-        <p className="font-normal truncate">{supportingText}</p>
+        <p className="leading-5 truncate">{supportingText}</p>
       </div>
       <div className="ml-auto flex items-center justify-center text-base proportional-nums">
         <div className="font-normal">{metadata}</div>

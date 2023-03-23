@@ -5,6 +5,8 @@ import { classnames } from "../../Utilities";
 import CompactHeadline from "./CompactHeadline";
 import Headline from "./Headline";
 import {
+  IconButton,
+  IconButtonProps,
   LeadingNavigation,
   LeadingNavigationProp,
   Subtitle,
@@ -80,11 +82,13 @@ AppTopBar.LeadingNavigation = LeadingNavigation;
 AppTopBar.TrailingIcon = TrailingIcon;
 AppTopBar.Title = Title;
 AppTopBar.Subtitle = Subtitle;
+AppTopBar.IconButton = IconButton;
 
 export default AppTopBar;
-export { LeadingNavigation, Subtitle, Title, TrailingIcon };
+export { IconButton, LeadingNavigation, Subtitle, Title, TrailingIcon };
 export type {
   AppTopBarProps,
+  IconButtonProps,
   LeadingNavigationProp,
   SubtitleProp,
   TitleProp,

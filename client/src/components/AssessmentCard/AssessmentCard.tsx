@@ -50,12 +50,12 @@ const AssessmentCard = ({
   return (
     <Button
       className={classnames(
-        "w-full p-4 rounded-[20px] flex-col justify-center items-start font-normal text-base",
+        "w-full p-4 rounded-[1.375rem] flex-col justify-center items-start font-normal",
         "bg-primary-95 hover:bg-primary-90"
       )}
       onClick={() => onAssessmentClick(assessment)}
     >
-      <div className="flex flex-row space-x-2.5">
+      <div className="flex flex-row space-x-2.5 justify-center items-center">
         <div className="relative h-12 w-12 flex flex-row justify-center items-center">
           <img
             src={blob}
