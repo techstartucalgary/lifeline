@@ -53,7 +53,7 @@ const AssessmentCard = ({
       variant="tonal"
       className={classnames(
         "w-full p-4 rounded-[1.375rem] flex-col justify-center items-start font-normal",
-        "bg-primary-95 hover:bg-primary-95 hover:before:bg-primary-90"
+        "bg-primary-95 hover:bg-primary-95 hover:before:bg-primary-90 duration-300"
       )}
       ripple={false}
       onClick={() => onAssessmentClick(assessment)}

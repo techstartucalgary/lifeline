@@ -32,7 +32,7 @@ const AssessmentsPanel = ({
           variant="tonal"
           ripple={false}
           className={classnames(
-            "text-sm text-on-primary-container ml-1 overflow-hidden",
+            "text-sm text-on-primary-container ml-1 overflow-hidden duration-300",
             "before:bg-primary-95 hover:before:bg-primary-90",
             "w-0 p-0 opacity-0 group-hover/assessment:w-auto group-hover/assessment:p-2.5 group-hover/assessment:opacity-100"
           )}
