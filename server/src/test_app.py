@@ -56,7 +56,7 @@ def test_bad_file():
 
 def test_too_large_file():
     """Sends a file that is too large to the endpoint and checks that the response is correct"""
-    with open("../test-data/too-large.pdf", "rb") as file:
+    with open("../test-data/too-large2.pdf", "rb") as file:
         request_data = {"outline_file": ("CPSC331.pdf", file, "application/pdf")}
         response = client.post("/files", files=request_data)
 
