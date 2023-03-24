@@ -13,7 +13,10 @@ const IconButton = ({ icon, iconClassName, ...args }: IconButtonProps) => {
   return (
     <Button
       {...args}
-      className={classnames("h-10 w-10", args.className)}
+      className={classnames(
+        "p-0 md:p-0 w-10 h-10 text-xl justify-center items-center",
+        args.className
+      )}
     >
       <span className={classnames("material-symbols-outlined", iconClassName)}>
         {icon}
