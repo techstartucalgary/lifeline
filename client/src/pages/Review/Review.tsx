@@ -136,7 +136,7 @@ const Review = () => {
     setCourses(parsedCourses);
   });
 
-  useEffect(() => {
+  useUpdateEffect(() => {
     localStorage.setItem("courses", JSON.stringify(courses));
   }, [courses]);
 
