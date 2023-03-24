@@ -191,10 +191,6 @@ def extract_assessments(table: List[List[Optional[str]]]) -> List[Dict]:
             source, date = dates[0]
             print("The source is " + source)
 
-            # If the identified date is a single number or has a number before it, skip it
-            # if re.match(r"\d+\D+" + re.escape(source.strip()), cell):
-            #     continue
-
             # Checks for "YYYY(/,-, )MM(/,-, )DD" in any ordering 
             # Weaknesses: Allows YYYY/MM or YYYY/DD which realistically is a not real due date
             pattern = r"^(?:(?P<year>\d{4}|\w+)?[-/\s])?(?P<month>\d{1,2}|\w+)[-/,\s](?P<day>\d{1,2}|\w+)$"
