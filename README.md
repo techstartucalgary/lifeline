@@ -60,5 +60,6 @@ Instructions for contributing to the Lifeline client and server code can be foun
 - [Harsweet Singh](https://github.com/harsweet)
 - [Jaza Khan](https://github.com/jaza-k)
 - [Amrit Mahendrarajah](https://github.com/skilledd007)
+- [Alisha Nas](https://github.com/alisha-nas) 
 - [Kevin Amado](https://github.com/kamadorueda)
 - [Hilton Luu](https://github.com/HiltonLuu)
