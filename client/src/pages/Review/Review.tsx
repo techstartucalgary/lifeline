@@ -32,10 +32,8 @@ const Review = () => {
     upsertCourse((c) => c.key === course.key, course);
   };
 
-  const onCourseDelete = () => {
-    removeAtCourse(
-      courses.findIndex((course) => course.key === courseKeyURLParam)
-    );
+  const onCourseDelete = (course: Course) => {
+    removeAtCourse(courses.findIndex((c) => c.key === course.key));
     navigate("/app");
   };
 
