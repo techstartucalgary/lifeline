@@ -191,15 +191,15 @@ def extract_assessments(table: List[List[Optional[str]]]) -> List[Dict]:
             source, date = dates[0]
             print("The source is " + source)
 
-            # Checks for "YYYY(/,-, )MM(/,-, )DD" in any ordering 
-            # Weaknesses: Allows YYYY/MM or YYYY/DD which realistically is a not real due date
-            pattern = r"^(?:(?P<year>\d{4}|\w+)?[-/\s])?(?P<month>\d{1,2}|\w+)[-/,\s](?P<day>\d{1,2}|\w+)$"
+            # First we isolate the found date to see if it matches the following types
+            regex_pattern = r'(?:January|Jan|February|Feb|March|Mar|April|Apr|May|June|Jun|July|Jul|August|Aug|September|Sep|Sept|October|Oct|November|Nov|December|Dec)\s+\d{1,2}(?:st|nd|rd|th)?(?:,\s+\d{4})?(?:\s+at\s+\d{1,2}:\d{2}[ap]m)?'
 
+            result = re.findall(regex_pattern, source)
 
-            # Use strip to ensure leading/trailing whitespaces are ignored
-            if re.match(pattern, source.strip()):
-                print("The source above matches!")
-                continue
+            if result:
+                print(result[0])
+            else:
+                print('No date found in the string')
         
             if len(source) < 5 :
                 # Ignore dates that are too short to avoid false positives.
