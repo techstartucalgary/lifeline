@@ -9,7 +9,6 @@ from fastapi import FastAPI, File, Response, UploadFile, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from mangum import Mangum
 import os
-
 from handlers import calendar_handler, file_handler, xlsx_handler
 
 IS_IN_PROD = "LAMBDA_TASK_ROOT" in dict(environ)
