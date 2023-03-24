@@ -1,9 +1,10 @@
 """Tests for the server. Run with `pytest test_app.py -s` to see print statements"""
 
 import json
-from fastapi.testclient import TestClient
-from handlers import calendar_handler
 
+from fastapi.testclient import TestClient
+
+from handlers import calendar_handler
 from main import app
 
 EXPECTEDCALENDARJSON = None

@@ -1,14 +1,15 @@
 """Entry point for the server. You can run this file directly to start the server locally."""
 
+import os
 from os import environ
 from typing import List
 
 import uvicorn
 from dotenv.main import load_dotenv
-from fastapi import FastAPI, File, Response, UploadFile, HTTPException
+from fastapi import FastAPI, File, HTTPException, Response, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
 from mangum import Mangum
-import os
+
 from handlers import calendar_handler, file_handler, xlsx_handler
 
 IS_IN_PROD = "LAMBDA_TASK_ROOT" in dict(environ)
