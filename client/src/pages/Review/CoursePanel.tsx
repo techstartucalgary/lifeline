@@ -2,11 +2,11 @@ import { useEffect, useState } from "react";
 
 import { classnames } from "../../Utilities";
 import AppTopBar, {
-  LeadingNavigation,
-  TrailingIcon,
-  Title,
-  Subtitle,
   IconButton,
+  LeadingNavigation,
+  Subtitle,
+  Title,
+  TrailingIcon,
 } from "../../components/AppTopBar";
 import CourseInfo from "../../components/CourseInfo";
 import EditAssessment from "../../components/EditAssessment";
@@ -19,17 +19,17 @@ import DocumentPanel from "./DocumentPanel";
 interface CoursePanelProp {
   course: Course;
   left: number;
-  onChangeAssessment(assessment: Assessment, index: number): void;
   onClickBack(): void;
-  onDeleteCourse(): void;
+  onCourseUpdate(course: Course): void;
+  onCourseDelete(course: Course): void;
 }
 
 const CoursePanel = ({
   course,
   left,
-  onChangeAssessment,
+  onCourseUpdate,
   onClickBack,
-  onDeleteCourse,
+  onCourseDelete,
 }: CoursePanelProp) => {
   const [selectedTab, setSelectedTab] = useState<Tab>(Tab.Assessments);
   const [editingAssessment, setEditingAssessment] = useState<{
@@ -40,6 +40,20 @@ const CoursePanel = ({
   useEffect(() => {
     setEditingAssessment(null);
   }, [course]);
+
+  const onAssessmentClick = (assessment: Assessment, index: number) => {
+    setEditingAssessment({ assessment, index });
+  };
+
+  const onAssessmentChange = (assessment: Assessment, index: number) => {
+    course.assessments[index] = assessment;
+    onCourseUpdate(course);
+  };
+
+  const onAssessmentDelete = (_: Assessment, index: number) => {
+    course.assessments.splice(index, 1);
+    onCourseUpdate(course);
+  };
 
   return (
     <>
@@ -65,7 +79,7 @@ const CoursePanel = ({
             <IconButton
               className="text-on-surface-variant hidden md:flex"
               icon="delete"
-              onClick={onDeleteCourse}
+              onClick={() => onCourseDelete(course)}
             />
             <IconButton
               className="text-on-surface-variant flex md:hidden"
@@ -91,7 +105,7 @@ const CoursePanel = ({
               assessment={editingAssessment.assessment}
               onClose={() => setEditingAssessment(null)}
               onSave={(assessment: Assessment) => {
-                onChangeAssessment(assessment, editingAssessment.index);
+                onAssessmentChange(assessment, editingAssessment.index);
                 setEditingAssessment(null);
               }}
             />
@@ -118,12 +132,8 @@ const CoursePanel = ({
               >
                 <AssessmentsPanel
                   assessments={course.assessments}
-                  onAssessmentClick={(
-                    assessment: Assessment,
-                    index: number
-                  ) => {
-                    setEditingAssessment({ assessment, index });
-                  }}
+                  onAssessmentClick={onAssessmentClick}
+                  onAssessmentDelete={onAssessmentDelete}
                 />
               </div>
             </>

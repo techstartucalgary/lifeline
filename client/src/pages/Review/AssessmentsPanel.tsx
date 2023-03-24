@@ -10,11 +10,13 @@ import divider from "./divider.svg";
 interface AssessmentPanelProp {
   assessments: Assessment[];
   onAssessmentClick(assessment: Assessment, index: number): void;
+  onAssessmentDelete(assessment: Assessment, index: number): void;
 }
 
 const AssessmentsPanel = ({
   assessments,
   onAssessmentClick,
+  onAssessmentDelete,
 }: AssessmentPanelProp) => {
   const renderAssessment = (assessment: Assessment, index: string) => {
     return (
@@ -30,9 +32,9 @@ const AssessmentsPanel = ({
           variant="tonal"
           className={classnames(
             "text-sm text-on-primary-container ml-1 overflow-hidden",
-            "w-0 p-0 opacity-0 group-hover/assessment:w-auto group-hover/assessment:p-2.5 group-hover/assessment:opacity-100",
+            "w-0 p-0 opacity-0 group-hover/assessment:w-auto group-hover/assessment:p-2.5 group-hover/assessment:opacity-100"
           )}
-          onClick={() => alert("Delete")}
+          onClick={() => onAssessmentDelete(assessment, parseInt(index))}
         />
       </li>
     );
