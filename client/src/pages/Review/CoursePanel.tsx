@@ -19,7 +19,7 @@ import DocumentPanel from "./DocumentPanel";
 interface CoursePanelProp {
   course: Course;
   left: number;
-  onClickBack(): void;
+  onBack(): void;
   onCourseUpdate(course: Course): void;
   onCourseDelete(course: Course): void;
 }
@@ -27,8 +27,8 @@ interface CoursePanelProp {
 const CoursePanel = ({
   course,
   left,
+  onBack,
   onCourseUpdate,
-  onClickBack,
   onCourseDelete,
 }: CoursePanelProp) => {
   const [selectedTab, setSelectedTab] = useState<Tab>(Tab.Assessments);
@@ -51,7 +51,7 @@ const CoursePanel = ({
   };
 
   const onAssessmentDelete = (_: Assessment, index: number) => {
-    course.assessments.splice(index, 1);
+    course.assessments = course.assessments.filter((_, i) => i !== index);
     onCourseUpdate(course);
   };
 
@@ -68,7 +68,7 @@ const CoursePanel = ({
             <IconButton
               className="text-on-surface mr-1.5"
               icon="arrow_back"
-              onClick={onClickBack}
+              onClick={onBack}
             />
           </LeadingNavigation>
           <TrailingIcon>

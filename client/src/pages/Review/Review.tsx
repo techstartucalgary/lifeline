@@ -197,7 +197,7 @@ const Review = () => {
               <CoursePanel
                 course={currentCourse}
                 left={mainMarginLeft}
-                onClickBack={() => navigate("/app")}
+                onBack={() => navigate("/app")}
                 onCourseUpdate={onCourseUpdate}
                 onCourseDelete={onCourseDelete}
               />
