@@ -59,4 +59,4 @@ def test_too_large_file():
         request_data = {"outline_file": ("CPSC331.pdf", file, "application/pdf")}
         response = client.post("/files", files=request_data)
 
-    assert response.status_code == 413, response.content.decode()
+    assert response.status_code == 413
