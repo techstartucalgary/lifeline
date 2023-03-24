@@ -19,19 +19,7 @@ const Review = () => {
 
   const [
     courses,
-    {
-      set: setCourses,
-      push: pushCourse,
-      updateAt: updateAtCourse,
-      insertAt: insertAtCourse,
-      update: updateCourse,
-      upsert: upsertCourse,
-      sort: sortCourses,
-      filter: filterCourses,
-      removeAt: removeAtCourse,
-      clear: clearCourses,
-      reset: resetCourses,
-    },
+    { set: setCourses, upsert: upsertCourse, removeAt: removeAtCourse },
   ] = useList<Course>([]);
   const { courseKey: courseKeyURLParam } = useParams<{
     courseKey: string | undefined;
