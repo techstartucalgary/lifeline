@@ -29,6 +29,7 @@ origins = (
     if IS_IN_PROD
     else ["http://localhost:3000", "http://127.0.0.1:3000"]
 )
+print(f"Allowed origins: {origins}")
 
 
 app.add_middleware(

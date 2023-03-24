@@ -3,23 +3,23 @@
 import json
 import os
 from concurrent.futures import ThreadPoolExecutor
+from typing import List
 
 import openai
-from transformers import GPT2Tokenizer
-
-MAX_TOKENS = 3000  # needs to account for the system prompt
 
 openai.api_key = os.getenv("OPENAI_API_KEY")
 executor = ThreadPoolExecutor(max_workers=4)
 
 
-def split(text):
-    """Divides the text into chunks of at most MAX_TOKENS tokens"""
-    tokenizer = GPT2Tokenizer.from_pretrained("gpt2")
-    tokens = tokenizer.encode(text)
-    chunks = []
-    for i in range(0, len(tokens), MAX_TOKENS):
-        chunks.append(tokenizer.decode(tokens[i : i + MAX_TOKENS]))
+def split(text: str) -> List[str]:
+    """Splits the text into chunks of 50 sentences each"""
+    sentences = text.split(". ")
+    sentences_per_chunk = 50
+
+    chunks = [
+        ". ".join(sentences[i : i + sentences_per_chunk]) + ". "
+            for i in range(0, len(sentences), sentences_per_chunk)
+    ]
     return chunks
 
 
