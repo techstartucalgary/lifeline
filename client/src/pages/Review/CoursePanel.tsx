@@ -59,16 +59,16 @@ const CoursePanel = ({
           </LeadingNavigation>
           <TrailingIcon>
             <IconButton
-              className="text-on-surface-variant hidden md:block"
+              className="text-on-surface-variant hidden md:flex"
               icon="error"
             />
             <IconButton
-              className="text-on-surface-variant hidden md:block"
+              className="text-on-surface-variant hidden md:flex"
               icon="delete"
               onClick={onDeleteCourse}
             />
             <IconButton
-              className="text-on-surface-variant block md:hidden"
+              className="text-on-surface-variant flex md:hidden"
               icon="more_vert"
             />
           </TrailingIcon>
@@ -81,7 +81,10 @@ const CoursePanel = ({
         </AppTopBar>
       </div>
 
-      <div className="flex flex-col md:flex-row gap-4 lg:gap-6" style={{ paddingLeft: left }}>
+      <div
+        className="flex flex-col md:flex-row gap-4 lg:gap-6"
+        style={{ paddingLeft: left }}
+      >
         <section className={classnames("w-full md:w-1/2")}>
           {editingAssessment ? (
             <EditAssessment

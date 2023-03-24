@@ -18,12 +18,21 @@ const AssessmentsPanel = ({
 }: AssessmentPanelProp) => {
   const renderAssessment = (assessment: Assessment, index: string) => {
     return (
-      <li key={index}>
+      <li key={index} className="flex flex-row group/assessment">
         <AssessmentCard
           assessment={assessment}
           onAssessmentClick={() =>
             onAssessmentClick(assessment, parseInt(index))
           }
+        />
+        <Button
+          icon="delete"
+          variant="tonal"
+          className={classnames(
+            "text-sm text-on-primary-container ml-1 overflow-hidden",
+            "w-0 p-0 opacity-0 group-hover/assessment:w-auto group-hover/assessment:p-2.5 group-hover/assessment:opacity-100",
+          )}
+          onClick={() => alert("Delete")}
         />
       </li>
     );
