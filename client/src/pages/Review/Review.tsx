@@ -2,7 +2,7 @@ import axios from "axios";
 import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { useEffectOnce } from "react-use";
+import { useEffectOnce, useList } from "react-use";
 
 import { useBreakpoint } from "../../Utilities";
 import { Dropzone } from "../../components/Dropzone";
@@ -17,35 +17,38 @@ const Review = () => {
   const breakpoint = useBreakpoint();
   const navigate = useNavigate();
 
-  const [courses, setCourses] = useState<Courses>([]);
-  const coursesRef = useRef(courses);
+  const [
+    courses,
+    {
+      set: setCourses,
+      push: pushCourse,
+      updateAt: updateAtCourse,
+      insertAt: insertAtCourse,
+      update: updateCourse,
+      upsert: upsertCourse,
+      sort: sortCourses,
+      filter: filterCourses,
+      removeAt: removeAtCourse,
+      clear: clearCourses,
+      reset: resetCourses,
+    },
+  ] = useList<Course>([]);
   const { courseKey: courseKeyURLParam } = useParams<{
     courseKey: string | undefined;
   }>();
 
-  const currentCourse = courses.find(
-    (course) => course.key === courseKeyURLParam
-  ) || null;
+  const currentCourse =
+    courses.find((course) => course.key === courseKeyURLParam) || null;
 
   const deleteCurrentCourse = () => {
-    setCourses(
-      coursesRef.current.filter((course) => course.key !== currentCourse?.key)
+    removeAtCourse(
+      courses.findIndex((course) => course.key === courseKeyURLParam)
     );
-    coursesRef.current = coursesRef.current.filter(
-      (course) => course.key !== currentCourse?.key
-    ) || null;
     navigate("/app");
   };
 
   const onCoursesChanged = (newCourse: Course) => {
-    if (coursesRef.current.some((course) => course.key === newCourse.key)) {
-      console.log("Course already exists");
-      // Snackbar here
-      return;
-    }
-    const newCourses = [...coursesRef.current, newCourse];
-    setCourses(newCourses);
-    coursesRef.current = newCourses;
+    upsertCourse((course) => course.key === newCourse.key, newCourse);
   };
 
   const base64encode = (file: File): Promise<string> => {
@@ -80,7 +83,7 @@ const Review = () => {
       formData.append("outline_file", file as File);
 
       await axios
-        .post("/premium-files", formData, {
+        .post("/files", formData, {
           headers: { "Content-Type": "multipart/form-data" },
         })
         .then((res) => res.data)
@@ -131,7 +134,6 @@ const Review = () => {
 
     const parsedCourses: Courses = JSON.parse(foundCourses).map(parseCourse);
     setCourses(parsedCourses);
-    coursesRef.current = parsedCourses;
   });
 
   useEffect(() => {
