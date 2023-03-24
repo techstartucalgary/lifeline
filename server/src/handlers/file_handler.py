@@ -200,6 +200,8 @@ def extract_assessments(table: List[List[Optional[str]]]) -> List[Dict]:
                 print(result[0])
             else:
                 print('No date found in the string')
+
+            # Weaknesses : search_dates does not look for all the dates in the pdf ie. dependant on the accuracy of search_dates
         
             if len(source) < 5 :
                 # Ignore dates that are too short to avoid false positives.
