@@ -78,7 +78,7 @@ const CompactHeadline = ({
                 elevationClassName
               )}
               style={{
-                opacity: normalize(window.scrollY, 90, 100),
+                opacity: normalize(scrollY, 90, 100),
               }}
             />
           )}
