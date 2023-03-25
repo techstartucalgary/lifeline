@@ -22,11 +22,15 @@ const ReactiveTitle = ({
   title,
   titleClassName,
   containerRef,
+  useWindowScrollFallback,
 }: HeadlineProp) => {
   const ref = useRef(null);
   const { y: scrollContainerY } = useScroll(containerRef ?? ref);
   const { y: scrollWindowY } = useWindowScroll();
-  const scrollY = findFirstNonZero(scrollContainerY, scrollWindowY);
+  const scrollY = findFirstNonZero(
+    scrollContainerY,
+    useWindowScrollFallback ? scrollWindowY : 0
+  );
 
   return (
     <h1
@@ -54,6 +58,7 @@ interface HeadlineProp extends Omit<HTMLAttributes<HTMLDivElement>, "title"> {
   subtitle?: ReactElement<SubtitleProp>;
   subtitleClassName?: string | null;
   containerRef?: RefObject<HTMLDivElement>;
+  useWindowScrollFallback?: boolean;
 }
 
 const Headline = ({
@@ -62,6 +67,7 @@ const Headline = ({
   subtitle,
   subtitleClassName,
   containerRef,
+  useWindowScrollFallback,
   ...args
 }: HeadlineProp) => {
   return (
