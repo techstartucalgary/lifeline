@@ -23,6 +23,7 @@ button, input[type=text], input[type=button] {
     'wght' 700,
     'GRAD' 0,
     'opsz' 40;
+    font-size: inherit;
 }
 
 :root {
