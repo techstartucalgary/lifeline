@@ -42,7 +42,7 @@ const AssessmentsPanel = ({
           icon="add"
           variant="tonal"
           className={classnames(
-            "px-3.5 py-2 absolute top-1/2 -translate-y-1/2 text-base",
+            "px-3 py-1.5 absolute top-1/2 -translate-y-1/2 text-lg text-on-primary-container",
             "transition-all ease-emphasized-decelerate",
             "invisible opacity-0 group-hover:visible group-hover:opacity-100",
             "[@media(hover:none)]:visible [@media(hover:none)]:opacity-100"
