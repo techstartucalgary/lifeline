@@ -56,8 +56,6 @@ const AppTopBar = ({
     (child) => child !== undefined && child.type === Subtitle
   );
 
-  console.log(containerRef);
-
   return (
     <>
       <CompactHeadline
