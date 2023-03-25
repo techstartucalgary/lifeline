@@ -139,8 +139,8 @@ const CoursePanel = ({
       /> */}
 
       <Dialog
-        open={true}
-        onClose={() => null}
+        open={editingAssessment !== null}
+        onClose={() => setEditingAssessment(null)}
         as="div"
         className="flex justify-center items-center h-screen"
       >

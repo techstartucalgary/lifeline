@@ -35,5 +35,5 @@ body {
 }
 
 #headlessui-portal-root {
-  @apply z-40 fixed top-0 w-screen h-screen;
+  @apply z-40 fixed top-0 w-screen;
 }
