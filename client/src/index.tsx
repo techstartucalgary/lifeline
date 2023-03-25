@@ -1,9 +1,10 @@
 import axios from "axios";
 import React from "react";
 import ReactDOM from "react-dom/client";
-import { Routes, Route, BrowserRouter } from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "./index.css";
 
+import Panel from "./components/Panel/Panel";
 import Disclaimer from "./pages/Disclaimer";
 import Landing from "./pages/Landing";
 import Loading from "./pages/Loading";
@@ -38,6 +39,7 @@ const App = () => {
           <Route path="/app/:courseKey" element={<Review />} />
           <Route path="/disclaimer" element={<Disclaimer />} />
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+          <Route path="/panel" element={<Panel />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>

@@ -124,6 +124,8 @@ const CoursePanel = ({
           </>
         </section>
 
+        <Button to="/panel">PANEL</Button>
+
         <section
           className={classnames(
             "p-4 mt-2 mr-2",
