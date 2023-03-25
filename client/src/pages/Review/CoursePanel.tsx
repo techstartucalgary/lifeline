@@ -43,6 +43,14 @@ const CoursePanel = ({
     setEditingAssessment(null);
   }, [course]);
 
+  const onOpenDialog = () => {
+    setIsEditingAssessment(true);
+  };
+
+  const onCloseDialog = () => {
+    setIsEditingAssessment(false);
+  };
+
   return (
     <>
       <div className="z-10">
@@ -108,7 +116,7 @@ const CoursePanel = ({
                 assessments={course.assessments}
                 onAssessmentClick={(assessment: Assessment, index: number) => {
                   setEditingAssessment({ assessment, index });
-                  setIsEditingAssessment(true);
+                  onOpenDialog();
                 }}
               />
             </div>
@@ -148,21 +156,21 @@ const CoursePanel = ({
             leaveFrom="opacity-100"
             leaveTo="opacity-0"
           >
-            <div className="fixed inset-0 bg-black bg-opacity-25" />
+            <div className="fixed inset-0 md:bg-black bg-opacity-25" />
           </Transition.Child>
 
           <div className="fixed inset-0 overflow-y-auto">
-            <div className="flex min-h-full items-center justify-center p-0 md:p-4 text-center">
+            <div className="flex min-h-full items-center justify-center p-0 md:p-4 text-center will-change-auto">
               <Transition.Child
                 as={Fragment}
-                enter="ease-out duration-300"
-                enterFrom="opacity-0 scale-95"
-                enterTo="opacity-100 scale-100"
-                leave="ease-in duration-200"
-                leaveFrom="opacity-100 scale-100"
-                leaveTo="opacity-0 scale-95"
+                enter="ease-emphasized-decelerate duration-300"
+                enterFrom="opacity-80 translate-y-96"
+                enterTo="opacity-100 translate-y-0"
+                leave="ease-emphasized-accelerate duration-200"
+                leaveFrom="opacity-100 translate-y-0"
+                leaveTo="opacity-80 translate-y-full"
               >
-                <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-surface p-4 text-left align-middle shadow-xl transition-all">
+                <Dialog.Panel className="w-full max-w-md transform overflow-hidden h-screen md:rounded-2xl bg-surface px-6 pt-4 text-left align-middle shadow-xl transition-all">
                   <Dialog.Title
                     as="h3"
                     className="text-lg font-medium leading-6 text-gray-900"
@@ -177,13 +185,14 @@ const CoursePanel = ({
                         <IconButton
                           className="text-on-surface mr-1.5"
                           icon="close"
-                          onClick={onClickBack}
+                          onClick={onCloseDialog}
                         />
                       </LeadingNavigation>
                       <TrailingIcon>
                         <IconButton
                           className="text-on-surface-variant"
                           icon="done"
+                          onClick={onCloseDialog}
                         />
                       </TrailingIcon>
 

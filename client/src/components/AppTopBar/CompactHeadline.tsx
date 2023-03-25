@@ -46,7 +46,7 @@ const CompactHeadline = ({
                 </div>
                 <div
                   className={classnames(
-                    "text-on-surface text-lg will-change-auto font-bold",
+                    "text-on-surface text-lg will-change-auto font-medium",
                     "transition-opacity duration-200 md:duration-75",
                     titleClassName
                   )}
