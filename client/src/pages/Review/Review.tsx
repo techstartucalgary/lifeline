@@ -166,13 +166,10 @@ const Review = () => {
     document.body.classList.add("[@media(hover:none)]:h-screen", "h-auto");
   });
 
-  const containerRef = useRef(null);
+  const containerRef = useRef(document.body);
 
   return (
-    <div
-      className="overflow-y-auto [@media(hover:none)]:h-screen h-auto"
-      ref={containerRef}
-    >
+    <div>
       <AnimatePresence mode="popLayout">
         {((isMobile() && !currentCourse) || !isMobile()) && (
           <motion.nav
