@@ -9,6 +9,7 @@ import AppTopBar, {
   Title,
   TrailingIcon,
 } from "../../components/AppTopBar";
+import { Button } from "../../components/Button";
 import CourseInfo from "../../components/CourseInfo";
 import EditAssessment from "../../components/EditAssessment";
 import Tabs, { Tab } from "../../components/Tabs";
@@ -156,10 +157,10 @@ const CoursePanel = ({
             leaveFrom="opacity-100"
             leaveTo="opacity-0"
           >
-            <div className="fixed inset-0 md:bg-black bg-opacity-25" />
+            <div className="fixed inset-0 md:bg-black/25" />
           </Transition.Child>
 
-          <div className="fixed inset-0 overflow-y-auto">
+          <div className="fixed inset-0 overflow-hidden">
             <div className="flex min-h-full items-center justify-center p-0 md:p-4 text-center will-change-auto">
               <Transition.Child
                 as={Fragment}
@@ -170,11 +171,8 @@ const CoursePanel = ({
                 leaveFrom="opacity-100 translate-y-0"
                 leaveTo="opacity-80 translate-y-full"
               >
-                <Dialog.Panel className="w-full max-w-md transform overflow-hidden h-screen md:rounded-2xl bg-surface px-6 pt-4 text-left align-middle shadow-xl transition-all">
-                  <Dialog.Title
-                    as="h3"
-                    className="text-lg font-medium leading-6 text-gray-900"
-                  >
+                <Dialog.Panel className="w-full max-w-md overflow-y-auto h-screen md:rounded-2xl bg-surface px-6 pt-4 text-left align-middle shadow-xl transition-all">
+                  <Dialog.Title as="div" className="w-full">
                     <AppTopBar
                       className="max-w-9xl mx-auto"
                       style={{ paddingLeft: left }}
@@ -189,11 +187,12 @@ const CoursePanel = ({
                         />
                       </LeadingNavigation>
                       <TrailingIcon>
-                        <IconButton
-                          className="text-on-surface-variant"
-                          icon="done"
+                        <Button
+                          className="text-primary text-base"
                           onClick={onCloseDialog}
-                        />
+                        >
+                          Save
+                        </Button>
                       </TrailingIcon>
 
                       {/* Titles */}
@@ -211,6 +210,7 @@ const CoursePanel = ({
                       }}
                     />
                   )}
+                  <div className="h-96"></div>
                 </Dialog.Panel>
               </Transition.Child>
             </div>
