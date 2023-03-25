@@ -1,12 +1,13 @@
-import { useEffect, useState } from "react";
+import { RefObject, useEffect, useState } from "react";
+import { useScroll } from "react-use";
 
 import { classnames } from "../../Utilities";
 import AppTopBar, {
-  LeadingNavigation,
-  TrailingIcon,
-  Title,
-  Subtitle,
   IconButton,
+  LeadingNavigation,
+  Subtitle,
+  Title,
+  TrailingIcon,
 } from "../../components/AppTopBar";
 import CourseInfo from "../../components/CourseInfo";
 import EditAssessment from "../../components/EditAssessment";
@@ -16,9 +17,70 @@ import { Assessment, Course } from "../../logic/icsGen";
 import AssessmentsPanel from "./AssessmentsPanel";
 import DocumentPanel from "./DocumentPanel";
 
+interface CourseTopBarProps {
+  left: number;
+  onClickBack: () => void;
+  onDeleteCourse: () => void;
+  course: Course;
+  containerRef: RefObject<HTMLDivElement>;
+}
+
+const CourseTopBar = ({
+  left,
+  onClickBack,
+  onDeleteCourse,
+  course,
+  containerRef,
+}: CourseTopBarProps) => {
+  const { x, y } = useScroll(containerRef);
+
+  return (
+    <div className="z-10">
+      <AppTopBar
+        className="max-w-9xl mx-auto"
+        style={{ paddingLeft: left }}
+        variant="large"
+      >
+        {/* Icons */}
+        <LeadingNavigation className="block md:hidden">
+          <IconButton
+            className="text-on-surface mr-1.5"
+            icon="arrow_back"
+            onClick={onClickBack}
+          />
+        </LeadingNavigation>
+        <TrailingIcon>
+          <IconButton
+            className="text-on-surface-variant hidden md:block"
+            icon="error"
+          />
+          <IconButton
+            className="text-on-surface-variant hidden md:block"
+            icon="delete"
+            onClick={onDeleteCourse}
+          />
+          <IconButton
+            className="text-on-surface-variant block md:hidden"
+            icon="more_vert"
+          />
+        </TrailingIcon>
+        {/* Titles */}
+        <Title>
+          {course.title} {course.number}
+        </Title>
+
+        <Subtitle>
+          {course.topic} {x} {y}
+        </Subtitle>
+      </AppTopBar>
+    </div>
+  );
+};
+
 interface CoursePanelProp {
   course: Course;
   left: number;
+  containerRef: RefObject<HTMLDivElement>;
   onChangeAssessment(assessment: Assessment, index: number): void;
   onClickBack(): void;
   onDeleteCourse(): void;
@@ -27,6 +89,7 @@ interface CoursePanelProp {
 const CoursePanel = ({
   course,
   left,
+  containerRef,
   onChangeAssessment,
   onClickBack,
   onDeleteCourse,
@@ -43,45 +106,18 @@ const CoursePanel = ({
 
   return (
     <>
-      <div className="z-10">
-        <AppTopBar
-          className="max-w-9xl mx-auto"
-          style={{ paddingLeft: left }}
-          variant="large"
-        >
-          {/* Icons */}
-          <LeadingNavigation className="block md:hidden">
-            <IconButton
-              className="text-on-surface mr-1.5"
-              icon="arrow_back"
-              onClick={onClickBack}
-            />
-          </LeadingNavigation>
-          <TrailingIcon>
-            <IconButton
-              className="text-on-surface-variant hidden md:block"
-              icon="error"
-            />
-            <IconButton
-              className="text-on-surface-variant hidden md:block"
-              icon="delete"
-              onClick={onDeleteCourse}
-            />
-            <IconButton
-              className="text-on-surface-variant block md:hidden"
-              icon="more_vert"
-            />
-          </TrailingIcon>
+      <CourseTopBar
+        left={left}
+        onClickBack={onClickBack}
+        onDeleteCourse={onDeleteCourse}
+        containerRef={containerRef}
+        course={course}
+      />
 
-          {/* Titles */}
-          <Title>
-            {course.title} {course.number}
-          </Title>
-          <Subtitle>{course.topic}</Subtitle>
-        </AppTopBar>
-      </div>
-
-      <div className="flex flex-col md:flex-row gap-4 lg:gap-6" style={{ paddingLeft: left }}>
+      <div
+        className="flex flex-col md:flex-row gap-4 lg:gap-6"
+        style={{ paddingLeft: left }}
+      >
         <section className={classnames("w-full md:w-1/2")}>
           {editingAssessment ? (
             <EditAssessment

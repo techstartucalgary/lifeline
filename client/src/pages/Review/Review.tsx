@@ -1,6 +1,6 @@
 import axios from "axios";
 import { AnimatePresence, motion } from "framer-motion";
-import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { useLayoutEffect, useMemo, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useEffectOnce, useUpdateEffect } from "react-use";
 
@@ -12,6 +12,7 @@ import CoursePanel from "./CoursePanel";
 import NavigationPanel from "./NavigationPanel";
 import { transformTemplate, variants } from "./transitions";
 
+// eslint-disable-next-line max-statements
 const Review = () => {
   const [loading, setLoading] = useState<string[]>([]);
   const breakpoint = useBreakpoint();
@@ -163,8 +164,10 @@ const Review = () => {
     document.body.classList.add("w-screen");
   });
 
+  const scrollRef = useRef(null);
+
   return (
-    <div className="overflow-hidden min-h-screen">
+    <div className="overflow-y-auto h-screen" ref={scrollRef}>
       <AnimatePresence mode="popLayout">
         {((isMobile() && !currentCourse) || !isMobile()) && (
           <motion.nav
@@ -213,6 +216,7 @@ const Review = () => {
               <CoursePanel
                 course={currentCourse}
                 left={mainMarginLeft}
+                containerRef={scrollRef}
                 onChangeAssessment={onChangeAssessment}
                 onClickBack={() => navigate("/app")}
                 onDeleteCourse={deleteCurrentCourse}
@@ -220,6 +224,7 @@ const Review = () => {
             </main>
           </motion.main>
         )}
+
         {!currentCourse && !isMobile() && (
           <div className="max-w-9xl mx-auto h-screen" ref={mainRef}>
             <Dropzone onDrop={onOutlineUpload} isLoading={loading.length > 0} />

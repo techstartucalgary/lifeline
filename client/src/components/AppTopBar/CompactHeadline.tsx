@@ -8,6 +8,7 @@ import {
   TitleProp,
   TrailingIconProp,
 } from "./Subcomponents";
+import { useScroll } from "react-use";
 
 interface CompactHeadlineProp
   extends Omit<HTMLAttributes<HTMLDivElement>, "title"> {
