@@ -1,3 +1,4 @@
+import { Dialog } from "@headlessui/react";
 import { useEffect, useState } from "react";
 
 import { classnames } from "../../Utilities";
@@ -136,6 +137,28 @@ const CoursePanel = ({
           setEditingAssessment(null);
         }}
       /> */}
+
+      <Dialog
+        open={true}
+        onClose={() => null}
+        as="div"
+        className="flex justify-center items-center h-screen"
+      >
+        <Dialog.Panel className="w-full max-w-md transform overflow-hidden mx-auto rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
+          <Dialog.Title>Deactivate account</Dialog.Title>
+          <Dialog.Description>
+            This will permanently deactivate your account
+          </Dialog.Description>
+
+          <p>
+            Are you sure you want to deactivate your account? All of your data
+            will be permanently removed. This action cannot be undone.
+          </p>
+
+          {/* <button onClick={() => setIsOpen(false)}>Deactivate</button>
+          <button onClick={() => setIsOpen(false)}>Cancel</button> */}
+        </Dialog.Panel>
+      </Dialog>
     </>
   );
 };

@@ -1,6 +1,6 @@
 import axios from "axios";
 import { AnimatePresence, motion } from "framer-motion";
-import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { useLayoutEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useEffectOnce, useUpdateEffect } from "react-use";
 
@@ -23,17 +23,17 @@ const Review = () => {
     courseKey: string | undefined;
   }>();
 
-  const currentCourse = courses.find(
-    (course) => course.key === courseKeyURLParam
-  ) || null;
+  const currentCourse =
+    courses.find((course) => course.key === courseKeyURLParam) || null;
 
   const deleteCurrentCourse = () => {
     setCourses(
       coursesRef.current.filter((course) => course.key !== currentCourse?.key)
     );
-    coursesRef.current = coursesRef.current.filter(
-      (course) => course.key !== currentCourse?.key
-    ) || null;
+    coursesRef.current =
+      coursesRef.current.filter(
+        (course) => course.key !== currentCourse?.key
+      ) || null;
     navigate("/app");
   };
 
