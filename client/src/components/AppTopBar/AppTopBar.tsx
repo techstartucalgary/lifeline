@@ -24,6 +24,7 @@ interface AppTopBarProps extends HTMLAttributes<HTMLDivElement> {
     | ReactElement<AllAcceptingChildren>[];
   variant?: "small" | "medium" | "large";
   containerRef?: RefObject<HTMLDivElement>;
+  useWindowScrollFallback?: boolean;
 }
 
 type AllAcceptingChildren =
@@ -37,6 +38,7 @@ const AppTopBar = ({
   elevation,
   children,
   containerRef,
+  useWindowScrollFallback = true,
   ...args
 }: AppTopBarProps) => {
   // If children is not an array, make it an array of only itself
