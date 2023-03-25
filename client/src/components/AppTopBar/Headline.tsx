@@ -78,6 +78,7 @@ const Headline = ({
             title={title}
             titleClassName={titleClassName}
             containerRef={containerRef}
+            useWindowScrollFallback={useWindowScrollFallback}
           />
           <h2
             className={classnames(

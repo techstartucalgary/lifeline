@@ -68,6 +68,7 @@ const AppTopBar = ({
         trailingIcon={trailingIcon}
         elevation={elevation}
         containerRef={containerRef}
+        useWindowScrollFallback={useWindowScrollFallback}
       />
       <Headline
         {...args}
@@ -79,6 +80,7 @@ const AppTopBar = ({
         title={title}
         subtitle={subtitle}
         containerRef={containerRef}
+        useWindowScrollFallback={useWindowScrollFallback}
       />
     </>
   );
