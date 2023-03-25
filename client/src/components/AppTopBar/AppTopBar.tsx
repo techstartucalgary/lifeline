@@ -23,7 +23,7 @@ interface AppTopBarProps extends HTMLAttributes<HTMLDivElement> {
     | ReactElement<AllAcceptingChildren>
     | ReactElement<AllAcceptingChildren>[];
   variant?: "small" | "medium" | "large";
-  containerRef: RefObject<HTMLDivElement>;
+  containerRef?: RefObject<HTMLDivElement>;
 }
 
 type AllAcceptingChildren =

@@ -53,7 +53,7 @@ interface HeadlineProp extends Omit<HTMLAttributes<HTMLDivElement>, "title"> {
   titleClassName?: string | null;
   subtitle?: ReactElement<SubtitleProp>;
   subtitleClassName?: string | null;
-  containerRef: RefObject<HTMLDivElement>;
+  containerRef?: RefObject<HTMLDivElement>;
 }
 
 const Headline = ({

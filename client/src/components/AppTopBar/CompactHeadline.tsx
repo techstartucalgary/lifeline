@@ -17,7 +17,7 @@ interface CompactHeadlineProp
   trailingIcon?: ReactElement<TrailingIconProp>;
   elevation?: boolean;
   elevationClassName?: string | null;
-  containerRef: RefObject<HTMLDivElement>;
+  containerRef?: RefObject<HTMLDivElement>;
 }
 
 const normalize = (val: number, min: number, max: number) =>
