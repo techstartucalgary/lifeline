@@ -1,5 +1,5 @@
 import { Dialog, Transition } from "@headlessui/react";
-import { Fragment, useEffect, useState } from "react";
+import { Fragment, RefObject, useEffect, useState } from "react";
 
 import { classnames } from "../../Utilities";
 import AppTopBar, {
@@ -21,6 +21,7 @@ import DocumentPanel from "./DocumentPanel";
 interface CoursePanelProp {
   course: Course;
   left: number;
+  containerRef: RefObject<HTMLDivElement>;
   onChangeAssessment(assessment: Assessment, index: number): void;
   onClickBack(): void;
   onDeleteCourse(): void;
@@ -29,6 +30,7 @@ interface CoursePanelProp {
 const CoursePanel = ({
   course,
   left,
+  containerRef,
   onChangeAssessment,
   onClickBack,
   onDeleteCourse,
@@ -59,6 +61,7 @@ const CoursePanel = ({
           className="max-w-9xl mx-auto"
           style={{ paddingLeft: left }}
           variant="large"
+          containerRef={containerRef}
         >
           {/* Icons */}
           <LeadingNavigation className="block md:hidden">
@@ -83,14 +86,15 @@ const CoursePanel = ({
               icon="more_vert"
             />
           </TrailingIcon>
-
           {/* Titles */}
           <Title>
             {course.title} {course.number}
           </Title>
+
           <Subtitle>{course.topic}</Subtitle>
         </AppTopBar>
       </div>
+
       <div
         className="flex flex-col md:flex-row gap-4 lg:gap-6"
         style={{ paddingLeft: left }}

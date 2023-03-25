@@ -1,5 +1,5 @@
-import useScrollPosition from "@react-hook/window-scroll";
-import { HTMLAttributes, ReactElement } from "react";
+import { HTMLAttributes, ReactElement, RefObject, useRef } from "react";
+import { useScroll, useWindowScroll } from "react-use";
 
 import { classnames } from "../../Utilities";
 
@@ -17,10 +17,18 @@ interface CompactHeadlineProp
   trailingIcon?: ReactElement<TrailingIconProp>;
   elevation?: boolean;
   elevationClassName?: string | null;
+  containerRef?: RefObject<HTMLDivElement>;
 }
 
 const normalize = (val: number, min: number, max: number) =>
   (val - min) / (max - min);
+
+const findFirstNonZero = (...args: number[]) => {
+  for (const arg of args) {
+    if (arg !== 0) return arg;
+  }
+  return 0;
+};
 
 const CompactHeadline = ({
   title,
@@ -29,9 +37,13 @@ const CompactHeadline = ({
   trailingIcon,
   elevation = true,
   elevationClassName,
+  containerRef,
   ...args
 }: CompactHeadlineProp) => {
-  const scrollY = useScrollPosition(240);
+  const ref = useRef(null);
+  const { y: scrollContainerY } = useScroll(containerRef ?? ref);
+  const { y: scrollWindowY } = useWindowScroll();
+  const scrollY = findFirstNonZero(scrollContainerY, scrollWindowY);
 
   return (
     <>
@@ -46,7 +58,7 @@ const CompactHeadline = ({
                 </div>
                 <div
                   className={classnames(
-                    "text-on-surface text-lg will-change-auto font-medium",
+                    "text-on-surface text-base will-change-auto font-medium",
                     "transition-opacity duration-200 md:duration-75",
                     titleClassName
                   )}
@@ -73,7 +85,7 @@ const CompactHeadline = ({
                 elevationClassName
               )}
               style={{
-                opacity: normalize(window.scrollY, 90, 100),
+                opacity: normalize(scrollY, 90, 100),
               }}
             />
           )}

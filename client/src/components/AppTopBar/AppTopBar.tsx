@@ -1,4 +1,4 @@
-import { HTMLAttributes, ReactElement } from "react";
+import { HTMLAttributes, ReactElement, RefObject } from "react";
 
 import { classnames } from "../../Utilities";
 
@@ -23,6 +23,7 @@ interface AppTopBarProps extends HTMLAttributes<HTMLDivElement> {
     | ReactElement<AllAcceptingChildren>
     | ReactElement<AllAcceptingChildren>[];
   variant?: "small" | "medium" | "large";
+  containerRef?: RefObject<HTMLDivElement>;
 }
 
 type AllAcceptingChildren =
@@ -35,6 +36,7 @@ const AppTopBar = ({
   variant = "large",
   elevation,
   children,
+  containerRef,
   ...args
 }: AppTopBarProps) => {
   // If children is not an array, make it an array of only itself
@@ -63,6 +65,7 @@ const AppTopBar = ({
         leadingNavigation={leadingNavigation}
         trailingIcon={trailingIcon}
         elevation={elevation}
+        containerRef={containerRef}
       />
       <Headline
         {...args}
@@ -73,6 +76,7 @@ const AppTopBar = ({
         )}
         title={title}
         subtitle={subtitle}
+        containerRef={containerRef}
       />
     </>
   );
