@@ -56,21 +56,12 @@ const EditAssessment = ({
 
   return (
     <form
-      className="w-full bg-surface flex flex-col gap-4 text-on-surface"
+      className="flex flex-col gap-4 text-on-surface"
       onSubmit={handleSubmit}
       onKeyDown={(e) => {
         if (e.key === "Escape") onClose();
       }}
     >
-      <div className="flex flex-row justify-between items-center">
-        <h1 className="text-2xl font-bold">Edit assessment</h1>
-        <button type="button" onClick={onClose}>
-          <span className="material-symbols-outlined text2xl text-right">
-            close
-          </span>
-        </button>
-      </div>
-
       <div className="flex flex-row w-full h-14">
         <BlobIcon icon="label" />
         <div className="relative w-full ml-2">

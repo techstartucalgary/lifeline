@@ -59,7 +59,7 @@ const AppTopBar = ({
       <CompactHeadline
         {...args}
         title={title}
-        titleClassName={classnames(variant === "small" && "opacity-1")}
+        titleClassName={classnames(variant === "small" && "!opacity-100")}
         leadingNavigation={leadingNavigation}
         trailingIcon={trailingIcon}
         elevation={elevation}

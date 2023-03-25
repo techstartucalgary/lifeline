@@ -10,6 +10,7 @@ import AppTopBar, {
   TrailingIcon,
 } from "../../components/AppTopBar";
 import CourseInfo from "../../components/CourseInfo";
+import EditAssessment from "../../components/EditAssessment";
 import Tabs, { Tab } from "../../components/Tabs";
 import { Assessment, Course } from "../../logic/icsGen";
 
@@ -32,6 +33,7 @@ const CoursePanel = ({
   onDeleteCourse,
 }: CoursePanelProp) => {
   const [selectedTab, setSelectedTab] = useState<Tab>(Tab.Assessments);
+  const [isEditingAssessment, setIsEditingAssessment] = useState(false);
   const [editingAssessment, setEditingAssessment] = useState<{
     assessment: Assessment;
     index: number;
@@ -106,6 +108,7 @@ const CoursePanel = ({
                 assessments={course.assessments}
                 onAssessmentClick={(assessment: Assessment, index: number) => {
                   setEditingAssessment({ assessment, index });
+                  setIsEditingAssessment(true);
                 }}
               />
             </div>
@@ -129,17 +132,13 @@ const CoursePanel = ({
           )}
         </section>
       </div>
-      {/* <EditAssessment
-        assessment={editingAssessment.assessment}
-        onClose={() => setEditingAssessment(null)}
-        onSave={(assessment: Assessment) => {
-          onChangeAssessment(assessment, editingAssessment.index);
-          setEditingAssessment(null);
-        }}
-      /> */}
 
-      <Transition appear show={editingAssessment !== null} as={Fragment}>
-        <Dialog as="div" className="relative z-10" onClose={() => setEditingAssessment(null)}>
+      <Transition appear show={isEditingAssessment} as={Fragment}>
+        <Dialog
+          as="div"
+          className="relative z-10"
+          onClose={() => setIsEditingAssessment(false)}
+        >
           <Transition.Child
             as={Fragment}
             enter="ease-out duration-300"
@@ -153,7 +152,7 @@ const CoursePanel = ({
           </Transition.Child>
 
           <div className="fixed inset-0 overflow-y-auto">
-            <div className="flex min-h-full items-center justify-center p-4 text-center">
+            <div className="flex min-h-full items-center justify-center p-0 md:p-4 text-center">
               <Transition.Child
                 as={Fragment}
                 enter="ease-out duration-300"
@@ -163,29 +162,46 @@ const CoursePanel = ({
                 leaveFrom="opacity-100 scale-100"
                 leaveTo="opacity-0 scale-95"
               >
-                <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
+                <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-surface p-4 text-left align-middle shadow-xl transition-all">
                   <Dialog.Title
                     as="h3"
                     className="text-lg font-medium leading-6 text-gray-900"
                   >
-                    Payment successful
-                  </Dialog.Title>
-                  <div className="mt-2">
-                    <p className="text-sm text-gray-500">
-                      Your payment has been successfully submitted. We’ve sent
-                      you an email with all of the details of your order.
-                    </p>
-                  </div>
-
-                  <div className="mt-4">
-                    <button
-                      type="button"
-                      className="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
-                      onClick={() => setEditingAssessment(null)}
+                    <AppTopBar
+                      className="max-w-9xl mx-auto"
+                      style={{ paddingLeft: left }}
+                      variant="small"
                     >
-                      Got it, thanks!
-                    </button>
-                  </div>
+                      {/* Icons */}
+                      <LeadingNavigation>
+                        <IconButton
+                          className="text-on-surface mr-1.5"
+                          icon="close"
+                          onClick={onClickBack}
+                        />
+                      </LeadingNavigation>
+                      <TrailingIcon>
+                        <IconButton
+                          className="text-on-surface-variant"
+                          icon="done"
+                        />
+                      </TrailingIcon>
+
+                      {/* Titles */}
+                      <Title>Edit essessment</Title>
+                    </AppTopBar>
+                  </Dialog.Title>
+
+                  {editingAssessment && (
+                    <EditAssessment
+                      assessment={editingAssessment.assessment}
+                      onClose={() => setEditingAssessment(null)}
+                      onSave={(assessment: Assessment) => {
+                        onChangeAssessment(assessment, editingAssessment.index);
+                        setEditingAssessment(null);
+                      }}
+                    />
+                  )}
                 </Dialog.Panel>
               </Transition.Child>
             </div>
