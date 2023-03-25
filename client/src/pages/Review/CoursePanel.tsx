@@ -1,5 +1,4 @@
 import { RefObject, useEffect, useState } from "react";
-import { useScroll } from "react-use";
 
 import { classnames } from "../../Utilities";
 import AppTopBar, {
@@ -44,7 +43,6 @@ const CoursePanel = ({
     setEditingAssessment(null);
   }, [course]);
 
-
   return (
     <>
       <div className="z-10">
@@ -82,9 +80,7 @@ const CoursePanel = ({
             {course.title} {course.number}
           </Title>
 
-          <Subtitle>
-            {course.topic}
-          </Subtitle>
+          <Subtitle>{course.topic}</Subtitle>
         </AppTopBar>
       </div>
 
