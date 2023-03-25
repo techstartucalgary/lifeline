@@ -66,7 +66,7 @@ const Headline = ({
           />
           <h2
             className={classnames(
-              "text-outline font-medium text-lg",
+              "text-outline font-medium text-base",
               "transition-opacity duration-100 ease-emphasized-accelerate",
               subtitleClassName
             )}
