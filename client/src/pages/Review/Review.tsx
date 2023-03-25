@@ -2,7 +2,7 @@ import axios from "axios";
 import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { useEffectOnce } from "react-use";
+import { useEffectOnce, useUpdateEffect } from "react-use";
 
 import { useBreakpoint } from "../../Utilities";
 import { Dropzone } from "../../components/Dropzone";
@@ -134,7 +134,7 @@ const Review = () => {
     coursesRef.current = parsedCourses;
   });
 
-  useEffect(() => {
+  useUpdateEffect(() => {
     localStorage.setItem("courses", JSON.stringify(courses));
   }, [courses]);
 
