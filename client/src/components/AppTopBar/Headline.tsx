@@ -1,5 +1,5 @@
 import { HTMLAttributes, ReactElement, RefObject, useRef } from "react";
-import { useScroll } from "react-use";
+import { useScroll, useWindowScroll } from "react-use";
 
 import { classnames } from "../../Utilities";
 
@@ -11,13 +11,22 @@ const normalize = (val: number, min: number, max: number) =>
 const limit = (val: number, min: number, max: number) =>
   Math.min(Math.max(val, min), max);
 
+const findFirstNonZero = (...args: number[]) => {
+  for (const arg of args) {
+    if (arg !== 0) return arg;
+  }
+  return 0;
+};
+
 const ReactiveTitle = ({
   title,
   titleClassName,
   containerRef,
 }: HeadlineProp) => {
   const ref = useRef(null);
-  const { y: scrollY } = useScroll(containerRef ?? ref);
+  const { y: scrollContainerY } = useScroll(containerRef ?? ref);
+  const { y: scrollWindowY } = useWindowScroll();
+  const scrollY = findFirstNonZero(scrollContainerY, scrollWindowY);
 
   return (
     <h1

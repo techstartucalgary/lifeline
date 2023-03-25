@@ -1,5 +1,5 @@
 import { HTMLAttributes, ReactElement, RefObject, useRef } from "react";
-import { useScroll } from "react-use";
+import { useScroll, useWindowScroll } from "react-use";
 
 import { classnames } from "../../Utilities";
 
@@ -23,6 +23,13 @@ interface CompactHeadlineProp
 const normalize = (val: number, min: number, max: number) =>
   (val - min) / (max - min);
 
+const findFirstNonZero = (...args: number[]) => {
+  for (const arg of args) {
+    if (arg !== 0) return arg;
+  }
+  return 0;
+};
+
 const CompactHeadline = ({
   title,
   titleClassName,
@@ -34,7 +41,9 @@ const CompactHeadline = ({
   ...args
 }: CompactHeadlineProp) => {
   const ref = useRef(null);
-  const { y: scrollY } = useScroll(containerRef ?? ref);
+  const { y: scrollContainerY } = useScroll(containerRef ?? ref);
+  const { y: scrollWindowY } = useWindowScroll();
+  const scrollY = findFirstNonZero(scrollContainerY, scrollWindowY);
 
   return (
     <>
@@ -62,9 +71,7 @@ const CompactHeadline = ({
               </div>
 
               {/* Trailing Icon */}
-              <div className="p-1 text-on-surface-variant">
-                {trailingIcon}
-              </div>
+              <div className="p-1 text-on-surface-variant">{trailingIcon}</div>
             </div>
           </div>
 
