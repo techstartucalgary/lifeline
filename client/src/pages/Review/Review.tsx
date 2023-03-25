@@ -157,7 +157,11 @@ const Review = () => {
   const isMobile = () => ["xs", "sm"].includes(breakpoint);
 
   // Add `overflow-hidden` to html element when on app page
-  useEffectOnce(() => document.documentElement.classList.add("overflow-hidden"));
+  useEffectOnce(() => {
+    document.documentElement.classList.add("overflow-hidden");
+    document.body.classList.add("h-screen");
+    document.body.classList.add("w-screen");
+  });
 
   return (
     <div className="overflow-hidden min-h-screen">
