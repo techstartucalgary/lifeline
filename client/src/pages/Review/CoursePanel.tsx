@@ -177,46 +177,45 @@ const CoursePanel = ({
                 leaveFrom="opacity-100 translate-y-0"
                 leaveTo="opacity-80 translate-y-full"
               >
-                <Dialog.Panel className="w-full max-w-md overflow-y-auto h-screen md:rounded-2xl bg-surface px-6 pt-4 text-left align-middle shadow-xl transition-all">
-                  <Dialog.Title as="div" className="w-full">
-                    <AppTopBar
-                      className="max-w-9xl mx-auto"
-                      style={{ paddingLeft: left }}
-                      variant="small"
-                    >
-                      {/* Icons */}
-                      <LeadingNavigation>
-                        <IconButton
-                          className="text-on-surface mr-1.5"
-                          icon="close"
-                          onClick={onCloseDialog}
-                        />
-                      </LeadingNavigation>
-                      <TrailingIcon>
-                        <Button
-                          className="text-primary text-base"
-                          onClick={onCloseDialog}
-                        >
-                          Save
-                        </Button>
-                      </TrailingIcon>
+                <Dialog.Panel className="w-full max-w-md overflow-hidden h-screen md:h-auto md:rounded-2xl bg-surface shadow-xl transition-all">
+                  <AppTopBar className="max-w-9xl mx-auto" variant="small">
+                    {/* Icons */}
+                    <LeadingNavigation>
+                      <IconButton
+                        className="text-on-surface mr-1.5"
+                        icon="close"
+                        onClick={onCloseDialog}
+                      />
+                    </LeadingNavigation>
+                    <TrailingIcon>
+                      <Button
+                        className="text-primary"
+                        onClick={onCloseDialog}
+                      >
+                        Save
+                      </Button>
+                    </TrailingIcon>
 
-                      {/* Titles */}
-                      <Title>Edit essessment</Title>
-                    </AppTopBar>
-                  </Dialog.Title>
+                    {/* Titles */}
+                    <Title>Edit assessment</Title>
+                  </AppTopBar>
 
                   {editingAssessment && (
-                    <EditAssessment
-                      assessment={editingAssessment.assessment}
-                      onClose={() => setEditingAssessment(null)}
-                      onSave={(assessment: Assessment) => {
-                        onChangeAssessment(assessment, editingAssessment.index);
-                        setEditingAssessment(null);
-                      }}
-                    />
+                    <div className="h-full md:h-96 overflow-y-auto px-6 py-4">
+                      <EditAssessment
+                        assessment={editingAssessment.assessment}
+                        onClose={() => setEditingAssessment(null)}
+                        onSave={(assessment: Assessment) => {
+                          onChangeAssessment(
+                            assessment,
+                            editingAssessment.index
+                          );
+                          setEditingAssessment(null);
+                        }}
+                      />
+                      <div className="pt-96"></div>
+                    </div>
                   )}
-                  <div className="h-96"></div>
                 </Dialog.Panel>
               </Transition.Child>
             </div>
