@@ -17,66 +17,6 @@ import { Assessment, Course } from "../../logic/icsGen";
 import AssessmentsPanel from "./AssessmentsPanel";
 import DocumentPanel from "./DocumentPanel";
 
-interface CourseTopBarProps {
-  left: number;
-  onClickBack: () => void;
-  onDeleteCourse: () => void;
-  course: Course;
-  containerRef: RefObject<HTMLDivElement>;
-}
-
-const CourseTopBar = ({
-  left,
-  onClickBack,
-  onDeleteCourse,
-  course,
-  containerRef,
-}: CourseTopBarProps) => {
-  const { x, y } = useScroll(containerRef);
-
-  return (
-    <div className="z-10">
-      <AppTopBar
-        className="max-w-9xl mx-auto"
-        style={{ paddingLeft: left }}
-        variant="large"
-      >
-        {/* Icons */}
-        <LeadingNavigation className="block md:hidden">
-          <IconButton
-            className="text-on-surface mr-1.5"
-            icon="arrow_back"
-            onClick={onClickBack}
-          />
-        </LeadingNavigation>
-        <TrailingIcon>
-          <IconButton
-            className="text-on-surface-variant hidden md:block"
-            icon="error"
-          />
-          <IconButton
-            className="text-on-surface-variant hidden md:block"
-            icon="delete"
-            onClick={onDeleteCourse}
-          />
-          <IconButton
-            className="text-on-surface-variant block md:hidden"
-            icon="more_vert"
-          />
-        </TrailingIcon>
-        {/* Titles */}
-        <Title>
-          {course.title} {course.number}
-        </Title>
-
-        <Subtitle>
-          {course.topic} {x} {y}
-        </Subtitle>
-      </AppTopBar>
-    </div>
-  );
-};
-
 interface CoursePanelProp {
   course: Course;
   left: number;
@@ -104,15 +44,49 @@ const CoursePanel = ({
     setEditingAssessment(null);
   }, [course]);
 
+
   return (
     <>
-      <CourseTopBar
-        left={left}
-        onClickBack={onClickBack}
-        onDeleteCourse={onDeleteCourse}
-        containerRef={containerRef}
-        course={course}
-      />
+      <div className="z-10">
+        <AppTopBar
+          className="max-w-9xl mx-auto"
+          style={{ paddingLeft: left }}
+          variant="large"
+          containerRef={containerRef}
+        >
+          {/* Icons */}
+          <LeadingNavigation className="block md:hidden">
+            <IconButton
+              className="text-on-surface mr-1.5"
+              icon="arrow_back"
+              onClick={onClickBack}
+            />
+          </LeadingNavigation>
+          <TrailingIcon>
+            <IconButton
+              className="text-on-surface-variant hidden md:block"
+              icon="error"
+            />
+            <IconButton
+              className="text-on-surface-variant hidden md:block"
+              icon="delete"
+              onClick={onDeleteCourse}
+            />
+            <IconButton
+              className="text-on-surface-variant block md:hidden"
+              icon="more_vert"
+            />
+          </TrailingIcon>
+          {/* Titles */}
+          <Title>
+            {course.title} {course.number}
+          </Title>
+
+          <Subtitle>
+            {course.topic}
+          </Subtitle>
+        </AppTopBar>
+      </div>
 
       <div
         className="flex flex-col md:flex-row gap-4 lg:gap-6"

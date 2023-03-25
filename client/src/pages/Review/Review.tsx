@@ -164,10 +164,10 @@ const Review = () => {
     document.body.classList.add("w-screen");
   });
 
-  const scrollRef = useRef(null);
+  const containerRef = useRef(null);
 
   return (
-    <div className="overflow-y-auto h-screen" ref={scrollRef}>
+    <div className="overflow-y-auto h-screen" ref={containerRef}>
       <AnimatePresence mode="popLayout">
         {((isMobile() && !currentCourse) || !isMobile()) && (
           <motion.nav
@@ -216,7 +216,7 @@ const Review = () => {
               <CoursePanel
                 course={currentCourse}
                 left={mainMarginLeft}
-                containerRef={scrollRef}
+                containerRef={containerRef}
                 onChangeAssessment={onChangeAssessment}
                 onClickBack={() => navigate("/app")}
                 onDeleteCourse={deleteCurrentCourse}

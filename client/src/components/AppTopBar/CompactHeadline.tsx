@@ -1,5 +1,5 @@
-import useScrollPosition from "@react-hook/window-scroll";
-import { HTMLAttributes, ReactElement } from "react";
+import { HTMLAttributes, ReactElement, RefObject, useRef } from "react";
+import { useScroll } from "react-use";
 
 import { classnames } from "../../Utilities";
 
@@ -8,7 +8,6 @@ import {
   TitleProp,
   TrailingIconProp,
 } from "./Subcomponents";
-import { useScroll } from "react-use";
 
 interface CompactHeadlineProp
   extends Omit<HTMLAttributes<HTMLDivElement>, "title"> {
@@ -18,6 +17,7 @@ interface CompactHeadlineProp
   trailingIcon?: ReactElement<TrailingIconProp>;
   elevation?: boolean;
   elevationClassName?: string | null;
+  containerRef: RefObject<HTMLDivElement>;
 }
 
 const normalize = (val: number, min: number, max: number) =>
@@ -30,9 +30,11 @@ const CompactHeadline = ({
   trailingIcon,
   elevation = true,
   elevationClassName,
+  containerRef,
   ...args
 }: CompactHeadlineProp) => {
-  const scrollY = useScrollPosition(240);
+  const ref = useRef(null);
+  const { y: scrollY } = useScroll(containerRef ?? ref);
 
   return (
     <>
@@ -60,7 +62,9 @@ const CompactHeadline = ({
               </div>
 
               {/* Trailing Icon */}
-              <div className="p-1 text-on-surface-variant">{trailingIcon}</div>
+              <div className="p-1 text-on-surface-variant">
+                {trailingIcon}
+              </div>
             </div>
           </div>
 
