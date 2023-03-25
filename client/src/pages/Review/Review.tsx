@@ -170,7 +170,7 @@ const Review = () => {
 
   return (
     <div
-      className="overflow-y-auto h-screen [@media(hover:none)]:h-auto"
+      className="overflow-y-auto [@media(hover:none)]:h-screen h-auto"
       ref={containerRef}
     >
       <AnimatePresence mode="popLayout">
