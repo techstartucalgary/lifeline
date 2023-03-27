@@ -13,6 +13,7 @@ from mangum import Mangum
 from handlers import calendar_handler, file_handler, xlsx_handler
 
 IS_IN_PROD = "LAMBDA_TASK_ROOT" in dict(environ)
+MAX_FILE_SIZE = 400_000
 
 load_dotenv()
 
@@ -53,7 +54,7 @@ async def show_calendar():
 async def get_deadlines(response: Response, outline_file: UploadFile = File(...)):
     """Returns the extracted dates and info from the uploaded file"""
     file_size = os.fstat(outline_file.file.fileno()).st_size
-    if file_size > 150000:
+    if file_size > MAX_FILE_SIZE:
         raise HTTPException(status_code=413, detail="File size exceeds 150kb")
     return file_handler.handle_file(outline_file, response)
 
