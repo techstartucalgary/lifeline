@@ -71,7 +71,7 @@ const CompactHeadline = ({
               </div>
 
               {/* Trailing Icon */}
-              <div className="p-1 text-on-surface-variant">{trailingIcon}</div>
+              <div className="px-1 py-0.5 text-on-surface-variant">{trailingIcon}</div>
             </div>
           </div>
 
