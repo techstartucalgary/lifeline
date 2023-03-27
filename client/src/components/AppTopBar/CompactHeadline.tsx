@@ -18,7 +18,6 @@ interface CompactHeadlineProp
   elevation?: boolean;
   elevationClassName?: string | null;
   containerRef?: RefObject<HTMLDivElement>;
-  useWindowScrollFallback?: boolean;
 }
 
 const normalize = (val: number, min: number, max: number) =>
@@ -39,16 +38,12 @@ const CompactHeadline = ({
   elevation = true,
   elevationClassName,
   containerRef,
-  useWindowScrollFallback,
   ...args
 }: CompactHeadlineProp) => {
   const ref = useRef(null);
   const { y: scrollContainerY } = useScroll(containerRef ?? ref);
   const { y: scrollWindowY } = useWindowScroll();
-  const scrollY = findFirstNonZero(
-    scrollContainerY,
-    useWindowScrollFallback ? scrollWindowY : 0
-  );
+  const scrollY = findFirstNonZero(scrollContainerY, scrollWindowY);
 
   return (
     <>
