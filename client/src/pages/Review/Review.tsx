@@ -166,13 +166,8 @@ const Review = () => {
     document.body.classList.add("[@media(hover:none)]:h-screen", "h-auto");
   });
 
-  const containerRef = useRef(null);
-
   return (
-    <div
-      className="overflow-y-auto [@media(hover:none)]:h-screen h-auto"
-      ref={containerRef}
-    >
+    <div className="overflow-y-auto [@media(hover:none)]:h-screen h-auto">
       <AnimatePresence mode="popLayout">
         {((isMobile() && !currentCourse) || !isMobile()) && (
           <motion.nav
@@ -221,7 +216,6 @@ const Review = () => {
               <CoursePanel
                 course={currentCourse}
                 left={mainMarginLeft}
-                containerRef={containerRef}
                 onChangeAssessment={onChangeAssessment}
                 onClickBack={() => navigate("/app")}
                 onDeleteCourse={deleteCurrentCourse}

@@ -67,7 +67,7 @@ const AppTopBar = ({
         elevation={elevation}
         containerRef={containerRef}
       />
-      <Headline
+      {/* <Headline
         {...args}
         className={classnames(
           variant === "small" && "h-0",
@@ -77,7 +77,7 @@ const AppTopBar = ({
         title={title}
         subtitle={subtitle}
         containerRef={containerRef}
-      />
+      /> */}
     </>
   );
 };

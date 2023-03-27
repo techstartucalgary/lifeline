@@ -1,4 +1,4 @@
-import { RefObject, useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import { classnames } from "../../Utilities";
 import AppTopBar, {
@@ -19,7 +19,6 @@ import DocumentPanel from "./DocumentPanel";
 interface CoursePanelProp {
   course: Course;
   left: number;
-  containerRef: RefObject<HTMLDivElement>;
   onChangeAssessment(assessment: Assessment, index: number): void;
   onClickBack(): void;
   onDeleteCourse(): void;
@@ -28,7 +27,6 @@ interface CoursePanelProp {
 const CoursePanel = ({
   course,
   left,
-  containerRef,
   onChangeAssessment,
   onClickBack,
   onDeleteCourse,
@@ -42,6 +40,8 @@ const CoursePanel = ({
   useEffect(() => {
     setEditingAssessment(null);
   }, [course]);
+
+  const containerRef = useRef(null);
 
   return (
     <>
@@ -85,8 +85,9 @@ const CoursePanel = ({
       </div>
 
       <div
-        className="flex flex-col md:flex-row gap-4 lg:gap-6"
+        className="flex flex-col md:flex-row gap-4 lg:gap-6 overflow-y-auto h-[calc(100vh-4rem)]"
         style={{ paddingLeft: left }}
+        ref={containerRef}
       >
         <section className={classnames("w-full md:w-1/2")}>
           {editingAssessment ? (
