@@ -1,13 +1,8 @@
 import axios from "axios";
 import { AnimatePresence, motion } from "framer-motion";
-import {
-  useCallback,
-  useEffect,
-  useLayoutEffect,
-  useRef,
-  useState,
-} from "react";
-import { useBeforeUnload, useNavigate, useParams } from "react-router-dom";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { useEffectOnce } from "react-use";
 
 import { useBreakpoint } from "../../Utilities";
 import { Dropzone } from "../../components/Dropzone";
@@ -73,10 +68,6 @@ const Review = () => {
     });
   };
 
-  const cacheCourses = () => {
-    localStorage.setItem("courses", JSON.stringify(courses));
-  };
-
   const onOutlineUpload = async (files: File[]) => {
     setLoading(files.map((f: File) => f.name));
 
@@ -133,7 +124,7 @@ const Review = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [navRef.current, mainRef.current, currentCourse, breakpoint]);
 
-  useEffect(() => {
+  useEffectOnce(() => {
     // Load courses from local storage
     const foundCourses = localStorage.getItem("courses");
     if (!foundCourses) return;
@@ -141,9 +132,11 @@ const Review = () => {
     const parsedCourses: Courses = JSON.parse(foundCourses).map(parseCourse);
     setCourses(parsedCourses);
     coursesRef.current = parsedCourses;
-  }, [courseKeyURLParam]);
+  });
 
-  useBeforeUnload(useCallback(cacheCourses, [courses]));
+  useEffect(() => {
+    localStorage.setItem("courses", JSON.stringify(courses));
+  }, [courses]);
 
   // Callback for select course in navigation drawer
   const onCourseClick = (course: Course) => {
