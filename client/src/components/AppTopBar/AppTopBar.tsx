@@ -24,7 +24,7 @@ const useAppTopBar = ({
   trailingIcon,
   containerRef,
 }: AppTopBarProps) => {
-  const compactHeadline = () => (
+  const compactHeadline = ({ ...args }) => (
     <CompactHeadline
       title={<>{title}</>}
       titleClassName={classnames(variant === "small" && "!opacity-100")}
@@ -32,10 +32,11 @@ const useAppTopBar = ({
       trailingIcon={trailingIcon}
       elevation={elevation}
       containerRef={containerRef}
+      {...args}
     />
   );
 
-  const headline = () => (
+  const headline = ({ ...args }) => (
     <Headline
       className={classnames(
         variant === "small" && "h-0",
@@ -44,6 +45,7 @@ const useAppTopBar = ({
       title={<>{title}</>}
       subtitle={<>{subtitle}</>}
       containerRef={containerRef}
+      {...args}
     />
   );
 
