@@ -7,6 +7,7 @@ import AppTopBar, {
   Subtitle,
   Title,
   TrailingIcon,
+  useAppTopBar,
 } from "../../components/AppTopBar";
 import CourseInfo from "../../components/CourseInfo";
 import EditAssessment from "../../components/EditAssessment";
@@ -57,6 +58,8 @@ const CoursePanel = ({
 
   const containerRef = useRef(null);
 
+  const [compactHeadline, headline] = useAppTopBar({ variant: "large", title: "AAAA" });
+
   return (
     <>
       <div className="z-10">
@@ -104,6 +107,8 @@ const CoursePanel = ({
         ref={containerRef}
       >
         <section className={classnames("w-full md:w-1/2")}>
+          {headline}
+
           {editingAssessment ? (
             <EditAssessment
               assessment={editingAssessment.assessment}
