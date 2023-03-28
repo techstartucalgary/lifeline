@@ -1,7 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 
 import { classnames } from "../../Utilities";
-import { IconButton, useAppTopBar } from "../../components/AppTopBar";
+import { useAppTopBar } from "../../components/AppTopBar";
+import { AppTopBarIconButton } from "../../components/AppTopBar/IconButton";
 import CourseInfo from "../../components/CourseInfo";
 import EditAssessment from "../../components/EditAssessment";
 import Tabs, { Tab } from "../../components/Tabs";
@@ -57,24 +58,24 @@ const CoursePanel = ({
     subtitle: course.topic,
     containerRef,
     leadingNavigation: (
-      <IconButton
-        className="text-on-surface mr-1.5 block md:hidden"
+      <AppTopBarIconButton
+        className="text-on-surface mr-1 flex md:hidden"
         icon="arrow_back"
         onClick={onBack}
       />
     ),
     trailingIcon: (
       <>
-        <IconButton
+        <AppTopBarIconButton
           className="text-on-surface-variant hidden md:flex"
           icon="error"
         />
-        <IconButton
+        <AppTopBarIconButton
           className="text-on-surface-variant hidden md:flex"
           icon="delete"
           onClick={() => onCourseDelete(course)}
         />
-        <IconButton
+        <AppTopBarIconButton
           className="text-on-surface-variant flex md:hidden"
           icon="more_vert"
         />

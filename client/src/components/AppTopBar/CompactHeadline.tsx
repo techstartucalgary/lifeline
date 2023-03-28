@@ -45,8 +45,8 @@ const CompactHeadline = ({
         <div {...args} className={classnames("bg-surface", args.className)}>
           <div className="flex flex-row px-1 pt-2 pb-1 justify-between items-center">
             {/* Leading Navigation */}
-            <div className="flex flex-row items-center justify-center">
-              <div className="p-1 text-on-surface min-w-[0.8rem]">
+            <div className="flex flex-row items-center">
+              <div className="py-0.5 text-on-surface min-w-[0.8rem]">
                 {leadingNavigation}
               </div>
               <div
