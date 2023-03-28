@@ -66,7 +66,7 @@ const Headline = ({
 }: HeadlineProp) => {
   return (
     <div {...args} className={classnames("overflow-hidden", args.className)}>
-      <div className="flex flex-row items-center pb-5 space-y-1 bg-surface">
+      <div className="flex flex-row items-center pb-5 space-y-1">
         <div className="grow px-4">
           <ReactiveTitle
             title={title}

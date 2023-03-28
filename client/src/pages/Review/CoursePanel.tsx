@@ -1,14 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 
 import { classnames } from "../../Utilities";
-import AppTopBar, {
-  IconButton,
-  LeadingNavigation,
-  Subtitle,
-  Title,
-  TrailingIcon,
-  useAppTopBar,
-} from "../../components/AppTopBar";
+import { IconButton, useAppTopBar } from "../../components/AppTopBar";
 import CourseInfo from "../../components/CourseInfo";
 import EditAssessment from "../../components/EditAssessment";
 import Tabs, { Tab } from "../../components/Tabs";
@@ -58,47 +51,41 @@ const CoursePanel = ({
 
   const containerRef = useRef(null);
 
-  const [compactHeadline, headline] = useAppTopBar({ variant: "large", title: "AAAA" });
+  const [CompactHeadline, Headline] = useAppTopBar({
+    variant: "large",
+    title: `${course.title} ${course.number}`,
+    subtitle: course.topic,
+    containerRef,
+    leadingNavigation: (
+      <IconButton
+        className="text-on-surface mr-1.5"
+        icon="arrow_back"
+        onClick={onBack}
+      />
+    ),
+    trailingIcon: (
+      <>
+        <IconButton
+          className="text-on-surface-variant hidden md:flex"
+          icon="error"
+        />
+        <IconButton
+          className="text-on-surface-variant hidden md:flex"
+          icon="delete"
+          onClick={() => onCourseDelete(course)}
+        />
+        <IconButton
+          className="text-on-surface-variant flex md:hidden"
+          icon="more_vert"
+        />
+      </>
+    ),
+  });
 
   return (
     <>
-      <div className="z-10">
-        <AppTopBar
-          className="max-w-9xl mx-auto"
-          style={{ paddingLeft: left }}
-          variant="large"
-          containerRef={containerRef}
-        >
-          {/* Icons */}
-          <LeadingNavigation className="block md:hidden">
-            <IconButton
-              className="text-on-surface mr-1.5"
-              icon="arrow_back"
-              onClick={onBack}
-            />
-          </LeadingNavigation>
-          <TrailingIcon>
-            <IconButton
-              className="text-on-surface-variant hidden md:flex"
-              icon="error"
-            />
-            <IconButton
-              className="text-on-surface-variant hidden md:flex"
-              icon="delete"
-              onClick={() => onCourseDelete(course)}
-            />
-            <IconButton
-              className="text-on-surface-variant flex md:hidden"
-              icon="more_vert"
-            />
-          </TrailingIcon>
-          {/* Titles */}
-          <Title>
-            {course.title} {course.number}
-          </Title>
-
-          <Subtitle>{course.topic}</Subtitle>
-        </AppTopBar>
+      <div className="z-10" style={{ paddingLeft: left }}>
+        <CompactHeadline />
       </div>
 
       <div
@@ -107,7 +94,7 @@ const CoursePanel = ({
         ref={containerRef}
       >
         <section className={classnames("w-full md:w-1/2")}>
-          {headline}
+          <Headline />
 
           {editingAssessment ? (
             <EditAssessment

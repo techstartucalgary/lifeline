@@ -1,4 +1,4 @@
-import { HTMLAttributes, ReactElement, RefObject, useMemo } from "react";
+import { HTMLAttributes, ReactElement, RefObject } from "react";
 
 import { classnames } from "../../Utilities";
 
@@ -107,33 +107,27 @@ const useAppTopBar = ({
   trailingIcon,
   containerRef,
 }: AppTopBarProps2) => {
-  const compactHeadline = useMemo(
-    () => (
-      <CompactHeadline
-        title={<>{title}</>}
-        titleClassName={classnames(variant === "small" && "!opacity-100")}
-        leadingNavigation={leadingNavigation}
-        trailingIcon={trailingIcon}
-        elevation={elevation}
-        containerRef={containerRef}
-      />
-    ),
-    [title, variant, leadingNavigation, trailingIcon, elevation, containerRef]
+  const compactHeadline = () => (
+    <CompactHeadline
+      title={<>{title}</>}
+      titleClassName={classnames(variant === "small" && "!opacity-100")}
+      leadingNavigation={leadingNavigation}
+      trailingIcon={trailingIcon}
+      elevation={elevation}
+      containerRef={containerRef}
+    />
   );
 
-  const headline = useMemo(
-    () => (
-      <Headline
-        className={classnames(
-          variant === "small" && "h-0",
-          variant === "large" && "pt-6"
-        )}
-        title={<>{title}</>}
-        subtitle={<>{subtitle}</>}
-        containerRef={containerRef}
-      />
-    ),
-    [containerRef, subtitle, title, variant]
+  const headline = () => (
+    <Headline
+      className={classnames(
+        variant === "small" && "h-0",
+        variant === "large" && "pt-6"
+      )}
+      title={<>{title}</>}
+      subtitle={<>{subtitle}</>}
+      containerRef={containerRef}
+    />
   );
 
   return [compactHeadline, headline];
