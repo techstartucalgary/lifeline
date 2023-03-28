@@ -134,17 +134,8 @@ const Review = () => {
 
   const isMobile = () => ["xs", "sm"].includes(breakpoint);
 
-  // Add `overflow-hidden` to html element when on app page
-  useEffectOnce(() => {
-    document.documentElement.classList.add(
-      "[@media(hover:none)]:overflow-hidden",
-      "overflow-y-auto"
-    );
-    document.body.classList.add("[@media(hover:none)]:h-screen", "h-auto");
-  });
-
   return (
-    <div className="overflow-y-auto [@media(hover:none)]:h-screen h-auto">
+    <div className="overflow-hidden">
       <AnimatePresence mode="popLayout">
         {((isMobile() && !currentCourse) || !isMobile()) && (
           <motion.nav
