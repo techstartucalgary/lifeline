@@ -1,4 +1,4 @@
-import { HTMLAttributes, ReactElement, RefObject } from "react";
+import { HTMLAttributes, ReactElement, RefObject, useMemo } from "react";
 
 import { classnames } from "../../Utilities";
 
@@ -87,6 +87,70 @@ AppTopBar.TrailingIcon = TrailingIcon;
 AppTopBar.Title = Title;
 AppTopBar.Subtitle = Subtitle;
 AppTopBar.IconButton = IconButton;
+
+interface AppTopBarProps2
+  extends Omit<HTMLAttributes<HTMLDivElement>, "title"> {
+  variant?: "small" | "medium" | "large";
+  elevation?: boolean;
+  title?: ReactElement | string;
+  subtitle?: ReactElement | string;
+  leadingNavigation?: ReactElement;
+  trailingIcon?: ReactElement;
+  containerRef?: RefObject<HTMLDivElement>;
+}
+
+const useAppTopBar = ({
+  variant = "large",
+  elevation,
+  title,
+  subtitle,
+  leadingNavigation,
+  trailingIcon,
+  containerRef,
+  ...args
+}: AppTopBarProps2) => {
+  const compactHeadline = useMemo(
+    () => (
+      <CompactHeadline
+        {...args}
+        title={<>{title}</>}
+        titleClassName={classnames(variant === "small" && "!opacity-100")}
+        leadingNavigation={leadingNavigation}
+        trailingIcon={trailingIcon}
+        elevation={elevation}
+        containerRef={containerRef}
+      />
+    ),
+    [
+      args,
+      title,
+      variant,
+      leadingNavigation,
+      trailingIcon,
+      elevation,
+      containerRef,
+    ]
+  );
+
+  const headline = useMemo(
+    () => (
+      <Headline
+        {...args}
+        className={classnames(
+          variant === "small" && "h-0",
+          variant === "large" && "pt-6",
+          args.className
+        )}
+        title={<>{title}</>}
+        subtitle={<>{subtitle}</>}
+        containerRef={containerRef}
+      />
+    ),
+    [args, containerRef, subtitle, title, variant]
+  );
+
+  return [compactHeadline, headline];
+};
 
 export default AppTopBar;
 export { IconButton, LeadingNavigation, Subtitle, Title, TrailingIcon };

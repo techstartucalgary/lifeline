@@ -137,7 +137,7 @@ const Review = () => {
   // SPA stylings
   useEffectOnce(() => {
     document.documentElement.classList.add("overflow-hidden");
-    document.body.classList.add("h-auto");
+    document.body.classList.add("overflow-hidden");
   });
 
   return (

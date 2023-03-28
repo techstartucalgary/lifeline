@@ -47,7 +47,7 @@ const CompactHeadline = ({
 
   return (
     <>
-      <div className="h-16">
+      <div className="h-16 max-h-16">
         <div className="relative">
           <div {...args} className={classnames("bg-surface", args.className)}>
             <div className="flex flex-row px-1 pt-2 pb-1 justify-between">
@@ -71,7 +71,9 @@ const CompactHeadline = ({
               </div>
 
               {/* Trailing Icon */}
-              <div className="px-1 py-0.5 text-on-surface-variant">{trailingIcon}</div>
+              <div className="px-1 py-0.5 text-on-surface-variant">
+                {trailingIcon}
+              </div>
             </div>
           </div>
 
