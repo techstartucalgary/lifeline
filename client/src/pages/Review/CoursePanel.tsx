@@ -1,15 +1,9 @@
-import { Dialog, Transition } from "@headlessui/react";
-import { Fragment, RefObject, useEffect, useState } from "react";
+import { Transition } from "headlessui-react";
+import { useEffect, useRef, useState } from "react";
 
 import { classnames } from "../../Utilities";
-import AppTopBar, {
-  IconButton,
-  LeadingNavigation,
-  Subtitle,
-  Title,
-  TrailingIcon,
-} from "../../components/AppTopBar";
-import { Button } from "../../components/Button";
+import { useAppTopBar } from "../../components/AppTopBar";
+import { AppTopBarIconButton } from "../../components/AppTopBar/IconButton";
 import CourseInfo from "../../components/CourseInfo";
 import EditAssessment from "../../components/EditAssessment";
 import Tabs, { Tab } from "../../components/Tabs";
@@ -20,20 +14,16 @@ import DocumentPanel from "./DocumentPanel";
 
 interface CoursePanelProp {
   course: Course;
-  left: number;
-  containerRef: RefObject<HTMLDivElement>;
-  onChangeAssessment(assessment: Assessment, index: number): void;
-  onClickBack(): void;
-  onDeleteCourse(): void;
+  onBack(): void;
+  onCourseUpdate(course: Course): void;
+  onCourseDelete(course: Course): void;
 }
 
 const CoursePanel = ({
   course,
-  left,
-  containerRef,
-  onChangeAssessment,
-  onClickBack,
-  onDeleteCourse,
+  onBack,
+  onCourseUpdate,
+  onCourseDelete,
 }: CoursePanelProp) => {
   const [selectedTab, setSelectedTab] = useState<Tab>(Tab.Assessments);
   const [isEditingAssessment, setIsEditingAssessment] = useState(false);
@@ -54,53 +44,61 @@ const CoursePanel = ({
     setIsEditingAssessment(false);
   };
 
+  const onAssessmentClick = (assessment: Assessment, index: number) => {
+    setEditingAssessment({ assessment, index });
+  };
+
+  const onAssessmentChange = (assessment: Assessment, index: number) => {
+    course.assessments[index] = assessment;
+    onCourseUpdate(course);
+  };
+
+  const onAssessmentDelete = (_: Assessment, index: number) => {
+    course.assessments = course.assessments.filter((_, i) => i !== index);
+    onCourseUpdate(course);
+  };
+
+  const containerRef = useRef(null);
+
+  const [CompactHeadline, Headline] = useAppTopBar({
+    variant: "large",
+    title: `${course.title} ${course.number}`,
+    subtitle: course.topic,
+    containerRef,
+    leadingNavigation: (
+      <AppTopBarIconButton
+        className="text-on-surface mr-1 flex md:hidden"
+        icon="arrow_back"
+        onClick={onBack}
+      />
+    ),
+    trailingIcon: (
+      <>
+        <AppTopBarIconButton
+          className="text-on-surface-variant hidden md:flex"
+          icon="error"
+        />
+        <AppTopBarIconButton
+          className="text-on-surface-variant hidden md:flex"
+          icon="delete"
+          onClick={() => onCourseDelete(course)}
+        />
+        <AppTopBarIconButton
+          className="text-on-surface-variant flex md:hidden"
+          icon="more_vert"
+        />
+      </>
+    ),
+  });
+
   return (
     <>
-      <div className="z-10">
-        <AppTopBar
-          className="max-w-9xl mx-auto"
-          style={{ paddingLeft: left }}
-          variant="large"
-          containerRef={containerRef}
-        >
-          {/* Icons */}
-          <LeadingNavigation className="block md:hidden">
-            <IconButton
-              className="text-on-surface mr-1.5"
-              icon="arrow_back"
-              onClick={onClickBack}
-            />
-          </LeadingNavigation>
-          <TrailingIcon>
-            <IconButton
-              className="text-on-surface-variant hidden md:block"
-              icon="error"
-            />
-            <IconButton
-              className="text-on-surface-variant hidden md:block"
-              icon="delete"
-              onClick={onDeleteCourse}
-            />
-            <IconButton
-              className="text-on-surface-variant block md:hidden"
-              icon="more_vert"
-            />
-          </TrailingIcon>
-          {/* Titles */}
-          <Title>
-            {course.title} {course.number}
-          </Title>
+      <CompactHeadline />
 
-          <Subtitle>{course.topic}</Subtitle>
-        </AppTopBar>
-      </div>
-
-      <div
-        className="flex flex-col md:flex-row gap-4 lg:gap-6"
-        style={{ paddingLeft: left }}
-      >
-        <section className={classnames("w-full md:w-1/2")}>
-          <>
+      <div className="overflow-y-auto h-[calc(100vh-4rem)]" ref={containerRef}>
+        <Headline />
+        <div className="flex flex-col md:flex-row gap-4 lg:gap-6">
+          <section className={classnames("w-full md:w-1/2")}>
             {(course.hours || course.faculty || course.description) && (
               <CourseInfo
                 hours={course.hours}
@@ -119,33 +117,29 @@ const CoursePanel = ({
             >
               <AssessmentsPanel
                 assessments={course.assessments}
-                onAssessmentClick={(assessment: Assessment, index: number) => {
-                  setEditingAssessment({ assessment, index });
-                  onOpenDialog();
-                }}
+                onAssessmentClick={onAssessmentClick}
+                onAssessmentDelete={onAssessmentDelete}
               />
             </div>
-          </>
-        </section>
+          </section>
 
-        <Button to="/panel">PANEL</Button>
-
-        <section
-          className={classnames(
-            "p-4 mt-2 mr-2",
-            "w-full md:w-1/2",
-            "md:h-screen",
-            "overflow-y-auto",
-            "border-x border-y border-dashed border-gray-400 rounded-3xl",
-            selectedTab === Tab.Assessments && "hidden md:block"
-          )}
-        >
-          {course.file ? (
-            <DocumentPanel file={course.file} />
-          ) : (
-            <p>File not found</p>
-          )}
-        </section>
+          <section
+            className={classnames(
+              "p-4 mt-2 mr-2",
+              "w-full md:w-1/2",
+              "md:h-screen",
+              "overflow-y-auto",
+              "border-x border-y border-dashed border-gray-400 rounded-3xl",
+              selectedTab === Tab.Assessments && "hidden md:block"
+            )}
+          >
+            {course.file ? (
+              <DocumentPanel file={course.file} />
+            ) : (
+              <p>File not found</p>
+            )}
+          </section>
+        </div>
       </div>
 
       <Transition appear show={isEditingAssessment} as={Fragment}>
@@ -188,10 +182,7 @@ const CoursePanel = ({
                       />
                     </LeadingNavigation>
                     <TrailingIcon>
-                      <Button
-                        className="text-primary"
-                        onClick={onCloseDialog}
-                      >
+                      <Button className="text-primary" onClick={onCloseDialog}>
                         Save
                       </Button>
                     </TrailingIcon>

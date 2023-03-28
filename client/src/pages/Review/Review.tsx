@@ -2,11 +2,11 @@ import axios from "axios";
 import { AnimatePresence, motion } from "framer-motion";
 import { useLayoutEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { useEffectOnce, useUpdateEffect } from "react-use";
+import { useEffectOnce, useList, useUpdateEffect } from "react-use";
 
 import { useBreakpoint } from "../../Utilities";
 import { Dropzone } from "../../components/Dropzone";
-import { Assessment, Course, Courses, parseCourse } from "../../logic/icsGen";
+import { Course, Courses, parseCourse } from "../../logic/icsGen";
 
 import CoursePanel from "./CoursePanel";
 import NavigationPanel from "./NavigationPanel";
@@ -18,8 +18,10 @@ const Review = () => {
   const breakpoint = useBreakpoint();
   const navigate = useNavigate();
 
-  const [courses, setCourses] = useState<Courses>([]);
-  const coursesRef = useRef(courses);
+  const [
+    courses,
+    { set: setCourses, upsert: upsertCourse, removeAt: removeAtCourse },
+  ] = useList<Course>([]);
   const { courseKey: courseKeyURLParam } = useParams<{
     courseKey: string | undefined;
   }>();
@@ -27,26 +29,13 @@ const Review = () => {
   const currentCourse =
     courses.find((course) => course.key === courseKeyURLParam) || null;
 
-  const deleteCurrentCourse = () => {
-    setCourses(
-      coursesRef.current.filter((course) => course.key !== currentCourse?.key)
-    );
-    coursesRef.current =
-      coursesRef.current.filter(
-        (course) => course.key !== currentCourse?.key
-      ) || null;
-    navigate("/app");
+  const onCourseUpdate = (course: Course) => {
+    upsertCourse((c) => c.key === course.key, course);
   };
 
-  const onCoursesChanged = (newCourse: Course) => {
-    if (coursesRef.current.some((course) => course.key === newCourse.key)) {
-      console.log("Course already exists");
-      // Snackbar here
-      return;
-    }
-    const newCourses = [...coursesRef.current, newCourse];
-    setCourses(newCourses);
-    coursesRef.current = newCourses;
+  const onCourseDelete = (course: Course) => {
+    removeAtCourse(courses.findIndex((c) => c.key === course.key));
+    navigate("/app");
   };
 
   const base64encode = (file: File): Promise<string> => {
@@ -93,7 +82,7 @@ const Review = () => {
           course.key = `${course.code.toLowerCase()}-${course.number}`;
           course.file = fileString;
 
-          onCoursesChanged(course);
+          onCourseUpdate(course);
         })
         .catch((error) => {
           console.log(error);
@@ -132,7 +121,6 @@ const Review = () => {
 
     const parsedCourses: Courses = JSON.parse(foundCourses).map(parseCourse);
     setCourses(parsedCourses);
-    coursesRef.current = parsedCourses;
   });
 
   useUpdateEffect(() => {
@@ -144,32 +132,16 @@ const Review = () => {
     navigate(`/app/${course.key}`);
   };
 
-  const onChangeAssessment = (assessment: Assessment, index: number) => {
-    setCourses(
-      courses.map((course) => {
-        if (course.key === currentCourse?.key) {
-          course.assessments[index] = assessment;
-        }
-        return course;
-      })
-    );
-  };
-
   const isMobile = () => ["xs", "sm"].includes(breakpoint);
 
-  // Add `overflow-hidden` to html element when on app page
+  // SPA stylings
   useEffectOnce(() => {
-    document.documentElement.classList.add(
-      "[@media(hover:none)]:overflow-hidden",
-      "overflow-y-auto"
-    );
-    document.body.classList.add("[@media(hover:none)]:h-screen", "h-auto");
+    document.documentElement.classList.add("overflow-hidden");
+    document.body.classList.add("overflow-hidden");
   });
 
-  const containerRef = useRef(document.body);
-
   return (
-    <div>
+    <div className="overflow-hidden">
       <AnimatePresence mode="popLayout">
         {((isMobile() && !currentCourse) || !isMobile()) && (
           <motion.nav
@@ -215,14 +187,14 @@ const Review = () => {
             className="w-full will-change-auto ease-emphasized"
           >
             <main className="max-w-9xl mx-auto" ref={mainRef}>
-              <CoursePanel
-                course={currentCourse}
-                left={mainMarginLeft}
-                containerRef={containerRef}
-                onChangeAssessment={onChangeAssessment}
-                onClickBack={() => navigate("/app")}
-                onDeleteCourse={deleteCurrentCourse}
-              />
+              <div style={{ marginLeft: mainMarginLeft }}>
+                <CoursePanel
+                  course={currentCourse}
+                  onBack={() => navigate("/app")}
+                  onCourseUpdate={onCourseUpdate}
+                  onCourseDelete={onCourseDelete}
+                />
+              </div>
             </main>
           </motion.main>
         )}

@@ -3,8 +3,6 @@ import { useScroll, useWindowScroll } from "react-use";
 
 import { classnames } from "../../Utilities";
 
-import { SubtitleProp, TitleProp } from "./Subcomponents";
-
 const normalize = (val: number, min: number, max: number) =>
   (val - min) / (max - min);
 
@@ -22,15 +20,11 @@ const ReactiveTitle = ({
   title,
   titleClassName,
   containerRef,
-  useWindowScrollFallback,
 }: HeadlineProp) => {
   const ref = useRef(null);
   const { y: scrollContainerY } = useScroll(containerRef ?? ref);
   const { y: scrollWindowY } = useWindowScroll();
-  const scrollY = findFirstNonZero(
-    scrollContainerY,
-    useWindowScrollFallback ? scrollWindowY : 0
-  );
+  const scrollY = findFirstNonZero(scrollContainerY, scrollWindowY);
 
   return (
     <h1
@@ -53,12 +47,11 @@ const ReactiveTitle = ({
 };
 
 interface HeadlineProp extends Omit<HTMLAttributes<HTMLDivElement>, "title"> {
-  title?: ReactElement<TitleProp>;
+  title?: ReactElement;
   titleClassName?: string | null;
-  subtitle?: ReactElement<SubtitleProp>;
+  subtitle?: ReactElement;
   subtitleClassName?: string | null;
   containerRef?: RefObject<HTMLDivElement>;
-  useWindowScrollFallback?: boolean;
 }
 
 const Headline = ({
@@ -67,18 +60,16 @@ const Headline = ({
   subtitle,
   subtitleClassName,
   containerRef,
-  useWindowScrollFallback,
   ...args
 }: HeadlineProp) => {
   return (
     <div {...args} className={classnames("overflow-hidden", args.className)}>
-      <div className="flex flex-row items-center pb-5 space-y-1 bg-surface">
+      <div className="flex flex-row items-center pb-5 space-y-1">
         <div className="grow px-4">
           <ReactiveTitle
             title={title}
             titleClassName={titleClassName}
             containerRef={containerRef}
-            useWindowScrollFallback={useWindowScrollFallback}
           />
           <h2
             className={classnames(

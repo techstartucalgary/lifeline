@@ -1,7 +1,8 @@
 import { useRef } from "react";
 
 import { classnames } from "../../Utilities";
-import AppTopBar from "../../components/AppTopBar/AppTopBar";
+import { useAppTopBar } from "../../components/AppTopBar";
+import { AppTopBarIconButton } from "../../components/AppTopBar/IconButton";
 import { Button, IconButton } from "../../components/Button";
 import List from "../../components/List";
 import NavigationDrawer from "../../components/NavigationDrawer";
@@ -41,6 +42,21 @@ const NavigationPanel = ({
     link.download = "deadlines.ics";
     link.click();
   };
+
+  const [CompactHeadline, Headline] = useAppTopBar({
+    variant: "medium",
+    title: "Courses",
+    trailingIcon: (
+      <AppTopBarIconButton
+        icon="add"
+        className="text-on-surface"
+        onClick={() => {
+          inputRef.current?.click();
+        }}
+        disabled={loading.length > 0}
+      />
+    ),
+  });
 
   return (
     <>
@@ -116,13 +132,13 @@ const NavigationPanel = ({
           </Button>
         </NavigationDrawer>
       </div>
-      <div className="hidden md:block xl:hidden">
+      <div className="hidden md:flex xl:hidden">
         <NavigationRail>
           <IconButton
             icon="save_alt"
             variant="filled"
             color="primary"
-            className="rounded-2xl text-center px-0 mt-4 mb-7 w-14 h-14 mx-auto"
+            className="rounded-2xl mt-4 mb-7 w-14 h-14 mx-auto"
             onClick={handleExport}
           />
 
@@ -164,26 +180,15 @@ const NavigationPanel = ({
             icon="add"
             variant="text"
             color="primary"
-            className="rounded-2xl mx-auto px-4 py-1 text-center"
-            iconClassName="text-on-primary-container text-3xl md:text-3xl"
+            className="rounded-2xl mx-auto w-14 text-center"
+            iconClassName="text-on-primary-container text-2xl md:text-2xl"
             disabled={loading.length > 0}
           />
         </NavigationRail>
       </div>
       <div className="block md:hidden xl:hidden">
-        <AppTopBar variant="medium">
-          <AppTopBar.Title>Courses</AppTopBar.Title>
-          <AppTopBar.TrailingIcon>
-            <AppTopBar.IconButton
-              icon="add"
-              className="text-on-surface"
-              onClick={() => {
-                inputRef.current?.click();
-              }}
-              disabled={loading.length > 0}
-            />
-          </AppTopBar.TrailingIcon>
-        </AppTopBar>
+        <CompactHeadline />
+        <Headline />
         <List>
           {courses &&
             courses.map((course, t) => (
