@@ -88,8 +88,7 @@ AppTopBar.Title = Title;
 AppTopBar.Subtitle = Subtitle;
 AppTopBar.IconButton = IconButton;
 
-interface AppTopBarProps2
-  extends Omit<HTMLAttributes<HTMLDivElement>, "title"> {
+interface AppTopBarProps2 {
   variant?: "small" | "medium" | "large";
   elevation?: boolean;
   title?: ReactElement | string;
@@ -107,12 +106,10 @@ const useAppTopBar = ({
   leadingNavigation,
   trailingIcon,
   containerRef,
-  ...args
 }: AppTopBarProps2) => {
   const compactHeadline = useMemo(
     () => (
       <CompactHeadline
-        {...args}
         title={<>{title}</>}
         titleClassName={classnames(variant === "small" && "!opacity-100")}
         leadingNavigation={leadingNavigation}
@@ -121,41 +118,39 @@ const useAppTopBar = ({
         containerRef={containerRef}
       />
     ),
-    [
-      args,
-      title,
-      variant,
-      leadingNavigation,
-      trailingIcon,
-      elevation,
-      containerRef,
-    ]
+    [title, variant, leadingNavigation, trailingIcon, elevation, containerRef]
   );
 
   const headline = useMemo(
     () => (
       <Headline
-        {...args}
         className={classnames(
           variant === "small" && "h-0",
-          variant === "large" && "pt-6",
-          args.className
+          variant === "large" && "pt-6"
         )}
         title={<>{title}</>}
         subtitle={<>{subtitle}</>}
         containerRef={containerRef}
       />
     ),
-    [args, containerRef, subtitle, title, variant]
+    [containerRef, subtitle, title, variant]
   );
 
   return [compactHeadline, headline];
 };
 
 export default AppTopBar;
-export { IconButton, LeadingNavigation, Subtitle, Title, TrailingIcon };
+export {
+  IconButton,
+  LeadingNavigation,
+  Subtitle,
+  Title,
+  TrailingIcon,
+  useAppTopBar,
+};
 export type {
   AppTopBarProps,
+  AppTopBarProps2,
   IconButtonProps,
   LeadingNavigationProp,
   SubtitleProp,
