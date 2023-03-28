@@ -3,18 +3,12 @@ import { useScroll, useWindowScroll } from "react-use";
 
 import { classnames } from "../../Utilities";
 
-import {
-  LeadingNavigationProp,
-  TitleProp,
-  TrailingIconProp,
-} from "./Subcomponents";
-
 interface CompactHeadlineProp
   extends Omit<HTMLAttributes<HTMLDivElement>, "title"> {
-  title?: ReactElement<TitleProp>;
+  title?: ReactElement;
   titleClassName?: string | null;
-  leadingNavigation?: ReactElement<LeadingNavigationProp>;
-  trailingIcon?: ReactElement<TrailingIconProp>;
+  leadingNavigation?: ReactElement;
+  trailingIcon?: ReactElement;
   elevation?: boolean;
   elevationClassName?: string | null;
   containerRef?: RefObject<HTMLDivElement>;
@@ -71,7 +65,12 @@ const CompactHeadline = ({
               </div>
 
               {/* Trailing Icon */}
-              <div className="px-1 py-0.5 text-on-surface-variant">
+              <div
+                className={classnames(
+                  "px-1 py-0.5 text-on-surface-variant",
+                  "flex flex-row space-x-1"
+                )}
+              >
                 {trailingIcon}
               </div>
             </div>

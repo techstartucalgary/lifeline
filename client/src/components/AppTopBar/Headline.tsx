@@ -3,8 +3,6 @@ import { useScroll, useWindowScroll } from "react-use";
 
 import { classnames } from "../../Utilities";
 
-import { SubtitleProp, TitleProp } from "./Subcomponents";
-
 const normalize = (val: number, min: number, max: number) =>
   (val - min) / (max - min);
 
@@ -49,9 +47,9 @@ const ReactiveTitle = ({
 };
 
 interface HeadlineProp extends Omit<HTMLAttributes<HTMLDivElement>, "title"> {
-  title?: ReactElement<TitleProp>;
+  title?: ReactElement;
   titleClassName?: string | null;
-  subtitle?: ReactElement<SubtitleProp>;
+  subtitle?: ReactElement;
   subtitleClassName?: string | null;
   containerRef?: RefObject<HTMLDivElement>;
 }
