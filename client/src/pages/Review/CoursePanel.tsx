@@ -4,6 +4,7 @@ import { Fragment, useEffect, useRef, useState } from "react";
 import { classnames } from "../../Utilities";
 import { useAppTopBar } from "../../components/AppTopBar";
 import { AppTopBarIconButton } from "../../components/AppTopBar/IconButton";
+import { Button } from "../../components/Button";
 import CourseInfo from "../../components/CourseInfo";
 import EditAssessment from "../../components/EditAssessment";
 import Tabs, { Tab } from "../../components/Tabs";
@@ -46,6 +47,7 @@ const CoursePanel = ({
 
   const onAssessmentClick = (assessment: Assessment, index: number) => {
     setEditingAssessment({ assessment, index });
+    setIsEditingAssessment(true);
   };
 
   const onAssessmentChange = (assessment: Assessment, index: number) => {
@@ -88,6 +90,26 @@ const CoursePanel = ({
           icon="more_vert"
         />
       </>
+    ),
+  });
+
+  const dialogContainerRef = useRef(null);
+
+  const [DialogCompactHeadline] = useAppTopBar({
+    variant: "small",
+    title: "Edit assesssment",
+    containerRef: dialogContainerRef,
+    leadingNavigation: (
+      <AppTopBarIconButton
+        className="text-on-surface mr-1.5"
+        icon="close"
+        onClick={onCloseDialog}
+      />
+    ),
+    trailingIcon: (
+      <Button className="text-primary" onClick={onCloseDialog}>
+        Save
+      </Button>
     ),
   });
 
@@ -172,25 +194,13 @@ const CoursePanel = ({
                 leaveTo="opacity-80 translate-y-full"
               >
                 <Dialog.Panel className="w-full max-w-md overflow-hidden h-screen md:h-auto md:rounded-2xl bg-surface shadow-xl transition-all">
-                  {/* <AppTopBar className="max-w-9xl mx-auto" variant="small">
-                    <LeadingNavigation>
-                      <IconButton
-                        className="text-on-surface mr-1.5"
-                        icon="close"
-                        onClick={onCloseDialog}
-                      />
-                    </LeadingNavigation>
-                    <TrailingIcon>
-                      <Button className="text-primary" onClick={onCloseDialog}>
-                        Save
-                      </Button>
-                    </TrailingIcon>
+                  <DialogCompactHeadline />
 
-                    <Title>Edit assessment</Title>
-                  </AppTopBar> */}
-
-                  {editingAssessment && (
-                    <div className="h-full md:h-96 overflow-y-auto px-6 py-4">
+                  <div
+                    className="h-full md:h-96 overflow-y-auto px-6 py-4"
+                    ref={dialogContainerRef}
+                  >
+                    {editingAssessment && (
                       <EditAssessment
                         assessment={editingAssessment.assessment}
                         onClose={() => setEditingAssessment(null)}
@@ -202,9 +212,9 @@ const CoursePanel = ({
                           setEditingAssessment(null);
                         }}
                       />
-                      <div className="pt-96"></div>
-                    </div>
-                  )}
+                    )}
+                    <div className="pt-96"></div>
+                  </div>
                 </Dialog.Panel>
               </Transition.Child>
             </div>
