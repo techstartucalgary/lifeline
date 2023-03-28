@@ -116,13 +116,13 @@ const NavigationPanel = ({
           </Button>
         </NavigationDrawer>
       </div>
-      <div className="hidden md:block xl:hidden">
+      <div className="hidden md:flex xl:hidden">
         <NavigationRail>
           <IconButton
             icon="save_alt"
             variant="filled"
             color="primary"
-            className="rounded-2xl text-center px-0 mt-4 mb-7 w-14 h-14 mx-auto"
+            className="rounded-2xl mt-4 mb-7 w-14 h-14 mx-auto"
             onClick={handleExport}
           />
 
@@ -164,8 +164,8 @@ const NavigationPanel = ({
             icon="add"
             variant="text"
             color="primary"
-            className="rounded-2xl mx-auto px-4 py-1 text-center"
-            iconClassName="text-on-primary-container text-3xl md:text-3xl"
+            className="rounded-2xl mx-auto w-14 text-center"
+            iconClassName="text-on-primary-container text-2xl md:text-2xl"
             disabled={loading.length > 0}
           />
         </NavigationRail>
