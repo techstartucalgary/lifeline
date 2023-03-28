@@ -1,5 +1,5 @@
-import { Transition } from "headlessui-react";
-import { useEffect, useRef, useState } from "react";
+import { Dialog, Transition } from "@headlessui/react";
+import { Fragment, useEffect, useRef, useState } from "react";
 
 import { classnames } from "../../Utilities";
 import { useAppTopBar } from "../../components/AppTopBar";
@@ -172,8 +172,7 @@ const CoursePanel = ({
                 leaveTo="opacity-80 translate-y-full"
               >
                 <Dialog.Panel className="w-full max-w-md overflow-hidden h-screen md:h-auto md:rounded-2xl bg-surface shadow-xl transition-all">
-                  <AppTopBar className="max-w-9xl mx-auto" variant="small">
-                    {/* Icons */}
+                  {/* <AppTopBar className="max-w-9xl mx-auto" variant="small">
                     <LeadingNavigation>
                       <IconButton
                         className="text-on-surface mr-1.5"
@@ -187,9 +186,8 @@ const CoursePanel = ({
                       </Button>
                     </TrailingIcon>
 
-                    {/* Titles */}
                     <Title>Edit assessment</Title>
-                  </AppTopBar>
+                  </AppTopBar> */}
 
                   {editingAssessment && (
                     <div className="h-full md:h-96 overflow-y-auto px-6 py-4">
@@ -197,7 +195,7 @@ const CoursePanel = ({
                         assessment={editingAssessment.assessment}
                         onClose={() => setEditingAssessment(null)}
                         onSave={(assessment: Assessment) => {
-                          onChangeAssessment(
+                          onAssessmentChange(
                             assessment,
                             editingAssessment.index
                           );
