@@ -1,4 +1,5 @@
 import { Dialog, Transition } from "@headlessui/react";
+import { disableBodyScroll } from "body-scroll-lock";
 import { Fragment, useEffect, useRef, useState } from "react";
 
 import { classnames } from "../../Utilities";
@@ -112,6 +113,12 @@ const CoursePanel = ({
       </Button>
     ),
   });
+
+  useEffect(() => {
+    if (containerRef.current) {
+      disableBodyScroll(containerRef.current);
+    }
+  }, [containerRef]);
 
   return (
     <>
