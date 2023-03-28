@@ -15,14 +15,14 @@ const NavItem = ({ title, metadata, className, icon, selected, ...args }: NavIte
       color="secondary"
       variant="text"
       className={classnames(
-        "flex flex-row py-3.5 px-5 text-on-secondary-container",
+        "flex flex-row py-4 px-5 text-on-secondary-container",
         "hover:text-on-surface-variant",
         selected && "bg-secondary-container hover:before:bg-transparent",
         className
       )}
       icon={
         <span className={classnames(
-          "material-symbols-outlined !text-lg mr-1",
+          "material-symbols-outlined !text-base mr-1",
           "flex justify-center items-center",
         )}>{icon}</span>
       }
