@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200');
+@import url("https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200");
 @import url("./font.css");
 
 @tailwind base;
@@ -7,22 +7,19 @@
 
 html {
   @apply bg-sys-background m-0 p-0;
-  overflow: hidden;
 }
 
-button, input[type=text], input[type=button] {
+button,
+input[type="text"],
+input[type="button"] {
   -webkit-appearance: none;
-  -webkit-tap-highlight-color: rgba(0,0,0,0);
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
   appearance: none;
 }
 
 .material-symbols-outlined {
-  font-variation-settings:
-    'FILL' 1,
-    'wght' 700,
-    'GRAD' 0,
-    'opsz' 40;
-    font-size: inherit;
+  font-variation-settings: "FILL" 1, "wght" 700, "GRAD" 0, "opsz" 40;
+  font-size: inherit;
 }
 
 :root {
