@@ -1,8 +1,9 @@
 import { useRef } from "react";
 
 import { classnames } from "../../Utilities";
-import { IconButton, useAppTopBar } from "../../components/AppTopBar";
-import { Button } from "../../components/Button";
+import { useAppTopBar } from "../../components/AppTopBar";
+import { AppTopBarIconButton } from "../../components/AppTopBar/IconButton";
+import { Button, IconButton } from "../../components/Button";
 import List from "../../components/List";
 import NavigationDrawer from "../../components/NavigationDrawer";
 import NavigationRail from "../../components/NavigationRail";
@@ -46,7 +47,7 @@ const NavigationPanel = ({
     variant: "medium",
     title: "Courses",
     trailingIcon: (
-      <IconButton
+      <AppTopBarIconButton
         icon="add"
         className="text-on-surface"
         onClick={() => {
@@ -186,19 +187,6 @@ const NavigationPanel = ({
         </NavigationRail>
       </div>
       <div className="block md:hidden xl:hidden">
-        {/* <AppTopBar variant="medium">
-          <AppTopBar.Title>Courses</AppTopBar.Title>
-          <AppTopBar.TrailingIcon>
-            <AppTopBar.IconButton
-              icon="add"
-              className="text-on-surface"
-              onClick={() => {
-                inputRef.current?.click();
-              }}
-              disabled={loading.length > 0}
-            />
-          </AppTopBar.TrailingIcon>
-        </AppTopBar> */}
         <CompactHeadline />
         <Headline />
         <List>
