@@ -19,11 +19,11 @@ button, input[type=text], input[type=button] {
 
 .material-symbols-outlined {
   font-variation-settings:
-    'FILL' 0,
-    'wght' 600,
+    'FILL' 1,
+    'wght' 700,
     'GRAD' 0,
-    'opsz' 48;
-  font-size: inherit;
+    'opsz' 40;
+    font-size: inherit;
 }
 
 :root {

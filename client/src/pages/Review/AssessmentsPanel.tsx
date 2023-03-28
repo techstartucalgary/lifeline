@@ -10,20 +10,34 @@ import divider from "./divider.svg";
 interface AssessmentPanelProp {
   assessments: Assessment[];
   onAssessmentClick(assessment: Assessment, index: number): void;
+  onAssessmentDelete(assessment: Assessment, index: number): void;
 }
 
 const AssessmentsPanel = ({
   assessments,
   onAssessmentClick,
+  onAssessmentDelete,
 }: AssessmentPanelProp) => {
   const renderAssessment = (assessment: Assessment, index: string) => {
     return (
-      <li key={index}>
+      <li key={index} className="flex flex-row group/assessment">
         <AssessmentCard
           assessment={assessment}
           onAssessmentClick={() =>
             onAssessmentClick(assessment, parseInt(index))
           }
+        />
+        <Button
+          icon="delete"
+          variant="tonal"
+          ripple={false}
+          className={classnames(
+            "text-lg text-on-primary-container ml-1 overflow-hidden duration-300",
+            "before:bg-primary-95 hover:before:bg-primary-90",
+            "w-0 p-0 opacity-0 group-hover/assessment:w-auto group-hover/assessment:p-2.5 group-hover/assessment:opacity-100",
+            "focus-within/assessment:w-auto focus-within/assessment:p-2.5 focus-within/assessment:opacity-100",
+          )}
+          onClick={() => onAssessmentDelete(assessment, parseInt(index))}
         />
       </li>
     );
@@ -60,7 +74,7 @@ const AssessmentsPanel = ({
         >
         </Button>
       </div>
-      <ul className="flex flex-col space-y-2">
+      <ul className="flex flex-col space-y-2 px-2 py-4 md:px-0 md:py-0">
         <FlatList
           list={assessments}
           renderItem={renderAssessment}
