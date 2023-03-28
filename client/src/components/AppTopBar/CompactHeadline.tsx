@@ -10,8 +10,9 @@ interface CompactHeadlineProp
   leadingNavigation?: ReactElement;
   trailingIcon?: ReactElement;
   elevation?: boolean;
-  elevationClassName?: string | null;
   containerRef?: RefObject<HTMLDivElement>;
+  compactTitleDisplayRange?: [number, number];
+  elevationDisplayRange?: [number, number];
 }
 
 const normalize = (val: number, min: number, max: number) =>
@@ -30,8 +31,9 @@ const CompactHeadline = ({
   leadingNavigation,
   trailingIcon,
   elevation = true,
-  elevationClassName,
   containerRef,
+  compactTitleDisplayRange = [40, 50],
+  elevationDisplayRange = [90, 100],
   ...args
 }: CompactHeadlineProp) => {
   const ref = useRef(null);
@@ -56,7 +58,11 @@ const CompactHeadline = ({
                   titleClassName
                 )}
                 style={{
-                  opacity: normalize(scrollY, 40, 50),
+                  opacity: normalize(
+                    scrollY,
+                    compactTitleDisplayRange[0],
+                    compactTitleDisplayRange[1]
+                  ),
                 }}
               >
                 {title}
@@ -81,11 +87,14 @@ const CompactHeadline = ({
               "bg-primary/8 absolute -top-full left-0 right-0 bottom-0",
               "pointer-events-none z-0",
               "transition-opacity duration-200 md:duration-75",
-              "will-change-opacity",
-              elevationClassName
+              "will-change-opacity"
             )}
             style={{
-              opacity: normalize(scrollY, 90, 100),
+              opacity: normalize(
+                scrollY,
+                elevationDisplayRange[0],
+                elevationDisplayRange[1]
+              ),
             }}
           />
         )}
