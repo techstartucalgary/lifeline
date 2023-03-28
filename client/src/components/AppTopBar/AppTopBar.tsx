@@ -4,7 +4,6 @@ import { classnames } from "../../Utilities";
 
 import CompactHeadline from "./CompactHeadline";
 import Headline from "./Headline";
-import { IconButton, IconButtonProps } from "./Subcomponents";
 
 interface AppTopBarProps {
   variant?: "small" | "medium" | "large";
@@ -52,5 +51,5 @@ const useAppTopBar = ({
 };
 
 export default useAppTopBar;
-export { IconButton, useAppTopBar };
-export type { AppTopBarProps, IconButtonProps };
+export { useAppTopBar };
+export type { AppTopBarProps };
