@@ -186,10 +186,14 @@ const Review = () => {
             transformTemplate={transformTemplate}
             className="w-full will-change-auto ease-emphasized"
           >
-            <main className="max-w-9xl mx-auto" ref={mainRef}>
+            <main
+              className="max-w-9xl mx-auto"
+              ref={mainRef}
+              style={{ marginLeft: mainMarginLeft }}
+            >
               <CoursePanel
                 course={currentCourse}
-                left={mainMarginLeft}
+                // left={mainMarginLeft}
                 onBack={() => navigate("/app")}
                 onCourseUpdate={onCourseUpdate}
                 onCourseDelete={onCourseDelete}
