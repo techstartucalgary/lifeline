@@ -164,7 +164,7 @@ const CoursePanel = ({
         </div>
       </div>
 
-      <Transition appear show={isEditingAssessment} as={Fragment}>
+      <Transition show={isEditingAssessment} as={Fragment}>
         <Dialog
           as="div"
           className="relative z-10"
@@ -186,15 +186,18 @@ const CoursePanel = ({
             <div className="flex min-h-full items-center justify-center p-0 md:p-4 text-center will-change-auto">
               <Transition.Child
                 as={Fragment}
-                enter="ease-emphasized-decelerate duration-300"
+                enter="ease-emphasized-decelerate duration-300 will-change-auto"
                 enterFrom="opacity-80 translate-y-96"
                 enterTo="opacity-100 translate-y-0"
-                leave="ease-emphasized-accelerate duration-200"
+                leave="ease-emphasized-accelerate duration-200 will-change-auto"
                 leaveFrom="opacity-100 translate-y-0"
                 leaveTo="opacity-80 translate-y-full"
               >
                 <Dialog.Panel className="w-full max-w-md overflow-hidden h-screen md:h-auto md:rounded-2xl bg-surface shadow-xl transition-all">
-                  <DialogCompactHeadline />
+                  <DialogCompactHeadline
+                    compactTitleDisplayRange={[0, 10]}
+                    elevationDisplayRange={[0, 10]}
+                  />
 
                   <div
                     className="h-full md:h-96 overflow-y-auto px-6 py-4"
