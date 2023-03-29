@@ -1,12 +1,12 @@
 import axios from "axios";
 import { AnimatePresence, motion } from "framer-motion";
-import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { useLayoutEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { useEffectOnce } from "react-use";
+import { useEffectOnce, useList, useUpdateEffect } from "react-use";
 
 import { useBreakpoint } from "../../Utilities";
 import { Dropzone } from "../../components/Dropzone";
-import { Assessment, Course, Courses, parseCourse } from "../../logic/icsGen";
+import { Course, Courses, parseCourse } from "../../logic/icsGen";
 
 import CoursePanel from "./CoursePanel";
 import NavigationPanel from "./NavigationPanel";
@@ -17,35 +17,24 @@ const Review = () => {
   const breakpoint = useBreakpoint();
   const navigate = useNavigate();
 
-  const [courses, setCourses] = useState<Courses>([]);
-  const coursesRef = useRef(courses);
+  const [
+    courses,
+    { set: setCourses, upsert: upsertCourse, removeAt: removeAtCourse },
+  ] = useList<Course>([]);
   const { courseKey: courseKeyURLParam } = useParams<{
     courseKey: string | undefined;
   }>();
 
-  const currentCourse = courses.find(
-    (course) => course.key === courseKeyURLParam
-  ) || null;
+  const currentCourse =
+    courses.find((course) => course.key === courseKeyURLParam) || null;
 
-  const deleteCurrentCourse = () => {
-    setCourses(
-      coursesRef.current.filter((course) => course.key !== currentCourse?.key)
-    );
-    coursesRef.current = coursesRef.current.filter(
-      (course) => course.key !== currentCourse?.key
-    ) || null;
-    navigate("/app");
+  const onCourseUpdate = (course: Course) => {
+    upsertCourse((c) => c.key === course.key, course);
   };
 
-  const onCoursesChanged = (newCourse: Course) => {
-    if (coursesRef.current.some((course) => course.key === newCourse.key)) {
-      console.log("Course already exists");
-      // Snackbar here
-      return;
-    }
-    const newCourses = [...coursesRef.current, newCourse];
-    setCourses(newCourses);
-    coursesRef.current = newCourses;
+  const onCourseDelete = (course: Course) => {
+    removeAtCourse(courses.findIndex((c) => c.key === course.key));
+    navigate("/app");
   };
 
   const base64encode = (file: File): Promise<string> => {
@@ -92,7 +81,7 @@ const Review = () => {
           course.key = `${course.code.toLowerCase()}-${course.number}`;
           course.file = fileString;
 
-          onCoursesChanged(course);
+          onCourseUpdate(course);
         })
         .catch((error) => {
           console.log(error);
@@ -131,27 +120,15 @@ const Review = () => {
 
     const parsedCourses: Courses = JSON.parse(foundCourses).map(parseCourse);
     setCourses(parsedCourses);
-    coursesRef.current = parsedCourses;
   });
 
-  useEffect(() => {
+  useUpdateEffect(() => {
     localStorage.setItem("courses", JSON.stringify(courses));
   }, [courses]);
 
   // Callback for select course in navigation drawer
   const onCourseClick = (course: Course) => {
     navigate(`/app/${course.key}`);
-  };
-
-  const onChangeAssessment = (assessment: Assessment, index: number) => {
-    setCourses(
-      courses.map((course) => {
-        if (course.key === currentCourse?.key) {
-          course.assessments[index] = assessment;
-        }
-        return course;
-      })
-    );
   };
 
   const isMobile = () => ["xs", "sm"].includes(breakpoint);
@@ -206,9 +183,9 @@ const Review = () => {
               <CoursePanel
                 course={currentCourse}
                 left={mainMarginLeft}
-                onChangeAssessment={onChangeAssessment}
-                onClickBack={() => navigate("/app")}
-                onDeleteCourse={deleteCurrentCourse}
+                onBack={() => navigate("/app")}
+                onCourseUpdate={onCourseUpdate}
+                onCourseDelete={onCourseDelete}
               />
             </main>
           </motion.main>
