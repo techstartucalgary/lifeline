@@ -43,7 +43,7 @@ const NavigationPanel = ({
       link.download = "deadlines.ics";
       link.click();
     } catch (e: any) {
-      alert(e.message); // replace with snackbar
+      alert(`Failed to download deadlines: ${e.message}`); // replace with snackbar
     }
   };
 
