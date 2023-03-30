@@ -70,7 +70,7 @@ const AssessmentCard = ({
           <h1 className="font-medium text-sys-on-primary-container">
             {assessment.name}
           </h1>
-          <h2 className="">{formatDate(assessment.date)}</h2>
+          <h2>{assessment.date ? formatDate(assessment.date) : "date unknown"}</h2>
         </div>
       </div>
 
