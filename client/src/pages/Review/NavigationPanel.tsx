@@ -32,14 +32,19 @@ const NavigationPanel = ({
   const inputRef = useRef<HTMLInputElement>(null);
 
   const handleExport = () => {
-    const ics = jsonToICS(courses);
-    const blob = new Blob([ics], { type: "text/calendar" });
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement("a");
+    try {
+      const ics = jsonToICS(courses);
 
-    link.href = url;
-    link.download = "deadlines.ics";
-    link.click();
+      const blob = new Blob([ics], { type: "text/calendar" });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+
+      link.href = url;
+      link.download = "deadlines.ics";
+      link.click();
+    } catch (e: any) {
+      alert(e.message); // replace with snackbar
+    }
   };
 
   return (
