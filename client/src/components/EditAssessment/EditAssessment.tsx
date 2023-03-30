@@ -17,22 +17,39 @@ const EditAssessment = ({
   onSave,
   assessment,
 }: EditAssessmentProps) => {
-  const [name, setName] = useState<string>(assessment.name);
-  const [date, setDate] = useState<Date>(assessment.date);
-  const [weight, setWeight] = useState<number>(assessment.weight);
-  const [location, setLocation] = useState("");
-  const [modality, setModality] = useState("");
-  const [notes, setNotes] = useState<string>(assessment.notes || "");
+  const [newAssessment, setNewAssessment] = useState<Assessment>(assessment);
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.name === "date") {
+      setNewAssessment({
+        ...newAssessment,
+        date: new Date(e.target.value),
+      });
+      console.log(new Date(e.target.value));
+
+      return;
+    }
+    setNewAssessment({
+      ...newAssessment,
+      [e.target.name]: e.target.value,
+    });
+  };
 
   const handleWeightChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (isNaN(Number(e.target.value.trim()))) {
       return;
     }
     if (e.target.value.trim() === "") {
-      setWeight(0);
+      setNewAssessment({
+        ...newAssessment,
+        weight: 0,
+      });
       return;
     }
-    setWeight(Number(e.target.value.trim()));
+    setNewAssessment({
+      ...newAssessment,
+      weight: Number(e.target.value.trim()),
+    });
   };
 
   const jsxInputFormat = (date: Date): string => {
@@ -46,12 +63,7 @@ const EditAssessment = ({
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    onSave({
-      name,
-      date,
-      weight,
-      notes,
-    });
+    onSave(newAssessment);
   };
 
   return (
@@ -77,11 +89,12 @@ const EditAssessment = ({
           {/* Adapted from https://flowbite.com/docs/forms/floating-label/ */}
           <input
             type="text"
+            name="name"
             id="assessment_name"
             className="block px-2.5 pb-2.5 pt-4 w-full bg-transparent rounded-xl peer"
             placeholder=" "
-            onChange={(e) => setName(e.target.value)}
-            value={name}
+            onChange={handleChange}
+            value={newAssessment.name}
           />
           <label
             htmlFor="assessment_name"
@@ -95,9 +108,10 @@ const EditAssessment = ({
         <div className="w-14"></div>
         <input
           type="datetime-local"
+          name="date"
           className="rounded-xl w-full ml-2"
-          value={jsxInputFormat(date)}
-          onChange={(e) => setDate(new Date(e.target.value))}
+          value={newAssessment.date ? jsxInputFormat(newAssessment.date) : ""}
+          onChange={handleChange}
         />
       </div>
       <div className="flex flex-row w-full h-14">
@@ -105,11 +119,12 @@ const EditAssessment = ({
         <div className="relative w-full ml-2">
           <input
             type="text"
+            name="notes"
             id="assessment_weight"
             className="block px-2.5 pb-2.5 pt-4 w-full bg-transparent rounded-xl peer"
             placeholder=" "
             onChange={handleWeightChange}
-            value={weight}
+            value={newAssessment.weight ? newAssessment.weight : 0}
           />
           <div className="absolute inset-y-0 right-0 pr-4 flex items-center pointer-events-none">
             <span className="text-xl">%</span>
@@ -130,8 +145,7 @@ const EditAssessment = ({
             id="assessment_location"
             className="block px-2.5 pb-2.5 pt-4 w-full bg-transparent rounded-xl peer"
             placeholder=" "
-            onChange={(e) => setLocation(e.target.value)}
-            value={location}
+            readOnly
           />
           <label
             htmlFor="assessment_location"
@@ -149,8 +163,7 @@ const EditAssessment = ({
             id="assessment_modality"
             className="block px-2.5 pb-2.5 pt-4 w-full bg-transparent rounded-xl peer"
             placeholder=" "
-            onChange={(e) => setModality(e.target.value)}
-            value={modality}
+            readOnly
           />
           <label
             htmlFor="assessment_modality"
@@ -178,8 +191,8 @@ const EditAssessment = ({
             id="assessment_notes"
             className="block px-2.5 pb-2.5 pt-4 w-full bg-transparent rounded-xl peer h-48"
             placeholder=" "
-            onChange={(e) => setNotes(e.target.value)}
-            value={notes}
+            onChange={handleChange}
+            value={newAssessment.notes}
           />
           <label
             htmlFor="assessment_notes"
