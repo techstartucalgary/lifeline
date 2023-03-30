@@ -68,7 +68,7 @@ const jsonToICS = (courses: Courses): string => {
 
   for (const course of courses) {
     for (const assessment of course.assessments) {
-      if (!assessment.date) {
+      if (!assessment.date || isNaN(assessment.date.getTime())) {
         throw new Error(
           `"${assessment.name}" in ${course.code} ${course.number} has no date`
         );
