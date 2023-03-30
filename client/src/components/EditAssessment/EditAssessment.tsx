@@ -4,7 +4,7 @@ import { classnames } from "../../Utilities";
 import { Assessment } from "../../logic/icsGen";
 import { Button } from "../Button";
 
-import blob from "./blob-small.svg";
+import blobImage from "./blob-small.svg";
 
 interface EditAssessmentProps {
   onClose: () => void;
@@ -19,36 +19,38 @@ const EditAssessment = ({
 }: EditAssessmentProps) => {
   const [newAssessment, setNewAssessment] = useState<Assessment>(assessment);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (
+    e:
+      | React.ChangeEvent<HTMLInputElement>
+      | React.ChangeEvent<HTMLTextAreaElement>
+  ) => {
     if (e.target.name === "date") {
       setNewAssessment({
         ...newAssessment,
         date: new Date(e.target.value),
       });
-      console.log(new Date(e.target.value));
-
       return;
     }
-    setNewAssessment({
-      ...newAssessment,
-      [e.target.name]: e.target.value,
-    });
-  };
-
-  const handleWeightChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (isNaN(Number(e.target.value.trim()))) {
-      return;
-    }
-    if (e.target.value.trim() === "") {
+    if (e.target.name === "weight") {
+      if (isNaN(Number(e.target.value.trim()))) {
+        return;
+      }
+      if (e.target.value.trim() === "") {
+        setNewAssessment({
+          ...newAssessment,
+          weight: 0,
+        });
+        return;
+      }
       setNewAssessment({
         ...newAssessment,
-        weight: 0,
+        weight: Number(e.target.value.trim()),
       });
       return;
     }
     setNewAssessment({
       ...newAssessment,
-      weight: Number(e.target.value.trim()),
+      [e.target.name]: e.target.value,
     });
   };
 
@@ -119,11 +121,11 @@ const EditAssessment = ({
         <div className="relative w-full ml-2">
           <input
             type="text"
-            name="notes"
+            name="weight"
             id="assessment_weight"
             className="block px-2.5 pb-2.5 pt-4 w-full bg-transparent rounded-xl peer"
             placeholder=" "
-            onChange={handleWeightChange}
+            onChange={handleChange}
             value={newAssessment.weight ? newAssessment.weight : 0}
           />
           <div className="absolute inset-y-0 right-0 pr-4 flex items-center pointer-events-none">
@@ -189,6 +191,7 @@ const EditAssessment = ({
         <div className="relative w-full ml-2">
           <textarea
             id="assessment_notes"
+            name="notes"
             className="block px-2.5 pb-2.5 pt-4 w-full bg-transparent rounded-xl peer h-48"
             placeholder=" "
             onChange={handleChange}
@@ -217,7 +220,7 @@ const BlobIcon = ({ icon }: { icon: string }) => {
   return (
     <div className="relative w-14">
       <img
-        src={blob}
+        src={blobImage}
         alt="icon background"
         className={classnames(
           "absolute",
