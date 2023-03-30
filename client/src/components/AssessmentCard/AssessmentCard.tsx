@@ -73,12 +73,14 @@ const AssessmentCard = ({
           <h1 className="font-medium text-sys-on-primary-container">
             {assessment.name}
           </h1>
-          <h2>{assessment.date ? formatDate(assessment.date) : "date unknown"}</h2>
+          <h2>
+            {assessment.date ? formatDate(assessment.date) : "Unknown date"}
+          </h2>
         </div>
       </div>
 
       <div className="text-on-primary-container flex flex-col items-start">
-        <p>Weight: {assessment.weight}%</p>
+        {assessment.weight && <p>Weight: {assessment.weight}%</p>}
         <p>{assessment.notes}</p>
       </div>
     </Button>
