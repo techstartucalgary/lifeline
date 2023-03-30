@@ -1,9 +1,9 @@
-import iCal from "ical-generator";
+import iCal, { ICalEventData } from "ical-generator";
 
 export interface Assessment {
   name: string;
-  date: Date;
-  weight: number;
+  date?: Date;
+  weight?: number;
   notes?: string;
 }
 
@@ -27,18 +27,18 @@ export const parseCourse = (rawCourse: {
   title: string;
   key: string;
   topic: string;
-  assessments: { name: string; date: string; weight: string }[];
+  assessments: { name: string; date?: string; weight?: string }[];
   file: string;
 }): Course => {
   const course: Course = {
     ...rawCourse,
     number: Number(rawCourse.number),
     assessments: rawCourse.assessments.map(
-      (a: { name: string; date: string; weight: string }) => {
+      (a: { name: string; date?: string; weight?: string }) => {
         return {
           name: a.name,
-          date: new Date(a.date),
-          weight: Number(a.weight) || 0,
+          date: a.date && new Date(a.date),
+          weight: a.weight && Number(a.weight),
         } as Assessment;
       }
     ),
@@ -68,12 +68,17 @@ const jsonToICS = (courses: Courses): string => {
 
   for (const course of courses) {
     for (const assessment of course.assessments) {
+      if (!assessment.date) {
+        throw new Error(
+          `"${assessment.name}" in ${course.code} ${course.number} has no date`
+        );
+      }
       cal.createEvent({
         start: assessment.date,
         end: assessment.date,
         summary: `${course.code} ${course.number} ${assessment.name}`,
         description: assessment.notes,
-      });
+      } as ICalEventData);
     }
   }
 
