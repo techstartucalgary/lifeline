@@ -2,12 +2,13 @@ import { useEffect, useState } from "react";
 
 import { classnames } from "../../Utilities";
 import AppTopBar, {
-  LeadingNavigation,
-  TrailingIcon,
-  Title,
-  Subtitle,
   IconButton,
+  LeadingNavigation,
+  Subtitle,
+  Title,
+  TrailingIcon,
 } from "../../components/AppTopBar";
+import BottomSheet from "../../components/BottomSheet";
 import CourseInfo from "../../components/CourseInfo";
 import EditAssessment from "../../components/EditAssessment";
 import Tabs, { Tab } from "../../components/Tabs";
@@ -36,6 +37,7 @@ const CoursePanel = ({
     assessment: Assessment;
     index: number;
   } | null>(null);
+  const [bottomSheetOpen, setBottomSheetOpen] = useState(true);
 
   useEffect(() => {
     setEditingAssessment(null);
@@ -81,7 +83,10 @@ const CoursePanel = ({
         </AppTopBar>
       </div>
 
-      <div className="flex flex-col md:flex-row gap-4 lg:gap-6" style={{ paddingLeft: left }}>
+      <div
+        className="flex flex-col md:flex-row gap-4 lg:gap-6"
+        style={{ paddingLeft: left }}
+      >
         <section className={classnames("w-full md:w-1/2")}>
           {editingAssessment ? (
             <EditAssessment
@@ -143,6 +148,13 @@ const CoursePanel = ({
             <p>File not found</p>
           )}
         </section>
+      </div>
+      <div className="block md:hidden">
+        <BottomSheet
+          onClose={() => setBottomSheetOpen(false)}
+          isOpen={bottomSheetOpen}
+        />
+        Bottom sheet is here
       </div>
     </>
   );
