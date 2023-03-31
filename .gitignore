@@ -12,3 +12,4 @@ server/.venv*
 **/build
 **/.ipynb_checkpoints
 server/prod
+server/venv
