@@ -1,7 +1,7 @@
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, useState } from "react";
 
-import { IconButton } from "./components/Button";
+import { IconButton } from "../Button";
 
 export default function MyModal() {
   const [isOpen, setIsOpen] = useState(true);
