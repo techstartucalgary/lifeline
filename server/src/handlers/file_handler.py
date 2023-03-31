@@ -1,5 +1,6 @@
 """Handles the file upload and extraction of assessments from the file"""
 
+import hashlib
 import json
 import pickle
 import shutil
@@ -15,13 +16,26 @@ from fastapi import Response, UploadFile, status
 from pdfminer.pdfparser import PDFSyntaxError
 
 from .openai_api_handler import get_assessments_from_text
-
+from .db_handler import insert_course_into_db, query_course_from_db
 
 def handle_file(file: UploadFile, response: Response, premium: bool = False):
     """Handles one file"""
     try:
         tmp_path = save_temp_file(file)
         print(f"Processing file: {tmp_path}")
+
+        print("First checking if a cached version of the course is present")
+        file_hash = get_file_hash(tmp_path)
+        print(f"The file hash is: {file_hash}")
+
+        print("Querying the DB")
+        cached_course = query_course_from_db(file_hash)
+        if cached_course is not None:
+            print("Found cached course for this file hash. Returning it.")
+            return cached_course
+
+        print("Couldn't find a cached version. Processing the file as usual.")
+        # Processing only if we don't have a cached version available
         with pdfplumber.open(tmp_path) as pdf:
             course = get_course_info(pdf)
 
@@ -40,6 +54,8 @@ def handle_file(file: UploadFile, response: Response, premium: bool = False):
         if tmp_path:
             tmp_path.unlink()
 
+    print("Caching the course for future use")
+    insert_course_into_db(file_hash, course)
     return course
 
 
@@ -53,6 +69,19 @@ def save_temp_file(upload_file: UploadFile):
     finally:
         upload_file.file.close()
     return tmp_path
+
+
+def get_file_hash(file_path: Path):
+    """Returns sha256 based on the file contents"""
+    contents = b""
+
+    # Reading just the first two pages (about 40kb) of a pdf for getting the sha
+    with open(file_path, "rb") as file:
+        contents = file.read(40000)
+
+    # Getting the hash
+    sha256 = hashlib.sha256(contents).hexdigest()
+    return sha256
 
 
 def load_course_codes() -> Set[str]:
