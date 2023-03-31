@@ -1,61 +1,73 @@
 import { Dialog, Transition } from "@headlessui/react";
-import { useState } from "react";
-import { useEffectOnce } from "react-use";
+import { Fragment, useState } from "react";
 
 import { IconButton } from "./components/Button";
 
-const MyDialog = () => {
-  const [isOpen, setIsOpen] = useState(false);
+export default function MyModal() {
+  const [isOpen, setIsOpen] = useState(true);
 
-  useEffectOnce(() => {
-    setTimeout(() => setIsOpen(true), 1000);
-    console.log("Dialog opened");
-  });
+  const closeModal = () => {
+    setIsOpen(false);
+  };
+
+  const openModal = () => {
+    setIsOpen(true);
+  };
 
   return (
     <>
-      <button onClick={() => setIsOpen(!isOpen)}>Open/close</button>
-      <Transition
-        show={isOpen}
-        enter="transition duration-100 ease-out"
-        enterFrom="transform scale-95 opacity-0"
-        enterTo="transform scale-100 opacity-100"
-        leave="transition duration-75 ease-out"
-        leaveFrom="transform scale-100 opacity-100"
-        leaveTo="transform scale-95 opacity-0"
-        // as={Fragment}
-      >
-        <Dialog
-          open={isOpen}
-          onClose={() => setIsOpen(false)}
-          className="relative z-50"
+      <div className="fixed inset-0 flex items-center justify-center">
+        <button
+          type="button"
+          onClick={openModal}
+          className="rounded-md bg-black bg-opacity-20 px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
         >
-          <div className="fixed inset-0 bg-black/30" aria-hidden="true" />
+          Open dialog
+        </button>
+      </div>
 
-          <div className="fixed inset-0 flex items-center justify-center p-4">
-            <Dialog.Panel
-              className="mx-auto max-w-sm fixed bottom-0 rounded-t-2xl bg-surface-variant flex flex-row justify-center p-4 gap-1"
-              role="dialog"
-              aria-modal="true"
+      <Transition appear show={isOpen} as={Fragment}>
+        <Dialog as="div" className="relative z-10" onClose={closeModal}>
+          <Transition.Child
+            as={Fragment}
+            enter="ease-out duration-300"
+            enterFrom="opacity-0"
+            enterTo="opacity-100"
+            leave="ease-in duration-200"
+            leaveFrom="opacity-100"
+            leaveTo="opacity-0"
+          >
+            <div className="fixed inset-0 bg-primary-30 bg-opacity-30" />
+          </Transition.Child>
+
+          <div className="fixed inset-0 overflow-y-auto flex justify-center">
+            <Transition.Child
+              as={Fragment}
+              enter="ease-out duration-300"
+              enterFrom="opacity-0 scale-95"
+              enterTo="opacity-100 scale-100"
+              leave="ease-in duration-200"
+              leaveFrom="opacity-100 scale-100"
+              leaveTo="opacity-0 scale-95"
             >
-              <span className="flex flex-col justify-start w-1/5 items-center text-center">
-                <IconButton icon="add" />
-                <label>Add assessment</label>
-              </span>
-              <span className="flex flex-col justify-start w-1/5 items-center text-center">
-                <IconButton icon="delete" />
-                <label>Delete course</label>
-              </span>
-              <span className="flex flex-col justify-start w-1/5 items-center text-center">
-                <IconButton icon="error" />
-                <label>Report</label>
-              </span>
-            </Dialog.Panel>
+              <Dialog.Panel className="rounded-t-2xl bg-surface-variant flex flex-row justify-center p-4 gap-1 transition-all fixed bottom-0">
+                <span className="flex flex-col justify-start w-1/3 items-center text-center">
+                  <IconButton icon="add" />
+                  <label>Add assessment</label>
+                </span>
+                <span className="flex flex-col justify-start w-1/3 items-center text-center">
+                  <IconButton icon="delete" />
+                  <label>Delete course</label>
+                </span>
+                <span className="flex flex-col justify-start w-1/3 items-center text-center">
+                  <IconButton icon="error" />
+                  <label>Report</label>
+                </span>
+              </Dialog.Panel>
+            </Transition.Child>
           </div>
         </Dialog>
       </Transition>
     </>
   );
-};
-
-export default MyDialog;
+}
