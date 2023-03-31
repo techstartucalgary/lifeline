@@ -2,11 +2,11 @@ import { useEffect, useState } from "react";
 
 import { classnames } from "../../Utilities";
 import AppTopBar, {
-  LeadingNavigation,
-  TrailingIcon,
-  Title,
-  Subtitle,
   IconButton,
+  LeadingNavigation,
+  Subtitle,
+  Title,
+  TrailingIcon,
 } from "../../components/AppTopBar";
 import CourseInfo from "../../components/CourseInfo";
 import EditAssessment from "../../components/EditAssessment";
@@ -19,17 +19,17 @@ import DocumentPanel from "./DocumentPanel";
 interface CoursePanelProp {
   course: Course;
   left: number;
-  onChangeAssessment(assessment: Assessment, index: number): void;
-  onClickBack(): void;
-  onDeleteCourse(): void;
+  onBack(): void;
+  onCourseUpdate(course: Course): void;
+  onCourseDelete(course: Course): void;
 }
 
 const CoursePanel = ({
   course,
   left,
-  onChangeAssessment,
-  onClickBack,
-  onDeleteCourse,
+  onBack,
+  onCourseUpdate,
+  onCourseDelete,
 }: CoursePanelProp) => {
   const [selectedTab, setSelectedTab] = useState<Tab>(Tab.Assessments);
   const [editingAssessment, setEditingAssessment] = useState<{
@@ -40,6 +40,20 @@ const CoursePanel = ({
   useEffect(() => {
     setEditingAssessment(null);
   }, [course]);
+
+  const onAssessmentClick = (assessment: Assessment, index: number) => {
+    setEditingAssessment({ assessment, index });
+  };
+
+  const onAssessmentChange = (assessment: Assessment, index: number) => {
+    course.assessments[index] = assessment;
+    onCourseUpdate(course);
+  };
+
+  const onAssessmentDelete = (_: Assessment, index: number) => {
+    course.assessments = course.assessments.filter((_, i) => i !== index);
+    onCourseUpdate(course);
+  };
 
   return (
     <>
@@ -54,21 +68,21 @@ const CoursePanel = ({
             <IconButton
               className="text-on-surface mr-1.5"
               icon="arrow_back"
-              onClick={onClickBack}
+              onClick={onBack}
             />
           </LeadingNavigation>
           <TrailingIcon>
             <IconButton
-              className="text-on-surface-variant hidden md:block"
+              className="text-on-surface-variant hidden md:flex"
               icon="error"
             />
             <IconButton
-              className="text-on-surface-variant hidden md:block"
+              className="text-on-surface-variant hidden md:flex"
               icon="delete"
-              onClick={onDeleteCourse}
+              onClick={() => onCourseDelete(course)}
             />
             <IconButton
-              className="text-on-surface-variant block md:hidden"
+              className="text-on-surface-variant flex md:hidden"
               icon="more_vert"
             />
           </TrailingIcon>
@@ -81,14 +95,17 @@ const CoursePanel = ({
         </AppTopBar>
       </div>
 
-      <div className="flex flex-col md:flex-row gap-4 lg:gap-6" style={{ paddingLeft: left }}>
+      <div
+        className="flex flex-col md:flex-row gap-4 lg:gap-6"
+        style={{ paddingLeft: left }}
+      >
         <section className={classnames("w-full md:w-1/2")}>
           {editingAssessment ? (
             <EditAssessment
               assessment={editingAssessment.assessment}
               onClose={() => setEditingAssessment(null)}
               onSave={(assessment: Assessment) => {
-                onChangeAssessment(assessment, editingAssessment.index);
+                onAssessmentChange(assessment, editingAssessment.index);
                 setEditingAssessment(null);
               }}
             />
@@ -115,12 +132,8 @@ const CoursePanel = ({
               >
                 <AssessmentsPanel
                   assessments={course.assessments}
-                  onAssessmentClick={(
-                    assessment: Assessment,
-                    index: number
-                  ) => {
-                    setEditingAssessment({ assessment, index });
-                  }}
+                  onAssessmentClick={onAssessmentClick}
+                  onAssessmentDelete={onAssessmentDelete}
                 />
               </div>
             </>
