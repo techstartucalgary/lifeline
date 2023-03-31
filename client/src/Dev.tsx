@@ -43,12 +43,13 @@ export default function MyModal() {
           <div className="fixed inset-0 overflow-y-auto flex justify-center">
             <Transition.Child
               as={Fragment}
-              enter="ease-out duration-300"
-              enterFrom="opacity-0 scale-95"
-              enterTo="opacity-100 scale-100"
-              leave="ease-in duration-200"
-              leaveFrom="opacity-100 scale-100"
-              leaveTo="opacity-0 scale-95"
+              // comes and goes from the bottom
+              enter="transform transition ease-out duration-300"
+              enterFrom="translate-y-full"
+              enterTo="translate-y-0"
+              leave="transform transition ease-in duration-200"
+              leaveFrom="translate-y-0"
+              leaveTo="translate-y-full"
             >
               <Dialog.Panel className="rounded-t-2xl bg-surface-variant flex flex-row justify-center p-4 gap-1 transition-all fixed bottom-0">
                 <span className="flex flex-col justify-start w-1/3 items-center text-center">
