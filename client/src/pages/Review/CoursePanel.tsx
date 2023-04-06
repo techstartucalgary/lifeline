@@ -47,7 +47,7 @@ const CoursePanel = ({
 
   const onAssessmentClick = (assessment: Assessment, index: number) => {
     setEditingAssessment({ assessment, index });
-    setIsEditingAssessment(true);
+    onOpenDialog();
   };
 
   const onAssessmentChange = (assessment: Assessment, index: number) => {
@@ -107,7 +107,18 @@ const CoursePanel = ({
       />
     ),
     trailingIcon: (
-      <Button className="text-primary" onClick={onCloseDialog}>
+      <Button
+        className="text-primary"
+        onClick={() => {
+          if (editingAssessment) {
+            onAssessmentChange(
+              editingAssessment.assessment,
+              editingAssessment.index
+            );
+          }
+          onCloseDialog();
+        }}
+      >
         Save
       </Button>
     ),
@@ -200,7 +211,7 @@ const CoursePanel = ({
                 leaveFrom="opacity-100 translate-y-0"
                 leaveTo="opacity-80 translate-y-full"
               >
-                <Dialog.Panel className="w-full max-w-md overflow-hidden h-screen md:h-auto md:rounded-2xl bg-surface shadow-xl transition-all">
+                <Dialog.Panel className="w-full max-w-lg overflow-hidden h-screen md:h-auto md:rounded-2xl bg-surface shadow-xl transition-all">
                   <DialogCompactHeadline
                     compactTitleDisplayRange={[0, 10]}
                     elevationDisplayRange={[0, 10]}
@@ -213,17 +224,8 @@ const CoursePanel = ({
                     {editingAssessment && (
                       <EditAssessment
                         assessment={editingAssessment.assessment}
-                        onClose={() => setEditingAssessment(null)}
-                        onSave={(assessment: Assessment) => {
-                          onAssessmentChange(
-                            assessment,
-                            editingAssessment.index
-                          );
-                          setEditingAssessment(null);
-                        }}
                       />
                     )}
-                    <div className="pt-96"></div>
                   </div>
                 </Dialog.Panel>
               </Transition.Child>

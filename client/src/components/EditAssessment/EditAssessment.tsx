@@ -7,16 +7,10 @@ import { Button } from "../Button";
 import blob from "./blob-small.svg";
 
 interface EditAssessmentProps {
-  onClose: () => void;
-  onSave: (assessment: Assessment) => void;
   assessment: Assessment;
 }
 
-const EditAssessment = ({
-  onClose,
-  onSave,
-  assessment,
-}: EditAssessmentProps) => {
+const EditAssessment = ({ assessment }: EditAssessmentProps) => {
   const [name, setName] = useState<string>(assessment.name);
   const [date, setDate] = useState<Date>(assessment.date);
   const [weight, setWeight] = useState<number>(assessment.weight);
@@ -44,24 +38,8 @@ const EditAssessment = ({
     return `${year}-${month}-${day}T${hours}:${minutes}`;
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    onSave({
-      name,
-      date,
-      weight,
-      notes,
-    });
-  };
-
   return (
-    <form
-      className="flex flex-col gap-4 text-on-surface"
-      onSubmit={handleSubmit}
-      onKeyDown={(e) => {
-        if (e.key === "Escape") onClose();
-      }}
-    >
+    <div className="flex flex-col gap-4 text-on-surface">
       <div className="flex flex-row w-full h-14">
         <BlobIcon icon="label" />
         <div className="relative w-full ml-2">
@@ -180,12 +158,7 @@ const EditAssessment = ({
           </label>
         </div>
       </div>
-      <div className="flex justify-center items-center">
-        <Button type="submit" variant="filled" className="mt-36">
-          Save
-        </Button>
-      </div>
-    </form>
+    </div>
   );
 };
 
