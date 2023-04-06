@@ -56,6 +56,7 @@ const EditAssessment = ({
               onAssessmentChange({ ...assessment, date: new Date(v) })
             }
             leadingIcon="event"
+            onClick={(e) => e.currentTarget.showPicker()}
           />
         </div>
       </div>
