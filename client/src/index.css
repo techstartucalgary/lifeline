@@ -4,33 +4,84 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@tailwind variants;
 
-html {
-  @apply bg-sys-background m-0 p-0;
-}
+@layer base {
+  :root {
+    font-size: 16px;
+    line-height: 1.43;
+    overflow-x: hidden;
+    outline-color: black;
+  }
 
-button,
-input[type="text"],
-input[type="button"] {
-  -webkit-appearance: none;
-  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-  appearance: none;
-}
+  html {
+    @apply text-gray-800 bg-sys-background m-0 p-0;
+  }
 
-.material-symbols-outlined {
-  font-variation-settings: "FILL" 1, "wght" 700, "GRAD" 0, "opsz" 40;
-  font-size: inherit;
-}
+  body {
+    font-size: 0.875rem;
+    overflow-x: hidden;
+  }
 
-:root {
-  font-size: 16px;
-  line-height: 1.43;
-  overflow-x: hidden;
-}
+  button,
+  input[type="text"],
+  input[type="button"] {
+    -webkit-appearance: none;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    appearance: none;
+  }
 
-body {
-  font-size: 0.875rem;
-  overflow-x: hidden;
+  [type="text"],
+  [type="email"],
+  [type="url"],
+  [type="password"],
+  [type="number"],
+  [type="date"],
+  [type="datetime-local"],
+  [type="month"],
+  [type="search"],
+  [type="tel"],
+  [type="time"],
+  [type="week"],
+  [multiple],
+  textarea,
+  select,
+  button,
+  input,
+  optgroup,
+  select,
+  textarea,
+  body {
+    @apply text-sm;
+  }
+  input.text {
+    @apply rounded-md border border-gray-300 shadow-sm py-2 px-3 focus:outline-none focus:ring-emerald-500 focus:border-emerald-500;
+  }
+  input[type="checkbox"] {
+    @apply rounded-md text-emerald-600 focus:ring-emerald-500 border-gray-300;
+  }
+  input[type="radio"] {
+    @apply rounded-full text-emerald-600 focus:ring-emerald-500 border-gray-300;
+  }
+  button.primary,
+  button[primary="true"],
+  input[type="submit"] {
+    @apply text-center items-center flex justify-center px-4 py-2 border border-transparent font-medium rounded-md shadow-sm text-white bg-emerald-600 hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500 disabled:opacity-50 disabled:cursor-not-allowed relative;
+  }
+  button.secondary,
+  button[secondary],
+  input[type="button"],
+  input[type="reset"] {
+    @apply bg-white py-2 px-4 border border-gray-300 rounded-md shadow-sm leading-4 text-gray-800 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500;
+  }
+  select {
+    @apply rounded-md border border-gray-300 shadow-sm py-2 px-3 focus:outline-none focus:ring-emerald-500 focus:border-emerald-500;
+  }
+
+  .material-symbols-outlined {
+    font-variation-settings: "FILL" 1, "wght" 700, "GRAD" 0, "opsz" 40;
+    font-size: inherit;
+  }
 }
 
 #headlessui-portal-root {
