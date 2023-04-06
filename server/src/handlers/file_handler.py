@@ -192,18 +192,17 @@ def extract_assessments(table: List[List[Optional[str]]]) -> List[Dict]:
             print("The source is " + source)
 
             # First we isolate the found date to see if it matches the following types
-            regex_pattern = r'(?:January|Jan|February|Feb|March|Mar|April|Apr|May|June|Jun|July|Jul|August|Aug|September|Sep|Sept|October|Oct|November|Nov|December|Dec)\s+\d{1,2}(?:st|nd|rd|th)?(?:,\s+\d{4})?(?:\s+at\s+\d{1,2}:\d{2}[ap]m)?'
-
+            # regex_pattern = r'(?:January|Jan|February|Feb|March|Mar|April|Apr|May|June|Jun|July|Jul|August|Aug|September|Sep|Sept|October|Oct|November|Nov|December|Dec)[ ,]+\d{1,2}(?:st|nd|rd|th)?(?:[ ,]+\d{4})?(?:\s+at\s+\d{1,2}:\d{2}\s*[ap]m)?'
+            regex_pattern = r"(?:Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday)?(?:,)?\s*(?:January|Jan|February|Feb|March|Mar|April|Apr|May|June|Jun|July|Jul|August|Aug|September|Sep|Sept|October|Oct|November|Nov|December|Dec)[ ,]*\d{1,2}(?:st|nd|rd|th)?(?:[ ,]*\d{4})?(?:\s*at\s*\d{1,2}:\d{2}\s*[ap]m)?"
             result = re.findall(regex_pattern, source)
 
             if result:
                 print(result[0])
             else:
-                print('No date found in the string')
+                print("No date found in the string")
 
-            # Weaknesses : search_dates does not look for all the dates in the pdf ie. dependant on the accuracy of search_dates
-        
-            if len(source) < 5 :
+            # Weaknesses : looking for dates only in tables, sometimes skips over non-empty cells
+            if len(source) < 5:
                 # Ignore dates that are too short to avoid false positives.
                 # The shortest a date can realistically be is 5 characters. e.g. Dec 1
                 continue
