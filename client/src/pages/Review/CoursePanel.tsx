@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useRef, useState } from "react";
+import { useCallback, useRef, useState } from "react";
 
 import { classnames } from "../../Utilities";
 import { useAppTopBar } from "../../components/AppTopBar";
@@ -31,7 +31,7 @@ const CoursePanel = ({
     [course, onCourseUpdate]
   );
 
-  const [CompactHeadlineRaw, Headline] = useAppTopBar({
+  const [CompactHeadline, Headline] = useAppTopBar({
     variant: "large",
     title: `${course.title} ${course.number}`,
     subtitle: course.topic,
@@ -61,13 +61,6 @@ const CoursePanel = ({
       </>
     ),
   });
-
-  const CompactHeadline = useMemo(
-    // eslint-disable-next-line react/display-name
-    () => () => <CompactHeadlineRaw />,
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [containerRef]
-  );
 
   return (
     <>
