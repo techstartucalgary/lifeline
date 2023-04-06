@@ -50,6 +50,7 @@ const EditAssessment = ({
           />
           <Input
             label="Date"
+            type="datetime-local"
             value={jsxInputFormat(assessment.date)}
             onValueChange={(v) =>
               onAssessmentChange({ ...assessment, date: new Date(v) })
