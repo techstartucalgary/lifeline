@@ -26,7 +26,7 @@ const Input = ({ label, onValueChange, leadingIcon, ...args }: InputProps) => {
         className={classnames(
           "block px-3 pb-3 pt-3.5 w-full text-sm text-on-surface bg-transparent peer",
           "rounded-xl border-[0.1rem] border-outline-variant appearance-none",
-          "focus:outline-none focus:ring-0 focus:border-primary",
+          "focus:outline-none focus:ring-0 focus:border-primary caret-primary",
           "transition-color duration-100 ease-in",
           leadingIcon && "pl-8",
           args.className
