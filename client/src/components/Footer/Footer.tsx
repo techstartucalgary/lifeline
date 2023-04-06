@@ -32,7 +32,7 @@ export default function Footer() {
                   <Link to="/disclaimer">Disclaimer</Link>
                 </div>
                 <div>
-                  <a href="mailto:lifeline@techstartucalgary.com">
+                  <a href="https://forms.gle/CevURDJqpuS6zcoY7" target="_blank" rel="noreferrer">
                       Feedback
                   </a>
                 </div>
