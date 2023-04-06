@@ -12,6 +12,7 @@ import CoursePanel from "./CoursePanel";
 import NavigationPanel from "./NavigationPanel";
 import { transformTemplate, variants } from "./transitions";
 
+// eslint-disable-next-line max-statements
 const Review = () => {
   const [loading, setLoading] = useState<string[]>([]);
   const breakpoint = useBreakpoint();
@@ -133,8 +134,14 @@ const Review = () => {
 
   const isMobile = () => ["xs", "sm"].includes(breakpoint);
 
+  // SPA stylings
+  useEffectOnce(() => {
+    document.documentElement.classList.add("overflow-hidden");
+    document.body.classList.add("overflow-hidden");
+  });
+
   return (
-    <div className="overflow-hidden min-h-screen">
+    <div className="overflow-hidden">
       <AnimatePresence mode="popLayout">
         {((isMobile() && !currentCourse) || !isMobile()) && (
           <motion.nav
@@ -180,16 +187,18 @@ const Review = () => {
             className="w-full will-change-auto ease-emphasized"
           >
             <main className="max-w-9xl mx-auto" ref={mainRef}>
-              <CoursePanel
-                course={currentCourse}
-                left={mainMarginLeft}
-                onBack={() => navigate("/app")}
-                onCourseUpdate={onCourseUpdate}
-                onCourseDelete={onCourseDelete}
-              />
+              <div style={{ marginLeft: mainMarginLeft }}>
+                <CoursePanel
+                  course={currentCourse}
+                  onBack={() => navigate("/app")}
+                  onCourseUpdate={onCourseUpdate}
+                  onCourseDelete={onCourseDelete}
+                />
+              </div>
             </main>
           </motion.main>
         )}
+
         {!currentCourse && !isMobile() && (
           <div className="max-w-9xl mx-auto h-screen" ref={mainRef}>
             <Dropzone onDrop={onOutlineUpload} isLoading={loading.length > 0} />
