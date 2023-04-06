@@ -49,7 +49,11 @@ const Input = ({ label, onValueChange, leadingIcon, ...args }: InputProps) => {
           "peer-focus:px-2 peer-focus:text-primary peer-placeholder-shown:scale-100 peer-focus:left-1.5",
           "peer-placeholder-shown:top-[1.96rem] peer-focus:top-2",
           "peer-focus:scale-75 peer-focus:-translate-y-4",
-          !args.value && leadingIcon && "left-7"
+          (args.value === null ||
+            args.value === undefined ||
+            args.value.toString() === "") &&
+            leadingIcon &&
+            "left-7"
         )}
       >
         {label}
