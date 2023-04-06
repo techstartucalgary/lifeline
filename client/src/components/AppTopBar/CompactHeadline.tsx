@@ -18,7 +18,7 @@ interface CompactHeadlineProp
 const normalize = (val: number, min: number, max: number) =>
   (val - min) / (max - min);
 
-const findFirstNonZero = (...args: number[]) => {
+const coalesce = (...args: number[]) => {
   for (const arg of args) {
     if (arg !== 0) return arg;
   }
@@ -39,7 +39,11 @@ const CompactHeadline = ({
   const ref = useRef(null);
   const { y: scrollContainerY } = useScroll(containerRef ?? ref);
   const { y: scrollWindowY } = useWindowScroll();
-  const scrollY = findFirstNonZero(scrollContainerY, scrollWindowY);
+  const scrollY = coalesce(
+    scrollContainerY,
+    containerRef?.current?.scrollTop || 0,
+    scrollWindowY
+  );
 
   return (
     <>
