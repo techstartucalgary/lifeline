@@ -28,10 +28,11 @@ const CoursePanel = ({
 }: CoursePanelProp) => {
   const [selectedTab, setSelectedTab] = useState<Tab>(Tab.Assessments);
   const [isEditingAssessment, setIsEditingAssessment] = useState(false);
-  const [editingAssessment, setEditingAssessment] = useState<{
-    assessment: Assessment;
-    index: number;
-  } | null>(null);
+  const [editingAssessment, setEditingAssessment] = useState<Assessment | null>(
+    null
+  );
+  const [editingAssessmentIndex, setEditingAssessmentIndex] =
+    useState<number>(-1);
 
   useEffect(() => {
     setEditingAssessment(null);
@@ -46,7 +47,8 @@ const CoursePanel = ({
   };
 
   const onAssessmentClick = (assessment: Assessment, index: number) => {
-    setEditingAssessment({ assessment, index });
+    setEditingAssessment(assessment);
+    setEditingAssessmentIndex(index);
     onOpenDialog();
   };
 
@@ -111,10 +113,7 @@ const CoursePanel = ({
         className="text-primary"
         onClick={() => {
           if (editingAssessment) {
-            onAssessmentChange(
-              editingAssessment.assessment,
-              editingAssessment.index
-            );
+            onAssessmentChange(editingAssessment, editingAssessmentIndex);
           }
           onCloseDialog();
         }}
@@ -218,12 +217,13 @@ const CoursePanel = ({
                   />
 
                   <div
-                    className="h-full md:h-96 overflow-y-auto px-6 py-4"
+                    className="h-full md:h-96 overflow-y-auto px-4 py-4"
                     ref={dialogContainerRef}
                   >
                     {editingAssessment && (
                       <EditAssessment
-                        assessment={editingAssessment.assessment}
+                        assessment={editingAssessment}
+                        onAssessmentChange={setEditingAssessment}
                       />
                     )}
                   </div>

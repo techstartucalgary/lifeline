@@ -1,5 +1,3 @@
-import { useState } from "react";
-
 import { classnames } from "../../Utilities";
 import { Assessment } from "../../logic/icsGen";
 import { Button } from "../Button";
@@ -8,25 +6,25 @@ import blob from "./blob-small.svg";
 
 interface EditAssessmentProps {
   assessment: Assessment;
+  onAssessmentChange: (assessment: Assessment) => void;
 }
 
-const EditAssessment = ({ assessment }: EditAssessmentProps) => {
-  const [name, setName] = useState<string>(assessment.name);
-  const [date, setDate] = useState<Date>(assessment.date);
-  const [weight, setWeight] = useState<number>(assessment.weight);
-  const [location, setLocation] = useState("");
-  const [modality, setModality] = useState("");
-  const [notes, setNotes] = useState<string>(assessment.notes || "");
-
+const EditAssessment = ({
+  assessment,
+  onAssessmentChange,
+}: EditAssessmentProps) => {
   const handleWeightChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (isNaN(Number(e.target.value.trim()))) {
       return;
     }
     if (e.target.value.trim() === "") {
-      setWeight(0);
+      onAssessmentChange({ ...assessment, weight: 0 });
       return;
     }
-    setWeight(Number(e.target.value.trim()));
+    onAssessmentChange({
+      ...assessment,
+      weight: Number(e.target.value.trim()),
+    });
   };
 
   const jsxInputFormat = (date: Date): string => {
@@ -48,9 +46,11 @@ const EditAssessment = ({ assessment }: EditAssessmentProps) => {
             type="text"
             id="assessment_name"
             className="block px-2.5 pb-2.5 pt-4 w-full bg-transparent rounded-xl peer"
-            placeholder=" "
-            onChange={(e) => setName(e.target.value)}
-            value={name}
+            placeholder=""
+            value={assessment.name}
+            onChange={(e) =>
+              onAssessmentChange({ ...assessment, name: e.target.value })
+            }
           />
           <label
             htmlFor="assessment_name"
@@ -65,8 +65,13 @@ const EditAssessment = ({ assessment }: EditAssessmentProps) => {
         <input
           type="datetime-local"
           className="rounded-xl w-full ml-2"
-          value={jsxInputFormat(date)}
-          onChange={(e) => setDate(new Date(e.target.value))}
+          value={jsxInputFormat(assessment.date)}
+          onChange={(e) =>
+            onAssessmentChange({
+              ...assessment,
+              date: new Date(e.target.value),
+            })
+          }
         />
       </div>
       <div className="flex flex-row w-full h-14">
@@ -77,8 +82,8 @@ const EditAssessment = ({ assessment }: EditAssessmentProps) => {
             id="assessment_weight"
             className="block px-2.5 pb-2.5 pt-4 w-full bg-transparent rounded-xl peer"
             placeholder=" "
+            value={assessment.weight}
             onChange={handleWeightChange}
-            value={weight}
           />
           <div className="absolute inset-y-0 right-0 pr-4 flex items-center pointer-events-none">
             <span className="text-xl">%</span>
@@ -99,33 +104,16 @@ const EditAssessment = ({ assessment }: EditAssessmentProps) => {
             id="assessment_location"
             className="block px-2.5 pb-2.5 pt-4 w-full bg-transparent rounded-xl peer"
             placeholder=" "
-            onChange={(e) => setLocation(e.target.value)}
-            value={location}
+            onChange={(e) =>
+              onAssessmentChange({ ...assessment, location: e.target.value })
+            }
+            value={assessment.location}
           />
           <label
             htmlFor="assessment_location"
             className="absolute duration-300 transform -translate-y-4 scale-75 top-2 z-10 bg-white px-2 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1"
           >
             Location
-          </label>
-        </div>
-      </div>
-      <div className="flex flex-row w-full h-14">
-        <div className="w-14"></div>
-        <div className="relative w-full ml-2">
-          <input
-            type="text"
-            id="assessment_modality"
-            className="block px-2.5 pb-2.5 pt-4 w-full bg-transparent rounded-xl peer"
-            placeholder=" "
-            onChange={(e) => setModality(e.target.value)}
-            value={modality}
-          />
-          <label
-            htmlFor="assessment_modality"
-            className="absolute duration-300 transform -translate-y-4 scale-75 top-2 z-10 bg-white px-2 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1"
-          >
-            Modality
           </label>
         </div>
       </div>
@@ -147,8 +135,10 @@ const EditAssessment = ({ assessment }: EditAssessmentProps) => {
             id="assessment_notes"
             className="block px-2.5 pb-2.5 pt-4 w-full bg-transparent rounded-xl peer h-48"
             placeholder=" "
-            onChange={(e) => setNotes(e.target.value)}
-            value={notes}
+            onChange={(e) =>
+              onAssessmentChange({ ...assessment, notes: e.target.value })
+            }
+            value={assessment.notes}
           />
           <label
             htmlFor="assessment_notes"
