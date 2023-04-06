@@ -1,7 +1,8 @@
 import { useRef } from "react";
 
 import { classnames } from "../../Utilities";
-import AppTopBar from "../../components/AppTopBar/AppTopBar";
+import { useAppTopBar } from "../../components/AppTopBar";
+import { AppTopBarIconButton } from "../../components/AppTopBar/IconButton";
 import { Button, IconButton } from "../../components/Button";
 import List from "../../components/List";
 import NavigationDrawer from "../../components/NavigationDrawer";
@@ -41,6 +42,21 @@ const NavigationPanel = ({
     link.download = "deadlines.ics";
     link.click();
   };
+
+  const [CompactHeadline, Headline] = useAppTopBar({
+    variant: "medium",
+    title: "Courses",
+    trailingIcon: (
+      <AppTopBarIconButton
+        icon="add"
+        className="text-on-surface"
+        onClick={() => {
+          inputRef.current?.click();
+        }}
+        disabled={loading.length > 0}
+      />
+    ),
+  });
 
   return (
     <>
@@ -171,19 +187,8 @@ const NavigationPanel = ({
         </NavigationRail>
       </div>
       <div className="block md:hidden xl:hidden">
-        <AppTopBar variant="medium">
-          <AppTopBar.Title>Courses</AppTopBar.Title>
-          <AppTopBar.TrailingIcon>
-            <AppTopBar.IconButton
-              icon="add"
-              className="text-on-surface"
-              onClick={() => {
-                inputRef.current?.click();
-              }}
-              disabled={loading.length > 0}
-            />
-          </AppTopBar.TrailingIcon>
-        </AppTopBar>
+        <CompactHeadline />
+        <Headline />
         <List>
           {courses &&
             courses.map((course, t) => (

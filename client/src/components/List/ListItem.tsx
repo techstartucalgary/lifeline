@@ -32,7 +32,7 @@ const ListItem = ({
       icon={
         <span
           className={classnames(
-            "material-symbols-outlined h-6 w-6 p-4 text-2xl",
+            "material-symbols-outlined h-6 w-6 p-4 !text-xl",
             "flex justify-center items-center"
           )}
         >
