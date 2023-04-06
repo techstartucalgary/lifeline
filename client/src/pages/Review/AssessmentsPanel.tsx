@@ -1,5 +1,6 @@
 import FlatList from "flatlist-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useList, useUpdateEffect } from "react-use";
 
 import { classnames } from "../../Utilities";
 import AssessmentCard from "../../components/AssessmentCard";
@@ -14,17 +15,26 @@ interface AssessmentPanelProp {
   onAssessmentsUpdate(assessments: Assessment[]): void;
 }
 
+const comparator = (a: Assessment, b: Assessment) => a.id === b.id;
+
 const AssessmentsPanel = ({
-  assessments,
+  assessments: assessmentsRaw,
   onAssessmentsUpdate,
 }: AssessmentPanelProp) => {
+  const [assessments, { upsert: upsertAssessments, set: setAssessments }] =
+    useList<Assessment>();
+
   const [assessment, setAssessment] = useState<Assessment | null>(null);
-  const onAssessmentUpdate = (assessment: Assessment | null) => {
-    assessments = assessments.map((a) =>
-      (a.id === assessment?.id ? assessment : a)
-    );
-    onAssessmentsUpdate(assessments);
+  const onAssessmentUpdate = (assessment: Assessment) => {
+    upsertAssessments(comparator, assessment);
   };
+
+  useUpdateEffect(() => onAssessmentsUpdate(assessments), [assessments]);
+
+  useEffect(
+    () => setAssessments(assessmentsRaw),
+    [assessmentsRaw, setAssessments]
+  );
 
   const renderAssessment = (assessment: Assessment, key: string) => {
     const onAssessmentClick = () => setAssessment({ ...assessment }); // Pass a copy of the assessment

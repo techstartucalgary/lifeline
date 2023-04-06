@@ -27,8 +27,8 @@ const EditAssessmentDialog = ({
 
   const close = () => setOpen(false);
   const save = () => {
-    onOriginalAssessmentUpdate(assessment);
     close();
+    onOriginalAssessmentUpdate(assessment);
   };
 
   // Editing Panel Topbar
