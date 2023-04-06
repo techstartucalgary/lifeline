@@ -53,6 +53,7 @@ jobs:
 
       - name: test-server
         run: |
+          export CONNECTION_STRING=${{ secrets.CONNECTION_STRING }}
           cd server/src
           pip install -r ../requirements.txt
           pytest test_app.py
