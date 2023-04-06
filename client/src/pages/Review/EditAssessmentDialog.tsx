@@ -23,13 +23,9 @@ const EditAssessmentDialog = ({
   useEffect(() => {
     if (originalAssessment) setAssessment(originalAssessment);
     setOpen(originalAssessment !== null);
-    console.log("EditAssessmentDialog: useEffect", originalAssessment);
   }, [originalAssessment]);
 
-  const close = () => {
-    setOpen(false);
-    onOriginalAssessmentUpdate(null);
-  };
+  const close = () => setOpen(false);
   const save = () => {
     onOriginalAssessmentUpdate(assessment);
     close();

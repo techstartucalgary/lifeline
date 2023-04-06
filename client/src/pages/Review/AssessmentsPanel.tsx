@@ -20,20 +20,16 @@ const AssessmentsPanel = ({
 }: AssessmentPanelProp) => {
   const [assessment, setAssessment] = useState<Assessment | null>(null);
   const onAssessmentUpdate = (assessment: Assessment | null) => {
-    setAssessment(assessment ? { ...assessment } : null);
-    assessments = assessments.map((a) => (a.id === assessment?.id ? assessment : a));
+    assessments = assessments.map((a) =>
+      (a.id === assessment?.id ? assessment : a)
+    );
     onAssessmentsUpdate(assessments);
   };
 
   const renderAssessment = (assessment: Assessment, key: string) => {
-    const index = parseInt(key);
-
-    const onAssessmentClick = () => {
-      setAssessment(assessment);
-    };
-    const onAssessmentDelete = () => {
-      onAssessmentsUpdate(assessments.filter((_, i) => i !== index));
-    };
+    const onAssessmentClick = () => setAssessment({ ...assessment }); // Pass a copy of the assessment
+    const onAssessmentDelete = () =>
+      onAssessmentsUpdate(assessments.filter((a, _) => a.id !== assessment.id));
 
     return (
       <li key={key} className="flex flex-row group/assessment">
@@ -76,7 +72,15 @@ const AssessmentsPanel = ({
               "invisible opacity-0 group-hover:visible group-hover:opacity-100",
               "[@media(hover:none)]:visible [@media(hover:none)]:opacity-100"
             )}
-          ></Button>
+            onClick={() =>
+              setAssessment({
+                id: `${Math.random() * 1922}`,
+                date: new Date(),
+                name: "",
+                weight: 0,
+              })
+            }
+          />
         </div>
         <ul className="flex flex-col space-y-2 px-2 py-4 md:px-0 md:py-0">
           <FlatList
