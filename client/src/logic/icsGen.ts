@@ -1,6 +1,7 @@
 import iCal from "ical-generator";
 
 export interface Assessment {
+  id: string;
   name: string;
   date: Date;
   weight: number;
@@ -35,8 +36,9 @@ export const parseCourse = (rawCourse: {
     ...rawCourse,
     number: Number(rawCourse.number),
     assessments: rawCourse.assessments.map(
-      (a: { name: string; date: string; weight: string }) => {
+      (a: { name: string; date: string; weight: string }, index) => {
         return {
+          id: `${rawCourse.key}-${index}`,
           name: a.name,
           date: new Date(a.date),
           weight: Number(a.weight) || 0,
