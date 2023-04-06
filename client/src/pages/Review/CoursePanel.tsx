@@ -1,12 +1,9 @@
-import { Dialog, Transition } from "@headlessui/react";
-import { Fragment, useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useMemo, useRef, useState } from "react";
 
 import { classnames } from "../../Utilities";
 import { useAppTopBar } from "../../components/AppTopBar";
 import { AppTopBarIconButton } from "../../components/AppTopBar/IconButton";
-import { Button } from "../../components/Button";
 import CourseInfo from "../../components/CourseInfo";
-import EditAssessment from "../../components/EditAssessment";
 import Tabs, { Tab } from "../../components/Tabs";
 import { Assessment, Course } from "../../logic/icsGen";
 
@@ -27,42 +24,12 @@ const CoursePanel = ({
   onCourseDelete,
 }: CoursePanelProp) => {
   const [selectedTab, setSelectedTab] = useState<Tab>(Tab.Assessments);
-  const [isEditingAssessment, setIsEditingAssessment] = useState(false);
-  const [editingAssessment, setEditingAssessment] = useState<Assessment | null>(
-    null
-  );
-  const [editingAssessmentIndex, setEditingAssessmentIndex] =
-    useState<number>(-1);
-
-  useEffect(() => {
-    setEditingAssessment(null);
-  }, [course]);
-
-  const onOpenDialog = () => {
-    setIsEditingAssessment(true);
-  };
-
-  const onCloseDialog = () => {
-    setIsEditingAssessment(false);
-  };
-
-  const onAssessmentClick = (assessment: Assessment, index: number) => {
-    setEditingAssessment(assessment);
-    setEditingAssessmentIndex(index);
-    onOpenDialog();
-  };
-
-  const onAssessmentChange = (assessment: Assessment, index: number) => {
-    course.assessments[index] = assessment;
-    onCourseUpdate(course);
-  };
-
-  const onAssessmentDelete = (_: Assessment, index: number) => {
-    course.assessments = course.assessments.filter((_, i) => i !== index);
-    onCourseUpdate(course);
-  };
-
   const containerRef = useRef(null);
+
+  const onAssessmentsUpdate = useCallback(
+    (assessments: Assessment[]) => onCourseUpdate({ ...course, assessments }),
+    [course, onCourseUpdate]
+  );
 
   const [CompactHeadlineRaw, Headline] = useAppTopBar({
     variant: "large",
@@ -92,34 +59,6 @@ const CoursePanel = ({
           icon="more_vert"
         />
       </>
-    ),
-  });
-
-  const dialogContainerRef = useRef(null);
-
-  const [DialogCompactHeadline] = useAppTopBar({
-    variant: "small",
-    title: "Edit assesssment",
-    containerRef: dialogContainerRef,
-    leadingNavigation: (
-      <AppTopBarIconButton
-        className="text-on-surface mr-1.5"
-        icon="close"
-        onClick={onCloseDialog}
-      />
-    ),
-    trailingIcon: (
-      <Button
-        className="text-primary"
-        onClick={() => {
-          if (editingAssessment) {
-            onAssessmentChange(editingAssessment, editingAssessmentIndex);
-          }
-          onCloseDialog();
-        }}
-      >
-        Save
-      </Button>
     ),
   });
 
@@ -156,8 +95,7 @@ const CoursePanel = ({
             >
               <AssessmentsPanel
                 assessments={course.assessments}
-                onAssessmentClick={onAssessmentClick}
-                onAssessmentDelete={onAssessmentDelete}
+                onAssessmentsUpdate={onAssessmentsUpdate}
               />
             </div>
           </section>
@@ -180,59 +118,6 @@ const CoursePanel = ({
           </section>
         </div>
       </div>
-
-      <Transition show={isEditingAssessment} as={Fragment}>
-        <Dialog
-          as="div"
-          className="relative z-10"
-          onClose={() => setIsEditingAssessment(false)}
-        >
-          <Transition.Child
-            as={Fragment}
-            enter="ease-out duration-300"
-            enterFrom="opacity-0"
-            enterTo="opacity-100"
-            leave="ease-in duration-200"
-            leaveFrom="opacity-100"
-            leaveTo="opacity-0"
-          >
-            <div className="fixed inset-0 md:bg-black/25" />
-          </Transition.Child>
-
-          <div className="fixed inset-0 overflow-hidden">
-            <div className="flex min-h-full items-center justify-center p-0 md:p-4 text-center will-change-auto">
-              <Transition.Child
-                as={Fragment}
-                enter="ease-emphasized-decelerate duration-300 will-change-auto"
-                enterFrom="opacity-80 translate-y-96"
-                enterTo="opacity-100 translate-y-0"
-                leave="ease-emphasized-accelerate duration-200 will-change-auto"
-                leaveFrom="opacity-100 translate-y-0"
-                leaveTo="opacity-80 translate-y-full"
-              >
-                <Dialog.Panel className="w-full max-w-lg overflow-hidden h-screen md:h-auto md:rounded-2xl bg-surface shadow-xl transition-all">
-                  <DialogCompactHeadline
-                    compactTitleDisplayRange={[0, 10]}
-                    elevationDisplayRange={[0, 10]}
-                  />
-
-                  <div
-                    className="h-full md:h-96 overflow-y-auto px-4 py-4"
-                    ref={dialogContainerRef}
-                  >
-                    {editingAssessment && (
-                      <EditAssessment
-                        assessment={editingAssessment}
-                        onAssessmentChange={setEditingAssessment}
-                      />
-                    )}
-                  </div>
-                </Dialog.Panel>
-              </Transition.Child>
-            </div>
-          </div>
-        </Dialog>
-      </Transition>
     </>
   );
 };
