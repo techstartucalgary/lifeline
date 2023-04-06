@@ -6,7 +6,7 @@ from pymongo import MongoClient
 
 # Getting the connection string
 load_dotenv()
-connection_string = os.environ["CONNECTION_STRING"]
+connection_string = os.getenv("CONNECTION_STRING")
 
 # Defining a MongoDB client instance
 client = MongoClient(connection_string)
