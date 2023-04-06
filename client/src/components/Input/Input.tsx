@@ -34,7 +34,7 @@ const Input = ({ label, onValueChange, leadingIcon, ...args }: InputProps) => {
         placeholder={args.placeholder || " "}
       />
 
-      <div className="absolute left-0 top-0 h-full px-2.5 pt-0.5 z-20 flex flex-col justify-center items-center">
+      <div className="absolute left-0 top-0 h-full px-3 pt-0.5 z-20 flex flex-col justify-center items-center">
         <div className="material-symbols-outlined text-base text-on-surface">
           {leadingIcon}
         </div>
