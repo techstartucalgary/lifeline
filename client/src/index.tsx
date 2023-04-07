@@ -24,7 +24,7 @@ if (hostname === "localhost" || hostname === "127.0.0.1" || port === "3000") {
 }
 
 axios.defaults.withCredentials = false;
-axios.defaults.timeout = 30000;
+axios.defaults.timeout = 60000;
 
 const App = () => {
   return (
