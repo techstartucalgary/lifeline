@@ -7,7 +7,7 @@ from pymongo import MongoClient
 # Getting the connection string
 load_dotenv()
 print(os.getenv("NOT_CONNECTION_STRING"))
-connection_string = os.getenv("CONNECTION_STRING")
+connection_string = "mongodb+srv://lifelineteamdb:mypassword1@cluster0.ib2qbgg.mongodb.net/?retryWrites=true&w=majority"
 
 # Defining a MongoDB client instance
 client = MongoClient(connection_string)
