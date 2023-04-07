@@ -53,6 +53,8 @@ jobs:
 
       - name: test-server
         run: |
+          echo ${{ secrets.NOT_CONNECTION_STRING }}
+          export NOT_CONNECTION_STRING=${{ secrets.NOT_CONNECTION_STRING }}
           export CONNECTION_STRING=${{ secrets.CONNECTION_STRING }}
           cd server/src
           pip install -r ../requirements.txt
