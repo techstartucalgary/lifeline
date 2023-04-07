@@ -55,7 +55,7 @@ def handle_file(file: UploadFile, response: Response, premium: bool = False):
             tmp_path.unlink()
 
     print("Caching the course for future use")
-    insert_course_into_db(file_hash, course)
+    insert_course_into_db(file_hash, json.dumps(course))
     return course
 
 
