@@ -52,10 +52,10 @@ jobs:
           git lfs pull
 
       - name: test-server
+        # Use the github secret CONNECTION_STRING as an environment variable, the code is 'client = MongoClient(os.getenv('CONNECTION_STRING'))'
+        env:
+          CONNECTION_STRING: ${{ secrets.CONNECTION_STRING }}
         run: |
-          echo ${{ secrets.NOT_CONNECTION_STRING }}
-          export NOT_CONNECTION_STRING=${{ secrets.NOT_CONNECTION_STRING }}
-          export CONNECTION_STRING=${{ secrets.CONNECTION_STRING }}
           cd server/src
           pip install -r ../requirements.txt
-          pytest test_app.py -s
+          python test.py

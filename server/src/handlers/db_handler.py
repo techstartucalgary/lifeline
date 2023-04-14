@@ -7,7 +7,6 @@ from pymongo import MongoClient
 
 # Getting the connection string
 load_dotenv()
-print(os.getenv("NOT_CONNECTION_STRING"))
 # pylint ignore next line naming and line length
 # pylint: disable=C0103, C0301
 connection_string = "mongodb+srv://lifelineteamdb:mypassword1@cluster0.ib2qbgg.mongodb.net/?retryWrites=true&w=majority"
