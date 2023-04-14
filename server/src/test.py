@@ -1,10 +1,6 @@
 """Test environment variables."""
 import os
 
-from dotenv.main import load_dotenv
-
-load_dotenv()
-
 connection_string = os.getenv("CONNECTION_STRING")
 
 if len(connection_string) > 0:
