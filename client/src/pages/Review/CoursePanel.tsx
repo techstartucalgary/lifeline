@@ -1,10 +1,9 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useRef, useState } from "react";
 
 import { classnames } from "../../Utilities";
 import { useAppTopBar } from "../../components/AppTopBar";
 import { AppTopBarIconButton } from "../../components/AppTopBar/IconButton";
 import CourseInfo from "../../components/CourseInfo";
-import EditAssessment from "../../components/EditAssessment";
 import Tabs, { Tab } from "../../components/Tabs";
 import { Assessment, Course } from "../../logic/icsGen";
 
@@ -25,32 +24,14 @@ const CoursePanel = ({
   onCourseDelete,
 }: CoursePanelProp) => {
   const [selectedTab, setSelectedTab] = useState<Tab>(Tab.Assessments);
-  const [editingAssessment, setEditingAssessment] = useState<{
-    assessment: Assessment;
-    index: number;
-  } | null>(null);
-
-  useEffect(() => {
-    setEditingAssessment(null);
-  }, [course]);
-
-  const onAssessmentClick = (assessment: Assessment, index: number) => {
-    setEditingAssessment({ assessment, index });
-  };
-
-  const onAssessmentChange = (assessment: Assessment, index: number) => {
-    course.assessments[index] = assessment;
-    onCourseUpdate(course);
-  };
-
-  const onAssessmentDelete = (_: Assessment, index: number) => {
-    course.assessments = course.assessments.filter((_, i) => i !== index);
-    onCourseUpdate(course);
-  };
-
   const containerRef = useRef(null);
 
-  const [CompactHeadlineRaw, Headline] = useAppTopBar({
+  const onAssessmentsUpdate = useCallback(
+    (assessments: Assessment[]) => onCourseUpdate({ ...course, assessments }),
+    [course, onCourseUpdate]
+  );
+
+  const [CompactHeadline, Headline] = useAppTopBar({
     variant: "large",
     title: `${course.title} ${course.number}`,
     subtitle: course.topic,
@@ -81,13 +62,6 @@ const CoursePanel = ({
     ),
   });
 
-  const CompactHeadline = useMemo(
-    // eslint-disable-next-line react/display-name
-    () => () => <CompactHeadlineRaw />,
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [containerRef]
-  );
-
   return (
     <>
       <CompactHeadline />
@@ -96,44 +70,27 @@ const CoursePanel = ({
         <Headline />
         <div className="flex flex-col md:flex-row gap-4 lg:gap-6">
           <section className={classnames("w-full md:w-1/2")}>
-            {editingAssessment ? (
-              <EditAssessment
-                assessment={editingAssessment.assessment}
-                onClose={() => setEditingAssessment(null)}
-                onSave={(assessment: Assessment) => {
-                  onAssessmentChange(assessment, editingAssessment.index);
-                  setEditingAssessment(null);
-                }}
+            {(course.hours || course.faculty || course.description) && (
+              <CourseInfo
+                hours={course.hours}
+                faculty={course.faculty?.title}
+                description={course.description}
               />
-            ) : (
-              <>
-                {(course.hours || course.faculty || course.description) && (
-                  <CourseInfo
-                    hours={course.hours}
-                    faculty={course.faculty?.title}
-                    description={course.description}
-                  />
-                )}
-                <div className="md:hidden border-b-2">
-                  <Tabs
-                    selectedTab={selectedTab}
-                    setSelectedTab={setSelectedTab}
-                  />
-                </div>
-                <div
-                  className={classnames(
-                    "w-full",
-                    selectedTab === Tab.Document && "hidden md:block"
-                  )}
-                >
-                  <AssessmentsPanel
-                    assessments={course.assessments}
-                    onAssessmentClick={onAssessmentClick}
-                    onAssessmentDelete={onAssessmentDelete}
-                  />
-                </div>
-              </>
             )}
+            <div className="md:hidden border-b-2">
+              <Tabs selectedTab={selectedTab} setSelectedTab={setSelectedTab} />
+            </div>
+            <div
+              className={classnames(
+                "w-full",
+                selectedTab === Tab.Document && "hidden md:block"
+              )}
+            >
+              <AssessmentsPanel
+                assessments={course.assessments}
+                onAssessmentsUpdate={onAssessmentsUpdate}
+              />
+            </div>
           </section>
 
           <section

@@ -1,38 +1,73 @@
-@import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200');
+@import url("https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200");
 @import url("./font.css");
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@tailwind variants;
 
-html {
-  @apply bg-sys-background;
-  margin: 0;
-  padding: 0;
-}
+@layer base {
+  :root {
+    font-size: 16px;
+    line-height: 1.43;
+    overflow-x: hidden;
+    outline-color: black;
+  }
 
-button, input[type=text], input[type=button] {
-  -webkit-appearance: none;
-  -webkit-tap-highlight-color: rgba(0,0,0,0);
-  appearance: none;
-}
+  html {
+    @apply text-gray-800 bg-sys-background m-0 p-0;
+  }
 
-.material-symbols-outlined {
-  font-variation-settings:
-    'FILL' 1,
-    'wght' 700,
-    'GRAD' 0,
-    'opsz' 40;
+  body {
+    font-size: 0.875rem;
+    overflow-x: hidden;
+  }
+
+  button,
+  input[type="text"],
+  input[type="button"] {
+    -webkit-appearance: none;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    appearance: none;
+  }
+
+  input.text {
+    @apply rounded-md border border-gray-300 shadow-sm py-2 px-3 focus:outline-none focus:ring-primary focus:border-primary;
+  }
+  input[type="checkbox"] {
+    @apply rounded-md text-emerald-600 focus:ring-primary border-gray-300;
+  }
+  input[type="radio"] {
+    @apply rounded-full text-emerald-600 focus:ring-primary border-gray-300;
+  }
+  button.primary,
+  button[primary="true"],
+  input[type="submit"] {
+    @apply text-center items-center flex justify-center px-4 py-2 border border-transparent font-medium rounded-md shadow-sm text-white bg-emerald-600 hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary disabled:opacity-50 disabled:cursor-not-allowed relative;
+  }
+  button.secondary,
+  button[secondary],
+  input[type="button"],
+  input[type="reset"] {
+    @apply bg-white py-2 px-4 border border-gray-300 rounded-md shadow-sm leading-4 text-gray-800 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary;
+  }
+  select {
+    @apply rounded-md border border-gray-300 shadow-sm py-2 px-3 focus:outline-none focus:ring-primary focus:border-primary;
+  }
+
+  .material-symbols-outlined {
+    font-variation-settings: "FILL" 1, "wght" 700, "GRAD" 0, "opsz" 40;
     font-size: inherit;
+  }
+
+  input[type="date"]::-webkit-inner-spin-button,
+  input[type="date"]::-webkit-calendar-picker-indicator,
+  input[type="datetime-local"]::-webkit-calendar-picker-indicator {
+    display: none;
+    -webkit-appearance: none;
+  }
 }
 
-:root {
-  font-size: 16px;
-  line-height: 1.43;
-  overflow-x: hidden;
-}
-
-body {
-  font-size: 0.875rem;
-  overflow-x: hidden;
+#headlessui-portal-root {
+  @apply z-40 fixed top-0 w-screen;
 }
