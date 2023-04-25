@@ -1,11 +1,11 @@
 import {
   ButtonHTMLAttributes,
-  useCallback,
-  useState,
   MouseEvent,
   ReactNode,
+  useCallback,
+  useState,
 } from "react";
-import { useNavigate, To } from "react-router-dom";
+import { To, useNavigate } from "react-router-dom";
 
 import { classnames } from "../../Utilities";
 
@@ -21,7 +21,7 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 
 const base = `
   bg-transparent text-center font-medium tracking-[0.01rem] overflow-hidden
-  px-7 py-3 pt-[0.67rem] align-middle rounded-full relative
+  px-7 py-3 pt-[0.67rem] align-middle rounded-full !relative
   transition-all ease-emphasized before:transition-all before:ease-emphasized
 
   before:block before:absolute before:top-0 before:left-0 before:bottom-0 before:right-0
@@ -46,17 +46,17 @@ const cls2 = {
     primary:
       "px-3 text-primary hover:before:bg-state-layers-primary/8 disabled:bg-transparent disable:before:bg-transparent",
     secondary:
-      "px-3 text-secondary hover:before:bg-state-layers-primary/8 disabled:bg-transparent disable:before:bg-transparent",
+      "px-3 text-secondary hover:before:bg-state-layers-secondary/8 disabled:bg-transparent disable:before:bg-transparent",
     tertiary:
-      "px-3 text-tertiary hover:before:bg-state-layers-primary/8 disabled:bg-transparent disable:before:bg-transparent",
+      "px-3 text-tertiary hover:before:bg-state-layers-tertiary/8 disabled:bg-transparent disable:before:bg-transparent",
   },
   tonal: {
     primary:
-      "bg-sys-primary-container text-sys-on-primary-container hover:before:bg-state-layers-on-primary-container/8 focus:before:bg-state-layers-on-primary-container/12 active:before:bg-state-layers-on-primary-container/12",
+      "bg-sys-primary-container text-sys-on-primary-container hover:before:bg-on-primary-container/8 focus:before:bg-on-primary-container/12 active:before:bg-on-primary-container/12",
     secondary:
-      "bg-sys-secondary-container text-sys-on-secondary-container hover:before:bg-state-layers-on-secondary-container/8 focus:before:bg-state-layers-on-secondary-container/12 active:before:bg-state-layers-on-secondary-container/12",
+      "bg-sys-secondary-container text-sys-on-secondary-container hover:before:bg-on-secondary-container/8 focus:before:bg-on-secondary-container/12 active:before:bg-on-secondary-container/12",
     tertiary:
-      "bg-sys-tertiary-container text-sys-on-tertiary-container hover:before:bg-state-layers-on-tertiary-container/8 focus:before:bg-state-layers-on-tertiary-container/12 active:before:bg-state-layers-on-tertiary-container/12",
+      "bg-sys-tertiary-container text-sys-on-tertiary-container hover:before:bg-on-tertiary-container/8 focus:before:bg-on-tertiary-container/12 active:before:bg-on-tertiary-container/12",
   },
 };
 
@@ -191,9 +191,11 @@ const Button = ({
     >
       {icon &&
         (typeof icon === "string" ? (
-          <i className={classnames("material-symbols-outlined", styles.icon)}>
-            {icon}
-          </i>
+          <div className="h-6 w-6 flex justify-center items-center mr-0.5">
+            <span className="material-symbols-outlined text-xl">
+              {icon}
+            </span>
+          </div>
         ) : (
           <i className={styles.icon}>{icon}</i>
         ))}

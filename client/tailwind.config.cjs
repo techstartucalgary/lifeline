@@ -56,6 +56,7 @@ const sys = {
   // "surface-tint": "B7194A",
   // "surface-tint-color": "#B7194A",
   // "inverse-primary": "#FFB2BC",
+  "surface-1": "#FBF0F5",
 };
 const ref = {
   "primary": {

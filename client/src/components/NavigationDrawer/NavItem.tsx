@@ -8,29 +8,28 @@ interface NavItemProps extends Omit<ButtonProps, "variant" | "color"> {
   selected?: boolean;
 }
 
-const NavItem = ({ title, metadata, className, icon, selected, ...args }: NavItemProps) => {
+const NavItem = ({
+  title,
+  metadata,
+  className,
+  icon,
+  selected,
+  ...args
+}: NavItemProps) => {
   return (
     <Button
       {...args}
       color="secondary"
       variant="text"
       className={classnames(
-        "flex flex-row py-4 px-5 text-on-secondary-container",
-        "hover:text-on-surface-variant",
+        "flex flex-row p-4 pr-6 text-on-secondary-container",
         selected && "bg-secondary-container hover:before:bg-transparent",
         className
       )}
-      icon={
-        <span className={classnames(
-          "material-symbols-outlined !text-base mr-1",
-          "flex justify-center items-center",
-        )}>{icon}</span>
-      }
+      icon={icon}
     >
       <div className="flex flex-col min-w-0">
-        <p className="font-medium align-middle truncate">
-          {title}
-        </p>
+        <p className="font-medium align-middle truncate">{title}</p>
       </div>
       <p className="ml-auto mr-1 flex items-center justify-center text-sm proportional-nums">
         {metadata}

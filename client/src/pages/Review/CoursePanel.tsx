@@ -95,11 +95,8 @@ const CoursePanel = ({
 
           <section
             className={classnames(
-              "p-4 mt-2 mr-2",
+              "p-4 mt-2 mr-2 rounded-3xl bg-surface",
               "w-full md:w-1/2",
-              "md:h-screen",
-              "overflow-y-auto",
-              "border-x border-y border-dashed border-gray-400 rounded-3xl",
               selectedTab === Tab.Assessments && "hidden md:block"
             )}
           >

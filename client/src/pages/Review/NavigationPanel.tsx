@@ -108,7 +108,7 @@ const NavigationPanel = ({
           <Button
             variant="text"
             color="secondary"
-            className="rounded-[20px] p-4 text-secondary font-normal"
+            className="rounded-2xl px-4 py-3.5 font-medium text-on-secondary-container"
             onClick={() => {
               inputRef.current?.click();
             }}
@@ -123,10 +123,10 @@ const NavigationPanel = ({
           <Button
             variant="filled"
             color="primary"
-            className="rounded-[20px] p-4"
+            className="rounded-2xl px-4 py-3.5"
             onClick={handleExport}
             disabled={courses.length === 0 || loading.length > 0}
-            icon="save_alt"
+            icon="download_for_offline"
           >
             Export
           </Button>
