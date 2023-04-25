@@ -66,7 +66,10 @@ const CoursePanel = ({
     <>
       <CompactHeadline />
 
-      <div className="overflow-y-auto h-[calc(100vh-4rem)]" ref={containerRef}>
+      <div
+        className="overflow-y-auto h-[calc(100vh-4rem)] px-6"
+        ref={containerRef}
+      >
         <Headline />
         <div className="flex flex-col md:flex-row gap-4 lg:gap-6">
           <section className={classnames("w-full md:w-1/2")}>
