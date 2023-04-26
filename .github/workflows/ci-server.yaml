@@ -47,6 +47,9 @@ jobs:
         run: |
           sudo apt-get -y update
           sudo apt-get -y install pip
+          sudo apt-get -y install git-lfs
+          git lfs install
+          git lfs pull
 
       - name: test-server
         run: |
