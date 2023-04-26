@@ -1,7 +1,7 @@
 import axios from "axios";
 import React from "react";
 import ReactDOM from "react-dom/client";
-import { Routes, Route, BrowserRouter } from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "./index.css";
 
 import Disclaimer from "./pages/Disclaimer";
