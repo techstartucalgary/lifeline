@@ -1,5 +1,4 @@
 """Handler for the database"""
-import os
 import json
 
 from dotenv.main import load_dotenv

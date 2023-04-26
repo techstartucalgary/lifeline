@@ -8,28 +8,28 @@ on:
       - server/**
 
 jobs:
-  # format-check:
-  #   runs-on: ubuntu-20.04
-  #   permissions:
-  #     contents: read
-  #   concurrency:
-  #     group: ${{ github.workflow }}-${{ github.ref }}--job1
-  #   steps:
-  #     - name: git-clone
-  #       uses: actions/checkout@v3
-  #       with:
-  #         fetch-depth: 0
+  format-check:
+    runs-on: ubuntu-20.04
+    permissions:
+      contents: read
+    concurrency:
+      group: ${{ github.workflow }}-${{ github.ref }}--job1
+    steps:
+      - name: git-clone
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
 
-  #     - name: dependencies
-  #       run: |
-  #         sudo apt-get -y update
-  #         sudo apt-get -y install pip
+      - name: dependencies
+        run: |
+          sudo apt-get -y update
+          sudo apt-get -y install pip
 
-  #     - name: check
-  #       run: |
-  #         cd server
-  #         pip install -r ./requirements.txt
-  #         pylint ./src
+      - name: check
+        run: |
+          cd server
+          pip install -r ./requirements.txt
+          pylint ./src
 
   test:
     runs-on: ubuntu-20.04
@@ -43,15 +43,13 @@ jobs:
         with:
           fetch-depth: 0
 
-      # - name: dependencies
-      #   run: |
-      #     sudo apt-get -y update
-      #     sudo apt-get -y install pip
+      - name: dependencies
+        run: |
+          sudo apt-get -y update
+          sudo apt-get -y install pip
 
       - name: test-server
-        # Use the github secret CONNECTION_STRING as an environment variable, the code is 'client = MongoClient(os.getenv('CONNECTION_STRING'))'
-        env:
-          CONNECTION_STRING: ${{ secrets.CONNECTION_STRING }}
         run: |
           cd server/src
-          python test.py
+          pip install -r ../requirements.txt
+          pytest test_app.py
