@@ -3,7 +3,6 @@
 import json
 
 from fastapi.testclient import TestClient
-
 from handlers import calendar_handler
 from main import app
 
@@ -43,7 +42,6 @@ def test_one_expected_outline():
 
     assert response.status_code == 200
     assert response.json() == expected_response
-
 
 def test_bad_file():
     """Sends a bad file to the endpoint and checks that the response is correct"""
