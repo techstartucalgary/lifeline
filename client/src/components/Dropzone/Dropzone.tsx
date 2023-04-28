@@ -37,11 +37,11 @@ const Dropzone = ({ onDrop, isLoading }: DropzoneProps) => {
       {!isLoading && (
         <>
           <span className="material-symbols-outlined text-5xl">add</span>
-          <p className="text-center">
+          <div className="text-center">
             {isDragActive ? (
               <p>Drop the file(s) here...</p>
             ) : (
-              <p>
+              <div>
                 To get started, drag and drop your course outlines here or click
                 &quot;Add course&quot;
                 <br />
@@ -89,9 +89,9 @@ const Dropzone = ({ onDrop, isLoading }: DropzoneProps) => {
                     </a>
                   </li>
                 </ul>
-              </p>
+              </div>
             )}
-          </p>
+          </div>
         </>
       )}
     </div>
