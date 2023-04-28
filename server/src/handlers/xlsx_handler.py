@@ -13,7 +13,7 @@ def get_xlsx_file(semester):
     assessments = []
     for course in semester:
         for assessment in course.get("assessments"):
-            coursename = {"COURSE": course["course"]}
+            coursename = {"COURSE": f'{course["code"]} {course["number"]}'}
             name = {"ASSESSMENT": assessment["name"]}
             date = {"DATE": assessment["date"]}
             weight = {"WEIGHT": assessment["weight"]}
