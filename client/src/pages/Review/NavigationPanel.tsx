@@ -1,3 +1,4 @@
+import axios from "axios";
 import { useRef } from "react";
 
 import { classnames } from "../../Utilities";
@@ -32,7 +33,7 @@ const NavigationPanel = ({
 }: NavigationPanelProps) => {
   const inputRef = useRef<HTMLInputElement>(null);
 
-  const handleExport = () => {
+  const handleExport = async () => {
     const ics = jsonToICS(courses);
     const blob = new Blob([ics], { type: "text/calendar" });
     const url = URL.createObjectURL(blob);
@@ -41,6 +42,26 @@ const NavigationPanel = ({
     link.href = url;
     link.download = "deadlines.ics";
     link.click();
+
+    await axios
+      .post("/xlsx", courses, {
+        responseType: "blob",
+      })
+      .then((response) => {
+        return response.data;
+      })
+      .then((blob) => {
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = "deadlines.xlsx";
+        document.body.appendChild(a); // append the element to the dom
+        a.click();
+        a.remove(); // afterwards, remove the element
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   };
 
   const [CompactHeadline, Headline] = useAppTopBar({
