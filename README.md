@@ -1,3 +1,7 @@
+## *Lifeline is now accepting outside contributions!*
+
+## *Feel free to grab any issue*
+
 ![version](https://img.shields.io/badge/version-1.0.0-red)
 ![frontend status](https://github.com/techstartucalgary/lifeline/actions/workflows/deploy-frontend.yaml/badge.svg)
 ![backend status](https://github.com/techstartucalgary/lifeline/actions/workflows/deploy-backend.yaml/badge.svg)
