@@ -30,8 +30,12 @@ const Dropzone = ({ onDrop, isLoading }: DropzoneProps) => {
       className={classnames(
         "h-full",
         "flex flex-col justify-center items-center",
+        "cursor-pointer",
         isDragActive && "bg-gray-200"
       )}
+      onClick={() => {
+        document.getElementById("file-upload")?.click();
+      }}
     >
       <input {...getInputProps()} />
       {!isLoading && (
