@@ -7,6 +7,7 @@ import { useEffectOnce, useList, useUpdateEffect } from "react-use";
 import { useBreakpoint } from "../../Utilities";
 import { Dropzone } from "../../components/Dropzone";
 import { Course, Courses, parseCourse } from "../../logic/icsGen";
+import { initalCourses } from "../../logic/initialCourses";
 
 import CoursePanel from "./CoursePanel";
 import NavigationPanel from "./NavigationPanel";
@@ -21,7 +22,7 @@ const Review = () => {
   const [
     courses,
     { set: setCourses, upsert: upsertCourse, removeAt: removeAtCourse },
-  ] = useList<Course>([]);
+  ] = useList<Course>(initalCourses);
   const { courseKey: courseKeyURLParam } = useParams<{
     courseKey: string | undefined;
   }>();
@@ -70,7 +71,7 @@ const Review = () => {
       formData.append("outline_file", file as File);
 
       await axios
-        .post("/premium-files", formData, {
+        .post("/files", formData, {
           headers: { "Content-Type": "multipart/form-data" },
         })
         .then((res) => res.data)
