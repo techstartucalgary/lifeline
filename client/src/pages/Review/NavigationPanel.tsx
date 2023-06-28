@@ -90,6 +90,7 @@ const NavigationPanel = ({
           onChange={onOutlineUpload}
           className="hidden"
           aria-hidden
+          id="file-upload"
         />
 
         <NavigationDrawer title="Courses">
