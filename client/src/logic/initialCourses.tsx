@@ -44,7 +44,7 @@ export const initalCourses: Courses = [
     assessments: [
       {
         id: "undefined-0",
-        name: "Assignment 11",
+        name: "Assignment 1",
         date: new Date("2022-09-26T07:00:00.000Z"),
         weight: 10,
       },
@@ -76,13 +76,13 @@ export const initalCourses: Courses = [
         id: "undefined-5",
         name: "Midterm #1",
         date: new Date("2022-10-18T01:00:00.000Z"),
-        weight: 0,
+        weight: 15,
       },
       {
         id: "undefined-6",
         name: "Midterm #2",
         date: new Date("2022-11-03T01:00:00.000Z"),
-        weight: 0,
+        weight: 15,
       },
     ],
     key: "cpsc-331",
