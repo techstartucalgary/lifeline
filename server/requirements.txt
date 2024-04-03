@@ -39,7 +39,7 @@ packaging==23.0
 pathspec==0.10.2
 pdfminer.six==20221105
 pdfplumber==0.7.6
-Pillow==10.0.1
+Pillow==10.3.0
 platformdirs==2.5.4
 pluggy==1.0.0
 pycparser==2.21
