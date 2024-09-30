@@ -3,7 +3,7 @@
 set -xeuo pipefail
 
 # Define the URL of the API
-API_URL="https://rj6crp3mqwnq6vskrxd5umir4a0tgcqv.lambda-url.us-west-2.on.aws"
+API_URL="https://ryfg6lbgzaoa6xt36w7iheqf5u0avxus.lambda-url.us-west-2.on.aws"
 
 # Define the path to the expected response file
 EXPECTED_RESPONSE_FILE="./test-data/CPSC331/expected.json"
