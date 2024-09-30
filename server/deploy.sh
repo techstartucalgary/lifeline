@@ -23,5 +23,5 @@ echo $fingerprint
 
 # Update the lambda function with the new image
 aws lambda update-function-code \
-  --function-name test-docker \
+  --function-name lifeline-server \
   --image-uri 452130394449.dkr.ecr.us-west-2.amazonaws.com/lifeline-server@$fingerprint
