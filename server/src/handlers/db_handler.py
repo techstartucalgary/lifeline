@@ -7,8 +7,6 @@
 # # Getting the connection string
 # load_dotenv()
 # pylint ignore next line naming and line length
-# pylint: disable=C0103, C0301
-# connection_string = "mongodb+srv://lifelineteamdb:mypassword1@cluster0.ib2qbgg.mongodb.net/?retryWrites=true&w=majority"
 
 # # Defining a MongoDB client instance
 # client = MongoClient(connection_string)
